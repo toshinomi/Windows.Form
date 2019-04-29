@@ -27,40 +27,18 @@ namespace WebBrowser
             m_toolTip = null;
         }
 
-        public void OnKeyDownTextUrl(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                m_strUrl = textUrl.Text;
-                webBrowser.Navigate(m_strUrl);
-            }
-        }
-
         public void OnFormClosedFormWebBrowser(object sender, FormClosedEventArgs e)
         {
-            FormWebBrowser form = Program.g_listWebBrowser[uint.Parse(this.Name)];
+            FormMain formMain = (FormMain)this.MdiParent;
+            FormWebBrowser form = formMain.GetFormWebBrowser(uint.Parse(this.Name));
             form = null;
-            Program.g_listWebBrowser.Remove(uint.Parse(this.Name));
+            formMain.RemoveListWebBrowser(uint.Parse(this.Name));
         }
 
         public void OnLoadFormWebBrowser(object sender, EventArgs e)
         {
             SetInitToolTip();
             HomeWebBrowser();
-        }
-
-        public void SetInitToolTip()
-        {
-            m_toolTip = new ToolTip();
-            m_toolTip.SetToolTip(textUrl, "URL入力後、Enterキーを押してください!!!");
-        }
-
-        public void HomeWebBrowser()
-        {
-            Uri uri = new Uri(HOME_URL);
-            webBrowser.Navigate(uri);
-            textUrl.Text = m_strUrl;
-            this.Text = m_strUrl;
         }
 
         public void OnClickBack(object sender, EventArgs e)
@@ -84,10 +62,33 @@ namespace WebBrowser
             webBrowser.Refresh();
         }
 
+        public void OnKeyDownTextUrl(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                m_strUrl = textUrl.Text;
+                webBrowser.Navigate(m_strUrl);
+            }
+        }
+
         public void OnNavigatedWebBrowser(object sender, WebBrowserNavigatedEventArgs e)
         {
             textUrl.Text = webBrowser.Url.AbsoluteUri;
             this.Text = webBrowser.Url.AbsoluteUri;
+        }
+
+        public void SetInitToolTip()
+        {
+            m_toolTip = new ToolTip();
+            m_toolTip.SetToolTip(textUrl, "URL入力後、Enterキーを押してください!!!");
+        }
+
+        public void HomeWebBrowser()
+        {
+            Uri uri = new Uri(HOME_URL);
+            webBrowser.Navigate(uri);
+            textUrl.Text = m_strUrl;
+            this.Text = m_strUrl;
         }
     }
 }

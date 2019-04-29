@@ -13,17 +13,18 @@ namespace WebBrowser
     public partial class FormMain : Form
     {
         private uint m_nCountWebBrowser;
+        private Dictionary<uint, FormWebBrowser> m_listWebBrowser;
 
         public FormMain()
         {
             InitializeComponent();
-            Program.g_listWebBrowser = new Dictionary<uint, FormWebBrowser>();
+            m_listWebBrowser = new Dictionary<uint, FormWebBrowser>();
         }
 
         ~FormMain()
         {
-            Program.g_listWebBrowser.Clear();
-            Program.g_listWebBrowser = null;
+            m_listWebBrowser.Clear();
+            m_listWebBrowser = null;
             m_nCountWebBrowser = 0;
         }
 
@@ -31,23 +32,6 @@ namespace WebBrowser
         {
             SetFormMain();
             SetFormChild();
-        }
-
-        public void SetFormMain()
-        {
-            this.Size = new Size(1000, 600);
-        }
-
-        public void SetFormChild()
-        {
-            FormWebBrowser form = new FormWebBrowser();
-            form.MdiParent = this;
-            form.WindowState = FormWindowState.Minimized;
-            form.Show();
-            form.Name = m_nCountWebBrowser.ToString();
-            form.WindowState = FormWindowState.Maximized;
-            Program.g_listWebBrowser.Add(uint.Parse(form.Name), form);
-            m_nCountWebBrowser += 1;
         }
 
         public void OnClickMenuFileNewOpen(object sender, EventArgs e)
@@ -72,9 +56,9 @@ namespace WebBrowser
 
         public void OnClickMenuFileEnd(object sender, EventArgs e)
         {
-            foreach (uint nKey in Program.g_listWebBrowser.Keys)
+            foreach (uint nKey in m_listWebBrowser.Keys)
             {
-                FormWebBrowser form = Program.g_listWebBrowser[nKey];
+                FormWebBrowser form = m_listWebBrowser[nKey];
                 form = null;
             }
             this.Close();
@@ -82,8 +66,35 @@ namespace WebBrowser
 
         public void OnFormClosedFormMain(object sender, FormClosedEventArgs e)
         {
-            Program.g_listWebBrowser.Clear();
-            Program.g_listWebBrowser = null;
+            m_listWebBrowser.Clear();
+            m_listWebBrowser = null;
+        }
+
+        public void SetFormMain()
+        {
+            this.Size = new Size(1000, 600);
+        }
+
+        public void SetFormChild()
+        {
+            FormWebBrowser form = new FormWebBrowser();
+            form.MdiParent = this;
+            form.WindowState = FormWindowState.Minimized;
+            form.Show();
+            form.Name = m_nCountWebBrowser.ToString();
+            form.WindowState = FormWindowState.Maximized;
+            m_listWebBrowser.Add(uint.Parse(form.Name), form);
+            m_nCountWebBrowser += 1;
+        }
+
+        public FormWebBrowser GetFormWebBrowser(uint nKey)
+        {
+            return m_listWebBrowser[nKey];
+        }
+
+        public void RemoveListWebBrowser(uint nKey)
+        {
+            m_listWebBrowser.Remove(nKey);
         }
     }
 }

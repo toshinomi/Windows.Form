@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWebBrowser));
             this.panelUrl = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelUrl = new System.Windows.Forms.Label();
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.buttonForward = new System.Windows.Forms.Button();
             this.buttonBack = new System.Windows.Forms.Button();
@@ -43,10 +43,10 @@
             // 
             // panelUrl
             // 
-            this.panelUrl.Controls.Add(this.label1);
             this.panelUrl.Controls.Add(this.buttonRefresh);
             this.panelUrl.Controls.Add(this.buttonForward);
             this.panelUrl.Controls.Add(this.buttonBack);
+            this.panelUrl.Controls.Add(this.labelUrl);
             this.panelUrl.Controls.Add(this.textUrl);
             this.panelUrl.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelUrl.Location = new System.Drawing.Point(0, 0);
@@ -54,38 +54,6 @@
             this.panelUrl.Name = "panelUrl";
             this.panelUrl.Size = new System.Drawing.Size(480, 45);
             this.panelUrl.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(136, 6);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(27, 12);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "URL";
-            // 
-            // buttonRefresh
-            // 
-            this.buttonRefresh.Image = ((System.Drawing.Image)(resources.GetObject("buttonRefresh.Image")));
-            this.buttonRefresh.Location = new System.Drawing.Point(88, 0);
-            this.buttonRefresh.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(45, 43);
-            this.buttonRefresh.TabIndex = 3;
-            this.buttonRefresh.UseVisualStyleBackColor = true;
-            this.buttonRefresh.Click += new System.EventHandler(this.OnClickRefresh);
-            // 
-            // buttonForward
-            // 
-            this.buttonForward.Image = ((System.Drawing.Image)(resources.GetObject("buttonForward.Image")));
-            this.buttonForward.Location = new System.Drawing.Point(44, 0);
-            this.buttonForward.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonForward.Name = "buttonForward";
-            this.buttonForward.Size = new System.Drawing.Size(45, 43);
-            this.buttonForward.TabIndex = 2;
-            this.buttonForward.UseVisualStyleBackColor = true;
-            this.buttonForward.Click += new System.EventHandler(this.OnClickForward);
             // 
             // buttonBack
             // 
@@ -98,6 +66,38 @@
             this.buttonBack.UseVisualStyleBackColor = true;
             this.buttonBack.Click += new System.EventHandler(this.OnClickBack);
             // 
+            // buttonForward
+            // 
+            this.buttonForward.Image = ((System.Drawing.Image)(resources.GetObject("buttonForward.Image")));
+            this.buttonForward.Location = new System.Drawing.Point(44, 0);
+            this.buttonForward.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonForward.Name = "buttonForward";
+            this.buttonForward.Size = new System.Drawing.Size(45, 43);
+            this.buttonForward.TabIndex = 2;
+            this.buttonForward.UseVisualStyleBackColor = true;
+            this.buttonForward.Click += new System.EventHandler(this.OnClickForward);
+            // 
+            // buttonRefresh
+            // 
+            this.buttonRefresh.Image = ((System.Drawing.Image)(resources.GetObject("buttonRefresh.Image")));
+            this.buttonRefresh.Location = new System.Drawing.Point(88, 0);
+            this.buttonRefresh.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonRefresh.Name = "buttonRefresh";
+            this.buttonRefresh.Size = new System.Drawing.Size(45, 43);
+            this.buttonRefresh.TabIndex = 3;
+            this.buttonRefresh.UseVisualStyleBackColor = true;
+            this.buttonRefresh.Click += new System.EventHandler(this.OnClickRefresh);
+            // 
+            // labelUrl
+            // 
+            this.labelUrl.AutoSize = true;
+            this.labelUrl.Location = new System.Drawing.Point(136, 6);
+            this.labelUrl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelUrl.Name = "labelUrl";
+            this.labelUrl.Size = new System.Drawing.Size(27, 12);
+            this.labelUrl.TabIndex = 4;
+            this.labelUrl.Text = "URL";
+            // 
             // textUrl
             // 
             this.textUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -106,8 +106,8 @@
             this.textUrl.Margin = new System.Windows.Forms.Padding(2);
             this.textUrl.Name = "textUrl";
             this.textUrl.Size = new System.Drawing.Size(338, 19);
-            this.textUrl.TabIndex = 0;
-            this.textUrl.Text = "https://www.google.co.jp/";
+            this.textUrl.TabIndex = 5;
+            this.textUrl.Text = "https://www.bing.com/";
             this.textUrl.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDownTextUrl);
             // 
             // panelWebBrowser
@@ -118,7 +118,7 @@
             this.panelWebBrowser.Margin = new System.Windows.Forms.Padding(2);
             this.panelWebBrowser.Name = "panelWebBrowser";
             this.panelWebBrowser.Size = new System.Drawing.Size(480, 255);
-            this.panelWebBrowser.TabIndex = 1;
+            this.panelWebBrowser.TabIndex = 6;
             // 
             // webBrowser
             // 
@@ -129,7 +129,7 @@
             this.webBrowser.Name = "webBrowser";
             this.webBrowser.ScriptErrorsSuppressed = true;
             this.webBrowser.Size = new System.Drawing.Size(480, 255);
-            this.webBrowser.TabIndex = 0;
+            this.webBrowser.TabIndex = 7;
             this.webBrowser.Navigated += new System.Windows.Forms.WebBrowserNavigatedEventHandler(this.OnNavigatedWebBrowser);
             // 
             // FormWebBrowser
@@ -143,7 +143,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormWebBrowser";
-            this.Text = "https://www.google.co.jp/";
+            this.Text = "https://www.bing.com/";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnFormClosedFormWebBrowser);
             this.Load += new System.EventHandler(this.OnLoadFormWebBrowser);
             this.panelUrl.ResumeLayout(false);
@@ -162,6 +162,6 @@
         private System.Windows.Forms.Button buttonBack;
         private System.Windows.Forms.Button buttonForward;
         private System.Windows.Forms.Button buttonRefresh;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelUrl;
     }
 }

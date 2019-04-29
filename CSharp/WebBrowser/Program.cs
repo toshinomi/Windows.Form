@@ -18,6 +18,5 @@ namespace WebBrowser
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FormMain());
         }
-        static public Dictionary<uint, FormWebBrowser> g_listWebBrowser;
     }
 }
