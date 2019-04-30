@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.156
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBrowser", "CSharp\WebBrowser\WebBrowser.csproj", "{FC30807D-5E3A-4C43-A101-1FB3F67A0FEB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessing", "CSharp\ImageProcessing\ImageProcessing.csproj", "{5CF94607-2649-4A18-BB33-93F0D7E9F21F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessing", "ImageProcessing.csproj", "{5CF94607-2649-4A18-BB33-93F0D7E9F21F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FC30807D-5E3A-4C43-A101-1FB3F67A0FEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FC30807D-5E3A-4C43-A101-1FB3F67A0FEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FC30807D-5E3A-4C43-A101-1FB3F67A0FEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FC30807D-5E3A-4C43-A101-1FB3F67A0FEB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5CF94607-2649-4A18-BB33-93F0D7E9F21F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5CF94607-2649-4A18-BB33-93F0D7E9F21F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CF94607-2649-4A18-BB33-93F0D7E9F21F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -26,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {AEB0CA61-8A6A-45CC-B1D6-470025522458}
+		SolutionGuid = {0587ECC8-34CB-4165-8BC0-0F71EE735083}
 	EndGlobalSection
 EndGlobal
