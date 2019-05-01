@@ -1,5 +1,6 @@
 #include "EdgeDetection.h"
 #include "ComFunc.h"
+#include "ComInfo.h"
 
 using namespace ImageProcessing;
 
@@ -73,19 +74,19 @@ bool EdgeDetection::GoEdgeDetection(CancellationToken _token)
 						{
 							Byte* pPixel2 = (Byte*)bitmapData->Scan0.ToPointer() + (nIdxHeight + nIdxHightMask) * bitmapData->Stride + (nIdxWidth + nIdxWidthMask) * 4;
 
-							dCalB += pPixel2[0] * dMask[nIdxWidthMask][nIdxHightMask];
-							dCalG += pPixel2[1] * dMask[nIdxWidthMask][nIdxHightMask];
-							dCalR += pPixel2[2] * dMask[nIdxWidthMask][nIdxHightMask];
-							dCalA += pPixel2[3] * dMask[nIdxWidthMask][nIdxHightMask];
+							dCalB += pPixel2[ComInfo::Pixel::B] * dMask[nIdxWidthMask][nIdxHightMask];
+							dCalG += pPixel2[ComInfo::Pixel::G] * dMask[nIdxWidthMask][nIdxHightMask];
+							dCalR += pPixel2[ComInfo::Pixel::R] * dMask[nIdxWidthMask][nIdxHightMask];
+							dCalA += pPixel2[ComInfo::Pixel::A] * dMask[nIdxWidthMask][nIdxHightMask];
 						}
 					}
 				}
 				nFilter++;
 			}
-			pPixel[0] = ComFunc::DoubleToByte(dCalB);
-			pPixel[1] = ComFunc::DoubleToByte(dCalG);
-			pPixel[2] = ComFunc::DoubleToByte(dCalR);
-			pPixel[3] = ComFunc::DoubleToByte(dCalA);
+			pPixel[ComInfo::Pixel::B] = ComFunc::DoubleToByte(dCalB);
+			pPixel[ComInfo::Pixel::G] = ComFunc::DoubleToByte(dCalG);
+			pPixel[ComInfo::Pixel::R] = ComFunc::DoubleToByte(dCalR);
+			pPixel[ComInfo::Pixel::A] = ComFunc::DoubleToByte(dCalA);
 		}
 	}
 	m_bitmap->UnlockBits(bitmapData);

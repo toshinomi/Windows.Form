@@ -97,19 +97,19 @@ namespace ImageProcessing
                                     {
                                         byte* pPixel2 = (byte*)bitmapData.Scan0 + (nIdxHeight + nIdxHightMask) * bitmapData.Stride + (nIdxWidth + nIdxWidthMask) * 4;
 
-                                        dCalB += pPixel2[0] * dMask[nIdxWidthMask, nIdxHightMask];
-                                        dCalG += pPixel2[1] * dMask[nIdxWidthMask, nIdxHightMask];
-                                        dCalR += pPixel2[2] * dMask[nIdxWidthMask, nIdxHightMask];
-                                        dCalA += pPixel2[3] * dMask[nIdxWidthMask, nIdxHightMask];
+                                        dCalB += pPixel2[(int)ComInfo.Pixel.B] * dMask[nIdxWidthMask, nIdxHightMask];
+                                        dCalG += pPixel2[(int)ComInfo.Pixel.G] * dMask[nIdxWidthMask, nIdxHightMask];
+                                        dCalR += pPixel2[(int)ComInfo.Pixel.R] * dMask[nIdxWidthMask, nIdxHightMask];
+                                        dCalA += pPixel2[(int)ComInfo.Pixel.A] * dMask[nIdxWidthMask, nIdxHightMask];
                                     }
                                 }
                             }
                             nFilter++;
                         }
-                        pPixel[0] = ComFunc.DoubleToByte(dCalB);
-                        pPixel[1] = ComFunc.DoubleToByte(dCalG);
-                        pPixel[2] = ComFunc.DoubleToByte(dCalR);
-                        pPixel[3] = ComFunc.DoubleToByte(dCalA);
+                        pPixel[(int)ComInfo.Pixel.B] = ComFunc.DoubleToByte(dCalB);
+                        pPixel[(int)ComInfo.Pixel.G] = ComFunc.DoubleToByte(dCalG);
+                        pPixel[(int)ComInfo.Pixel.R] = ComFunc.DoubleToByte(dCalR);
+                        pPixel[(int)ComInfo.Pixel.A] = ComFunc.DoubleToByte(dCalA);
                     }
                 }
                 m_bitmap.UnlockBits(bitmapData);
