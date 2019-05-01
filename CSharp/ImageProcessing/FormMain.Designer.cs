@@ -241,7 +241,9 @@ namespace ImageProcessing
             this.Controls.Add(this.groupBoxProcessingInfo);
             this.Controls.Add(this.groupBoxImageOutput);
             this.Controls.Add(this.groupBoxOperation);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "FormMain";
             this.Text = "Image Processing";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosingFormMain);

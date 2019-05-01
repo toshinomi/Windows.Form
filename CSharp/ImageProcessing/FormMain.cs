@@ -11,18 +11,13 @@ namespace ImageProcessing
     public partial class FormMain : Form
     {
         private Bitmap m_bitmap;
-
         private EdgeDetection m_edgeDetection;
-
-
         private string m_strOpenFileName;
         private CancellationTokenSource m_tokenSource;
 
         public FormMain()
         {
             InitializeComponent();
-
-            SetFormMain();
 
             btnFileSelect.Enabled = true;
             btnAllClear.Enabled = true;
@@ -36,14 +31,6 @@ namespace ImageProcessing
             m_bitmap = null;
             m_tokenSource = null;
             m_edgeDetection = null;
-        }
-
-        public void SetFormMain()
-        {
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-
-            return;
         }
 
         public void SetToolTip()
@@ -78,7 +65,6 @@ namespace ImageProcessing
 
         ~FormMain()
         {
-            //m_dMask = null;
             m_bitmap= null;
             m_tokenSource = null;
         }
@@ -89,16 +75,22 @@ namespace ImageProcessing
             btnAllClear.Enabled = true;
             btnStart.Enabled = true;
             btnStop.Enabled = false;
+
+            return;
         }
 
-        public void SetTextTime(long lTime)
+        public void SetTextTime(long _lTime)
         {
-            textBoxTime.Text = lTime.ToString();
+            textBoxTime.Text = _lTime.ToString();
+
+            return;
         }
 
         public void SetPictureBoxStatus()
         {
             pictureBoxStatus.Visible = false;
+
+            return;
         }
 
         public async Task<bool> TaskWorkImageProcessing()
@@ -198,7 +190,7 @@ namespace ImageProcessing
             if (bResult)
             {
                 pictureBoxOriginal.ImageLocation = m_strOpenFileName;
-                pictureBoxAfter.Image = m_edgeDetection.GetBitmapImage();
+                pictureBoxAfter.Image = m_edgeDetection.GetBitmap();
 
                 stopwatch.Stop();
 

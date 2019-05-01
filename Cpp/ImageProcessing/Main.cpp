@@ -1,10 +1,9 @@
 #include "FormMain.h"
-#include "FormWebBrowser.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
 
-namespace WebBrowser
+namespace ImageProcessing
 {
 	[STAThread]
 	void Main(void)
@@ -12,7 +11,7 @@ namespace WebBrowser
 		Application::EnableVisualStyles();
 		Application::SetCompatibleTextRenderingDefault(false);
 
-		Application::Run(gcnew ::WebBrowser::FormMain());
+		Application::Run(gcnew ::ImageProcessing::FormMain());
 
 		return;
 	}
