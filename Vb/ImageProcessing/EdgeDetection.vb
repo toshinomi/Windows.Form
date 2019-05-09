@@ -14,7 +14,7 @@ Namespace ImageProcessing
         End Sub
 
         Public Sub New(_bitmap As Bitmap, _filterMax As UInt32)
-            m_nFilterMax = 1
+            m_nFilterMax = _filterMax
             m_bitmap = _bitmap
         End Sub
 
