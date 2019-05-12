@@ -56,7 +56,6 @@ bool EdgeDetection::GoEdgeDetection(CancellationToken _token)
 			double dCalB = 0.0;
 			double dCalG = 0.0;
 			double dCalR = 0.0;
-			double dCalA = 0.0;
 			int nIdxWidthMask;
 			int nIdxHightMask;
 			UInt32 nFilter = 0;
@@ -77,7 +76,6 @@ bool EdgeDetection::GoEdgeDetection(CancellationToken _token)
 							dCalB += pPixel2[ComInfo::Pixel::B] * dMask[nIdxWidthMask][nIdxHightMask];
 							dCalG += pPixel2[ComInfo::Pixel::G] * dMask[nIdxWidthMask][nIdxHightMask];
 							dCalR += pPixel2[ComInfo::Pixel::R] * dMask[nIdxWidthMask][nIdxHightMask];
-							dCalA += pPixel2[ComInfo::Pixel::A] * dMask[nIdxWidthMask][nIdxHightMask];
 						}
 					}
 				}
@@ -86,7 +84,6 @@ bool EdgeDetection::GoEdgeDetection(CancellationToken _token)
 			pPixel[ComInfo::Pixel::B] = ComFunc::DoubleToByte(dCalB);
 			pPixel[ComInfo::Pixel::G] = ComFunc::DoubleToByte(dCalG);
 			pPixel[ComInfo::Pixel::R] = ComFunc::DoubleToByte(dCalR);
-			pPixel[ComInfo::Pixel::A] = ComFunc::DoubleToByte(dCalA);
 		}
 	}
 	m_bitmap->UnlockBits(bitmapData);

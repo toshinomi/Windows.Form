@@ -111,7 +111,7 @@ Public Class FormMain
 
         openFileDlg.FileName = "default.jpg"
         openFileDlg.InitialDirectory = "C:\\"
-        openFileDlg.Filter = "All Files(*.*)|*.*"
+        openFileDlg.Filter = "JPG|*.jpg|PNG|*.png"
         openFileDlg.FilterIndex = 1
         openFileDlg.Title = "Please select a file to open"
         openFileDlg.RestoreDirectory = True
