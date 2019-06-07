@@ -30,10 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWebBrowser));
             this.panelUrl = new System.Windows.Forms.Panel();
-            this.labelUrl = new System.Windows.Forms.Label();
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.buttonForward = new System.Windows.Forms.Button();
             this.buttonBack = new System.Windows.Forms.Button();
+            this.labelUrl = new System.Windows.Forms.Label();
             this.textUrl = new System.Windows.Forms.TextBox();
             this.panelWebBrowser = new System.Windows.Forms.Panel();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
@@ -55,16 +55,16 @@
             this.panelUrl.Size = new System.Drawing.Size(480, 45);
             this.panelUrl.TabIndex = 0;
             // 
-            // buttonBack
+            // buttonRefresh
             // 
-            this.buttonBack.Image = ((System.Drawing.Image)(resources.GetObject("buttonBack.Image")));
-            this.buttonBack.Location = new System.Drawing.Point(0, 0);
-            this.buttonBack.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonBack.Name = "buttonBack";
-            this.buttonBack.Size = new System.Drawing.Size(45, 43);
-            this.buttonBack.TabIndex = 1;
-            this.buttonBack.UseVisualStyleBackColor = true;
-            this.buttonBack.Click += new System.EventHandler(this.OnClickBack);
+            this.buttonRefresh.Image = ((System.Drawing.Image)(resources.GetObject("buttonRefresh.Image")));
+            this.buttonRefresh.Location = new System.Drawing.Point(88, 0);
+            this.buttonRefresh.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonRefresh.Name = "buttonRefresh";
+            this.buttonRefresh.Size = new System.Drawing.Size(45, 43);
+            this.buttonRefresh.TabIndex = 3;
+            this.buttonRefresh.UseVisualStyleBackColor = true;
+            this.buttonRefresh.Click += new System.EventHandler(this.OnClickRefresh);
             // 
             // buttonForward
             // 
@@ -77,16 +77,16 @@
             this.buttonForward.UseVisualStyleBackColor = true;
             this.buttonForward.Click += new System.EventHandler(this.OnClickForward);
             // 
-            // buttonRefresh
+            // buttonBack
             // 
-            this.buttonRefresh.Image = ((System.Drawing.Image)(resources.GetObject("buttonRefresh.Image")));
-            this.buttonRefresh.Location = new System.Drawing.Point(88, 0);
-            this.buttonRefresh.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(45, 43);
-            this.buttonRefresh.TabIndex = 3;
-            this.buttonRefresh.UseVisualStyleBackColor = true;
-            this.buttonRefresh.Click += new System.EventHandler(this.OnClickRefresh);
+            this.buttonBack.Image = ((System.Drawing.Image)(resources.GetObject("buttonBack.Image")));
+            this.buttonBack.Location = new System.Drawing.Point(0, 0);
+            this.buttonBack.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonBack.Name = "buttonBack";
+            this.buttonBack.Size = new System.Drawing.Size(45, 43);
+            this.buttonBack.TabIndex = 1;
+            this.buttonBack.UseVisualStyleBackColor = true;
+            this.buttonBack.Click += new System.EventHandler(this.OnClickBack);
             // 
             // labelUrl
             // 
@@ -137,6 +137,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.BackColor = System.Drawing.Color.LightSteelBlue;
             this.ClientSize = new System.Drawing.Size(480, 300);
             this.Controls.Add(this.panelWebBrowser);
             this.Controls.Add(this.panelUrl);
