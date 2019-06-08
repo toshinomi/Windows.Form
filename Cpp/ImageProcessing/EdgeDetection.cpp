@@ -6,13 +6,6 @@ using namespace ImageProcessing;
 
 EdgeDetection::EdgeDetection(Bitmap^ _bitmap)
 {
-	m_nFilterMax = 1;
-	m_bitmap = _bitmap;
-}
-
-EdgeDetection::EdgeDetection(Bitmap^ _bitmap, UInt32 _filterMax)
-{
-	m_nFilterMax = _filterMax;
 	m_bitmap = _bitmap;
 }
 
@@ -25,11 +18,11 @@ bool EdgeDetection::GoEdgeDetection(CancellationToken _token)
 {
 	bool bRst = true;
 
-	double dMask[3][3] =
+	short nMask[3][3] =
 	{
-		{ 1.0,  1.0, 1.0 },
-		{ 1.0, -8.0, 1.0 },
-		{ 1.0,  1.0, 1.0 }
+		{ 1,  1, 1 },
+		{ 1, -8, 1 },
+		{ 1,  1, 1 }
 	};
 
 	int nWidthSize = m_bitmap->Width;
@@ -53,37 +46,33 @@ bool EdgeDetection::GoEdgeDetection(CancellationToken _token)
 
 			Byte* pPixel = (Byte*)bitmapData->Scan0.ToPointer() + nIdxHeight * bitmapData->Stride + nIdxWidth * 4;
 
-			double dCalB = 0.0;
-			double dCalG = 0.0;
-			double dCalR = 0.0;
+			long lCalB = 0;
+			long lCalG = 0;
+			long lCalR = 0;
 			int nIdxWidthMask;
 			int nIdxHightMask;
 			UInt32 nFilter = 0;
 
-			while (nFilter < m_nFilterMax)
+			for (nIdxHightMask = 0; nIdxHightMask < nMasksize; nIdxHightMask++)
 			{
-				for (nIdxHightMask = 0; nIdxHightMask < nMasksize; nIdxHightMask++)
+				for (nIdxWidthMask = 0; nIdxWidthMask < nMasksize; nIdxWidthMask++)
 				{
-					for (nIdxWidthMask = 0; nIdxWidthMask < nMasksize; nIdxWidthMask++)
+					if (nIdxWidth + nIdxWidthMask > 0 &&
+						nIdxWidth + nIdxWidthMask < nWidthSize &&
+						nIdxHeight + nIdxHightMask > 0 &&
+						nIdxHeight + nIdxHightMask < nHeightSize)
 					{
-						if (nIdxWidth + nIdxWidthMask > 0 &&
-							nIdxWidth + nIdxWidthMask < nWidthSize &&
-							nIdxHeight + nIdxHightMask > 0 &&
-							nIdxHeight + nIdxHightMask < nHeightSize)
-						{
-							Byte* pPixel2 = (Byte*)bitmapData->Scan0.ToPointer() + (nIdxHeight + nIdxHightMask) * bitmapData->Stride + (nIdxWidth + nIdxWidthMask) * 4;
+						Byte* pPixel2 = (Byte*)bitmapData->Scan0.ToPointer() + (nIdxHeight + nIdxHightMask) * bitmapData->Stride + (nIdxWidth + nIdxWidthMask) * 4;
 
-							dCalB += pPixel2[ComInfo::Pixel::B] * dMask[nIdxWidthMask][nIdxHightMask];
-							dCalG += pPixel2[ComInfo::Pixel::G] * dMask[nIdxWidthMask][nIdxHightMask];
-							dCalR += pPixel2[ComInfo::Pixel::R] * dMask[nIdxWidthMask][nIdxHightMask];
-						}
+						lCalB += pPixel2[ComInfo::Pixel::B] * nMask[nIdxWidthMask][nIdxHightMask];
+						lCalG += pPixel2[ComInfo::Pixel::G] * nMask[nIdxWidthMask][nIdxHightMask];
+						lCalR += pPixel2[ComInfo::Pixel::R] * nMask[nIdxWidthMask][nIdxHightMask];
 					}
 				}
-				nFilter++;
 			}
-			pPixel[ComInfo::Pixel::B] = ComFunc::DoubleToByte(dCalB);
-			pPixel[ComInfo::Pixel::G] = ComFunc::DoubleToByte(dCalG);
-			pPixel[ComInfo::Pixel::R] = ComFunc::DoubleToByte(dCalR);
+			pPixel[ComInfo::Pixel::B] = ComFunc::LongToByte(lCalB);
+			pPixel[ComInfo::Pixel::G] = ComFunc::LongToByte(lCalG);
+			pPixel[ComInfo::Pixel::R] = ComFunc::LongToByte(lCalR);
 		}
 	}
 	m_bitmap->UnlockBits(bitmapData);

@@ -11,5 +11,6 @@ namespace ImageProcessing
 	{
 	public:
 		static Byte DoubleToByte(double _dValue);
+		static Byte LongToByte(long _lValue);
 	};
 }

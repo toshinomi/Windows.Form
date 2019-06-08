@@ -15,11 +15,9 @@ namespace ImageProcessing
 	{
 	private:
 		const int m_nMaskSize = 3;
-		UInt32 m_nFilterMax;
 		Bitmap^ m_bitmap;
 	public:
 		EdgeDetection(Bitmap^ _bitmap);
-		EdgeDetection(Bitmap^ _bitmap, UInt32 _filterMax);
 		~EdgeDetection();
 		Bitmap^ GetBitmap() { return m_bitmap; }
 		void SetBitmap(Bitmap^ _bitmap) { m_bitmap = _bitmap; }
