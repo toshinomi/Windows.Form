@@ -36,16 +36,16 @@ Namespace ImageProcessing
         Public Function GoEdgeDetection(_token As CancellationToken) As Boolean
             Dim bRst As Boolean = True
 
-            Dim dMask As Double(,) =
+            Dim nMask As Short(,) =
             {
-                {1.0, 1.0, 1.0},
-                {1.0, -8.0, 1.0},
-                {1.0, 1.0, 1.0}
+                {1, 1, 1},
+                {1, -8, 1},
+                {1, 1, 1}
             }
 
             Dim nWidthSize As Integer = m_bitmap.Width
             Dim nHeightSize As Integer = m_bitmap.Height
-            Dim nMasksize As Integer = dMask.GetLength(0)
+            Dim nMasksize As Integer = nMask.GetLength(0)
 
             Dim bitmapData As BitmapData = m_bitmap.LockBits(New Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb)
 
@@ -66,9 +66,9 @@ Namespace ImageProcessing
                     Dim bytePixelR As Byte = ReadByte(pAdr, nPos + ComInfo.Pixel.R)
                     Dim bytePixelA As Byte = ReadByte(pAdr, nPos + ComInfo.Pixel.A)
 
-                    Dim dCalB As Double = 0.0
-                    Dim dCalG As Double = 0.0
-                    Dim dCalR As Double = 0.0
+                    Dim lCalB As Long = 0.0
+                    Dim lCalG As Long = 0.0
+                    Dim lCalR As Long = 0.0
 
                     Dim nIdxWidthMask As Integer
                     Dim nIdxHightMask As Integer
@@ -85,17 +85,17 @@ Namespace ImageProcessing
                                     Dim pAdr2 As IntPtr = bitmapData.Scan0
                                     Dim nPos2 As Integer = (nIdxHeight + nIdxHightMask) * bitmapData.Stride + (nIdxWidth + nIdxWidthMask) * 4
 
-                                    dCalB += ReadByte(pAdr2, nPos2 + ComInfo.Pixel.B) * dMask(nIdxWidthMask, nIdxHightMask)
-                                    dCalG += ReadByte(pAdr2, nPos2 + ComInfo.Pixel.G) * dMask(nIdxWidthMask, nIdxHightMask)
-                                    dCalR += ReadByte(pAdr2, nPos2 + ComInfo.Pixel.R) * dMask(nIdxWidthMask, nIdxHightMask)
+                                    lCalB += ReadByte(pAdr2, nPos2 + ComInfo.Pixel.B) * nMask(nIdxWidthMask, nIdxHightMask)
+                                    lCalG += ReadByte(pAdr2, nPos2 + ComInfo.Pixel.G) * nMask(nIdxWidthMask, nIdxHightMask)
+                                    lCalR += ReadByte(pAdr2, nPos2 + ComInfo.Pixel.R) * nMask(nIdxWidthMask, nIdxHightMask)
                                 End If
                             Next
                         Next
                         nFilter += 1
                     End While
-                    WriteByte(pAdr, nPos + ComInfo.Pixel.B, ComFunc.DoubleToByte(dCalB))
-                    WriteByte(pAdr, nPos + ComInfo.Pixel.G, ComFunc.DoubleToByte(dCalG))
-                    WriteByte(pAdr, nPos + ComInfo.Pixel.R, ComFunc.DoubleToByte(dCalR))
+                    WriteByte(pAdr, nPos + ComInfo.Pixel.B, ComFunc.DoubleToByte(lCalB))
+                    WriteByte(pAdr, nPos + ComInfo.Pixel.G, ComFunc.DoubleToByte(lCalG))
+                    WriteByte(pAdr, nPos + ComInfo.Pixel.R, ComFunc.DoubleToByte(lCalR))
                 Next
             Next
             m_bitmap.UnlockBits(bitmapData)
