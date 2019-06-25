@@ -106,19 +106,10 @@ Public Class FormMain
     End Sub
 
     Private Sub OnClickBtnFileSelect(sender As Object, e As EventArgs) Handles btnFileSelect.Click
-
-        Dim openFileDlg As OpenFileDialog = New OpenFileDialog()
-
-        openFileDlg.FileName = "default.jpg"
-        openFileDlg.InitialDirectory = "C:\\"
+        Dim openFileDlg As ComOpenFileDialog = New ComOpenFileDialog()
         openFileDlg.Filter = "JPG|*.jpg|PNG|*.png"
-        openFileDlg.FilterIndex = 1
-        openFileDlg.Title = "Please select a file to open"
-        openFileDlg.RestoreDirectory = True
-        openFileDlg.CheckFileExists = True
-        openFileDlg.CheckPathExists = True
-
-        If (openFileDlg.ShowDialog() = DialogResult.OK) Then
+        openFileDlg.Title = "Open the file"
+        If (openFileDlg.ShowDialog() = True) Then
             pictureBoxOriginal.Image = Nothing
             pictureBoxAfter.Image = Nothing
             m_strOpenFileName = openFileDlg.FileName
@@ -131,7 +122,7 @@ Public Class FormMain
             pictureBoxOriginal.ImageLocation = m_strOpenFileName
             btnStart.Enabled = True
             textBoxTime.Text = ""
-            End If
+        End If
         Return
     End Sub
 

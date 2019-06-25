@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="ComFunc.vb" />
     <Compile Include="ComInfo.vb" />
+    <Compile Include="ComOpenFileDialog.vb" />
     <Compile Include="EdgeDetection.vb" />
     <Compile Include="FormMain.vb">
       <SubType>Form</SubType>
