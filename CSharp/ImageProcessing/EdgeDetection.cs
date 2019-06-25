@@ -11,7 +11,6 @@ namespace ImageProcessing
 {
     public class EdgeDetection
     {
-        private const int m_nMaskSize = 3;
         private Bitmap m_bitmap;
 
         public EdgeDetection(Bitmap _bitmap)
