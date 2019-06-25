@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComFunc.cs" />
+    <Compile Include="ComOpenFileDialog.cs" />
     <Compile Include="EdgeDetection.cs" />
     <Compile Include="ComInfo.cs" />
     <Compile Include="FormMain.cs">

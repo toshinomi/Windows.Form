@@ -120,18 +120,10 @@ namespace ImageProcessing
 
         public void OnClickBtnFileSelect(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDlg = new OpenFileDialog();
-
-            openFileDlg.FileName = "default.jpg";
-            openFileDlg.InitialDirectory = @"C:\";
+            ComOpenFileDialog openFileDlg = new ComOpenFileDialog();
             openFileDlg.Filter = "JPG|*.jpg|PNG|*.png";
-            openFileDlg.FilterIndex = 1;
-            openFileDlg.Title = "Please select a file to open";
-            openFileDlg.RestoreDirectory = true;
-            openFileDlg.CheckFileExists = true;
-            openFileDlg.CheckPathExists = true;
-
-            if (openFileDlg.ShowDialog() == DialogResult.OK)
+            openFileDlg.Title = "Open the file";
+            if (openFileDlg.ShowDialog() == true)
             {
                 pictureBoxOriginal.Image = null;
                 pictureBoxAfter.Image = null;
