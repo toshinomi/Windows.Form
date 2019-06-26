@@ -97,7 +97,7 @@ namespace ImageProcessing
         {
             m_tokenSource = new CancellationTokenSource();
             CancellationToken token = m_tokenSource.Token;
-            bool bRst = await Task.Run(() => m_edgeDetection.GoEdgeDetection(token));
+            bool bRst = await Task.Run(() => m_edgeDetection.GoImgProc(token));
             return bRst;
         }
 
@@ -182,7 +182,7 @@ namespace ImageProcessing
             if (bResult)
             {
                 pictureBoxOriginal.ImageLocation = m_strOpenFileName;
-                pictureBoxAfter.Image = m_edgeDetection.GetBitmap();
+                pictureBoxAfter.Image = m_edgeDetection.Bitmap;
 
                 stopwatch.Stop();
 

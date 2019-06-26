@@ -9,31 +9,17 @@ using System.Threading.Tasks;
 
 namespace ImageProcessing
 {
-    public class EdgeDetection
+    public class EdgeDetection : ComImgProc
     {
-        private Bitmap m_bitmap;
-
-        public EdgeDetection(Bitmap _bitmap)
+        public EdgeDetection(Bitmap _bitmap) : base(_bitmap)
         {
-            m_bitmap = _bitmap;
         }
 
         ~EdgeDetection()
         {
-            m_bitmap = null;
         }
 
-        public Bitmap GetBitmap()
-        {
-            return m_bitmap;
-        }
-
-        public void SetBitmap(Bitmap _bitmap)
-        {
-            m_bitmap = _bitmap;
-        }
-
-        public bool GoEdgeDetection(CancellationToken _token)
+        public override bool GoImgProc(CancellationToken _token)
         {
             bool bRst = true;
 
@@ -44,11 +30,11 @@ namespace ImageProcessing
                 {1,  1, 1}
             };
 
-            int nWidthSize = m_bitmap.Width;
-            int nHeightSize = m_bitmap.Height;
+            int nWidthSize = base.m_bitmap.Width;
+            int nHeightSize = base.m_bitmap.Height;
             int nMasksize = nMask.GetLength(0);
 
-            BitmapData bitmapData = m_bitmap.LockBits(new Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+            BitmapData bitmapData = base.m_bitmap.LockBits(new Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
             int nIdxWidth;
             int nIdxHeight;
@@ -95,7 +81,7 @@ namespace ImageProcessing
                         pPixel[(int)ComInfo.Pixel.R] = ComFunc.LongToByte(dCalR);
                     }
                 }
-                m_bitmap.UnlockBits(bitmapData);
+                base.m_bitmap.UnlockBits(bitmapData);
             }
 
             return bRst;
