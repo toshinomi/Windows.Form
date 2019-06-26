@@ -1,4 +1,5 @@
 #include "FormMain.h"
+#include "ComOpenFileDialog.h"
 
 using namespace System;
 using namespace System::Drawing;
@@ -114,22 +115,14 @@ void FormMain::OnFormClosingFormMain(Object^ sender, FormClosingEventArgs^ e)
 
 void FormMain::OnClickBtnFileSelect(Object^ sender, EventArgs^ e)
 {
-	OpenFileDialog^ openFileDlg = gcnew OpenFileDialog();
-
-	openFileDlg->FileName = "default.jpg";
-	openFileDlg->InitialDirectory = "C:\\";
-	openFileDlg->Filter = "JPG|*.jpg|PNG|*.png";
-	openFileDlg->FilterIndex = 1;
-	openFileDlg->Title = "Please select a file to open";
-	openFileDlg->RestoreDirectory = true;
-	openFileDlg->CheckFileExists = true;
-	openFileDlg->CheckPathExists = true;
-
-	if (openFileDlg->ShowDialog() == ::DialogResult::OK)
+	ComOpenFileDialog^ openFileDlg = gcnew ComOpenFileDialog();
+	openFileDlg->SetFilter("JPG|*.jpg|PNG|*.png");
+	openFileDlg->SetTitle("Open the file");
+	if (openFileDlg->ShowDialog() == true)
 	{
 		pictureBoxOriginal->Image = nullptr;
 		pictureBoxAfter->Image = nullptr;
-		m_strOpenFileName = openFileDlg->FileName;
+		m_strOpenFileName = openFileDlg->GetFileName();
 		try
 		{
 			LoadImage();

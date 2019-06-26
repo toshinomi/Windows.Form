@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ComFunc.cpp" />
+    <ClCompile Include="ComOpenFileDialog.cpp" />
     <ClCompile Include="EdgeDetection.cpp" />
     <ClCompile Include="FormMain.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -143,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="ComFunc.h" />
     <ClInclude Include="ComInfo.h" />
+    <ClInclude Include="ComOpenFileDialog.h" />
     <ClInclude Include="EdgeDetection.h" />
     <ClInclude Include="FormMain.h">
       <FileType>CppForm</FileType>
