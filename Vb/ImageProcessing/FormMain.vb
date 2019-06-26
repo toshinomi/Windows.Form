@@ -87,7 +87,7 @@ Public Class FormMain
     Public Function TaskWorkImageProcessing()
         m_tokenSource = New CancellationTokenSource()
         Dim token As CancellationToken = m_tokenSource.Token
-        Dim bRst As Task(Of Boolean) = Task.Run(Function() m_edgeDetection.GoEdgeDetection(token))
+        Dim bRst As Task(Of Boolean) = Task.Run(Function() m_edgeDetection.GoImgProc(token))
         Return bRst
     End Function
 
@@ -161,7 +161,7 @@ Public Class FormMain
         Dim bResult As Boolean = Await TaskWorkImageProcessing()
         If (bResult) Then
             pictureBoxOriginal.ImageLocation = m_strOpenFileName
-            pictureBoxAfter.Image = m_edgeDetection.GetBitmap()
+            pictureBoxAfter.Image = m_edgeDetection.Bitmap
 
             Stopwatch.Stop()
 

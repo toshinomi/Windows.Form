@@ -3,29 +3,16 @@ Imports System.Threading
 Imports System.Runtime.InteropServices.Marshal
 
 Namespace ImageProcessing
-    Public Class EdgeDetection
-        Private m_bitmap As Bitmap
-
+    Public Class EdgeDetection : Inherits ComImgProc
         Public Sub New(_bitmap As Bitmap)
-            m_bitmap = _bitmap
+            MyBase.New(_bitmap)
         End Sub
 
         Protected Overrides Sub Finalize()
             MyBase.Finalize()
-
-            m_bitmap = Nothing
         End Sub
 
-        Public Function GetBitmap() As Bitmap
-            Return m_bitmap
-        End Function
-
-
-        Public Sub SetBitmap(_bitmap As Bitmap)
-            m_bitmap = _bitmap
-        End Sub
-
-        Public Function GoEdgeDetection(_token As CancellationToken) As Boolean
+        Public Overrides Function GoImgProc(_token As CancellationToken) As Boolean
             Dim bRst As Boolean = True
 
             Dim nMask As Short(,) =
@@ -35,11 +22,11 @@ Namespace ImageProcessing
                 {1, 1, 1}
             }
 
-            Dim nWidthSize As Integer = m_bitmap.Width
-            Dim nHeightSize As Integer = m_bitmap.Height
+            Dim nWidthSize As Integer = MyBase.m_bitmap.Width
+            Dim nHeightSize As Integer = MyBase.m_bitmap.Height
             Dim nMasksize As Integer = nMask.GetLength(0)
 
-            Dim bitmapData As BitmapData = m_bitmap.LockBits(New Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb)
+            Dim bitmapData As BitmapData = MyBase.m_bitmap.LockBits(New Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb)
 
             Dim nIdxWidth As Integer
             Dim nIdxHeight As Integer
@@ -86,7 +73,7 @@ Namespace ImageProcessing
                     WriteByte(pAdr, nPos + ComInfo.Pixel.R, ComFunc.DoubleToByte(lCalR))
                 Next
             Next
-            m_bitmap.UnlockBits(bitmapData)
+            MyBase.m_bitmap.UnlockBits(bitmapData)
 
             Return bRst
         End Function
