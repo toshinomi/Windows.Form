@@ -76,6 +76,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Binarization.vb" />
     <Compile Include="ComFunc.vb" />
     <Compile Include="ComImgProc.vb" />
     <Compile Include="ComInfo.vb" />
