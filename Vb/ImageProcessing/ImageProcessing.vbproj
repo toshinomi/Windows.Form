@@ -48,7 +48,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <ApplicationIcon>Icon\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -76,22 +76,22 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Binarization.vb" />
-    <Compile Include="ColorReversal.vb" />
-    <Compile Include="ComFunc.vb" />
-    <Compile Include="ComImgProc.vb" />
-    <Compile Include="ComInfo.vb" />
-    <Compile Include="ComOpenFileDialog.vb" />
-    <Compile Include="EdgeDetection.vb" />
-    <Compile Include="FormMain.vb">
+    <Compile Include="ImgProc\Binarization.vb" />
+    <Compile Include="ImgProc\ColorReversal.vb" />
+    <Compile Include="Lib\ComFunc.vb" />
+    <Compile Include="Lib\ComImgProc.vb" />
+    <Compile Include="Lib\ComInfo.vb" />
+    <Compile Include="Lib\ComOpenFileDialog.vb" />
+    <Compile Include="ImgProc\EdgeDetection.vb" />
+    <Compile Include="Views\FormMain.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.vb">
+    <Compile Include="Views\FormMain.Designer.vb">
       <DependentUpon>FormMain.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GrayScale.vb" />
-    <Compile Include="GrayScale2Diff.vb" />
+    <Compile Include="ImgProc\GrayScale.vb" />
+    <Compile Include="ImgProc\GrayScale2Diff.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -109,7 +109,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FormMain.resx">
+    <EmbeddedResource Include="Views\FormMain.resx">
       <DependentUpon>FormMain.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -132,7 +132,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icon.ico" />
+    <Content Include="Icon\icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
