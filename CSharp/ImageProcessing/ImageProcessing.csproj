@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Binarization.cs" />
     <Compile Include="ComFunc.cs" />
     <Compile Include="ComImgProc.cs" />
     <Compile Include="ComOpenFileDialog.cs" />
