@@ -35,7 +35,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <ApplicationIcon>Icon\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -51,24 +51,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Binarization.cs" />
-    <Compile Include="ColorReversal.cs" />
-    <Compile Include="ComFunc.cs" />
-    <Compile Include="ComImgProc.cs" />
-    <Compile Include="ComOpenFileDialog.cs" />
-    <Compile Include="EdgeDetection.cs" />
-    <Compile Include="ComInfo.cs" />
-    <Compile Include="FormMain.cs">
+    <Compile Include="ImgProc\Binarization.cs" />
+    <Compile Include="ImgProc\ColorReversal.cs" />
+    <Compile Include="Lib\ComFunc.cs" />
+    <Compile Include="Lib\ComImgProc.cs" />
+    <Compile Include="Lib\ComOpenFileDialog.cs" />
+    <Compile Include="ImgProc\EdgeDetection.cs" />
+    <Compile Include="Lib\ComInfo.cs" />
+    <Compile Include="Views\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.cs">
+    <Compile Include="Views\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="GrayScale.cs" />
-    <Compile Include="GrayScale2Diff.cs" />
+    <Compile Include="ImgProc\GrayScale.cs" />
+    <Compile Include="ImgProc\GrayScale2Diff.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FormMain.resx">
+    <EmbeddedResource Include="Views\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -94,7 +94,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icon.ico" />
+    <Content Include="Icon\icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
