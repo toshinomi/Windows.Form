@@ -25,13 +25,6 @@ bool Binarization::GoEdgeDetection(CancellationToken _token)
 {
 	bool bRst = true;
 
-	short nMask[3][3] =
-	{
-		{ 1,  1, 1 },
-		{ 1, -8, 1 },
-		{ 1,  1, 1 }
-	};
-
 	int nWidthSize = m_bitmap->Width;
 	int nHeightSize = m_bitmap->Height;
 
