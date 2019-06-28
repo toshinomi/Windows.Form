@@ -51,7 +51,6 @@ bool EdgeDetection::GoEdgeDetection(CancellationToken _token)
 			long lCalR = 0;
 			int nIdxWidthMask;
 			int nIdxHightMask;
-			UInt32 nFilter = 0;
 
 			for (nIdxHightMask = 0; nIdxHightMask < nMasksize; nIdxHightMask++)
 			{
