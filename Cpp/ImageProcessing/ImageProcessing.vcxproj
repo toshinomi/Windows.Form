@@ -132,6 +132,7 @@
     <ClCompile Include="ComOpenFileDialog.cpp" />
     <ClCompile Include="EdgeDetection.cpp" />
     <ClCompile Include="FormMain.cpp" />
+    <ClCompile Include="GrayScale.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +150,7 @@
     <ClInclude Include="FormMain.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="GrayScale.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource1.h" />
   </ItemGroup>
