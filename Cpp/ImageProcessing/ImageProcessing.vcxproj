@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Binarization.cpp" />
     <ClCompile Include="ComFunc.cpp" />
     <ClCompile Include="ComOpenFileDialog.cpp" />
     <ClCompile Include="EdgeDetection.cpp" />
@@ -143,6 +144,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Binarization.h" />
     <ClInclude Include="ComFunc.h" />
     <ClInclude Include="ComInfo.h" />
     <ClInclude Include="ComOpenFileDialog.h" />
