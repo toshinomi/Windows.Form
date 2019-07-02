@@ -5,6 +5,7 @@ using System.Threading;
 using System.Drawing.Imaging;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace ImageProcessing
 {
@@ -203,6 +204,25 @@ namespace ImageProcessing
             if (m_tokenSource != null)
             {
                 m_tokenSource.Cancel();
+            }
+
+            return;
+        }
+
+        private void OnClickBtnSaveImage(object sender, EventArgs e)
+        {
+            ComSaveFileDialog saveDialog = new ComSaveFileDialog();
+            saveDialog.Filter = "PNG|*.png";
+            saveDialog.Title = "Save the file";
+            if (saveDialog.ShowDialog() == true)
+            {
+                string strFileName = saveDialog.FileName;
+                var bitmap = (Bitmap)m_edgeDetection.Bitmap.Clone();
+                if (bitmap != null)
+                {
+                    bitmap.Save(strFileName, System.Drawing.Imaging.ImageFormat.Png);
+                    bitmap.Dispose();
+                }
             }
 
             return;

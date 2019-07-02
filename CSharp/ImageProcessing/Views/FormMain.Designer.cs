@@ -35,6 +35,7 @@ namespace ImageProcessing
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.btnFileSelect = new System.Windows.Forms.Button();
             this.groupBoxOperation = new System.Windows.Forms.GroupBox();
+            this.btnSaveImage = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnAllClear = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
@@ -67,7 +68,7 @@ namespace ImageProcessing
             this.btnFileSelect.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.btnFileSelect.Location = new System.Drawing.Point(41, 36);
             this.btnFileSelect.Name = "btnFileSelect";
-            this.btnFileSelect.Size = new System.Drawing.Size(154, 68);
+            this.btnFileSelect.Size = new System.Drawing.Size(154, 40);
             this.btnFileSelect.TabIndex = 0;
             this.btnFileSelect.Text = "File Select...";
             this.btnFileSelect.UseVisualStyleBackColor = false;
@@ -75,6 +76,7 @@ namespace ImageProcessing
             // 
             // groupBoxOperation
             // 
+            this.groupBoxOperation.Controls.Add(this.btnSaveImage);
             this.groupBoxOperation.Controls.Add(this.btnStop);
             this.groupBoxOperation.Controls.Add(this.btnAllClear);
             this.groupBoxOperation.Controls.Add(this.btnStart);
@@ -87,15 +89,28 @@ namespace ImageProcessing
             this.groupBoxOperation.TabStop = false;
             this.groupBoxOperation.Text = "Operation";
             // 
+            // btnSaveImage
+            // 
+            this.btnSaveImage.BackColor = System.Drawing.Color.White;
+            this.btnSaveImage.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSaveImage.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.btnSaveImage.Location = new System.Drawing.Point(41, 263);
+            this.btnSaveImage.Name = "btnSaveImage";
+            this.btnSaveImage.Size = new System.Drawing.Size(154, 40);
+            this.btnSaveImage.TabIndex = 5;
+            this.btnSaveImage.Text = "Save Image...";
+            this.btnSaveImage.UseVisualStyleBackColor = false;
+            this.btnSaveImage.Click += new System.EventHandler(this.OnClickBtnSaveImage);
+            // 
             // btnStop
             // 
             this.btnStop.BackColor = System.Drawing.Color.White;
             this.btnStop.Enabled = false;
             this.btnStop.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnStop.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnStop.Location = new System.Drawing.Point(41, 285);
+            this.btnStop.Location = new System.Drawing.Point(41, 207);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(154, 68);
+            this.btnStop.Size = new System.Drawing.Size(154, 40);
             this.btnStop.TabIndex = 4;
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = false;
@@ -106,9 +121,9 @@ namespace ImageProcessing
             this.btnAllClear.BackColor = System.Drawing.Color.White;
             this.btnAllClear.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnAllClear.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnAllClear.Location = new System.Drawing.Point(41, 120);
+            this.btnAllClear.Location = new System.Drawing.Point(41, 92);
             this.btnAllClear.Name = "btnAllClear";
-            this.btnAllClear.Size = new System.Drawing.Size(154, 68);
+            this.btnAllClear.Size = new System.Drawing.Size(154, 40);
             this.btnAllClear.TabIndex = 1;
             this.btnAllClear.Text = "All Clear";
             this.btnAllClear.UseVisualStyleBackColor = false;
@@ -120,9 +135,9 @@ namespace ImageProcessing
             this.btnStart.Enabled = false;
             this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnStart.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnStart.Location = new System.Drawing.Point(41, 202);
+            this.btnStart.Location = new System.Drawing.Point(41, 147);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(154, 68);
+            this.btnStart.Size = new System.Drawing.Size(154, 40);
             this.btnStart.TabIndex = 2;
             this.btnStart.Text = "Start\r\n";
             this.btnStart.UseVisualStyleBackColor = false;
@@ -280,6 +295,7 @@ namespace ImageProcessing
         private PictureBox pictureBoxStatus;
         private Button btnStop;
         private ToolTip toolTipBtnStop;
+        private Button btnSaveImage;
     }
 }
 

@@ -58,6 +58,7 @@
     <Compile Include="Lib\ComOpenFileDialog.cs" />
     <Compile Include="ImgProc\EdgeDetection.cs" />
     <Compile Include="Lib\ComInfo.cs" />
+    <Compile Include="Lib\ComSaveFileDialog.cs" />
     <Compile Include="Views\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
