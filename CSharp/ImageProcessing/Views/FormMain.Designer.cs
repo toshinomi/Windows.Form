@@ -53,6 +53,7 @@ namespace ImageProcessing
             this.labelTimeUnit = new System.Windows.Forms.Label();
             this.textBoxTime = new System.Windows.Forms.TextBox();
             this.toolTipBtnStop = new System.Windows.Forms.ToolTip(this.components);
+            this.btnShowHistgram = new System.Windows.Forms.Button();
             this.groupBoxOperation.SuspendLayout();
             this.groupBoxImageOutput.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxStatus)).BeginInit();
@@ -66,9 +67,9 @@ namespace ImageProcessing
             this.btnFileSelect.BackColor = System.Drawing.Color.White;
             this.btnFileSelect.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnFileSelect.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnFileSelect.Location = new System.Drawing.Point(41, 36);
+            this.btnFileSelect.Location = new System.Drawing.Point(29, 47);
             this.btnFileSelect.Name = "btnFileSelect";
-            this.btnFileSelect.Size = new System.Drawing.Size(154, 40);
+            this.btnFileSelect.Size = new System.Drawing.Size(192, 40);
             this.btnFileSelect.TabIndex = 0;
             this.btnFileSelect.Text = "File Select...";
             this.btnFileSelect.UseVisualStyleBackColor = false;
@@ -76,6 +77,7 @@ namespace ImageProcessing
             // 
             // groupBoxOperation
             // 
+            this.groupBoxOperation.Controls.Add(this.btnShowHistgram);
             this.groupBoxOperation.Controls.Add(this.btnSaveImage);
             this.groupBoxOperation.Controls.Add(this.btnStop);
             this.groupBoxOperation.Controls.Add(this.btnAllClear);
@@ -94,9 +96,9 @@ namespace ImageProcessing
             this.btnSaveImage.BackColor = System.Drawing.Color.White;
             this.btnSaveImage.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnSaveImage.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnSaveImage.Location = new System.Drawing.Point(41, 263);
+            this.btnSaveImage.Location = new System.Drawing.Point(29, 272);
             this.btnSaveImage.Name = "btnSaveImage";
-            this.btnSaveImage.Size = new System.Drawing.Size(154, 40);
+            this.btnSaveImage.Size = new System.Drawing.Size(192, 40);
             this.btnSaveImage.TabIndex = 5;
             this.btnSaveImage.Text = "Save Image...";
             this.btnSaveImage.UseVisualStyleBackColor = false;
@@ -108,9 +110,9 @@ namespace ImageProcessing
             this.btnStop.Enabled = false;
             this.btnStop.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnStop.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnStop.Location = new System.Drawing.Point(41, 207);
+            this.btnStop.Location = new System.Drawing.Point(29, 217);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(154, 40);
+            this.btnStop.Size = new System.Drawing.Size(192, 40);
             this.btnStop.TabIndex = 4;
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = false;
@@ -121,9 +123,9 @@ namespace ImageProcessing
             this.btnAllClear.BackColor = System.Drawing.Color.White;
             this.btnAllClear.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnAllClear.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnAllClear.Location = new System.Drawing.Point(41, 92);
+            this.btnAllClear.Location = new System.Drawing.Point(29, 102);
             this.btnAllClear.Name = "btnAllClear";
-            this.btnAllClear.Size = new System.Drawing.Size(154, 40);
+            this.btnAllClear.Size = new System.Drawing.Size(192, 40);
             this.btnAllClear.TabIndex = 1;
             this.btnAllClear.Text = "All Clear";
             this.btnAllClear.UseVisualStyleBackColor = false;
@@ -135,9 +137,9 @@ namespace ImageProcessing
             this.btnStart.Enabled = false;
             this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnStart.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnStart.Location = new System.Drawing.Point(41, 147);
+            this.btnStart.Location = new System.Drawing.Point(29, 157);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(154, 40);
+            this.btnStart.Size = new System.Drawing.Size(192, 40);
             this.btnStart.TabIndex = 2;
             this.btnStart.Text = "Start\r\n";
             this.btnStart.UseVisualStyleBackColor = false;
@@ -247,6 +249,19 @@ namespace ImageProcessing
             this.textBoxTime.TabIndex = 4;
             this.textBoxTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // btnShowHistgram
+            // 
+            this.btnShowHistgram.BackColor = System.Drawing.Color.White;
+            this.btnShowHistgram.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnShowHistgram.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.btnShowHistgram.Location = new System.Drawing.Point(29, 328);
+            this.btnShowHistgram.Name = "btnShowHistgram";
+            this.btnShowHistgram.Size = new System.Drawing.Size(192, 40);
+            this.btnShowHistgram.TabIndex = 6;
+            this.btnShowHistgram.Text = "Show Histgram...";
+            this.btnShowHistgram.UseVisualStyleBackColor = false;
+            this.btnShowHistgram.Click += new System.EventHandler(this.OnClickBtnShowHistgram);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -296,6 +311,7 @@ namespace ImageProcessing
         private Button btnStop;
         private ToolTip toolTipBtnStop;
         private Button btnSaveImage;
+        private Button btnShowHistgram;
     }
 }
 

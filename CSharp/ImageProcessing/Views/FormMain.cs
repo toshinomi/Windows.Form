@@ -15,6 +15,7 @@ namespace ImageProcessing
         private EdgeDetection m_edgeDetection;
         private string m_strOpenFileName;
         private CancellationTokenSource m_tokenSource;
+        private FormHistgram m_histgram;
 
         public FormMain()
         {
@@ -141,6 +142,18 @@ namespace ImageProcessing
                 pictureBoxOriginal.ImageLocation = m_strOpenFileName;
                 btnStart.Enabled = true;
                 textBoxTime.Text = "";
+
+                if (m_histgram == null)
+                {
+                    m_histgram = new FormHistgram();
+                }
+
+                m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
+                m_histgram.BitmapAfter = (Bitmap)m_edgeDetection.Bitmap.Clone();
+                if (m_histgram.IsOpen == true)
+                {
+                    m_histgram.DrawHistgram();
+                }
             }
             return;
         }
@@ -158,6 +171,11 @@ namespace ImageProcessing
             btnFileSelect.Enabled = true;
             btnAllClear.Enabled = true;
             btnStart.Enabled = false;
+
+            if (m_histgram != null)
+            {
+                m_histgram.Close();
+            }
 
             return;
         }
@@ -188,13 +206,19 @@ namespace ImageProcessing
                 stopwatch.Stop();
 
                 Invoke(new Action<long>(SetTextTime), stopwatch.ElapsedMilliseconds);
+
+                m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
+                m_histgram.BitmapAfter = (Bitmap)m_edgeDetection.Bitmap.Clone();
+                if (m_histgram.IsOpen == true)
+                {
+                    m_histgram.DrawHistgram();
+                }
             }
             Invoke(new Action(SetPictureBoxStatus));
             Invoke(new Action(SetButtonEnable));
 
             stopwatch = null;
             m_tokenSource = null;
-            m_bitmap = null;
 
             return;
         }
@@ -224,6 +248,29 @@ namespace ImageProcessing
                     bitmap.Dispose();
                 }
             }
+
+            return;
+        }
+
+        private void OnClickBtnShowHistgram(object sender, EventArgs e)
+        {
+            if (m_bitmap == null)
+            {
+                return;
+            }
+
+            if (m_histgram != null)
+            {
+                m_histgram.Close();
+                m_histgram = null;
+                m_histgram = new FormHistgram();
+            }
+
+            m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
+            m_histgram.BitmapAfter = (Bitmap)m_edgeDetection.Bitmap.Clone();
+            m_histgram.DrawHistgram();
+            m_histgram.IsOpen = true;
+            m_histgram.Show();
 
             return;
         }
