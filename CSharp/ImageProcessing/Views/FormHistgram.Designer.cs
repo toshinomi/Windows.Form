@@ -28,8 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHistgram));
             this.chart = new LiveCharts.WinForms.CartesianChart();
+            this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.saveCsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // chart
@@ -39,6 +43,20 @@
             this.chart.Size = new System.Drawing.Size(776, 426);
             this.chart.TabIndex = 0;
             this.chart.Text = "cartesianChart1";
+            // 
+            // contextMenu
+            // 
+            this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveCsvToolStripMenuItem});
+            this.contextMenu.Name = "contextMenu";
+            this.contextMenu.Size = new System.Drawing.Size(181, 48);
+            // 
+            // saveCsvToolStripMenuItem
+            // 
+            this.saveCsvToolStripMenuItem.Name = "saveCsvToolStripMenuItem";
+            this.saveCsvToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveCsvToolStripMenuItem.Text = "Save Csv...";
+            this.saveCsvToolStripMenuItem.Click += new System.EventHandler(this.OnClickMenu);
             // 
             // FormHistgram
             // 
@@ -50,6 +68,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormHistgram";
             this.Text = "Histgram";
+            this.contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -57,5 +76,7 @@
         #endregion
 
         private LiveCharts.WinForms.CartesianChart chart;
+        private System.Windows.Forms.ContextMenuStrip contextMenu;
+        private System.Windows.Forms.ToolStripMenuItem saveCsvToolStripMenuItem;
     }
 }

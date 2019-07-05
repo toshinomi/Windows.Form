@@ -41,6 +41,8 @@ namespace ImageProcessing
         public FormHistgram()
         {
             InitializeComponent();
+
+            chart.ContextMenuStrip = contextMenu;
         }
 
         public void DrawHistgram()
@@ -115,6 +117,45 @@ namespace ImageProcessing
                 m_nHistgram[0, nIdx] = 0;
                 m_nHistgram[1, nIdx] = 0;
             }
+        }
+
+        private void OnClickMenu(object sender, EventArgs e)
+        {
+            string strHeader = sender.ToString();
+
+            switch (strHeader)
+            {
+                case ComInfo.MENU_SAVE_CSV:
+                    SaveCsv();
+                    break;
+                default:
+                    break;
+            }
+
+            return;
+        }
+
+        public void SaveCsv()
+        {
+            ComSaveFileDialog saveDialog = new ComSaveFileDialog();
+            saveDialog.Filter = "CSV|*.csv";
+            saveDialog.Title = "Save the csv file";
+            saveDialog.FileName = "default.csv";
+            if (saveDialog.ShowDialog() == true)
+            {
+                String strDelmiter = ",";
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int nIdx = 0; nIdx < (m_nHistgram.Length >> 1); nIdx++)
+                {
+                    stringBuilder.Append(nIdx).Append(strDelmiter);
+                    stringBuilder.Append(m_nHistgram[0, nIdx]).Append(strDelmiter);
+                    stringBuilder.Append(m_nHistgram[1, nIdx]).Append(strDelmiter);
+                    stringBuilder.Append(Environment.NewLine);
+                }
+                saveDialog.StreamWrite(stringBuilder.ToString());
+            }
+
+            return;
         }
     }
 }
