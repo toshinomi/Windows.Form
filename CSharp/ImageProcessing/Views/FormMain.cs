@@ -25,6 +25,7 @@ namespace ImageProcessing
             btnAllClear.Enabled = true;
             btnStart.Enabled = false;
             btnStop.Enabled = false;
+            btnSaveImage.Enabled = false;
 
             pictureBoxStatus.Visible = false;
 
@@ -183,6 +184,7 @@ namespace ImageProcessing
             btnFileSelect.Enabled = true;
             btnAllClear.Enabled = true;
             btnStart.Enabled = false;
+            btnSaveImage.Enabled = false;
 
             if (m_histgram != null)
             {
@@ -209,6 +211,8 @@ namespace ImageProcessing
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             btnStop.Enabled = true;
+            btnSaveImage.Enabled = false;
+            btnShowHistgram.Enabled = false;
             bool bResult = await TaskWorkImageProcessing();
             if (bResult)
             {
@@ -218,6 +222,7 @@ namespace ImageProcessing
                 stopwatch.Stop();
 
                 Invoke(new Action<long>(SetTextTime), stopwatch.ElapsedMilliseconds);
+                btnSaveImage.Enabled = true;
 
                 m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
                 m_histgram.BitmapAfter = (Bitmap)m_edgeDetection.Bitmap.Clone();
@@ -228,6 +233,7 @@ namespace ImageProcessing
             }
             Invoke(new Action(SetPictureBoxStatus));
             Invoke(new Action(SetButtonEnable));
+            btnShowHistgram.Enabled = true;
 
             stopwatch = null;
             m_tokenSource = null;
