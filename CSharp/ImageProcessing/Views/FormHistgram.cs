@@ -89,7 +89,7 @@ namespace ImageProcessing
             BitmapData bitmapDataAfter = null;
             if (m_bitmapAfter != null)
             {
-                bitmapDataAfter = m_bitmapAfter.LockBits(new Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+                bitmapDataAfter = m_bitmapAfter.LockBits(new Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
             }
 
             int nIdxWidth;

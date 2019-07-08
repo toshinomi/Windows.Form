@@ -276,16 +276,21 @@ namespace ImageProcessing
                 {
                     m_histgram = new FormHistgram();
                 }
+                else
+                {
+                    m_histgram.Close();
+                    m_histgram = null;
+                    m_histgram = new FormHistgram();
+                }
 
                 m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
                 if (SelectGetBitmap(m_strCurImgName) != null)
                 {
                     m_histgram.BitmapAfter = (Bitmap)SelectGetBitmap(m_strCurImgName).Clone();
                 }
-                if (m_histgram.IsOpen == true)
-                {
-                    m_histgram.DrawHistgram();
-                }
+                m_histgram.DrawHistgram();
+                m_histgram.IsOpen = true;
+                m_histgram.Show();
             }
             return;
         }
