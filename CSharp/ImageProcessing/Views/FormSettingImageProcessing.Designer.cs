@@ -1,4 +1,4 @@
-﻿namespace ImageProcessing.Views
+﻿namespace ImageProcessing
 {
     partial class FormSettingImageProcessing
     {

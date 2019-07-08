@@ -65,6 +65,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComImgInfo.cs" />
     <Compile Include="ImgProc\Binarization.cs" />
     <Compile Include="ImgProc\ColorReversal.cs" />
     <Compile Include="Lib\ComFunc.cs" />

@@ -8,11 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ImageProcessing.Views
+namespace ImageProcessing
 {
     public partial class FormSettingImageProcessing : Form
     {
         private List<ComImageProcessingType> m_items;
+
+        public System.Windows.Forms.ComboBox CmbBoxImageProcessingType
+        {
+            get { return cmbBoxImageProcessingType; }
+        }
 
         public FormSettingImageProcessing()
         {
@@ -31,16 +36,16 @@ namespace ImageProcessing.Views
             m_items.Add(new ComImageProcessingType(Properties.Settings.Default.ImgTypeEdgeId, Properties.Settings.Default.ImgTypeEdgeName));
             m_items.Add(new ComImageProcessingType(Properties.Settings.Default.ImgTypeGrayScaleId, Properties.Settings.Default.ImgTypeGrayScaleName));
 
-            cmbBoxImageProcessingType.Items.Add(m_items);
-            cmbBoxImageProcessingType.SelectedIndex = (int)m_items.Find(x => x.Name == Properties.Settings.Default.ImgTypeEdgeName)?.Id - 1;
+            cmbBoxImageProcessingType.Items.Add(Properties.Settings.Default.ImgTypeEdgeName);
+            cmbBoxImageProcessingType.Items.Add(Properties.Settings.Default.ImgTypeGrayScaleName);
+            cmbBoxImageProcessingType.SelectedIndex = (int)m_items.Find(x => x.Name == Properties.Settings.Default.ImgTypeSelectName)?.Id - 1;
 
             return;
         }
 
         public void SaveParam()
         {
-            ComImageProcessingType imgProcType = (ComImageProcessingType)cmbBoxImageProcessingType.SelectedItem;
-            Properties.Settings.Default.ImgTypeSelectName = imgProcType.Name;
+            Properties.Settings.Default.ImgTypeSelectName = (string)cmbBoxImageProcessingType.SelectedItem;
             Properties.Settings.Default.Save();
 
             return;
@@ -49,10 +54,13 @@ namespace ImageProcessing.Views
         private void OnClickOk(object sender, EventArgs e)
         {
             SaveParam();
+            this.DialogResult = DialogResult.OK;
+            Close();
         }
 
         private void OnClickCancel(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.Cancel;
             Close();
         }
     }

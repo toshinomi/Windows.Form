@@ -11,6 +11,7 @@ namespace ImageProcessing
     abstract public class ComImgProc
     {
         protected Bitmap m_bitmap;
+        protected Bitmap m_bitmapAfter;
 
         public ComImgProc(Bitmap _bitmap)
         {
@@ -26,6 +27,12 @@ namespace ImageProcessing
         {
             set { m_bitmap = value; }
             get { return m_bitmap; }
+        }
+
+        public Bitmap BitmapAfter
+        {
+            set { m_bitmapAfter = value; }
+            get { return m_bitmapAfter; }
         }
 
         abstract public bool GoImgProc(CancellationToken _token);

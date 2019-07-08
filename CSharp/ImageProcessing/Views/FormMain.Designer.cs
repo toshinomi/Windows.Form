@@ -56,12 +56,18 @@ namespace ImageProcessing
             this.toolTipBtnStop = new System.Windows.Forms.ToolTip(this.components);
             this.toolTipBtnSaveImage = new System.Windows.Forms.ToolTip(this.components);
             this.toolTipBtnShowHistgram = new System.Windows.Forms.ToolTip(this.components);
+            this.fileFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.endXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageProcessingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMain = new System.Windows.Forms.MenuStrip();
             this.groupBoxOperation.SuspendLayout();
             this.groupBoxImageOutput.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAfter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOriginal)).BeginInit();
             this.groupBoxProcessingInfo.SuspendLayout();
+            this.menuMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnFileSelect
@@ -86,7 +92,7 @@ namespace ImageProcessing
             this.groupBoxOperation.Controls.Add(this.btnStart);
             this.groupBoxOperation.Controls.Add(this.btnFileSelect);
             this.groupBoxOperation.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.groupBoxOperation.Location = new System.Drawing.Point(12, 12);
+            this.groupBoxOperation.Location = new System.Drawing.Point(12, 49);
             this.groupBoxOperation.Name = "groupBoxOperation";
             this.groupBoxOperation.Size = new System.Drawing.Size(249, 408);
             this.groupBoxOperation.TabIndex = 0;
@@ -168,7 +174,7 @@ namespace ImageProcessing
             this.groupBoxImageOutput.Controls.Add(this.labelOriginalImage);
             this.groupBoxImageOutput.Controls.Add(this.pictureBoxOriginal);
             this.groupBoxImageOutput.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.groupBoxImageOutput.Location = new System.Drawing.Point(267, 12);
+            this.groupBoxImageOutput.Location = new System.Drawing.Point(267, 49);
             this.groupBoxImageOutput.Name = "groupBoxImageOutput";
             this.groupBoxImageOutput.Size = new System.Drawing.Size(1065, 539);
             this.groupBoxImageOutput.TabIndex = 2;
@@ -230,7 +236,7 @@ namespace ImageProcessing
             this.groupBoxProcessingInfo.Controls.Add(this.labelTimeUnit);
             this.groupBoxProcessingInfo.Controls.Add(this.textBoxTime);
             this.groupBoxProcessingInfo.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.groupBoxProcessingInfo.Location = new System.Drawing.Point(12, 438);
+            this.groupBoxProcessingInfo.Location = new System.Drawing.Point(12, 475);
             this.groupBoxProcessingInfo.Name = "groupBoxProcessingInfo";
             this.groupBoxProcessingInfo.Size = new System.Drawing.Size(249, 113);
             this.groupBoxProcessingInfo.TabIndex = 1;
@@ -264,17 +270,60 @@ namespace ImageProcessing
             this.textBoxTime.TabIndex = 4;
             this.textBoxTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // fileFToolStripMenuItem
+            // 
+            this.fileFToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.endXToolStripMenuItem});
+            this.fileFToolStripMenuItem.Name = "fileFToolStripMenuItem";
+            this.fileFToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.fileFToolStripMenuItem.Text = "File(&F)";
+            // 
+            // endXToolStripMenuItem
+            // 
+            this.endXToolStripMenuItem.Name = "endXToolStripMenuItem";
+            this.endXToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.endXToolStripMenuItem.Text = "End(&X)";
+            this.endXToolStripMenuItem.Click += new System.EventHandler(this.OnClickMenu);
+            // 
+            // settingOToolStripMenuItem
+            // 
+            this.settingOToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.imageProcessingToolStripMenuItem});
+            this.settingOToolStripMenuItem.Name = "settingOToolStripMenuItem";
+            this.settingOToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
+            this.settingOToolStripMenuItem.Text = "Setting(&O)";
+            // 
+            // imageProcessingToolStripMenuItem
+            // 
+            this.imageProcessingToolStripMenuItem.Name = "imageProcessingToolStripMenuItem";
+            this.imageProcessingToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.imageProcessingToolStripMenuItem.Text = "Image Processing";
+            this.imageProcessingToolStripMenuItem.Click += new System.EventHandler(this.OnClickMenu);
+            // 
+            // menuMain
+            // 
+            this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileFToolStripMenuItem,
+            this.settingOToolStripMenuItem});
+            this.menuMain.Location = new System.Drawing.Point(0, 0);
+            this.menuMain.Name = "menuMain";
+            this.menuMain.Size = new System.Drawing.Size(1344, 24);
+            this.menuMain.TabIndex = 3;
+            this.menuMain.Text = "menuStrip1";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.ClientSize = new System.Drawing.Size(1344, 569);
+            this.ClientSize = new System.Drawing.Size(1344, 611);
             this.Controls.Add(this.groupBoxProcessingInfo);
             this.Controls.Add(this.groupBoxImageOutput);
             this.Controls.Add(this.groupBoxOperation);
+            this.Controls.Add(this.menuMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuMain;
             this.MaximizeBox = false;
             this.Name = "FormMain";
             this.Text = "Image Processing";
@@ -287,7 +336,10 @@ namespace ImageProcessing
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOriginal)).EndInit();
             this.groupBoxProcessingInfo.ResumeLayout(false);
             this.groupBoxProcessingInfo.PerformLayout();
+            this.menuMain.ResumeLayout(false);
+            this.menuMain.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -316,6 +368,11 @@ namespace ImageProcessing
         private Button btnShowHistgram;
         private ToolTip toolTipBtnSaveImage;
         private ToolTip toolTipBtnShowHistgram;
+        private ToolStripMenuItem fileFToolStripMenuItem;
+        private ToolStripMenuItem endXToolStripMenuItem;
+        private ToolStripMenuItem settingOToolStripMenuItem;
+        private ToolStripMenuItem imageProcessingToolStripMenuItem;
+        private MenuStrip menuMain;
     }
 }
 

@@ -37,7 +37,9 @@ namespace ImageProcessing
             int nWidthSize = base.m_bitmap.Width;
             int nHeightSize = base.m_bitmap.Height;
 
-            BitmapData bitmapData = base.m_bitmap.LockBits(new Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+            base.m_bitmapAfter = new Bitmap(base.m_bitmap);
+
+            BitmapData bitmapData = base.m_bitmapAfter.LockBits(new Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
             int nIdxWidth;
             int nIdxHeight;
@@ -63,7 +65,7 @@ namespace ImageProcessing
                         pPixel[(int)ComInfo.Pixel.R] = nBinarization;
                     }
                 }
-                base.m_bitmap.UnlockBits(bitmapData);
+                base.m_bitmapAfter.UnlockBits(bitmapData);
             }
 
             return bRst;

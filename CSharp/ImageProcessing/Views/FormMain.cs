@@ -12,9 +12,10 @@ namespace ImageProcessing
     public partial class FormMain : Form
     {
         private Bitmap m_bitmap;
-        private EdgeDetection m_edgeDetection;
+        private object m_imgProc;
         private string m_strOpenFileName;
         private CancellationTokenSource m_tokenSource;
+        private string m_strCurImgName;
         private FormHistgram m_histgram;
 
         public FormMain()
@@ -33,7 +34,117 @@ namespace ImageProcessing
 
             m_bitmap = null;
             m_tokenSource = null;
-            m_edgeDetection = null;
+            m_imgProc = null;
+
+            m_strCurImgName = Properties.Settings.Default.ImgTypeSelectName;
+            this.Text = "Image Processing ( " + m_strCurImgName + " )";
+        }
+
+        ~FormMain()
+        {
+            m_bitmap = null;
+            m_tokenSource = null;
+            m_imgProc = null;
+        }
+
+        public bool SelectLoadImage(string _strImgName)
+        {
+            bool bRst = true;
+
+            if (m_imgProc != null)
+            {
+                m_imgProc = null;
+            }
+
+            switch (_strImgName)
+            {
+                case ComInfo.IMG_NAME_EDGE_DETECTION:
+                    m_imgProc = new EdgeDetection(m_bitmap);
+                    break;
+                case ComInfo.IMG_NAME_GRAY_SCALE:
+                    m_imgProc = new GrayScale(m_bitmap);
+                    break;
+                case ComInfo.IMG_NAME_BINARIZATION:
+                    m_imgProc = new Binarization(m_bitmap);
+                    break;
+                case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF:
+                    m_imgProc = new GrayScale2Diff(m_bitmap);
+                    break;
+                case ComInfo.IMG_NAME_COLOR_REVERSAL:
+                    m_imgProc = new ColorReversal(m_bitmap);
+                    break;
+                default:
+                    break;
+            }
+
+            return bRst;
+        }
+
+        public Bitmap SelectGetBitmap(string _strImgName)
+        {
+            Bitmap bitmap = null;
+
+            switch (_strImgName)
+            {
+                case ComInfo.IMG_NAME_EDGE_DETECTION:
+                    EdgeDetection edge = (EdgeDetection)m_imgProc;
+                    bitmap = edge.BitmapAfter;
+                    break;
+                case ComInfo.IMG_NAME_GRAY_SCALE:
+                    GrayScale gray = (GrayScale)m_imgProc;
+                    bitmap = gray.BitmapAfter;
+                    break;
+                case ComInfo.IMG_NAME_BINARIZATION:
+                    Binarization binarization = (Binarization)m_imgProc;
+                    bitmap = binarization.BitmapAfter;
+                    break;
+                case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF:
+                    GrayScale2Diff gray2Diff = (GrayScale2Diff)m_imgProc;
+                    bitmap = gray2Diff.BitmapAfter;
+                    break;
+                case ComInfo.IMG_NAME_COLOR_REVERSAL:
+                    ColorReversal colorReversal = (ColorReversal)m_imgProc;
+                    bitmap = colorReversal.BitmapAfter;
+                    break;
+                default:
+                    break;
+            }
+
+            return bitmap;
+        }
+
+        public bool SelectGoImgProc(ComImgInfo _comImgInfo, CancellationToken _token)
+        {
+            bool bRst = true;
+
+            switch (_comImgInfo.CurImgName)
+            {
+                case ComInfo.IMG_NAME_EDGE_DETECTION:
+                    EdgeDetection edge = (EdgeDetection)m_imgProc;
+                    bRst = edge.GoImgProc(_token);
+                    break;
+                case ComInfo.IMG_NAME_GRAY_SCALE:
+                    GrayScale gray = (GrayScale)m_imgProc;
+                    bRst = gray.GoImgProc(_token);
+                    break;
+                case ComInfo.IMG_NAME_BINARIZATION:
+                    Binarization binarization = (Binarization)m_imgProc;
+                    binarization.Thresh = _comImgInfo.BinarizationInfo.Thresh;
+                    bRst = binarization.GoImgProc(_token);
+                    break;
+                case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF:
+                    GrayScale2Diff gray2Diff = (GrayScale2Diff)m_imgProc;
+                    bRst = gray2Diff.GoImgProc(_token);
+                    break;
+                case ComInfo.IMG_NAME_COLOR_REVERSAL:
+                    ColorReversal colorReversal = (ColorReversal)m_imgProc;
+                    bRst = colorReversal.GoImgProc(_token);
+                    break;
+                default:
+                    break;
+            }
+
+            return bRst;
         }
 
         public void SetToolTip()
@@ -77,13 +188,6 @@ namespace ImageProcessing
             return;
         }
 
-
-        ~FormMain()
-        {
-            m_bitmap= null;
-            m_tokenSource = null;
-        }
-
         public void SetButtonEnable()
         {
             btnFileSelect.Enabled = true;
@@ -112,14 +216,19 @@ namespace ImageProcessing
         {
             m_tokenSource = new CancellationTokenSource();
             CancellationToken token = m_tokenSource.Token;
-            bool bRst = await Task.Run(() => m_edgeDetection.GoImgProc(token));
+            ComImgInfo imgInfo = new ComImgInfo();
+            ComBinarizationInfo binarizationInfo = new ComBinarizationInfo();
+            //binarizationInfo.Thresh = (byte)sliderThresh.Value;
+            imgInfo.CurImgName = m_strCurImgName;
+            imgInfo.BinarizationInfo = binarizationInfo;
+            bool bRst = await Task.Run(() => SelectGoImgProc(imgInfo, token));
             return bRst;
         }
 
         public void LoadImage()
         {
             m_bitmap = new Bitmap(m_strOpenFileName);
-            m_edgeDetection = new EdgeDetection(m_bitmap);
+            SelectLoadImage(m_strCurImgName);
 
             return;
         }
@@ -130,6 +239,13 @@ namespace ImageProcessing
             {
                 e.Cancel = true;
             }
+
+            if (m_histgram != null)
+            {
+                m_histgram.Close();
+                m_histgram = null;
+            }
+
             return;
         }
 
@@ -162,7 +278,10 @@ namespace ImageProcessing
                 }
 
                 m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
-                m_histgram.BitmapAfter = (Bitmap)m_edgeDetection.Bitmap.Clone();
+                if (SelectGetBitmap(m_strCurImgName) != null)
+                {
+                    m_histgram.BitmapAfter = (Bitmap)SelectGetBitmap(m_strCurImgName).Clone();
+                }
                 if (m_histgram.IsOpen == true)
                 {
                     m_histgram.DrawHistgram();
@@ -201,6 +320,7 @@ namespace ImageProcessing
             btnFileSelect.Enabled = false;
             btnAllClear.Enabled = false;
             btnStart.Enabled = false;
+            menuMain.Enabled = false;
 
             textBoxTime.Text = "";
 
@@ -217,7 +337,7 @@ namespace ImageProcessing
             if (bResult)
             {
                 pictureBoxOriginal.ImageLocation = m_strOpenFileName;
-                pictureBoxAfter.Image = m_edgeDetection.Bitmap;
+                pictureBoxAfter.Image = SelectGetBitmap(m_strCurImgName);
 
                 stopwatch.Stop();
 
@@ -225,7 +345,10 @@ namespace ImageProcessing
                 btnSaveImage.Enabled = true;
 
                 m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
-                m_histgram.BitmapAfter = (Bitmap)m_edgeDetection.Bitmap.Clone();
+                if (SelectGetBitmap(m_strCurImgName) != null)
+                {
+                    m_histgram.BitmapAfter = (Bitmap)SelectGetBitmap(m_strCurImgName).Clone();
+                }
                 if (m_histgram.IsOpen == true)
                 {
                     m_histgram.DrawHistgram();
@@ -233,6 +356,7 @@ namespace ImageProcessing
             }
             Invoke(new Action(SetPictureBoxStatus));
             Invoke(new Action(SetButtonEnable));
+            menuMain.Enabled = true;
             btnShowHistgram.Enabled = true;
 
             stopwatch = null;
@@ -251,6 +375,53 @@ namespace ImageProcessing
             return;
         }
 
+        public Bitmap GetImage(string _strImgName)
+        {
+            Bitmap bitmap = null;
+            switch (m_strCurImgName)
+            {
+                case ComInfo.IMG_NAME_EDGE_DETECTION:
+                    EdgeDetection edge = (EdgeDetection)m_imgProc;
+                    if (edge != null)
+                    {
+                        bitmap = edge.Bitmap;
+                    }
+                    break;
+                case ComInfo.IMG_NAME_GRAY_SCALE:
+                    GrayScale gray = (GrayScale)m_imgProc;
+                    if (gray != null)
+                    {
+                        bitmap = gray.Bitmap;
+                    }
+                    break;
+                case ComInfo.IMG_NAME_BINARIZATION:
+                    Binarization binarization = (Binarization)m_imgProc;
+                    if (binarization != null)
+                    {
+                        bitmap = binarization.Bitmap;
+                    }
+                    break;
+                case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF:
+                    GrayScale2Diff gray2Diff = (GrayScale2Diff)m_imgProc;
+                    if (gray2Diff != null)
+                    {
+                        bitmap = gray2Diff.Bitmap;
+                    }
+                    break;
+                case ComInfo.IMG_NAME_COLOR_REVERSAL:
+                    ColorReversal colorReversal = (ColorReversal)m_imgProc;
+                    if (colorReversal != null)
+                    {
+                        bitmap = colorReversal.Bitmap;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return bitmap;
+        }
+
         private void OnClickBtnSaveImage(object sender, EventArgs e)
         {
             ComSaveFileDialog saveDialog = new ComSaveFileDialog();
@@ -259,7 +430,7 @@ namespace ImageProcessing
             if (saveDialog.ShowDialog() == true)
             {
                 string strFileName = saveDialog.FileName;
-                var bitmap = (Bitmap)m_edgeDetection.Bitmap.Clone();
+                var bitmap = GetImage(m_strCurImgName);
                 if (bitmap != null)
                 {
                     bitmap.Save(strFileName, System.Drawing.Imaging.ImageFormat.Png);
@@ -285,10 +456,54 @@ namespace ImageProcessing
             }
 
             m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
-            m_histgram.BitmapAfter = (Bitmap)m_edgeDetection.Bitmap.Clone();
+            if (SelectGetBitmap(m_strCurImgName) != null)
+            {
+                m_histgram.BitmapAfter = (Bitmap)SelectGetBitmap(m_strCurImgName).Clone();
+            }
             m_histgram.DrawHistgram();
             m_histgram.IsOpen = true;
             m_histgram.Show();
+
+            return;
+        }
+
+        private void OnClickMenu(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = (ToolStripMenuItem)sender;
+            string strText = menuItem.Text;
+
+            switch (strText)
+            {
+                case ComInfo.MENU_FILE_END:
+                    Close();
+                    break;
+                case ComInfo.MENU_SETTING_IMAGE_PROCESSING:
+                    ShowSettingImageProcessing();
+                    break;
+                default:
+                    break;
+            }
+
+            return;
+        }
+
+        public void ShowSettingImageProcessing()
+        {
+            FormSettingImageProcessing win = new FormSettingImageProcessing();
+            var dialogResult = win.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                m_strCurImgName = (string)win.CmbBoxImageProcessingType.SelectedItem;
+                this.Text = "Image Processing ( " + m_strCurImgName + " )";
+
+                pictureBoxAfter.Image = null;
+                SelectLoadImage(m_strCurImgName);
+                if (m_histgram != null && m_histgram.IsOpen == true)
+                {
+                    OnClickBtnShowHistgram(this, null);
+                }
+            }
 
             return;
         }

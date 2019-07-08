@@ -45,6 +45,12 @@ namespace ImageProcessing
             chart.ContextMenuStrip = contextMenu;
         }
 
+        ~FormHistgram()
+        {
+            m_bitmapOrg.Dispose();
+            m_bitmapAfter.Dispose();
+        }
+
         public void DrawHistgram()
         {
             InitHistgram();
@@ -80,7 +86,11 @@ namespace ImageProcessing
             int nHeightSize = m_bitmapOrg.Height;
 
             BitmapData bitmapDataOrg = m_bitmapOrg.LockBits(new Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
-            BitmapData bitmapDataAfter = m_bitmapAfter.LockBits(new Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+            BitmapData bitmapDataAfter = null;
+            if (m_bitmapAfter != null)
+            {
+                bitmapDataAfter = m_bitmapAfter.LockBits(new Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+            }
 
             int nIdxWidth;
             int nIdxHeight;
@@ -106,7 +116,10 @@ namespace ImageProcessing
                     }
                 }
                 m_bitmapOrg.UnlockBits(bitmapDataOrg);
-                m_bitmapAfter.UnlockBits(bitmapDataAfter);
+                if (m_bitmapAfter != null)
+                {
+                    m_bitmapAfter.UnlockBits(bitmapDataAfter);
+                }
             }
         }
 
