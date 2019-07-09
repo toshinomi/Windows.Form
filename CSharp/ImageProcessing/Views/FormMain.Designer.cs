@@ -41,6 +41,8 @@ namespace ImageProcessing
             this.btnAllClear = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.groupBoxImageOutput = new System.Windows.Forms.GroupBox();
+            this.labelValue = new System.Windows.Forms.Label();
+            this.sliderThresh = new System.Windows.Forms.TrackBar();
             this.pictureBoxStatus = new System.Windows.Forms.PictureBox();
             this.labelAfterImage = new System.Windows.Forms.Label();
             this.pictureBoxAfter = new System.Windows.Forms.PictureBox();
@@ -61,8 +63,10 @@ namespace ImageProcessing
             this.settingOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageProcessingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain = new System.Windows.Forms.MenuStrip();
+            this.labelThresh = new System.Windows.Forms.Label();
             this.groupBoxOperation.SuspendLayout();
             this.groupBoxImageOutput.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sliderThresh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAfter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOriginal)).BeginInit();
@@ -168,6 +172,9 @@ namespace ImageProcessing
             // 
             // groupBoxImageOutput
             // 
+            this.groupBoxImageOutput.Controls.Add(this.labelThresh);
+            this.groupBoxImageOutput.Controls.Add(this.labelValue);
+            this.groupBoxImageOutput.Controls.Add(this.sliderThresh);
             this.groupBoxImageOutput.Controls.Add(this.pictureBoxStatus);
             this.groupBoxImageOutput.Controls.Add(this.labelAfterImage);
             this.groupBoxImageOutput.Controls.Add(this.pictureBoxAfter);
@@ -180,6 +187,28 @@ namespace ImageProcessing
             this.groupBoxImageOutput.TabIndex = 2;
             this.groupBoxImageOutput.TabStop = false;
             this.groupBoxImageOutput.Text = "Image Output";
+            // 
+            // labelValue
+            // 
+            this.labelValue.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelValue.Location = new System.Drawing.Point(998, 26);
+            this.labelValue.Name = "labelValue";
+            this.labelValue.Size = new System.Drawing.Size(40, 28);
+            this.labelValue.TabIndex = 9;
+            this.labelValue.Text = "0";
+            this.labelValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // sliderThresh
+            // 
+            this.sliderThresh.AutoSize = false;
+            this.sliderThresh.Location = new System.Drawing.Point(809, 28);
+            this.sliderThresh.Maximum = 255;
+            this.sliderThresh.Name = "sliderThresh";
+            this.sliderThresh.Size = new System.Drawing.Size(183, 28);
+            this.sliderThresh.TabIndex = 8;
+            this.sliderThresh.Scroll += new System.EventHandler(this.OnScrollSliderThresh);
+            this.sliderThresh.KeyUp += new System.Windows.Forms.KeyEventHandler(this.OnSliderPreviewKeyUp);
+            this.sliderThresh.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnSliderPreviewMouseUp);
             // 
             // pictureBoxStatus
             // 
@@ -194,7 +223,7 @@ namespace ImageProcessing
             // 
             this.labelAfterImage.AutoSize = true;
             this.labelAfterImage.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelAfterImage.Location = new System.Drawing.Point(536, 35);
+            this.labelAfterImage.Location = new System.Drawing.Point(536, 28);
             this.labelAfterImage.Name = "labelAfterImage";
             this.labelAfterImage.Size = new System.Drawing.Size(111, 21);
             this.labelAfterImage.TabIndex = 1;
@@ -214,7 +243,7 @@ namespace ImageProcessing
             // 
             this.labelOriginalImage.AutoSize = true;
             this.labelOriginalImage.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelOriginalImage.Location = new System.Drawing.Point(19, 35);
+            this.labelOriginalImage.Location = new System.Drawing.Point(19, 28);
             this.labelOriginalImage.Name = "labelOriginalImage";
             this.labelOriginalImage.Size = new System.Drawing.Size(132, 21);
             this.labelOriginalImage.TabIndex = 0;
@@ -281,7 +310,7 @@ namespace ImageProcessing
             // endXToolStripMenuItem
             // 
             this.endXToolStripMenuItem.Name = "endXToolStripMenuItem";
-            this.endXToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.endXToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.endXToolStripMenuItem.Text = "End(&X)";
             this.endXToolStripMenuItem.Click += new System.EventHandler(this.OnClickMenu);
             // 
@@ -311,6 +340,16 @@ namespace ImageProcessing
             this.menuMain.TabIndex = 3;
             this.menuMain.Text = "menuStrip1";
             // 
+            // labelThresh
+            // 
+            this.labelThresh.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelThresh.Location = new System.Drawing.Point(653, 26);
+            this.labelThresh.Name = "labelThresh";
+            this.labelThresh.Size = new System.Drawing.Size(150, 28);
+            this.labelThresh.TabIndex = 10;
+            this.labelThresh.Text = "Threshold( 0 - 255 )";
+            this.labelThresh.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -331,6 +370,7 @@ namespace ImageProcessing
             this.groupBoxOperation.ResumeLayout(false);
             this.groupBoxImageOutput.ResumeLayout(false);
             this.groupBoxImageOutput.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sliderThresh)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAfter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOriginal)).EndInit();
@@ -373,6 +413,9 @@ namespace ImageProcessing
         private ToolStripMenuItem settingOToolStripMenuItem;
         private ToolStripMenuItem imageProcessingToolStripMenuItem;
         private MenuStrip menuMain;
+        private Label labelValue;
+        private TrackBar sliderThresh;
+        private Label labelThresh;
     }
 }
 

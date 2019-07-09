@@ -82,5 +82,77 @@ namespace ImageProcessing.Properties {
                 this["ImgTypeGrayScaleName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int ImgTypeBinarizationId {
+            get {
+                return ((int)(this["ImgTypeBinarizationId"]));
+            }
+            set {
+                this["ImgTypeBinarizationId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Binarization")]
+        public string ImgTypeBinarizationName {
+            get {
+                return ((string)(this["ImgTypeBinarizationName"]));
+            }
+            set {
+                this["ImgTypeBinarizationName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public int ImgTypeGrayScale2DiffId {
+            get {
+                return ((int)(this["ImgTypeGrayScale2DiffId"]));
+            }
+            set {
+                this["ImgTypeGrayScale2DiffId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("GrayScale 2Diff")]
+        public string ImgTypeGrayScale2DiffName {
+            get {
+                return ((string)(this["ImgTypeGrayScale2DiffName"]));
+            }
+            set {
+                this["ImgTypeGrayScale2DiffName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int ImgTypeColorReversalId {
+            get {
+                return ((int)(this["ImgTypeColorReversalId"]));
+            }
+            set {
+                this["ImgTypeColorReversalId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ColorReversal")]
+        public string ImgTypeColorReversalName {
+            get {
+                return ((string)(this["ImgTypeColorReversalName"]));
+            }
+            set {
+                this["ImgTypeColorReversalName"] = value;
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@ using System.Drawing.Imaging;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.IO;
+using System.Windows.Media.Imaging;
 
 namespace ImageProcessing
 {
@@ -38,6 +39,8 @@ namespace ImageProcessing
 
             m_strCurImgName = Properties.Settings.Default.ImgTypeSelectName;
             this.Text = "Image Processing ( " + m_strCurImgName + " )";
+
+            sliderThresh.Enabled = m_strCurImgName == ComInfo.IMG_NAME_BINARIZATION ? true : false;
         }
 
         ~FormMain()
@@ -218,7 +221,7 @@ namespace ImageProcessing
             CancellationToken token = m_tokenSource.Token;
             ComImgInfo imgInfo = new ComImgInfo();
             ComBinarizationInfo binarizationInfo = new ComBinarizationInfo();
-            //binarizationInfo.Thresh = (byte)sliderThresh.Value;
+            binarizationInfo.Thresh = (byte)sliderThresh.Value;
             imgInfo.CurImgName = m_strCurImgName;
             imgInfo.BinarizationInfo = binarizationInfo;
             bool bRst = await Task.Run(() => SelectGoImgProc(imgInfo, token));
@@ -502,6 +505,8 @@ namespace ImageProcessing
                 m_strCurImgName = (string)win.CmbBoxImageProcessingType.SelectedItem;
                 this.Text = "Image Processing ( " + m_strCurImgName + " )";
 
+                sliderThresh.Enabled = m_strCurImgName == ComInfo.IMG_NAME_BINARIZATION ? true : false;
+
                 pictureBoxAfter.Image = null;
                 SelectLoadImage(m_strCurImgName);
                 if (m_histgram != null && m_histgram.IsOpen == true)
@@ -509,6 +514,68 @@ namespace ImageProcessing
                     OnClickBtnShowHistgram(this, null);
                 }
             }
+
+            return;
+        }
+
+        private void OnScrollSliderThresh(object sender, EventArgs e)
+        {
+            var trackBar = (TrackBar)sender;
+            labelValue.Text = trackBar.Value.ToString();
+        }
+
+        private void OnSliderPreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (pictureBoxAfter.Image != null)
+            {
+                ParamAjust();
+            }
+        }
+
+        private void OnSliderPreviewMouseUp(object sender, MouseEventArgs e)
+        {
+            if (pictureBoxAfter.Image != null)
+            {
+                ParamAjust();
+            }
+        }
+
+        private async void ParamAjust()
+        {
+            pictureBoxAfter.Image = null;
+
+            btnFileSelect.Enabled = false;
+            btnAllClear.Enabled = false;
+            btnStart.Enabled = false;
+            menuMain.Enabled = false;
+
+            LoadImage();
+
+            btnStop.Enabled = true;
+            btnSaveImage.Enabled = false;
+            bool bResult = await TaskWorkImageProcessing();
+            if (bResult)
+            {
+                pictureBoxOriginal.ImageLocation = m_strOpenFileName;
+                pictureBoxAfter.Image = SelectGetBitmap(m_strCurImgName);
+
+                btnSaveImage.Enabled = true;
+
+                m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
+                if (SelectGetBitmap(m_strCurImgName) != null)
+                {
+                    m_histgram.BitmapAfter = (Bitmap)SelectGetBitmap(m_strCurImgName).Clone();
+                }
+                if (m_histgram.IsOpen == true)
+                {
+                    m_histgram.DrawHistgram();
+                }
+            }
+            Invoke(new Action(SetButtonEnable));
+            menuMain.Enabled = true;
+            btnShowHistgram.Enabled = true;
+
+            m_tokenSource = null;
 
             return;
         }
