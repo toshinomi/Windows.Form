@@ -38,21 +38,22 @@
             // labelImageProcessingType
             // 
             this.labelImageProcessingType.Font = new System.Drawing.Font("MS UI Gothic", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelImageProcessingType.Location = new System.Drawing.Point(4, 9);
+            this.labelImageProcessingType.Location = new System.Drawing.Point(11, 9);
             this.labelImageProcessingType.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.labelImageProcessingType.Name = "labelImageProcessingType";
-            this.labelImageProcessingType.Size = new System.Drawing.Size(218, 36);
+            this.labelImageProcessingType.Size = new System.Drawing.Size(209, 36);
             this.labelImageProcessingType.TabIndex = 0;
             this.labelImageProcessingType.Text = "Image Processing Type";
             this.labelImageProcessingType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // cmbBoxImageProcessingType
             // 
+            this.cmbBoxImageProcessingType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxImageProcessingType.Font = new System.Drawing.Font("MS UI Gothic", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.cmbBoxImageProcessingType.FormattingEnabled = true;
-            this.cmbBoxImageProcessingType.Location = new System.Drawing.Point(214, 14);
+            this.cmbBoxImageProcessingType.Location = new System.Drawing.Point(228, 14);
             this.cmbBoxImageProcessingType.Name = "cmbBoxImageProcessingType";
-            this.cmbBoxImageProcessingType.Size = new System.Drawing.Size(258, 28);
+            this.cmbBoxImageProcessingType.Size = new System.Drawing.Size(244, 28);
             this.cmbBoxImageProcessingType.TabIndex = 1;
             // 
             // btnCancel
