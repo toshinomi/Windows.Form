@@ -5,7 +5,14 @@
 開発環境：Visual Studio 2019  
 言語：C#、C++(C++/CLI)、Visual Basic.NET   
 
-![スクリーンショット](https://github.com/toshinomi/Windows.Form_Sample/blob/master/ImageProcessing.png)
+メイン画面  
+![スクリーンショット](https://github.com/toshinomi/Windows.Form/blob/master/ImageProcessing.png)
+
+画像処理設定画面  
+![スクリーンショット](https://github.com/toshinomi/Windows.Form/blob/master/SettingImageProcessing.png)
+
+ヒストグラム表示画面  
+![スクリーンショット](https://github.com/toshinomi/Windows.Form/blob/master/Histgram.png)
 
 【 WebBrowser 】  
 MDI型のWindowsアプリケーションの例として作成した Windows Form アプリケーションのウェブブラウザです。  
@@ -13,4 +20,4 @@ MDI型のWindowsアプリケーションの例として作成した Windows Form
 開発環境：Visual Studio 2019  
 言語：C#、C++(C++/CLI)、Visual Basic.NET  
 
-![スクリーンショット](https://github.com/toshinomi/Windows.Form_Sample/blob/master/WebBrowser.png)
+![スクリーンショット](https://github.com/toshinomi/Windows.Form/blob/master/WebBrowser.png)
