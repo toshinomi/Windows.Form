@@ -38,6 +38,9 @@
             // 
             // chart
             // 
+            this.chart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.chart.Location = new System.Drawing.Point(12, 12);
             this.chart.Name = "chart";
             this.chart.Size = new System.Drawing.Size(776, 426);
@@ -49,12 +52,12 @@
             this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveCsvToolStripMenuItem});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(181, 48);
+            this.contextMenu.Size = new System.Drawing.Size(128, 26);
             // 
             // saveCsvToolStripMenuItem
             // 
             this.saveCsvToolStripMenuItem.Name = "saveCsvToolStripMenuItem";
-            this.saveCsvToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveCsvToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.saveCsvToolStripMenuItem.Text = "Save Csv...";
             this.saveCsvToolStripMenuItem.Click += new System.EventHandler(this.OnClickMenu);
             // 
