@@ -72,6 +72,10 @@ namespace ImageProcessing {
 	private: System::Windows::Forms::Button^ btnStart;
 	private: System::Windows::Forms::GroupBox^ groupBoxOperation;
 	private: System::Windows::Forms::Button^ btnFileSelect;
+	private: System::Windows::Forms::Button^ btnShowHistgram;
+	private: System::Windows::Forms::Button^ btnSaveImage;
+	private: System::Windows::Forms::ToolTip^ toolTipBtnSaveImage;
+	private: System::Windows::Forms::ToolTip^ toolTipBtnShowHistgram;
 	private: System::ComponentModel::IContainer^ components;
 
 	private:
@@ -107,7 +111,11 @@ namespace ImageProcessing {
 			this->btnAllClear = (gcnew System::Windows::Forms::Button());
 			this->btnStart = (gcnew System::Windows::Forms::Button());
 			this->groupBoxOperation = (gcnew System::Windows::Forms::GroupBox());
+			this->btnShowHistgram = (gcnew System::Windows::Forms::Button());
+			this->btnSaveImage = (gcnew System::Windows::Forms::Button());
 			this->btnFileSelect = (gcnew System::Windows::Forms::Button());
+			this->toolTipBtnSaveImage = (gcnew System::Windows::Forms::ToolTip(this->components));
+			this->toolTipBtnShowHistgram = (gcnew System::Windows::Forms::ToolTip(this->components));
 			this->groupBoxProcessingInfo->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxStatus))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxAfter))->BeginInit();
@@ -231,9 +239,9 @@ namespace ImageProcessing {
 			this->btnStop->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
 			this->btnStop->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(128)));
-			this->btnStop->Location = System::Drawing::Point(41, 285);
+			this->btnStop->Location = System::Drawing::Point(31, 223);
 			this->btnStop->Name = L"btnStop";
-			this->btnStop->Size = System::Drawing::Size(154, 68);
+			this->btnStop->Size = System::Drawing::Size(192, 40);
 			this->btnStop->TabIndex = 4;
 			this->btnStop->Text = L"Stop";
 			this->btnStop->UseVisualStyleBackColor = false;
@@ -245,9 +253,9 @@ namespace ImageProcessing {
 			this->btnAllClear->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
 			this->btnAllClear->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(128)));
-			this->btnAllClear->Location = System::Drawing::Point(41, 120);
+			this->btnAllClear->Location = System::Drawing::Point(31, 106);
 			this->btnAllClear->Name = L"btnAllClear";
-			this->btnAllClear->Size = System::Drawing::Size(154, 68);
+			this->btnAllClear->Size = System::Drawing::Size(192, 40);
 			this->btnAllClear->TabIndex = 1;
 			this->btnAllClear->Text = L"All Clear";
 			this->btnAllClear->UseVisualStyleBackColor = false;
@@ -260,9 +268,9 @@ namespace ImageProcessing {
 			this->btnStart->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
 			this->btnStart->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(128)));
-			this->btnStart->Location = System::Drawing::Point(41, 202);
+			this->btnStart->Location = System::Drawing::Point(31, 164);
 			this->btnStart->Name = L"btnStart";
-			this->btnStart->Size = System::Drawing::Size(154, 68);
+			this->btnStart->Size = System::Drawing::Size(192, 40);
 			this->btnStart->TabIndex = 2;
 			this->btnStart->Text = L"Start\r\n";
 			this->btnStart->UseVisualStyleBackColor = false;
@@ -270,6 +278,8 @@ namespace ImageProcessing {
 			// 
 			// groupBoxOperation
 			// 
+			this->groupBoxOperation->Controls->Add(this->btnShowHistgram);
+			this->groupBoxOperation->Controls->Add(this->btnSaveImage);
 			this->groupBoxOperation->Controls->Add(this->btnStop);
 			this->groupBoxOperation->Controls->Add(this->btnAllClear);
 			this->groupBoxOperation->Controls->Add(this->btnStart);
@@ -283,15 +293,45 @@ namespace ImageProcessing {
 			this->groupBoxOperation->TabStop = false;
 			this->groupBoxOperation->Text = L"Operation";
 			// 
+			// btnShowHistgram
+			// 
+			this->btnShowHistgram->BackColor = System::Drawing::Color::White;
+			this->btnShowHistgram->Enabled = false;
+			this->btnShowHistgram->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+			this->btnShowHistgram->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(128)));
+			this->btnShowHistgram->Location = System::Drawing::Point(31, 340);
+			this->btnShowHistgram->Name = L"btnShowHistgram";
+			this->btnShowHistgram->Size = System::Drawing::Size(192, 40);
+			this->btnShowHistgram->TabIndex = 6;
+			this->btnShowHistgram->Text = L"Show Histgram...";
+			this->btnShowHistgram->UseVisualStyleBackColor = false;
+			this->btnShowHistgram->Click += gcnew System::EventHandler(this, &FormMain::OnClickBtnShowHistgram);
+			// 
+			// btnSaveImage
+			// 
+			this->btnSaveImage->BackColor = System::Drawing::Color::White;
+			this->btnSaveImage->Enabled = false;
+			this->btnSaveImage->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+			this->btnSaveImage->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(128)));
+			this->btnSaveImage->Location = System::Drawing::Point(31, 282);
+			this->btnSaveImage->Name = L"btnSaveImage";
+			this->btnSaveImage->Size = System::Drawing::Size(192, 40);
+			this->btnSaveImage->TabIndex = 5;
+			this->btnSaveImage->Text = L"Save Image...";
+			this->btnSaveImage->UseVisualStyleBackColor = false;
+			this->btnSaveImage->Click += gcnew System::EventHandler(this, &FormMain::OnClickBtnSaveImage);
+			// 
 			// btnFileSelect
 			// 
 			this->btnFileSelect->BackColor = System::Drawing::Color::White;
 			this->btnFileSelect->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
 			this->btnFileSelect->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(128)));
-			this->btnFileSelect->Location = System::Drawing::Point(41, 36);
+			this->btnFileSelect->Location = System::Drawing::Point(31, 50);
 			this->btnFileSelect->Name = L"btnFileSelect";
-			this->btnFileSelect->Size = System::Drawing::Size(154, 68);
+			this->btnFileSelect->Size = System::Drawing::Size(192, 40);
 			this->btnFileSelect->TabIndex = 0;
 			this->btnFileSelect->Text = L"File Select...";
 			this->btnFileSelect->UseVisualStyleBackColor = false;
@@ -342,6 +382,8 @@ namespace ImageProcessing {
 			void OnClickBtnAllClear(Object^ sender, EventArgs^ e);
 			void OnClickBtnStart(Object^ sender, EventArgs^ e);
 			void OnClickBtnStop(Object^ sender, EventArgs^ e);
+			void OnClickBtnSaveImage(Object^ sender, EventArgs^ e);
+			void OnClickBtnShowHistgram(Object^ sender, EventArgs^ e);
 			void ExecTask(void);
 	};
-}
+};

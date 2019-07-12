@@ -38,6 +38,18 @@ void FormMain::SetToolTip()
 	toolTipBtnStop->ShowAlways = false;
 	toolTipBtnStop->SetToolTip(btnStop, "Processing stop.");
 
+	toolTipBtnSaveImage->InitialDelay = 1000;
+	toolTipBtnSaveImage->ReshowDelay = 1000;
+	toolTipBtnSaveImage->AutoPopDelay = 10000;
+	toolTipBtnSaveImage->ShowAlways = false;
+	toolTipBtnSaveImage->SetToolTip(btnSaveImage, "Saving image.");
+
+	toolTipBtnShowHistgram->InitialDelay = 1000;
+	toolTipBtnShowHistgram->ReshowDelay = 1000;
+	toolTipBtnShowHistgram->AutoPopDelay = 10000;
+	toolTipBtnShowHistgram->ShowAlways = false;
+	toolTipBtnShowHistgram->SetToolTip(btnShowHistgram, "Show Histgram.");
+
 	return;
 }
 
@@ -184,5 +196,15 @@ void FormMain::OnClickBtnStop(Object^ sender, EventArgs^ e)
 		m_tokenSource->Cancel();
 	}
 
+	return;
+}
+
+void FormMain::OnClickBtnSaveImage(Object^ sender, EventArgs^ e)
+{
+	return;
+}
+
+void FormMain::OnClickBtnShowHistgram(Object^ sender, EventArgs^ e)
+{
 	return;
 }
