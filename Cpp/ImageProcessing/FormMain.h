@@ -296,7 +296,6 @@ namespace ImageProcessing {
 			// btnShowHistgram
 			// 
 			this->btnShowHistgram->BackColor = System::Drawing::Color::White;
-			this->btnShowHistgram->Enabled = false;
 			this->btnShowHistgram->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
 			this->btnShowHistgram->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(128)));
@@ -311,7 +310,6 @@ namespace ImageProcessing {
 			// btnSaveImage
 			// 
 			this->btnSaveImage->BackColor = System::Drawing::Color::White;
-			this->btnSaveImage->Enabled = false;
 			this->btnSaveImage->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
 			this->btnSaveImage->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(128)));

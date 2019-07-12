@@ -132,6 +132,7 @@
     <ClCompile Include="ColorReversal.cpp" />
     <ClCompile Include="ComFunc.cpp" />
     <ClCompile Include="ComOpenFileDialog.cpp" />
+    <ClCompile Include="ComSaveFileDialog.cpp" />
     <ClCompile Include="EdgeDetection.cpp" />
     <ClCompile Include="FormMain.cpp" />
     <ClCompile Include="GrayScale.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="ComFunc.h" />
     <ClInclude Include="ComInfo.h" />
     <ClInclude Include="ComOpenFileDialog.h" />
+    <ClInclude Include="ComSaveFileDialog.h" />
     <ClInclude Include="EdgeDetection.h" />
     <ClInclude Include="FormMain.h">
       <FileType>CppForm</FileType>

@@ -1,5 +1,6 @@
 #include "FormMain.h"
 #include "ComOpenFileDialog.h"
+#include "ComSaveFileDialog.h"
 
 using namespace System;
 using namespace System::Drawing;
@@ -95,7 +96,7 @@ void FormMain::ExecTask()
 	Invoke(gcnew Action(this, &FormMain::SetPictureBoxStatus));
 	Invoke(gcnew Action(this, &FormMain::SetButtonEnable));
 
-	stopwatch = nullptr;
+	delete stopwatch;
 	m_tokenSource = nullptr;
 	m_bitmap = nullptr;
 
@@ -148,6 +149,7 @@ void FormMain::OnClickBtnFileSelect(Object^ sender, EventArgs^ e)
 		btnStart->Enabled = true;
 		textBoxTime->Text = "";
 	}
+	delete openFileDlg;
 	return;
 }
 
@@ -201,6 +203,21 @@ void FormMain::OnClickBtnStop(Object^ sender, EventArgs^ e)
 
 void FormMain::OnClickBtnSaveImage(Object^ sender, EventArgs^ e)
 {
+	ComSaveFileDialog^ saveDialog = gcnew ComSaveFileDialog();
+	saveDialog->SetFilter("PNG|*.png");
+	saveDialog->SetTitle("Save the file");
+	if (saveDialog->ShowDialog() == true)
+	{
+		String^ strFileName = saveDialog->GetFileName();
+		auto bitmap = gcnew Bitmap(m_edgeDetection->GetBitmap());
+		if (bitmap != nullptr)
+		{
+			bitmap->Save(strFileName, System::Drawing::Imaging::ImageFormat::Png);
+		}
+		delete bitmap;
+	}
+	delete saveDialog;
+
 	return;
 }
 
