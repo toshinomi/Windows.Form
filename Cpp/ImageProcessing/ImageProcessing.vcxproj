@@ -131,10 +131,12 @@
     <ClCompile Include="Binarization.cpp" />
     <ClCompile Include="ColorReversal.cpp" />
     <ClCompile Include="ComFunc.cpp" />
+    <ClCompile Include="ComImageProcessingType.cpp" />
     <ClCompile Include="ComOpenFileDialog.cpp" />
     <ClCompile Include="ComSaveFileDialog.cpp" />
     <ClCompile Include="EdgeDetection.cpp" />
     <ClCompile Include="FormMain.cpp" />
+    <ClCompile Include="FormSettingImageProcessing.cpp" />
     <ClCompile Include="GrayScale.cpp" />
     <ClCompile Include="GrayScale2Diff.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -150,6 +152,7 @@
     <ClInclude Include="Binarization.h" />
     <ClInclude Include="ColorReversal.h" />
     <ClInclude Include="ComFunc.h" />
+    <ClInclude Include="ComImageProcessingType.h" />
     <ClInclude Include="ComInfo.h" />
     <ClInclude Include="ComOpenFileDialog.h" />
     <ClInclude Include="ComSaveFileDialog.h" />
@@ -157,14 +160,19 @@
     <ClInclude Include="FormMain.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="FormSettingImageProcessing.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="GrayScale.h" />
     <ClInclude Include="GrayScale2Diff.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSettingImageProcessing.resx">
+      <DependentUpon>FormSettingImageProcessing.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
