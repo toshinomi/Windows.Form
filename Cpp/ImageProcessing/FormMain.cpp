@@ -224,8 +224,5 @@ void FormMain::OnClickBtnSaveImage(Object^ sender, EventArgs^ e)
 
 void FormMain::OnClickBtnShowHistgram(Object^ sender, EventArgs^ e)
 {
-	FormSettingImageProcessing^ form = gcnew FormSettingImageProcessing();
-	form->ShowDialog();
-
 	return;
 }
