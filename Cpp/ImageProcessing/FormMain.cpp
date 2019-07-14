@@ -2,6 +2,7 @@
 #include "ComOpenFileDialog.h"
 #include "ComSaveFileDialog.h"
 #include "FormSettingImageProcessing.h"
+#include "FormHistgram.h"
 
 using namespace System;
 using namespace System::Drawing;
@@ -224,5 +225,13 @@ void FormMain::OnClickBtnSaveImage(Object^ sender, EventArgs^ e)
 
 void FormMain::OnClickBtnShowHistgram(Object^ sender, EventArgs^ e)
 {
+	FormHistgram^ form = gcnew FormHistgram();
+	
+	Bitmap^ bitmap = gcnew Bitmap(m_strOpenFileName);
+	form->SetBitmapOrg((Bitmap^)bitmap->Clone());
+	form->SetBitmapAfter((Bitmap^)m_edgeDetection->GetBitmap()->Clone());
+	form->DrawHistgram();
+	form->ShowDialog();
+
 	return;
 }
