@@ -1,6 +1,7 @@
 #include "FormMain.h"
 #include "ComOpenFileDialog.h"
 #include "ComSaveFileDialog.h"
+#include "FormSettingImageProcessing.h"
 
 using namespace System;
 using namespace System::Drawing;
@@ -223,5 +224,8 @@ void FormMain::OnClickBtnSaveImage(Object^ sender, EventArgs^ e)
 
 void FormMain::OnClickBtnShowHistgram(Object^ sender, EventArgs^ e)
 {
+	FormSettingImageProcessing^ form = gcnew FormSettingImageProcessing();
+	form->ShowDialog();
+
 	return;
 }

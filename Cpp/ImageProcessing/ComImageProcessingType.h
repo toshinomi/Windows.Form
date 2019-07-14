@@ -16,6 +16,12 @@ namespace ImageProcessing
 		ComImageProcessingType();
 		ComImageProcessingType(int _Id, String^ _Nmae);
 		~ComImageProcessingType();
+		// Id
+		int GetId(void) { return m_Id; };
+		void SetId(int _Id) { m_Id = _Id; };
+		// Name
+		String^ GetName(void) { return m_Name; };
+		void SetName(String^ _Name) { m_Name = _Name; };
 		Object^ Clone();
 	};
 }

@@ -9,6 +9,7 @@ namespace ImageProcessing {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Windows::Forms;
 
 	/// <summary>
 	/// FormSettingImageProcessing の概要
@@ -22,6 +23,7 @@ namespace ImageProcessing {
 			//
 			//TODO: ここにコンストラクター コードを追加します
 			//
+			LoadParam();
 		}
 
 	protected:
@@ -45,7 +47,7 @@ namespace ImageProcessing {
 		/// <summary>
 		/// 必要なデザイナー変数です。
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -72,6 +74,7 @@ namespace ImageProcessing {
 			this->btnOk->TabIndex = 7;
 			this->btnOk->Text = L"OK";
 			this->btnOk->UseVisualStyleBackColor = false;
+			this->btnOk->Click += gcnew System::EventHandler(this, &FormSettingImageProcessing::OnClickOk);
 			// 
 			// btnCancel
 			// 
@@ -84,6 +87,7 @@ namespace ImageProcessing {
 			this->btnCancel->TabIndex = 6;
 			this->btnCancel->Text = L"Cancel";
 			this->btnCancel->UseVisualStyleBackColor = false;
+			this->btnCancel->Click += gcnew System::EventHandler(this, &FormSettingImageProcessing::OnClickCancel);
 			// 
 			// cmbBoxImageProcessingType
 			// 
@@ -125,9 +129,12 @@ namespace ImageProcessing {
 
 		}
 #pragma endregion
-		private:
-			List<ComImageProcessingType^>^ m_items;
-		public:
-			void SaveParam(void);
+	private:
+	public:
+		void LoadParam(void);
+		void SaveParam(void);
+	private:
+		void OnClickOk(System::Object^ sender, System::EventArgs^ e);
+		void OnClickCancel(System::Object^ sender, System::EventArgs^ e);
 	};
 }

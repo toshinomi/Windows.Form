@@ -3,14 +3,51 @@
 using namespace ImageProcessing;
 using namespace System::Configuration;
 
+void FormSettingImageProcessing::LoadParam(void)
+{
+	System::Collections::Generic::Dictionary<int, String^> items;
+	System::Configuration::Configuration^ config = ConfigurationManager::OpenExeConfiguration(ConfigurationUserLevel::None);
+	items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeEdgeId"]->Value), (String^)config->AppSettings->Settings["ImgTypeEdgeName"]->Value);
+	items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeGrayScaleId"]->Value), (String^)config->AppSettings->Settings["ImgTypeGrayScaleName"]->Value);
+	items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeBinarizationId"]->Value), (String^)config->AppSettings->Settings["ImgTypeBinarizationName"]->Value);
+	items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeGrayScale2DiffId"]->Value), (String^)config->AppSettings->Settings["ImgTypeGrayScale2DiffName"]->Value);
+	items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeColorReversalId"]->Value), (String^)config->AppSettings->Settings["ImgTypeColorReversalName"]->Value);
+
+	cmbBoxImageProcessingType->Items->Add((String^)config->AppSettings->Settings["ImgTypeEdgeName"]->Value);
+	cmbBoxImageProcessingType->Items->Add((String^)config->AppSettings->Settings["ImgTypeGrayScaleName"]->Value);
+	cmbBoxImageProcessingType->Items->Add((String^)config->AppSettings->Settings["ImgTypeBinarizationName"]->Value);
+	cmbBoxImageProcessingType->Items->Add((String^)config->AppSettings->Settings["ImgTypeGrayScale2DiffName"]->Value);
+	cmbBoxImageProcessingType->Items->Add((String^)config->AppSettings->Settings["ImgTypeColorReversalName"]->Value);
+
+	for each (unsigned int nKey in items.Keys)
+	{
+		if (items[nKey] == (String^)config->AppSettings->Settings["ImgTypeSelectName"]->Value)
+		{
+			cmbBoxImageProcessingType->SelectedIndex = nKey - 1;
+		}
+	}
+
+	return;
+}
+
 void FormSettingImageProcessing::SaveParam(void)
 {
-	//m_items = gcnew List<ComImageProcessingType^>();
-	//m_items->Add(gcnew ComImageProcessingType(ImgTypeEdgeId, ImgTypeEdgeName));
-	//m_items->Add(gcnew ComImageProcessingType(ImgTypeGrayScaleId, ImgTypeGrayScaleName));
-	//m_items.Add(new ComImageProcessingType(Properties.Settings.Default.ImgTypeBinarizationId, Properties.Settings.Default.ImgTypeBinarizationName));
-	//m_items.Add(new ComImageProcessingType(Properties.Settings.Default.ImgTypeGrayScale2DiffId, Properties.Settings.Default.ImgTypeGrayScale2DiffName));
-	//m_items.Add(new ComImageProcessingType(Properties.Settings.Default.ImgTypeColorReversalId, Properties.Settings.Default.ImgTypeColorReversalName));
+	System::Configuration::Configuration^ config = ConfigurationManager::OpenExeConfiguration(ConfigurationUserLevel::None);
+	config->AppSettings->Settings["ImgTypeSelectName"]->Value = (String^)cmbBoxImageProcessingType->SelectedItem;
+	config->Save();
 
-	String^ name = ::ConfigurationManager::AppSettings["ImgTypeEdgeId"];
+	return;
+}
+
+void FormSettingImageProcessing::OnClickOk(System::Object^ sender, System::EventArgs^ e)
+{
+	SaveParam();
+	this->DialogResult = System::Windows::Forms::DialogResult::OK;
+	Close();
+}
+
+void ImageProcessing::FormSettingImageProcessing::OnClickCancel(System::Object^ sender, System::EventArgs^ e)
+{
+	this->DialogResult = System::Windows::Forms::DialogResult::Cancel;
+	Close();
 }
