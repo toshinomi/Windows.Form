@@ -128,9 +128,13 @@ namespace ImageProcessing {
 		Bitmap^ GetBitmapAfter(void) { return m_bitmapAfter; };
 		void SetBitmapAfter(Bitmap^ _bitmap) { m_bitmapAfter = _bitmap; }
 
+		bool GetIsOpen(void) { return m_bIsOpen; };
+		void SetIsOpen(bool _isOpen) { m_bIsOpen = _isOpen; };
+
 		void DrawHistgram(void);
 		void CalHistgram(void);
 		void InitHistgram(void);
+		void SaveCsv(void);
 		void OnClickMenu(System::Object^ sender, System::EventArgs^ e);
 	};
 }

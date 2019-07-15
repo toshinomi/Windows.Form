@@ -1,5 +1,6 @@
 #include "FormHistgram.h"
 #include "ComInfo.h"
+#include "ComSaveFileDialog.h"
 
 using namespace ImageProcessing;
 
@@ -97,4 +98,37 @@ void FormHistgram::InitHistgram(void)
 
 void FormHistgram::OnClickMenu(System::Object^ sender, System::EventArgs^ e)
 {
+	String^ strHeader = sender->ToString();
+
+	if (strHeader == ComConstStringInfo::MENU_SAVE_CSV)
+	{
+		SaveCsv();
+	}
+
+	return;
+}
+
+void FormHistgram::SaveCsv(void)
+{
+	ComSaveFileDialog^ saveDialog = gcnew ComSaveFileDialog();
+	saveDialog->SetFilter("CSV|*.csv");
+	saveDialog->SetTitle("Save the csv file");
+	saveDialog->SetFileName("default.csv");
+	if (saveDialog->ShowDialog() == true)
+	{
+		String^ strDelmiter = ",";
+		StringBuilder^ stringBuilder = gcnew StringBuilder();
+		for (int nIdx = 0; nIdx < 256; nIdx++)
+		{
+			stringBuilder->Append(nIdx)->Append(strDelmiter);
+			stringBuilder->Append(m_nHistgram[0, nIdx])->Append(strDelmiter);
+			stringBuilder->Append(m_nHistgram[1, nIdx])->Append(strDelmiter);
+			stringBuilder->Append(Environment::NewLine);
+		}
+		saveDialog->StreamWrite(stringBuilder->ToString());
+		delete stringBuilder;
+	}
+	delete saveDialog;
+
+	return;
 }

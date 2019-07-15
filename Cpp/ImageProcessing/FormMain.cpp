@@ -100,7 +100,6 @@ void FormMain::ExecTask()
 
 	delete stopwatch;
 	m_tokenSource = nullptr;
-	m_bitmap = nullptr;
 
 	return;
 }
@@ -150,6 +149,17 @@ void FormMain::OnClickBtnFileSelect(Object^ sender, EventArgs^ e)
 		pictureBoxOriginal->ImageLocation = m_strOpenFileName;
 		btnStart->Enabled = true;
 		textBoxTime->Text = "";
+
+		if (m_histgram == nullptr)
+		{
+			m_histgram = gcnew FormHistgram();
+		}
+		else
+		{
+			m_histgram->Close();
+			m_histgram = nullptr;
+			m_histgram = gcnew FormHistgram();
+		}
 	}
 	delete openFileDlg;
 	return;
@@ -225,13 +235,28 @@ void FormMain::OnClickBtnSaveImage(Object^ sender, EventArgs^ e)
 
 void FormMain::OnClickBtnShowHistgram(Object^ sender, EventArgs^ e)
 {
-	FormHistgram^ form = gcnew FormHistgram();
-	
+	if (m_bitmap == nullptr)
+	{
+		return;
+	}
+
+	if (m_histgram != nullptr)
+	{
+		m_histgram->Close();
+		m_histgram = nullptr;
+		delete m_histgram;
+		m_histgram = gcnew FormHistgram();
+	}
+
 	Bitmap^ bitmap = gcnew Bitmap(m_strOpenFileName);
-	form->SetBitmapOrg((Bitmap^)bitmap->Clone());
-	form->SetBitmapAfter((Bitmap^)m_edgeDetection->GetBitmap()->Clone());
-	form->DrawHistgram();
-	form->ShowDialog();
+	m_histgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
+	m_histgram->SetBitmapAfter((Bitmap^)m_bitmap->Clone());
+
+	m_histgram->DrawHistgram();
+	m_histgram->SetIsOpen(true);
+	m_histgram->Show();
+
+	delete bitmap;
 
 	return;
 }

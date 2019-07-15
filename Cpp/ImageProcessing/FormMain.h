@@ -1,5 +1,6 @@
 #pragma once
 #include "EdgeDetection.h"
+#include "FormHistgram.h"
 
 namespace ImageProcessing {
 
@@ -47,9 +48,10 @@ namespace ImageProcessing {
 			{
 				delete components;
 
-				m_bitmap = nullptr;
-				m_tokenSource = nullptr;
-				m_edgeDetection = nullptr;
+				delete m_bitmap;
+				delete m_tokenSource;
+				delete m_edgeDetection;
+				delete m_histgram;
 			}
 		}
 	private: System::Windows::Forms::ToolTip^ toolTipBtnStop;
@@ -368,6 +370,7 @@ namespace ImageProcessing {
 			String^ m_strOpenFileName;
 			CancellationTokenSource^ m_tokenSource;
 			Task^ m_task;
+			FormHistgram^ m_histgram;
 		public:
 			void SetToolTip(void);
 			void SetButtonEnable(void);
