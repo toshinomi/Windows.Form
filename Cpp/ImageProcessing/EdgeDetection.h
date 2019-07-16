@@ -21,6 +21,6 @@ namespace ImageProcessing
 		~EdgeDetection();
 		Bitmap^ GetBitmap() { return m_bitmap; }
 		void SetBitmap(Bitmap^ _bitmap) { m_bitmap = _bitmap; }
-		bool GoEdgeDetection(CancellationToken _token);
+		bool GoEdgeDetection(CancellationToken^ _token);
 	};
 }

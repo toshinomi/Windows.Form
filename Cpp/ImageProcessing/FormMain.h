@@ -1,6 +1,9 @@
 #pragma once
 #include "EdgeDetection.h"
+#include "GrayScale.h"
+#include "Binarization.h"
 #include "FormHistgram.h"
+#include "ComImgInfo.h"
 
 namespace ImageProcessing {
 
@@ -34,7 +37,8 @@ namespace ImageProcessing {
 
 			m_bitmap = nullptr;
 			m_tokenSource = nullptr;
-			m_edgeDetection = nullptr;
+			m_imgProc = nullptr;
+			//m_edgeDetection = nullptr;
 			m_task = nullptr;
 		}
 
@@ -50,7 +54,8 @@ namespace ImageProcessing {
 
 				delete m_bitmap;
 				delete m_tokenSource;
-				delete m_edgeDetection;
+				delete m_imgProc;
+				//delete m_edgeDetection;
 				delete m_histgram;
 			}
 		}
@@ -366,10 +371,12 @@ namespace ImageProcessing {
 #pragma endregion
 		private:
 			Bitmap^ m_bitmap;
-			static EdgeDetection^ m_edgeDetection;
+			Object^ m_imgProc;
+			//static EdgeDetection^ m_edgeDetection;
 			String^ m_strOpenFileName;
 			CancellationTokenSource^ m_tokenSource;
 			Task^ m_task;
+			String^ m_strCurImgName;
 			FormHistgram^ m_histgram;
 		public:
 			void SetToolTip(void);
@@ -386,5 +393,6 @@ namespace ImageProcessing {
 			void OnClickBtnSaveImage(Object^ sender, EventArgs^ e);
 			void OnClickBtnShowHistgram(Object^ sender, EventArgs^ e);
 			void ExecTask(void);
+			bool SelectGoImgProc(ComImgInfo^ _comImgInfo, CancellationToken^ _token);
 	};
 };

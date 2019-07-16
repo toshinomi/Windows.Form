@@ -21,6 +21,8 @@ namespace ImageProcessing
 		~Binarization();
 		Bitmap^ GetBitmap() { return m_bitmap; }
 		void SetBitmap(Bitmap^ _bitmap) { m_bitmap = _bitmap; }
-		bool GoEdgeDetection(CancellationToken _token);
+		Byte GetThresh() { return m_nThresh; }
+		void SetThresh(Byte _nThresh) { m_nThresh = _nThresh; }
+		bool GoEdgeDetection(CancellationToken^ _token);
 	};
 }

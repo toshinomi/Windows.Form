@@ -14,7 +14,7 @@ EdgeDetection::~EdgeDetection()
 	m_bitmap = nullptr;
 }
 
-bool EdgeDetection::GoEdgeDetection(CancellationToken _token)
+bool EdgeDetection::GoEdgeDetection(CancellationToken^ _token)
 {
 	bool bRst = true;
 
@@ -38,7 +38,7 @@ bool EdgeDetection::GoEdgeDetection(CancellationToken _token)
 	{
 		for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
 		{
-			if (_token.IsCancellationRequested)
+			if (_token->IsCancellationRequested)
 			{
 				bRst = false;
 				break;

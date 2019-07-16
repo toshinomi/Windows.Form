@@ -172,6 +172,7 @@
     <ClInclude Include="ColorReversal.h" />
     <ClInclude Include="ComFunc.h" />
     <ClInclude Include="ComImageProcessingType.h" />
+    <ClInclude Include="ComImgInfo.h" />
     <ClInclude Include="ComInfo.h" />
     <ClInclude Include="ComOpenFileDialog.h" />
     <ClInclude Include="ComSaveFileDialog.h" />

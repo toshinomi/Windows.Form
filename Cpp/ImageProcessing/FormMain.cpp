@@ -3,6 +3,7 @@
 #include "ComSaveFileDialog.h"
 #include "FormSettingImageProcessing.h"
 #include "FormHistgram.h"
+#include "ComInfo.h"
 
 using namespace System;
 using namespace System::Drawing;
@@ -84,12 +85,20 @@ void FormMain::ExecTask()
 	stopwatch->Start();
 
 	m_tokenSource = gcnew CancellationTokenSource();
-	CancellationToken token = m_tokenSource->Token;
-	bool bRst = m_edgeDetection->GoEdgeDetection(token);
+	CancellationToken^ token = m_tokenSource->Token;
+
+	//bool bRst = m_edgeDetection->GoEdgeDetection(token);
+	ComImgInfo^ imgInfo = gcnew ComImgInfo();
+	ComBinarizationInfo^ binarizationInfo = gcnew ComBinarizationInfo();
+	Byte nThresh = 125;
+	binarizationInfo->SetThresh(nThresh);
+	imgInfo->SetCurImgName(m_strCurImgName);
+	imgInfo->SetBinarizationInfo(binarizationInfo);
+	bool bRst = SelectGoImgProc(imgInfo, token);
 	if (bRst)
 	{
 		pictureBoxOriginal->ImageLocation = m_strOpenFileName;
-		pictureBoxAfter->Image = m_edgeDetection->GetBitmap();
+		//pictureBoxAfter->Image = m_edgeDetection->GetBitmap();
 
 		stopwatch->Stop();
 
@@ -102,6 +111,34 @@ void FormMain::ExecTask()
 	m_tokenSource = nullptr;
 
 	return;
+}
+
+bool FormMain::SelectGoImgProc(ComImgInfo^ _comImgInfo, CancellationToken^ _token)
+{
+	bool bRst = true;
+
+	String^ strCurName = _comImgInfo->GetCurImgName();
+	if (strCurName == ComConstStringInfo::IMG_NAME_EDGE_DETECTION)
+	{
+		EdgeDetection^ edge = (EdgeDetection^)m_imgProc;
+		bRst = edge->GoEdgeDetection(_token);
+	}
+	else if (strCurName == ComConstStringInfo::IMG_NAME_GRAY_SCALE)
+	{
+		GrayScale^ gray = (GrayScale^)m_imgProc;
+		bRst = gray->GoEdgeDetection(_token);
+	}
+	else if (strCurName == ComConstStringInfo::IMG_NAME_BINARIZATION)
+	{
+	}
+	else if (strCurName == ComConstStringInfo::IMG_NAME_GRAY_SCALE_2DIFF)
+	{
+	}
+	else if (strCurName == ComConstStringInfo::IMG_NAME_COLOR_REVERSAL)
+	{
+	}
+
+	return bRst;
 }
 
 void FormMain::TaskWorkImageProcessing()
@@ -197,6 +234,8 @@ void FormMain::OnClickBtnStart(Object^ sender, EventArgs^ e)
 	LoadImage();
 
 	btnStop->Enabled = true;
+	btnSaveImage->Enabled = false;
+	btnShowHistgram->Enabled = false;
 
 	TaskWorkImageProcessing();
 

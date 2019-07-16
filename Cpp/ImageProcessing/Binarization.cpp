@@ -21,7 +21,7 @@ Binarization::~Binarization()
 	m_bitmap = nullptr;
 }
 
-bool Binarization::GoEdgeDetection(CancellationToken _token)
+bool Binarization::GoEdgeDetection(CancellationToken^ _token)
 {
 	bool bRst = true;
 
@@ -37,7 +37,7 @@ bool Binarization::GoEdgeDetection(CancellationToken _token)
 	{
 		for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
 		{
-			if (_token.IsCancellationRequested)
+			if (_token->IsCancellationRequested)
 			{
 				bRst = false;
 				break;

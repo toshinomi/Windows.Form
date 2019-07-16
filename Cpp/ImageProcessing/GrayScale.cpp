@@ -14,7 +14,7 @@ GrayScale::~GrayScale()
 	m_bitmap = nullptr;
 }
 
-bool GrayScale::GoEdgeDetection(CancellationToken _token)
+bool GrayScale::GoEdgeDetection(CancellationToken^ _token)
 {
 	bool bRst = true;
 
