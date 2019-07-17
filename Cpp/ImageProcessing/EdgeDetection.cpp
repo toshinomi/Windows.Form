@@ -4,17 +4,15 @@
 
 using namespace ImageProcessing;
 
-EdgeDetection::EdgeDetection(Bitmap^ _bitmap)
+EdgeDetection::EdgeDetection(Bitmap^ _bitmap) : ComImgProc(_bitmap)
 {
-	m_bitmap = _bitmap;
 }
 
 EdgeDetection::~EdgeDetection()
 {
-	m_bitmap = nullptr;
 }
 
-bool EdgeDetection::GoEdgeDetection(CancellationToken^ _token)
+bool EdgeDetection::GoImgProc(CancellationToken^ _token)
 {
 	bool bRst = true;
 
@@ -25,11 +23,14 @@ bool EdgeDetection::GoEdgeDetection(CancellationToken^ _token)
 		{ 1,  1, 1 }
 	};
 
-	int nWidthSize = m_bitmap->Width;
-	int nHeightSize = m_bitmap->Height;
-	int nMasksize = m_nMaskSize;
+	Bitmap^ bitmap = this->GetBitmap();
+	int nWidthSize = bitmap->Width;
+	int nHeightSize = bitmap->Height;
+	int nMasksize = 3;
 
-	BitmapData^ bitmapData = m_bitmap->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
+	Bitmap^ bitmapAfter = gcnew Bitmap(bitmap);
+	
+	BitmapData^ bitmapData = bitmapAfter->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
 
 	int nIdxWidth;
 	int nIdxHeight;
@@ -74,7 +75,9 @@ bool EdgeDetection::GoEdgeDetection(CancellationToken^ _token)
 			pPixel[ComInfo::Pixel::R] = ComFunc::LongToByte(lCalR);
 		}
 	}
-	m_bitmap->UnlockBits(bitmapData);
+	bitmapAfter->UnlockBits(bitmapData);
+	this->SetBitmapAfter((Bitmap^)bitmapAfter->Clone());
+	delete bitmapAfter;
 
 	return bRst;
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "ComImgProc.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -10,19 +11,16 @@ using namespace System::Threading::Tasks;
 
 namespace ImageProcessing
 {
-	public ref class Binarization
+	public ref class Binarization : public ComImgProc
 	{
 	private:
-		Bitmap^ m_bitmap;
 		Byte m_nThresh;
 	public:
 		Binarization(Bitmap^ _bitmap);
 		Binarization(Bitmap^ _bitmap, Byte _nThresh);
 		~Binarization();
-		Bitmap^ GetBitmap() { return m_bitmap; }
-		void SetBitmap(Bitmap^ _bitmap) { m_bitmap = _bitmap; }
 		Byte GetThresh() { return m_nThresh; }
 		void SetThresh(Byte _nThresh) { m_nThresh = _nThresh; }
-		bool GoEdgeDetection(CancellationToken^ _token);
+		bool GoImgProc(CancellationToken^ _token);
 	};
 }

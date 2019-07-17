@@ -1,4 +1,5 @@
 #pragma once
+#include "ComImgProc.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -10,16 +11,12 @@ using namespace System::Threading::Tasks;
 
 namespace ImageProcessing
 {
-	public ref class GrayScale2Diff
+	public ref class GrayScale2Diff : ComImgProc
 	{
 	private:
-		const int m_nMaskSize = 3;
-		Bitmap^ m_bitmap;
 	public:
 		GrayScale2Diff(Bitmap^ _bitmap);
 		~GrayScale2Diff();
-		Bitmap^ GetBitmap() { return m_bitmap; }
-		void SetBitmap(Bitmap^ _bitmap) { m_bitmap = _bitmap; }
-		bool GoEdgeDetection(CancellationToken _token);
+		bool GoImgProc(CancellationToken^ _token);
 	};
 }

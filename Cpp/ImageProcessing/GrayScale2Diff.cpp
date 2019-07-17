@@ -4,17 +4,15 @@
 
 using namespace ImageProcessing;
 
-GrayScale2Diff::GrayScale2Diff(Bitmap^ _bitmap)
+GrayScale2Diff::GrayScale2Diff(Bitmap^ _bitmap) : ComImgProc(_bitmap)
 {
-	m_bitmap = _bitmap;
 }
 
 GrayScale2Diff::~GrayScale2Diff()
 {
-	m_bitmap = nullptr;
 }
 
-bool GrayScale2Diff::GoEdgeDetection(CancellationToken _token)
+bool GrayScale2Diff::GoImgProc(CancellationToken^ _token)
 {
 	bool bRst = true;
 
@@ -25,11 +23,14 @@ bool GrayScale2Diff::GoEdgeDetection(CancellationToken _token)
 		{ 1,  1, 1 }
 	};
 
-	int nWidthSize = m_bitmap->Width;
-	int nHeightSize = m_bitmap->Height;
-	int nMasksize = m_nMaskSize;
+	Bitmap^ bitmap = this->GetBitmap();
+	int nWidthSize = bitmap->Width;
+	int nHeightSize = bitmap->Height;
+	int nMasksize = 3;
 
-	BitmapData^ bitmapData = m_bitmap->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
+	Bitmap^ bitmapAfter = gcnew Bitmap(bitmap);
+
+	BitmapData^ bitmapData = bitmapAfter->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
 
 	int nIdxWidth;
 	int nIdxHeight;
@@ -38,7 +39,7 @@ bool GrayScale2Diff::GoEdgeDetection(CancellationToken _token)
 	{
 		for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
 		{
-			if (_token.IsCancellationRequested)
+			if (_token->IsCancellationRequested)
 			{
 				bRst = false;
 				break;
@@ -80,7 +81,9 @@ bool GrayScale2Diff::GoEdgeDetection(CancellationToken _token)
 			pPixel[ComInfo::Pixel::R] = nGrayScale;
 		}
 	}
-	m_bitmap->UnlockBits(bitmapData);
+	bitmapAfter->UnlockBits(bitmapData);
+	this->SetBitmapAfter((Bitmap^)bitmapAfter->Clone());
+	delete bitmapAfter;
 
 	return bRst;
 }

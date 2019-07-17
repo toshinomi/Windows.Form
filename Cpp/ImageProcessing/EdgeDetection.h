@@ -1,5 +1,6 @@
 #pragma once
 #include <string.h>
+#include "ComImgProc.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -11,16 +12,12 @@ using namespace System::Threading::Tasks;
 
 namespace ImageProcessing
 {
-	public ref class EdgeDetection
+	public ref class EdgeDetection : public ComImgProc
 	{
 	private:
-		const int m_nMaskSize = 3;
-		Bitmap^ m_bitmap;
 	public:
 		EdgeDetection(Bitmap^ _bitmap);
 		~EdgeDetection();
-		Bitmap^ GetBitmap() { return m_bitmap; }
-		void SetBitmap(Bitmap^ _bitmap) { m_bitmap = _bitmap; }
-		bool GoEdgeDetection(CancellationToken^ _token);
+		bool GoImgProc(CancellationToken^ _token);
 	};
 }
