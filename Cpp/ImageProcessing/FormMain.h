@@ -41,17 +41,9 @@ namespace ImageProcessing {
 			m_bitmap = nullptr;
 			m_tokenSource = nullptr;
 			m_imgProc = nullptr;
-			//m_edgeDetection = nullptr;
 			m_task = nullptr;
 
 			System::Configuration::Configuration^ config = ConfigurationManager::OpenExeConfiguration(ConfigurationUserLevel::None);
-			//items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeEdgeId"]->Value), (String^)config->AppSettings->Settings["ImgTypeEdgeName"]->Value);
-			//items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeGrayScaleId"]->Value), (String^)config->AppSettings->Settings["ImgTypeGrayScaleName"]->Value);
-			//items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeBinarizationId"]->Value), (String^)config->AppSettings->Settings["ImgTypeBinarizationName"]->Value);
-			//items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeGrayScale2DiffId"]->Value), (String^)config->AppSettings->Settings["ImgTypeGrayScale2DiffName"]->Value);
-			//items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeColorReversalId"]->Value), (String^)config->AppSettings->Settings["ImgTypeColorReversalName"]->Value);
-
-			//m_strCurImgName = Properties.Settings.Default.ImgTypeSelectName;
 			m_strCurImgName = config->AppSettings->Settings["ImgTypeSelectName"]->Value;
 			this->Text = "Image Processing ( " + m_strCurImgName + " )";
 		}
@@ -386,7 +378,6 @@ namespace ImageProcessing {
 		private:
 			Bitmap^ m_bitmap;
 			Object^ m_imgProc;
-			//static EdgeDetection^ m_edgeDetection;
 			String^ m_strOpenFileName;
 			CancellationTokenSource^ m_tokenSource;
 			Task^ m_task;

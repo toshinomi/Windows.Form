@@ -87,7 +87,6 @@ void FormMain::ExecTask()
 	m_tokenSource = gcnew CancellationTokenSource();
 	CancellationToken^ token = m_tokenSource->Token;
 
-	//bool bRst = m_edgeDetection->GoEdgeDetection(token);
 	ComImgInfo^ imgInfo = gcnew ComImgInfo();
 	ComBinarizationInfo^ binarizationInfo = gcnew ComBinarizationInfo();
 	Byte nThresh = 125;
@@ -273,7 +272,6 @@ void FormMain::TaskWorkImageProcessing()
 void FormMain::LoadImage(void)
 {
 	m_bitmap = gcnew Bitmap(m_strOpenFileName);
-	//m_edgeDetection = gcnew EdgeDetection(m_bitmap);
 	SelectLoadImage(m_strCurImgName);
 
 	return;
@@ -383,7 +381,6 @@ void FormMain::OnClickBtnSaveImage(Object^ sender, EventArgs^ e)
 	if (saveDialog->ShowDialog() == true)
 	{
 		String^ strFileName = saveDialog->GetFileName();
-		//auto bitmap = gcnew Bitmap(m_edgeDetection->GetBitmap());
 		auto bitmap = GetImage(m_strCurImgName);
 		if (bitmap != nullptr)
 		{
