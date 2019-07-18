@@ -100,7 +100,7 @@ void FormHistgram::OnClickMenu(System::Object^ sender, System::EventArgs^ e)
 {
 	String^ strHeader = sender->ToString();
 
-	if (strHeader == ComConstStringInfo::MENU_SAVE_CSV)
+	if (strHeader == (String^)ComConstStringInfo::MENU_SAVE_CSV)
 	{
 		SaveCsv();
 	}

@@ -10,7 +10,7 @@ using namespace System::Threading::Tasks;
 
 namespace ImageProcessing
 {
-	public ref class ComImgProc
+	public  ref class  ComImgProc abstract
 	{
 	private:
 		Bitmap^ m_bitmap;
@@ -23,6 +23,6 @@ namespace ImageProcessing
 		Bitmap^ GetBitmapAfter() { return m_bitmapAfter; }
 		void SetBitmapAfter(Bitmap^ _bitmap) { m_bitmapAfter = _bitmap; }
 
-		virtual bool GoImgProc(CancellationToken _token) = 0;
+		virtual bool GoImgProc(CancellationToken^ _token) = 0;
 	};
 }

@@ -18,6 +18,6 @@ namespace ImageProcessing
 	public:
 		ColorReversal(Bitmap^ _bitmap);
 		~ColorReversal();
-		bool GoImgProc(CancellationToken^ _token);
+		bool GoImgProc(CancellationToken^ _token) override;
 	};
 }

@@ -21,6 +21,6 @@ namespace ImageProcessing
 		~Binarization();
 		Byte GetThresh() { return m_nThresh; }
 		void SetThresh(Byte _nThresh) { m_nThresh = _nThresh; }
-		bool GoImgProc(CancellationToken^ _token);
+		bool GoImgProc(CancellationToken^ _token) override;
 	};
 }

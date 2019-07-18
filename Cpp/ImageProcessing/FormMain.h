@@ -2,6 +2,8 @@
 #include "EdgeDetection.h"
 #include "GrayScale.h"
 #include "Binarization.h"
+#include "GrayScale2Diff.h"
+#include "ColorReversal.h"
 #include "FormHistgram.h"
 #include "ComImgInfo.h"
 
@@ -13,6 +15,7 @@ namespace ImageProcessing {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Configuration;
 
 	/// <summary>
 	/// FormMain ‚ÌŠT—v
@@ -40,6 +43,17 @@ namespace ImageProcessing {
 			m_imgProc = nullptr;
 			//m_edgeDetection = nullptr;
 			m_task = nullptr;
+
+			System::Configuration::Configuration^ config = ConfigurationManager::OpenExeConfiguration(ConfigurationUserLevel::None);
+			//items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeEdgeId"]->Value), (String^)config->AppSettings->Settings["ImgTypeEdgeName"]->Value);
+			//items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeGrayScaleId"]->Value), (String^)config->AppSettings->Settings["ImgTypeGrayScaleName"]->Value);
+			//items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeBinarizationId"]->Value), (String^)config->AppSettings->Settings["ImgTypeBinarizationName"]->Value);
+			//items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeGrayScale2DiffId"]->Value), (String^)config->AppSettings->Settings["ImgTypeGrayScale2DiffName"]->Value);
+			//items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeColorReversalId"]->Value), (String^)config->AppSettings->Settings["ImgTypeColorReversalName"]->Value);
+
+			//m_strCurImgName = Properties.Settings.Default.ImgTypeSelectName;
+			m_strCurImgName = config->AppSettings->Settings["ImgTypeSelectName"]->Value;
+			this->Text = "Image Processing ( " + m_strCurImgName + " )";
 		}
 
 	protected:
@@ -394,5 +408,8 @@ namespace ImageProcessing {
 			void OnClickBtnShowHistgram(Object^ sender, EventArgs^ e);
 			void ExecTask(void);
 			bool SelectGoImgProc(ComImgInfo^ _comImgInfo, CancellationToken^ _token);
+			bool SelectLoadImage(String^ _strImgName);
+			Bitmap^ GetImage(String^ _strImgName);
+			Bitmap^ SelectGetBitmap(String^ _strImgName);
 	};
 };

@@ -18,6 +18,6 @@ namespace ImageProcessing
 	public:
 		EdgeDetection(Bitmap^ _bitmap);
 		~EdgeDetection();
-		bool GoImgProc(CancellationToken^ _token);
+		bool GoImgProc(CancellationToken^ _token) override;
 	};
 }

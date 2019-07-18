@@ -98,7 +98,7 @@ void FormMain::ExecTask()
 	if (bRst)
 	{
 		pictureBoxOriginal->ImageLocation = m_strOpenFileName;
-		//pictureBoxAfter->Image = m_edgeDetection->GetBitmap();
+		pictureBoxAfter->Image = SelectGetBitmap(m_strCurImgName);
 
 		stopwatch->Stop();
 
@@ -118,27 +118,149 @@ bool FormMain::SelectGoImgProc(ComImgInfo^ _comImgInfo, CancellationToken^ _toke
 	bool bRst = true;
 
 	String^ strCurName = _comImgInfo->GetCurImgName();
-	if (strCurName == ComConstStringInfo::IMG_NAME_EDGE_DETECTION)
+	if (strCurName == (String^)ComConstStringInfo::IMG_NAME_EDGE_DETECTION)
 	{
 		EdgeDetection^ edge = (EdgeDetection^)m_imgProc;
-		bRst = edge->GoEdgeDetection(_token);
+		bRst = edge->GoImgProc(_token);
 	}
-	else if (strCurName == ComConstStringInfo::IMG_NAME_GRAY_SCALE)
+	else if (strCurName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE)
 	{
 		GrayScale^ gray = (GrayScale^)m_imgProc;
-		bRst = gray->GoEdgeDetection(_token);
+		bRst = gray->GoImgProc(_token);
 	}
-	else if (strCurName == ComConstStringInfo::IMG_NAME_BINARIZATION)
+	else if (strCurName == (String^)ComConstStringInfo::IMG_NAME_BINARIZATION)
 	{
+		Binarization^ binarization = (Binarization^)m_imgProc;
+		binarization->SetThresh(120);
+		bRst = binarization->GoImgProc(_token);
 	}
-	else if (strCurName == ComConstStringInfo::IMG_NAME_GRAY_SCALE_2DIFF)
+	else if (strCurName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE_2DIFF)
 	{
+		GrayScale2Diff^ gray2Diff = (GrayScale2Diff^)m_imgProc;
+		bRst = gray2Diff->GoImgProc(_token);
 	}
-	else if (strCurName == ComConstStringInfo::IMG_NAME_COLOR_REVERSAL)
+	else if (strCurName == (String^)ComConstStringInfo::IMG_NAME_COLOR_REVERSAL)
 	{
+		ColorReversal^ colorReversal = (ColorReversal^)m_imgProc;
+		bRst = colorReversal->GoImgProc(_token);
 	}
 
 	return bRst;
+}
+
+bool FormMain::SelectLoadImage(String^ _strImgName)
+{
+	bool bRst = true;
+
+	if (m_imgProc != nullptr)
+	{
+		m_imgProc = nullptr;
+		delete m_imgProc;
+	}
+
+	if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_EDGE_DETECTION)
+	{
+		m_imgProc = gcnew EdgeDetection(m_bitmap);
+	}
+	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE)
+	{
+		m_imgProc = gcnew GrayScale(m_bitmap);
+	}
+	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_BINARIZATION)
+	{
+		m_imgProc = gcnew Binarization(m_bitmap);
+	}
+	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE_2DIFF)
+	{
+		m_imgProc = gcnew GrayScale2Diff(m_bitmap);
+	}
+	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_COLOR_REVERSAL)
+	{
+		m_imgProc = gcnew ColorReversal(m_bitmap);
+	}
+
+	return bRst;
+}
+
+Bitmap^ FormMain::GetImage(String^ _strImgName)
+{
+	Bitmap^ bitmap = nullptr;
+
+	if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_EDGE_DETECTION)
+	{
+		EdgeDetection^ edge = (EdgeDetection^)m_imgProc;
+		if (edge != nullptr)
+		{
+			bitmap = edge->GetBitmap();
+		}
+	}
+	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE)
+	{
+		GrayScale^ gray = (GrayScale^)m_imgProc;
+		if (gray != nullptr)
+		{
+			bitmap = gray->GetBitmap();
+		}
+	}
+	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_BINARIZATION)
+	{
+		Binarization^ binarization = (Binarization^)m_imgProc;
+		if (binarization != nullptr)
+		{
+			bitmap = binarization->GetBitmap();
+		}
+	}
+	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE_2DIFF)
+	{
+		GrayScale2Diff^ gray2Diff = (GrayScale2Diff^)m_imgProc;
+		if (gray2Diff != nullptr)
+		{
+			bitmap = gray2Diff->GetBitmap();
+		}
+	}
+	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_COLOR_REVERSAL)
+	{
+		ColorReversal^ colorReversal = (ColorReversal^)m_imgProc;
+		if (colorReversal != nullptr)
+		{
+			bitmap = colorReversal->GetBitmap();
+		}
+	}
+
+	return bitmap;
+}
+
+Bitmap^ FormMain::SelectGetBitmap(String^ _strImgName)
+{
+	Bitmap^ bitmap = nullptr;
+
+	if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_EDGE_DETECTION)
+	{
+		EdgeDetection^ edge = (EdgeDetection^)m_imgProc;
+		bitmap = edge->GetBitmapAfter();
+	}
+	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE)
+	{
+		GrayScale^ gray = (GrayScale^)m_imgProc;
+		bitmap = gray->GetBitmapAfter();
+	}
+	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_BINARIZATION)
+	{
+		Binarization^ binarization = (Binarization^)m_imgProc;
+		bitmap = binarization->GetBitmapAfter();
+	}
+	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE_2DIFF)
+	{
+		GrayScale2Diff^ gray2Diff = (GrayScale2Diff^)m_imgProc;
+		bitmap = gray2Diff->GetBitmapAfter();
+	}
+	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_COLOR_REVERSAL)
+	{
+		ColorReversal^ colorReversal = (ColorReversal^)m_imgProc;
+		bitmap = colorReversal->GetBitmapAfter();
+	}
+
+	return bitmap;
 }
 
 void FormMain::TaskWorkImageProcessing()
@@ -151,7 +273,8 @@ void FormMain::TaskWorkImageProcessing()
 void FormMain::LoadImage(void)
 {
 	m_bitmap = gcnew Bitmap(m_strOpenFileName);
-	m_edgeDetection = gcnew EdgeDetection(m_bitmap);
+	//m_edgeDetection = gcnew EdgeDetection(m_bitmap);
+	SelectLoadImage(m_strCurImgName);
 
 	return;
 }
@@ -260,7 +383,8 @@ void FormMain::OnClickBtnSaveImage(Object^ sender, EventArgs^ e)
 	if (saveDialog->ShowDialog() == true)
 	{
 		String^ strFileName = saveDialog->GetFileName();
-		auto bitmap = gcnew Bitmap(m_edgeDetection->GetBitmap());
+		//auto bitmap = gcnew Bitmap(m_edgeDetection->GetBitmap());
+		auto bitmap = GetImage(m_strCurImgName);
 		if (bitmap != nullptr)
 		{
 			bitmap->Save(strFileName, System::Drawing::Imaging::ImageFormat::Png);

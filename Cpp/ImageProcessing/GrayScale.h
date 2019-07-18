@@ -17,6 +17,6 @@ namespace ImageProcessing
 	public:
 		GrayScale(Bitmap^ _bitmap);
 		~GrayScale();
-		bool GoImgProc(CancellationToken^ _token);
+		bool GoImgProc(CancellationToken^ _token) override;
 	};
 }
