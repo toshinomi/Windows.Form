@@ -46,7 +46,7 @@ bool GrayScale::GoImgProc(CancellationToken^ _token)
 		}
 	}
 	bitmapAfter->UnlockBits(bitmapData);
-	this->SetBitmapAfter((Bitmap^)bitmapAfter->Clone());
+	this->m_bitmapAfter = (Bitmap^)bitmapAfter->Clone();
 	delete bitmapAfter;
 
 	return bRst;

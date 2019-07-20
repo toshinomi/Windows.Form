@@ -448,7 +448,11 @@ void FormMain::OnClickBtnShowHistgram(Object^ sender, EventArgs^ e)
 
 	Bitmap^ bitmap = gcnew Bitmap(m_strOpenFileName);
 	m_histgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
-	m_histgram->SetBitmapAfter((Bitmap^)m_bitmap->Clone());
+	//m_histgram->SetBitmapAfter((Bitmap^)m_bitmap->Clone());
+	if (SelectGetBitmap(m_strCurImgName) != nullptr)
+	{
+		m_histgram->SetBitmapAfter((Bitmap^)SelectGetBitmap(m_strCurImgName)->Clone());
+	}
 
 	m_histgram->DrawHistgram();
 	m_histgram->SetIsOpen(true);

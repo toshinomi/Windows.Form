@@ -1,6 +1,7 @@
 #include "FormHistgram.h"
 #include "ComInfo.h"
 #include "ComSaveFileDialog.h"
+#include <string>
 
 using namespace ImageProcessing;
 
@@ -24,6 +25,12 @@ void FormHistgram::DrawHistgram(void)
 	seriesLine2->BorderWidth = 4;
 	seriesLine2->MarkerStyle = MarkerStyle::Circle;
 	seriesLine2->MarkerSize = 2;
+	int nHistgram0[256];
+	int nHistgram1[256];
+	memset(nHistgram0, 0, sizeof(int) * 256);
+	memset(nHistgram1, 0, sizeof(int) * 256);
+	memcpy(nHistgram0, m_nHistgram[0], sizeof(int) * 256);
+	memcpy(nHistgram1, m_nHistgram[1], sizeof(int) * 256);
 	for (int i = 0; i < 256; i++)
 	{
 		seriesLine->Points->Add(gcnew DataPoint(i, m_nHistgram[0][i]));
@@ -118,6 +125,12 @@ void FormHistgram::SaveCsv(void)
 	{
 		String^ strDelmiter = ",";
 		StringBuilder^ stringBuilder = gcnew StringBuilder();
+		int nHistgram0[256];
+		int nHistgram1[256];
+		memset(nHistgram0, 0, sizeof(int) * 256);
+		memset(nHistgram1, 0, sizeof(int) * 256);
+		memcpy(nHistgram0, m_nHistgram[0], sizeof(int) * 256);
+		memcpy(nHistgram1, m_nHistgram[1], sizeof(int) * 256);
 		for (int nIdx = 0; nIdx < 256; nIdx++)
 		{
 			stringBuilder->Append(nIdx)->Append(strDelmiter);

@@ -12,7 +12,7 @@ namespace ImageProcessing
 {
 	public  ref class  ComImgProc abstract
 	{
-	private:
+	protected:
 		Bitmap^ m_bitmap;
 		Bitmap^ m_bitmapAfter;
 	public:
