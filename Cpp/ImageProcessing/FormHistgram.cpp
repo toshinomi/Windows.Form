@@ -38,11 +38,6 @@ void FormHistgram::DrawHistgram(void)
 	}
 	chart->Series->Add(seriesLine);
 	chart->Series->Add(seriesLine2);
-
-	if (m_nHistgram != nullptr)
-	{
-		delete[] m_nHistgram;
-	}
 }
 
 void FormHistgram::CalHistgram(void)
@@ -134,8 +129,8 @@ void FormHistgram::SaveCsv(void)
 		for (int nIdx = 0; nIdx < 256; nIdx++)
 		{
 			stringBuilder->Append(nIdx)->Append(strDelmiter);
-			stringBuilder->Append(m_nHistgram[0, nIdx])->Append(strDelmiter);
-			stringBuilder->Append(m_nHistgram[1, nIdx])->Append(strDelmiter);
+			stringBuilder->Append(m_nHistgram[0][nIdx])->Append(strDelmiter);
+			stringBuilder->Append(m_nHistgram[1][nIdx])->Append(strDelmiter);
 			stringBuilder->Append(Environment::NewLine);
 		}
 		saveDialog->StreamWrite(stringBuilder->ToString());

@@ -36,6 +36,10 @@ namespace ImageProcessing {
 			{
 				delete components;
 			}
+			if (m_nHistgram != nullptr)
+			{
+				delete[] m_nHistgram;
+			}
 		}
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^ chart;
 	private: System::Windows::Forms::ContextMenuStrip^ contextMenu;
