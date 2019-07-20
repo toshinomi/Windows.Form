@@ -89,6 +89,12 @@ namespace ImageProcessing {
 	private: System::Windows::Forms::Button^ btnSaveImage;
 	private: System::Windows::Forms::ToolTip^ toolTipBtnSaveImage;
 	private: System::Windows::Forms::ToolTip^ toolTipBtnShowHistgram;
+	private: System::Windows::Forms::MenuStrip^ menuMain;
+
+	private: System::Windows::Forms::ToolStripMenuItem^ fileFToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ endXToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ settingOToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ imageProcessingToolStripMenuItem;
 	private: System::ComponentModel::IContainer^ components;
 
 	private:
@@ -129,12 +135,18 @@ namespace ImageProcessing {
 			this->btnFileSelect = (gcnew System::Windows::Forms::Button());
 			this->toolTipBtnSaveImage = (gcnew System::Windows::Forms::ToolTip(this->components));
 			this->toolTipBtnShowHistgram = (gcnew System::Windows::Forms::ToolTip(this->components));
+			this->menuMain = (gcnew System::Windows::Forms::MenuStrip());
+			this->fileFToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->endXToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->settingOToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->imageProcessingToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->groupBoxProcessingInfo->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxStatus))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxAfter))->BeginInit();
 			this->groupBoxImageOutput->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxOriginal))->BeginInit();
 			this->groupBoxOperation->SuspendLayout();
+			this->menuMain->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// labelTime
@@ -162,7 +174,7 @@ namespace ImageProcessing {
 			this->groupBoxProcessingInfo->Controls->Add(this->textBoxTime);
 			this->groupBoxProcessingInfo->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(128)));
-			this->groupBoxProcessingInfo->Location = System::Drawing::Point(12, 441);
+			this->groupBoxProcessingInfo->Location = System::Drawing::Point(12, 464);
 			this->groupBoxProcessingInfo->Name = L"groupBoxProcessingInfo";
 			this->groupBoxProcessingInfo->Size = System::Drawing::Size(249, 113);
 			this->groupBoxProcessingInfo->TabIndex = 4;
@@ -228,7 +240,7 @@ namespace ImageProcessing {
 			this->groupBoxImageOutput->Controls->Add(this->pictureBoxOriginal);
 			this->groupBoxImageOutput->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(128)));
-			this->groupBoxImageOutput->Location = System::Drawing::Point(267, 15);
+			this->groupBoxImageOutput->Location = System::Drawing::Point(267, 38);
 			this->groupBoxImageOutput->Name = L"groupBoxImageOutput";
 			this->groupBoxImageOutput->Size = System::Drawing::Size(1065, 539);
 			this->groupBoxImageOutput->TabIndex = 5;
@@ -299,7 +311,7 @@ namespace ImageProcessing {
 			this->groupBoxOperation->Controls->Add(this->btnFileSelect);
 			this->groupBoxOperation->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(128)));
-			this->groupBoxOperation->Location = System::Drawing::Point(12, 15);
+			this->groupBoxOperation->Location = System::Drawing::Point(12, 38);
 			this->groupBoxOperation->Name = L"groupBoxOperation";
 			this->groupBoxOperation->Size = System::Drawing::Size(249, 408);
 			this->groupBoxOperation->TabIndex = 3;
@@ -348,17 +360,59 @@ namespace ImageProcessing {
 			this->btnFileSelect->UseVisualStyleBackColor = false;
 			this->btnFileSelect->Click += gcnew System::EventHandler(this, &FormMain::OnClickBtnFileSelect);
 			// 
+			// menuMain
+			// 
+			this->menuMain->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->fileFToolStripMenuItem,
+					this->settingOToolStripMenuItem
+			});
+			this->menuMain->Location = System::Drawing::Point(0, 0);
+			this->menuMain->Name = L"menuMain";
+			this->menuMain->Size = System::Drawing::Size(1344, 24);
+			this->menuMain->TabIndex = 6;
+			this->menuMain->Text = L"menuStrip1";
+			// 
+			// fileFToolStripMenuItem
+			// 
+			this->fileFToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->endXToolStripMenuItem });
+			this->fileFToolStripMenuItem->Name = L"fileFToolStripMenuItem";
+			this->fileFToolStripMenuItem->Size = System::Drawing::Size(51, 20);
+			this->fileFToolStripMenuItem->Text = L"File(&F)";
+			// 
+			// endXToolStripMenuItem
+			// 
+			this->endXToolStripMenuItem->Name = L"endXToolStripMenuItem";
+			this->endXToolStripMenuItem->Size = System::Drawing::Size(109, 22);
+			this->endXToolStripMenuItem->Text = L"End(&X)";
+			this->endXToolStripMenuItem->Click += gcnew System::EventHandler(this, &FormMain::OnClickMenu);
+			// 
+			// settingOToolStripMenuItem
+			// 
+			this->settingOToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->imageProcessingToolStripMenuItem });
+			this->settingOToolStripMenuItem->Name = L"settingOToolStripMenuItem";
+			this->settingOToolStripMenuItem->Size = System::Drawing::Size(73, 20);
+			this->settingOToolStripMenuItem->Text = L"Setting(&O)";
+			// 
+			// imageProcessingToolStripMenuItem
+			// 
+			this->imageProcessingToolStripMenuItem->Name = L"imageProcessingToolStripMenuItem";
+			this->imageProcessingToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->imageProcessingToolStripMenuItem->Text = L"Image Processing";
+			this->imageProcessingToolStripMenuItem->Click += gcnew System::EventHandler(this, &FormMain::OnClickMenu);
+			// 
 			// FormMain
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 12);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::LightSteelBlue;
-			this->ClientSize = System::Drawing::Size(1344, 569);
+			this->ClientSize = System::Drawing::Size(1344, 611);
 			this->Controls->Add(this->groupBoxProcessingInfo);
 			this->Controls->Add(this->groupBoxImageOutput);
 			this->Controls->Add(this->groupBoxOperation);
+			this->Controls->Add(this->menuMain);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->MainMenuStrip = this->menuMain;
 			this->MaximizeBox = false;
 			this->Name = L"FormMain";
 			this->Text = L"Image Processing";
@@ -371,7 +425,10 @@ namespace ImageProcessing {
 			this->groupBoxImageOutput->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxOriginal))->EndInit();
 			this->groupBoxOperation->ResumeLayout(false);
+			this->menuMain->ResumeLayout(false);
+			this->menuMain->PerformLayout();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -402,5 +459,7 @@ namespace ImageProcessing {
 			bool SelectLoadImage(String^ _strImgName);
 			Bitmap^ GetImage(String^ _strImgName);
 			Bitmap^ SelectGetBitmap(String^ _strImgName);
+			void OnClickMenu(System::Object^ sender, System::EventArgs^ e);
+			void ShowSettingImageProcessing(void);
 	};
 };

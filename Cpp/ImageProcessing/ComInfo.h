@@ -29,7 +29,7 @@ namespace ImageProcessing
 	{
 	public:
 		static const String^ MENU_SETTING_IMAGE_PROCESSING = "Image Processing";
-		static const String^ MENU_FILE_END = "End(_X)";
+		static const String^ MENU_FILE_END = "End(&X)";
 		static const String^ MENU_SAVE_CSV = "Save Csv...";
 		static const String^ BTN_OK = "btnOk";
 		static const String^ BTN_CANCEL = "btnCancel";

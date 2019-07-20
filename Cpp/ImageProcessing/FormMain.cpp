@@ -63,6 +63,7 @@ void FormMain::SetButtonEnable()
 	btnAllClear->Enabled = true;
 	btnStart->Enabled = true;
 	btnStop->Enabled = false;
+	btnShowHistgram->Enabled = true;
 }
 
 void FormMain::SetTextTime(long long _lTime)
@@ -105,6 +106,7 @@ void FormMain::ExecTask()
 	}
 	Invoke(gcnew Action(this, &FormMain::SetPictureBoxStatus));
 	Invoke(gcnew Action(this, &FormMain::SetButtonEnable));
+	menuMain->Enabled = true;
 
 	delete stopwatch;
 	m_tokenSource = nullptr;
@@ -260,6 +262,42 @@ Bitmap^ FormMain::SelectGetBitmap(String^ _strImgName)
 	}
 
 	return bitmap;
+}
+
+void ImageProcessing::FormMain::OnClickMenu(System::Object^ sender, System::EventArgs^ e)
+{
+	ToolStripMenuItem^ menuItem = (ToolStripMenuItem^)sender;
+	String^ strText = menuItem->Text;
+
+	if (strText == (String^)ComConstStringInfo::MENU_FILE_END)
+	{
+		Close();
+	}
+	else if (strText == (String^)ComConstStringInfo::MENU_SETTING_IMAGE_PROCESSING)
+	{
+		ShowSettingImageProcessing();
+	}
+}
+
+void FormMain::ShowSettingImageProcessing(void)
+{
+	FormSettingImageProcessing^ win = gcnew FormSettingImageProcessing();
+	auto dialogResult = win->ShowDialog();
+
+	if (dialogResult == ::DialogResult::OK)
+	{
+		m_strCurImgName = (String^)win->GetCmbBoxImageProcessingType()->SelectedItem;
+		this->Text = "Image Processing ( " + m_strCurImgName + " )";
+
+		//sliderThresh.Enabled = m_strCurImgName == ComConstStringInfo::IMG_NAME_BINARIZATION ? true : false;
+
+		pictureBoxAfter->Image = nullptr;
+		SelectLoadImage(m_strCurImgName);
+		if (m_histgram != nullptr && m_histgram->GetIsOpen() == true)
+		{
+			OnClickBtnShowHistgram(this, nullptr);
+		}
+	}
 }
 
 void FormMain::TaskWorkImageProcessing()

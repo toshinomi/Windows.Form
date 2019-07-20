@@ -133,6 +133,7 @@ namespace ImageProcessing {
 	public:
 		void LoadParam(void);
 		void SaveParam(void);
+		ComboBox^ GetCmbBoxImageProcessingType(void) { return cmbBoxImageProcessingType; };
 	private:
 		void OnClickOk(System::Object^ sender, System::EventArgs^ e);
 		void OnClickCancel(System::Object^ sender, System::EventArgs^ e);
