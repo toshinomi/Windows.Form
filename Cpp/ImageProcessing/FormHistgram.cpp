@@ -15,26 +15,24 @@ void FormHistgram::DrawHistgram(void)
 	Series^ seriesLine = gcnew Series();
 	seriesLine->ChartType = SeriesChartType::Line;
 	seriesLine->LegendText = "Original";
-	seriesLine->BorderWidth = 4;
-	seriesLine->MarkerStyle = MarkerStyle:: Circle;
-	seriesLine->MarkerSize = 2;
+	seriesLine->BorderWidth = 2;
 
 	Series^ seriesLine2 = gcnew Series();
 	seriesLine2->ChartType = SeriesChartType::Line;
 	seriesLine2->LegendText = "After";
-	seriesLine2->BorderWidth = 4;
-	seriesLine2->MarkerStyle = MarkerStyle::Circle;
-	seriesLine2->MarkerSize = 2;
+	seriesLine2->BorderWidth = 2;
+#ifdef DEBUG
 	int nHistgram0[256];
 	int nHistgram1[256];
 	memset(nHistgram0, 0, sizeof(int) * 256);
 	memset(nHistgram1, 0, sizeof(int) * 256);
 	memcpy(nHistgram0, m_nHistgram[0], sizeof(int) * 256);
 	memcpy(nHistgram1, m_nHistgram[1], sizeof(int) * 256);
+#endif // DEBUG
 	for (int i = 0; i < 256; i++)
 	{
-		seriesLine->Points->Add(gcnew DataPoint(i, m_nHistgram[0][i]));
-		seriesLine->Points->Add(gcnew DataPoint(i, m_nHistgram[1][i]));
+		seriesLine->Points->AddXY(i, m_nHistgram[0][i]);
+		seriesLine2->Points->AddXY(i, m_nHistgram[1][i]);
 	}
 	chart->Series->Add(seriesLine);
 	chart->Series->Add(seriesLine2);
@@ -120,12 +118,14 @@ void FormHistgram::SaveCsv(void)
 	{
 		String^ strDelmiter = ",";
 		StringBuilder^ stringBuilder = gcnew StringBuilder();
+#ifdef DEBUG
 		int nHistgram0[256];
 		int nHistgram1[256];
 		memset(nHistgram0, 0, sizeof(int) * 256);
 		memset(nHistgram1, 0, sizeof(int) * 256);
 		memcpy(nHistgram0, m_nHistgram[0], sizeof(int) * 256);
 		memcpy(nHistgram1, m_nHistgram[1], sizeof(int) * 256);
+#endif // DEBUG
 		for (int nIdx = 0; nIdx < 256; nIdx++)
 		{
 			stringBuilder->Append(nIdx)->Append(strDelmiter);
