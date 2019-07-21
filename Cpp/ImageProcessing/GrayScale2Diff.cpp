@@ -65,9 +65,9 @@ bool GrayScale2Diff::GoImgProc(CancellationToken^ _token)
 					{
 						Byte* pPixel2 = (Byte*)bitmapData->Scan0.ToPointer() + (nIdxHeight + nIdxHightMask) * bitmapData->Stride + (nIdxWidth + nIdxWidthMask) * 4;
 
-						lCalB += pPixel2[ComInfo::Pixel::B] * nMask[nIdxWidthMask][nIdxHightMask];
-						lCalG += pPixel2[ComInfo::Pixel::G] * nMask[nIdxWidthMask][nIdxHightMask];
-						lCalR += pPixel2[ComInfo::Pixel::R] * nMask[nIdxWidthMask][nIdxHightMask];
+						lCalB = pPixel2[ComInfo::Pixel::B] * nMask[nIdxWidthMask][nIdxHightMask];
+						lCalG = pPixel2[ComInfo::Pixel::G] * nMask[nIdxWidthMask][nIdxHightMask];
+						lCalR = pPixel2[ComInfo::Pixel::R] * nMask[nIdxWidthMask][nIdxHightMask];
 
 						double dcalGray = (lCalB + lCalG + lCalR) / 3;
 						dCalAve = (dCalAve + dcalGray) / 2;
