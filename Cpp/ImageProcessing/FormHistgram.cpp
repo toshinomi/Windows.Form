@@ -12,15 +12,25 @@ void FormHistgram::DrawHistgram(void)
 	CalHistgram();
 
 	chart->Series->Clear();
-	Series^ seriesLine = gcnew Series();
-	seriesLine->ChartType = SeriesChartType::Line;
-	seriesLine->LegendText = "Original";
-	seriesLine->BorderWidth = 2;
+	if (m_seriesLineOriginal != nullptr)
+	{
+		delete m_seriesLineOriginal;
+		m_seriesLineOriginal = nullptr;
+	}
+	m_seriesLineOriginal = gcnew Series();
+	m_seriesLineOriginal->ChartType = SeriesChartType::Line;
+	m_seriesLineOriginal->LegendText = "Original";
+	m_seriesLineOriginal->BorderWidth = 2;
 
-	Series^ seriesLine2 = gcnew Series();
-	seriesLine2->ChartType = SeriesChartType::Line;
-	seriesLine2->LegendText = "After";
-	seriesLine2->BorderWidth = 2;
+	if (m_seriesLineAfter != nullptr)
+	{
+		delete m_seriesLineAfter;
+		m_seriesLineAfter = nullptr;
+	}
+	m_seriesLineAfter = gcnew Series();
+	m_seriesLineAfter->ChartType = SeriesChartType::Line;
+	m_seriesLineAfter->LegendText = "After";
+	m_seriesLineAfter->BorderWidth = 2;
 #ifdef DEBUG
 	int nHistgram0[256];
 	int nHistgram1[256];
@@ -31,11 +41,11 @@ void FormHistgram::DrawHistgram(void)
 #endif // DEBUG
 	for (int i = 0; i < 256; i++)
 	{
-		seriesLine->Points->AddXY(i, m_nHistgram[0][i]);
-		seriesLine2->Points->AddXY(i, m_nHistgram[1][i]);
+		m_seriesLineOriginal->Points->AddXY(i, m_nHistgram[0][i]);
+		m_seriesLineAfter->Points->AddXY(i, m_nHistgram[1][i]);
 	}
-	chart->Series->Add(seriesLine);
-	chart->Series->Add(seriesLine2);
+	chart->Series->Add(m_seriesLineOriginal);
+	chart->Series->Add(m_seriesLineAfter);
 }
 
 void FormHistgram::CalHistgram(void)

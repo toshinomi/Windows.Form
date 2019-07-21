@@ -33,6 +33,7 @@ namespace ImageProcessing {
 			btnAllClear->Enabled = true;
 			btnStart->Enabled = false;
 			btnStop->Enabled = false;
+			btnSaveImage->Enabled = false;
 
 			pictureBoxStatus->Visible = false;
 

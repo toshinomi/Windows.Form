@@ -45,6 +45,11 @@ namespace ImageProcessing {
 				delete[] m_nHistgram;
 				m_nHistgram = nullptr;
 			}
+			delete m_seriesLineOriginal;
+			delete m_seriesLineAfter;
+			m_seriesLineOriginal = nullptr;
+			m_seriesLineAfter = nullptr;
+			m_bIsOpen = false;
 		}
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^ chart;
 	private: System::Windows::Forms::ContextMenuStrip^ contextMenu;
@@ -129,7 +134,8 @@ namespace ImageProcessing {
 		Bitmap^ m_bitmapOrg;
 		Bitmap^ m_bitmapAfter;
 		bool m_bIsOpen;
-
+		Series^ m_seriesLineOriginal;
+		Series^ m_seriesLineAfter;
 	public:
 		Bitmap^ GetBitmapOrg(void) { return m_bitmapOrg; };
 		void SetBitmapOrg(Bitmap^ _bitmap) { m_bitmapOrg = _bitmap; }
@@ -139,6 +145,12 @@ namespace ImageProcessing {
 
 		bool GetIsOpen(void) { return m_bIsOpen; };
 		void SetIsOpen(bool _isOpen) { m_bIsOpen = _isOpen; };
+
+		Series^ GetSeriesLineOriginal(void) { return m_seriesLineOriginal; };
+		void SetSeriesLineOriginal(Series^ _series) { m_seriesLineOriginal = _series; };
+
+		Series^ GetSeriesLineAfter(void) { return m_seriesLineAfter; };
+		void SetSeriesLineAfter(Series^ _series) { m_seriesLineAfter = _series; };
 
 		void DrawHistgram(void);
 		void CalHistgram(void);

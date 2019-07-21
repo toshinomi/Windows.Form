@@ -63,7 +63,9 @@ void FormMain::SetButtonEnable()
 	btnAllClear->Enabled = true;
 	btnStart->Enabled = true;
 	btnStop->Enabled = false;
+	btnSaveImage->Enabled = true;
 	btnShowHistgram->Enabled = true;
+	menuMain->Enabled = true;
 }
 
 void FormMain::SetTextTime(long long _lTime)
@@ -103,12 +105,27 @@ void FormMain::ExecTask()
 		stopwatch->Stop();
 
 		Invoke(gcnew Action<long long>(this, &FormMain::SetTextTime), stopwatch->ElapsedMilliseconds);
+
+		Bitmap^ bitmap = gcnew Bitmap(m_strOpenFileName);
+		m_histgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
+		if (SelectGetBitmap(m_strCurImgName) != nullptr)
+		{
+			System::Threading::Thread::Sleep(100);
+			m_histgram->SetBitmapAfter((Bitmap^)SelectGetBitmap(m_strCurImgName)->Clone());
+		}
+		if (m_histgram->GetIsOpen() == true)
+		{
+			Invoke(gcnew Action(m_histgram, &FormHistgram::DrawHistgram));
+		}
+		delete bitmap;
 	}
 	Invoke(gcnew Action(this, &FormMain::SetPictureBoxStatus));
 	Invoke(gcnew Action(this, &FormMain::SetButtonEnable));
-	menuMain->Enabled = true;
 
 	delete stopwatch;
+	delete m_tokenSource;
+	delete imgInfo;
+	delete binarizationInfo;
 	m_tokenSource = nullptr;
 
 	return;
@@ -344,6 +361,7 @@ void FormMain::ShowSettingImageProcessing(void)
 			OnClickBtnShowHistgram(this, nullptr);
 		}
 	}
+	delete win;
 }
 
 int ImageProcessing::FormMain::SearchImgTypeId(String^ _strImgName)
@@ -425,6 +443,17 @@ void FormMain::OnClickBtnFileSelect(Object^ sender, EventArgs^ e)
 			m_histgram = nullptr;
 			m_histgram = gcnew FormHistgram();
 		}
+
+		Bitmap^ bitmap = gcnew Bitmap(m_strOpenFileName);
+		m_histgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
+		if (SelectGetBitmap(m_strCurImgName) != nullptr)
+		{
+			m_histgram->SetBitmapAfter((Bitmap^)SelectGetBitmap(m_strCurImgName)->Clone());
+		}
+		m_histgram->DrawHistgram();
+		m_histgram->SetIsOpen(true);
+		m_histgram->Show();
+		delete bitmap;
 	}
 	delete openFileDlg;
 	return;
@@ -443,6 +472,12 @@ void FormMain::OnClickBtnAllClear(Object^ sender, EventArgs^ e)
 	btnFileSelect->Enabled = true;
 	btnAllClear->Enabled = true;
 	btnStart->Enabled = false;
+	btnSaveImage->Enabled = false;
+
+	if (m_histgram != nullptr)
+	{
+		m_histgram->Close();
+	}
 
 	return;
 }
@@ -454,6 +489,7 @@ void FormMain::OnClickBtnStart(Object^ sender, EventArgs^ e)
 	btnFileSelect->Enabled = false;
 	btnAllClear->Enabled = false;
 	btnStart->Enabled = false;
+	menuMain->Enabled = false;
 
 	textBoxTime->Text = "";
 
