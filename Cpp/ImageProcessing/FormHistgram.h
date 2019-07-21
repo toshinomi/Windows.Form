@@ -38,7 +38,12 @@ namespace ImageProcessing {
 			}
 			if (m_nHistgram != nullptr)
 			{
+				for (int i = 0; i < 2; i++)
+				{
+					delete[] m_nHistgram[i];
+				}
 				delete[] m_nHistgram;
+				m_nHistgram = nullptr;
 			}
 		}
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^ chart;

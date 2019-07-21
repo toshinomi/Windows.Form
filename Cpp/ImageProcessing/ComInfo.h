@@ -16,6 +16,10 @@ namespace ImageProcessing
 		enum ImgType
 		{
 			EdgeDetection = 0,
+			GrayScale,
+			Binarization,
+			GrayScale2Diff,
+			ColorReversal,
 		};
 
 		enum ImgDataType

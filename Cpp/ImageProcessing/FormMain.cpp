@@ -119,31 +119,43 @@ bool FormMain::SelectGoImgProc(ComImgInfo^ _comImgInfo, CancellationToken^ _toke
 	bool bRst = true;
 
 	String^ strCurName = _comImgInfo->GetCurImgName();
-	if (strCurName == (String^)ComConstStringInfo::IMG_NAME_EDGE_DETECTION)
+	int nId = SearchImgTypeId(strCurName);
+
+	switch (nId)
+	{
+	case ComInfo::EdgeDetection:
 	{
 		EdgeDetection^ edge = (EdgeDetection^)m_imgProc;
 		bRst = edge->GoImgProc(_token);
+		break;
 	}
-	else if (strCurName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE)
+	case ComInfo::GrayScale:
 	{
 		GrayScale^ gray = (GrayScale^)m_imgProc;
 		bRst = gray->GoImgProc(_token);
+		break;
 	}
-	else if (strCurName == (String^)ComConstStringInfo::IMG_NAME_BINARIZATION)
+	case ComInfo::Binarization:
 	{
 		Binarization^ binarization = (Binarization^)m_imgProc;
 		binarization->SetThresh(120);
 		bRst = binarization->GoImgProc(_token);
+		break;
 	}
-	else if (strCurName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE_2DIFF)
+	case ComInfo::GrayScale2Diff:
 	{
 		GrayScale2Diff^ gray2Diff = (GrayScale2Diff^)m_imgProc;
 		bRst = gray2Diff->GoImgProc(_token);
+		break;
 	}
-	else if (strCurName == (String^)ComConstStringInfo::IMG_NAME_COLOR_REVERSAL)
+	case ComInfo::ColorReversal:
 	{
 		ColorReversal^ colorReversal = (ColorReversal^)m_imgProc;
 		bRst = colorReversal->GoImgProc(_token);
+		break;
+	}
+	default:
+		break;
 	}
 
 	return bRst;
@@ -159,25 +171,37 @@ bool FormMain::SelectLoadImage(String^ _strImgName)
 		delete m_imgProc;
 	}
 
-	if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_EDGE_DETECTION)
+	int nId = SearchImgTypeId(_strImgName);
+
+	switch (nId)
+	{
+	case ComInfo::EdgeDetection:
 	{
 		m_imgProc = gcnew EdgeDetection(m_bitmap);
+		break;
 	}
-	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE)
+	case ComInfo::GrayScale:
 	{
 		m_imgProc = gcnew GrayScale(m_bitmap);
+		break;
 	}
-	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_BINARIZATION)
+	case ComInfo::Binarization:
 	{
 		m_imgProc = gcnew Binarization(m_bitmap);
+		break;
 	}
-	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE_2DIFF)
+	case ComInfo::GrayScale2Diff:
 	{
 		m_imgProc = gcnew GrayScale2Diff(m_bitmap);
+		break;
 	}
-	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_COLOR_REVERSAL)
+	case ComInfo::ColorReversal:
 	{
 		m_imgProc = gcnew ColorReversal(m_bitmap);
+		break;
+	}
+	default:
+		break;
 	}
 
 	return bRst;
@@ -186,46 +210,57 @@ bool FormMain::SelectLoadImage(String^ _strImgName)
 Bitmap^ FormMain::GetImage(String^ _strImgName)
 {
 	Bitmap^ bitmap = nullptr;
+	int nId = SearchImgTypeId(_strImgName);
 
-	if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_EDGE_DETECTION)
+	switch (nId)
+	{
+	case ComInfo::EdgeDetection:
 	{
 		EdgeDetection^ edge = (EdgeDetection^)m_imgProc;
 		if (edge != nullptr)
 		{
 			bitmap = edge->GetBitmap();
 		}
+		break;
 	}
-	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE)
+	case ComInfo::GrayScale:
 	{
 		GrayScale^ gray = (GrayScale^)m_imgProc;
 		if (gray != nullptr)
 		{
 			bitmap = gray->GetBitmap();
 		}
+		break;
 	}
-	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_BINARIZATION)
+	case ComInfo::Binarization:
 	{
 		Binarization^ binarization = (Binarization^)m_imgProc;
 		if (binarization != nullptr)
 		{
 			bitmap = binarization->GetBitmap();
 		}
+		break;
 	}
-	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE_2DIFF)
+	case ComInfo::GrayScale2Diff:
 	{
 		GrayScale2Diff^ gray2Diff = (GrayScale2Diff^)m_imgProc;
 		if (gray2Diff != nullptr)
 		{
 			bitmap = gray2Diff->GetBitmap();
 		}
+		break;
 	}
-	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_COLOR_REVERSAL)
+	case ComInfo::ColorReversal:
 	{
 		ColorReversal^ colorReversal = (ColorReversal^)m_imgProc;
 		if (colorReversal != nullptr)
 		{
 			bitmap = colorReversal->GetBitmap();
 		}
+		break;
+	}
+	default:
+		break;
 	}
 
 	return bitmap;
@@ -234,31 +269,42 @@ Bitmap^ FormMain::GetImage(String^ _strImgName)
 Bitmap^ FormMain::SelectGetBitmap(String^ _strImgName)
 {
 	Bitmap^ bitmap = nullptr;
+	int nId = SearchImgTypeId(_strImgName);
 
-	if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_EDGE_DETECTION)
+	switch (nId)
+	{
+	case ComInfo::EdgeDetection:
 	{
 		EdgeDetection^ edge = (EdgeDetection^)m_imgProc;
 		bitmap = edge->GetBitmapAfter();
+		break;
 	}
-	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE)
+	case ComInfo::GrayScale:
 	{
 		GrayScale^ gray = (GrayScale^)m_imgProc;
 		bitmap = gray->GetBitmapAfter();
+		break;
 	}
-	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_BINARIZATION)
+	case ComInfo::Binarization:
 	{
 		Binarization^ binarization = (Binarization^)m_imgProc;
 		bitmap = binarization->GetBitmapAfter();
+		break;
 	}
-	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE_2DIFF)
+	case ComInfo::GrayScale2Diff:
 	{
 		GrayScale2Diff^ gray2Diff = (GrayScale2Diff^)m_imgProc;
 		bitmap = gray2Diff->GetBitmapAfter();
+		break;
 	}
-	else if (_strImgName == (String^)ComConstStringInfo::IMG_NAME_COLOR_REVERSAL)
+	case ComInfo::ColorReversal:
 	{
 		ColorReversal^ colorReversal = (ColorReversal^)m_imgProc;
 		bitmap = colorReversal->GetBitmapAfter();
+		break;
+	}
+	default:
+		break;
 	}
 
 	return bitmap;
@@ -298,6 +344,29 @@ void FormMain::ShowSettingImageProcessing(void)
 			OnClickBtnShowHistgram(this, nullptr);
 		}
 	}
+}
+
+int ImageProcessing::FormMain::SearchImgTypeId(String^ _strImgName)
+{
+	int nId = -1;
+
+	System::Collections::Generic::Dictionary<int, String^> items;
+	System::Configuration::Configuration^ config = ConfigurationManager::OpenExeConfiguration(ConfigurationUserLevel::None);
+	items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeEdgeId"]->Value), (String^)config->AppSettings->Settings["ImgTypeEdgeName"]->Value);
+	items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeGrayScaleId"]->Value), (String^)config->AppSettings->Settings["ImgTypeGrayScaleName"]->Value);
+	items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeBinarizationId"]->Value), (String^)config->AppSettings->Settings["ImgTypeBinarizationName"]->Value);
+	items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeGrayScale2DiffId"]->Value), (String^)config->AppSettings->Settings["ImgTypeGrayScale2DiffName"]->Value);
+	items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeColorReversalId"]->Value), (String^)config->AppSettings->Settings["ImgTypeColorReversalName"]->Value);
+
+	for each (unsigned int nKey in items.Keys)
+	{
+		if (items[nKey] == _strImgName)
+		{
+			nId = nKey - 1;
+		}
+	}
+
+	return nId;
 }
 
 void FormMain::TaskWorkImageProcessing()

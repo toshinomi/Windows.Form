@@ -461,5 +461,6 @@ namespace ImageProcessing {
 			Bitmap^ SelectGetBitmap(String^ _strImgName);
 			void OnClickMenu(System::Object^ sender, System::EventArgs^ e);
 			void ShowSettingImageProcessing(void);
+			int SearchImgTypeId(String^ _strImgName);
 	};
 };
