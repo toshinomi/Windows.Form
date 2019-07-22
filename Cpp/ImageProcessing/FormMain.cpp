@@ -82,8 +82,6 @@ void FormMain::SetPictureBoxStatus()
 	return;
 }
 
-delegate void DelegateFunction(Bitmap^ bitmap);
-
 void FormMain::ExecTask()
 {
 	Stopwatch^ stopwatch = gcnew Stopwatch();
@@ -113,9 +111,7 @@ void FormMain::ExecTask()
 		if (SelectGetBitmap(m_strCurImgName) != nullptr)
 		{
 			System::Threading::Thread::Sleep(50);
-			DelegateFunction^ DelegateSetBitmapAfter = nullptr;
-			DelegateSetBitmapAfter += gcnew DelegateFunction(m_histgram, &FormHistgram::SetBitmapAfter);
-			DelegateSetBitmapAfter((Bitmap^)SelectGetBitmap(m_strCurImgName)->Clone());
+			m_histgram->SetBitmapAfter((Bitmap^)SelectGetBitmap(m_strCurImgName)->Clone());
 		}
 		if (m_histgram->GetIsOpen() == true)
 		{
