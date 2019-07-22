@@ -110,7 +110,7 @@ void FormMain::ExecTask()
 		m_histgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
 		if (SelectGetBitmap(m_strCurImgName) != nullptr)
 		{
-			System::Threading::Thread::Sleep(100);
+			//System::Threading::Thread::Sleep(100);
 			m_histgram->SetBitmapAfter((Bitmap^)SelectGetBitmap(m_strCurImgName)->Clone());
 		}
 		if (m_histgram->GetIsOpen() == true)
