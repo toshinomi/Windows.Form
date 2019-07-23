@@ -6,6 +6,7 @@
 #include "ColorReversal.h"
 #include "FormHistgram.h"
 #include "ComImgInfo.h"
+#include "ComInfo.h"
 
 namespace ImageProcessing {
 
@@ -42,11 +43,12 @@ namespace ImageProcessing {
 			m_bitmap = nullptr;
 			m_tokenSource = nullptr;
 			m_imgProc = nullptr;
-			m_task = nullptr;
 
 			System::Configuration::Configuration^ config = ConfigurationManager::OpenExeConfiguration(ConfigurationUserLevel::None);
 			m_strCurImgName = config->AppSettings->Settings["ImgTypeSelectName"]->Value;
 			this->Text = "Image Processing ( " + m_strCurImgName + " )";
+
+			sliderThresh->Enabled = m_strCurImgName == (String^)ComConstStringInfo::IMG_NAME_BINARIZATION ? true : false;
 		}
 
 	protected:
@@ -62,7 +64,6 @@ namespace ImageProcessing {
 				delete m_bitmap;
 				delete m_tokenSource;
 				delete m_imgProc;
-				//delete m_edgeDetection;
 				delete m_histgram;
 			}
 		}
@@ -96,6 +97,9 @@ namespace ImageProcessing {
 	private: System::Windows::Forms::ToolStripMenuItem^ endXToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ settingOToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ imageProcessingToolStripMenuItem;
+	private: System::Windows::Forms::Label^ labelThresh;
+	private: System::Windows::Forms::Label^ labelValue;
+	private: System::Windows::Forms::TrackBar^ sliderThresh;
 	private: System::ComponentModel::IContainer^ components;
 
 	private:
@@ -126,6 +130,9 @@ namespace ImageProcessing {
 			this->toolTipBtnFileSelect = (gcnew System::Windows::Forms::ToolTip(this->components));
 			this->labelOriginalImage = (gcnew System::Windows::Forms::Label());
 			this->groupBoxImageOutput = (gcnew System::Windows::Forms::GroupBox());
+			this->labelThresh = (gcnew System::Windows::Forms::Label());
+			this->labelValue = (gcnew System::Windows::Forms::Label());
+			this->sliderThresh = (gcnew System::Windows::Forms::TrackBar());
 			this->pictureBoxOriginal = (gcnew System::Windows::Forms::PictureBox());
 			this->btnStop = (gcnew System::Windows::Forms::Button());
 			this->btnAllClear = (gcnew System::Windows::Forms::Button());
@@ -145,6 +152,7 @@ namespace ImageProcessing {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxStatus))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxAfter))->BeginInit();
 			this->groupBoxImageOutput->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->sliderThresh))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxOriginal))->BeginInit();
 			this->groupBoxOperation->SuspendLayout();
 			this->menuMain->SuspendLayout();
@@ -234,6 +242,9 @@ namespace ImageProcessing {
 			// 
 			// groupBoxImageOutput
 			// 
+			this->groupBoxImageOutput->Controls->Add(this->labelThresh);
+			this->groupBoxImageOutput->Controls->Add(this->labelValue);
+			this->groupBoxImageOutput->Controls->Add(this->sliderThresh);
 			this->groupBoxImageOutput->Controls->Add(this->pictureBoxStatus);
 			this->groupBoxImageOutput->Controls->Add(this->labelAfterImage);
 			this->groupBoxImageOutput->Controls->Add(this->pictureBoxAfter);
@@ -247,6 +258,40 @@ namespace ImageProcessing {
 			this->groupBoxImageOutput->TabIndex = 5;
 			this->groupBoxImageOutput->TabStop = false;
 			this->groupBoxImageOutput->Text = L"Image Output";
+			// 
+			// labelThresh
+			// 
+			this->labelThresh->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(128)));
+			this->labelThresh->Location = System::Drawing::Point(654, 28);
+			this->labelThresh->Name = L"labelThresh";
+			this->labelThresh->Size = System::Drawing::Size(150, 28);
+			this->labelThresh->TabIndex = 13;
+			this->labelThresh->Text = L"Threshold( 0 - 255 )";
+			this->labelThresh->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			// 
+			// labelValue
+			// 
+			this->labelValue->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(128)));
+			this->labelValue->Location = System::Drawing::Point(999, 28);
+			this->labelValue->Name = L"labelValue";
+			this->labelValue->Size = System::Drawing::Size(40, 28);
+			this->labelValue->TabIndex = 12;
+			this->labelValue->Text = L"0";
+			this->labelValue->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			// 
+			// sliderThresh
+			// 
+			this->sliderThresh->AutoSize = false;
+			this->sliderThresh->Location = System::Drawing::Point(810, 30);
+			this->sliderThresh->Maximum = 255;
+			this->sliderThresh->Name = L"sliderThresh";
+			this->sliderThresh->Size = System::Drawing::Size(183, 28);
+			this->sliderThresh->TabIndex = 11;
+			this->sliderThresh->Scroll += gcnew System::EventHandler(this, &FormMain::OnScrollSliderThresh);
+			this->sliderThresh->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &FormMain::OnSliderPreviewKeyUp);
+			this->sliderThresh->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &FormMain::OnSliderPreviewMouseUp);
 			// 
 			// pictureBoxOriginal
 			// 
@@ -397,7 +442,7 @@ namespace ImageProcessing {
 			// imageProcessingToolStripMenuItem
 			// 
 			this->imageProcessingToolStripMenuItem->Name = L"imageProcessingToolStripMenuItem";
-			this->imageProcessingToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->imageProcessingToolStripMenuItem->Size = System::Drawing::Size(166, 22);
 			this->imageProcessingToolStripMenuItem->Text = L"Image Processing";
 			this->imageProcessingToolStripMenuItem->Click += gcnew System::EventHandler(this, &FormMain::OnClickMenu);
 			// 
@@ -424,6 +469,7 @@ namespace ImageProcessing {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxAfter))->EndInit();
 			this->groupBoxImageOutput->ResumeLayout(false);
 			this->groupBoxImageOutput->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->sliderThresh))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxOriginal))->EndInit();
 			this->groupBoxOperation->ResumeLayout(false);
 			this->menuMain->ResumeLayout(false);
@@ -438,7 +484,6 @@ namespace ImageProcessing {
 			Object^ m_imgProc;
 			String^ m_strOpenFileName;
 			CancellationTokenSource^ m_tokenSource;
-			Task^ m_task;
 			String^ m_strCurImgName;
 			FormHistgram^ m_histgram;
 		public:
@@ -447,6 +492,7 @@ namespace ImageProcessing {
 			void SetTextTime(long long _lTime);
 			void SetPictureBoxStatus(void);
 			void TaskWorkImageProcessing(void);
+			void TaskWorkParamAjust(void);
 			void LoadImage(void);
 			void OnFormClosingFormMain(Object^ sender, FormClosingEventArgs^ e);
 			void OnClickBtnFileSelect(Object^ sender, EventArgs^ e);
@@ -455,7 +501,8 @@ namespace ImageProcessing {
 			void OnClickBtnStop(Object^ sender, EventArgs^ e);
 			void OnClickBtnSaveImage(Object^ sender, EventArgs^ e);
 			void OnClickBtnShowHistgram(Object^ sender, EventArgs^ e);
-			void ExecTask(void);
+			void ExecTaskImageProcessing(void);
+			void ExecTaskParamAjust(void);
 			bool SelectGoImgProc(ComImgInfo^ _comImgInfo, CancellationToken^ _token);
 			bool SelectLoadImage(String^ _strImgName);
 			Bitmap^ GetImage(String^ _strImgName);
@@ -463,5 +510,15 @@ namespace ImageProcessing {
 			void OnClickMenu(System::Object^ sender, System::EventArgs^ e);
 			void ShowSettingImageProcessing(void);
 			int SearchImgTypeId(String^ _strImgName);
+			void OnSliderPreviewKeyUp(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e);
+			void OnSliderPreviewMouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e);
+			void ParamAjust(void);
+			void OnScrollSliderThresh(System::Object^ sender, System::EventArgs^ e);
+			Byte GetSliderThresh(void) { return (Byte)sliderThresh->Value; };
 	};
 };
+
+namespace FuncDelegate
+{
+	delegate Byte GetSliderThreshDelegate(void);
+}

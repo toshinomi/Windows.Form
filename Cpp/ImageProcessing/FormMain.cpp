@@ -82,7 +82,7 @@ void FormMain::SetPictureBoxStatus()
 	return;
 }
 
-void FormMain::ExecTask()
+void FormMain::ExecTaskImageProcessing()
 {
 	Stopwatch^ stopwatch = gcnew Stopwatch();
 	stopwatch->Start();
@@ -92,7 +92,8 @@ void FormMain::ExecTask()
 
 	ComImgInfo^ imgInfo = gcnew ComImgInfo();
 	ComBinarizationInfo^ binarizationInfo = gcnew ComBinarizationInfo();
-	Byte nThresh = 125;
+	FuncDelegate::GetSliderThreshDelegate^ getSliderThreshDelegate = gcnew FuncDelegate::GetSliderThreshDelegate(this, &FormMain::GetSliderThresh);
+	Byte nThresh = (Byte)this->Invoke(getSliderThreshDelegate);
 	binarizationInfo->SetThresh(nThresh);
 	imgInfo->SetCurImgName(m_strCurImgName);
 	imgInfo->SetBinarizationInfo(binarizationInfo);
@@ -131,6 +132,48 @@ void FormMain::ExecTask()
 	return;
 }
 
+void FormMain::ExecTaskParamAjust()
+{
+	m_tokenSource = gcnew CancellationTokenSource();
+	CancellationToken^ token = m_tokenSource->Token;
+
+	ComImgInfo^ imgInfo = gcnew ComImgInfo();
+	ComBinarizationInfo^ binarizationInfo = gcnew ComBinarizationInfo();
+	FuncDelegate::GetSliderThreshDelegate^ getSliderThreshDelegate = gcnew FuncDelegate::GetSliderThreshDelegate(this, &FormMain::GetSliderThresh);
+	Byte nThresh = (Byte)this->Invoke(getSliderThreshDelegate);
+	binarizationInfo->SetThresh(nThresh);
+	imgInfo->SetCurImgName(m_strCurImgName);
+	imgInfo->SetBinarizationInfo(binarizationInfo);
+	bool bRst = SelectGoImgProc(imgInfo, token);
+	if (bRst)
+	{
+		pictureBoxOriginal->ImageLocation = m_strOpenFileName;
+		pictureBoxAfter->Image = SelectGetBitmap(m_strCurImgName);
+
+		Bitmap^ bitmap = gcnew Bitmap(m_strOpenFileName);
+		m_histgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
+		if (SelectGetBitmap(m_strCurImgName) != nullptr)
+		{
+			System::Threading::Thread::Sleep(50);
+			m_histgram->SetBitmapAfter((Bitmap^)SelectGetBitmap(m_strCurImgName)->Clone());
+		}
+		if (m_histgram->GetIsOpen() == true)
+		{
+			Invoke(gcnew Action(m_histgram, &FormHistgram::DrawHistgram));
+		}
+		delete bitmap;
+	}
+	Invoke(gcnew Action(this, &FormMain::SetPictureBoxStatus));
+	Invoke(gcnew Action(this, &FormMain::SetButtonEnable));
+
+	delete m_tokenSource;
+	delete imgInfo;
+	delete binarizationInfo;
+	m_tokenSource = nullptr;
+
+	return;
+}
+
 bool FormMain::SelectGoImgProc(ComImgInfo^ _comImgInfo, CancellationToken^ _token)
 {
 	bool bRst = true;
@@ -155,7 +198,8 @@ bool FormMain::SelectGoImgProc(ComImgInfo^ _comImgInfo, CancellationToken^ _toke
 	case ComInfo::Binarization:
 	{
 		Binarization^ binarization = (Binarization^)m_imgProc;
-		binarization->SetThresh(120);
+		ComBinarizationInfo^ comBinarizationInfo = _comImgInfo->GetBinarizationInfo();
+		binarization->SetThresh((Byte)comBinarizationInfo->GetThresh());
 		bRst = binarization->GoImgProc(_token);
 		break;
 	}
@@ -352,7 +396,7 @@ void FormMain::ShowSettingImageProcessing(void)
 		m_strCurImgName = (String^)win->GetCmbBoxImageProcessingType()->SelectedItem;
 		this->Text = "Image Processing ( " + m_strCurImgName + " )";
 
-		//sliderThresh.Enabled = m_strCurImgName == ComConstStringInfo::IMG_NAME_BINARIZATION ? true : false;
+		sliderThresh->Enabled = m_strCurImgName == (String^)ComConstStringInfo::IMG_NAME_BINARIZATION ? true : false;
 
 		pictureBoxAfter->Image = nullptr;
 		SelectLoadImage(m_strCurImgName);
@@ -387,9 +431,62 @@ int ImageProcessing::FormMain::SearchImgTypeId(String^ _strImgName)
 	return nId;
 }
 
+void FormMain::OnSliderPreviewKeyUp(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e)
+{
+	if (pictureBoxAfter->Image != nullptr)
+	{
+		ParamAjust();
+	}
+
+	return;
+}
+
+void FormMain::OnSliderPreviewMouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e)
+{
+	if (pictureBoxAfter->Image != nullptr)
+	{
+		ParamAjust();
+	}
+
+	return;
+}
+
+void FormMain::ParamAjust()
+{
+	pictureBoxAfter->Image = nullptr;
+
+	btnFileSelect->Enabled = false;
+	btnAllClear->Enabled = false;
+	btnStart->Enabled = false;
+	menuMain->Enabled = false;
+
+	LoadImage();
+
+	btnStop->Enabled = true;
+	btnSaveImage->Enabled = false;
+	btnShowHistgram->Enabled = false;
+
+	TaskWorkParamAjust();
+
+	return;
+}
+
+void ImageProcessing::FormMain::OnScrollSliderThresh(System::Object^ sender, System::EventArgs^ e)
+{
+	auto trackBar = (TrackBar^)sender;
+	labelValue->Text = trackBar->Value.ToString();
+}
+
 void FormMain::TaskWorkImageProcessing()
 {
-	Task::Run(gcnew Action(this, &FormMain::ExecTask));
+	Task::Run(gcnew Action(this, &FormMain::ExecTaskImageProcessing));
+
+	return;
+}
+
+void FormMain::TaskWorkParamAjust()
+{
+	Task::Run(gcnew Action(this, &FormMain::ExecTaskParamAjust));
 
 	return;
 }
