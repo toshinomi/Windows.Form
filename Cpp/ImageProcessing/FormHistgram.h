@@ -87,6 +87,9 @@ namespace ImageProcessing {
 			// 
 			// chart
 			// 
+			this->chart->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->chart->BackColor = System::Drawing::Color::LightSteelBlue;
 			this->chart->BackImageTransparentColor = System::Drawing::Color::White;
 			chartArea1->Name = L"ChartArea1";
