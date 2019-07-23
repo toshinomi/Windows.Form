@@ -44,13 +44,13 @@ bool Binarization::GoImgProc(CancellationToken^ _token)
 			}
 
 			Byte* pPixel = (Byte*)bitmapData->Scan0.ToPointer() + nIdxHeight * bitmapData->Stride + nIdxWidth * 4;
-			Byte nGrayScale = (Byte)((pPixel[ComInfo::Pixel::B] + pPixel[ComInfo::Pixel::G] + pPixel[ComInfo::Pixel::R]) / 3);
+			Byte nGrayScale = (Byte)((pPixel[ComInfo::Pixel::Type::B] + pPixel[ComInfo::Pixel::Type::G] + pPixel[ComInfo::Pixel::Type::R]) / 3);
 
 			Byte nBinarization = nGrayScale >= m_nThresh ? (Byte)255 : (Byte)0;
 
-			pPixel[ComInfo::Pixel::B] = nBinarization;
-			pPixel[ComInfo::Pixel::G] = nBinarization;
-			pPixel[ComInfo::Pixel::R] = nBinarization;
+			pPixel[ComInfo::Pixel::Type::B] = nBinarization;
+			pPixel[ComInfo::Pixel::Type::G] = nBinarization;
+			pPixel[ComInfo::Pixel::Type::R] = nBinarization;
 		}
 	}
 	bitmapAfter->UnlockBits(bitmapData);

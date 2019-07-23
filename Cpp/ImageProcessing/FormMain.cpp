@@ -183,19 +183,19 @@ bool FormMain::SelectGoImgProc(ComImgInfo^ _comImgInfo, CancellationToken^ _toke
 
 	switch (nId)
 	{
-	case ComInfo::EdgeDetection:
+	case ComInfo::ImgProc::Type::EdgeDetection:
 	{
 		EdgeDetection^ edge = (EdgeDetection^)m_imgProc;
 		bRst = edge->GoImgProc(_token);
 		break;
 	}
-	case ComInfo::GrayScale:
+	case ComInfo::ImgProc::Type::GrayScale:
 	{
 		GrayScale^ gray = (GrayScale^)m_imgProc;
 		bRst = gray->GoImgProc(_token);
 		break;
 	}
-	case ComInfo::Binarization:
+	case ComInfo::ImgProc::Type::Binarization:
 	{
 		Binarization^ binarization = (Binarization^)m_imgProc;
 		ComBinarizationInfo^ comBinarizationInfo = _comImgInfo->GetBinarizationInfo();
@@ -203,13 +203,13 @@ bool FormMain::SelectGoImgProc(ComImgInfo^ _comImgInfo, CancellationToken^ _toke
 		bRst = binarization->GoImgProc(_token);
 		break;
 	}
-	case ComInfo::GrayScale2Diff:
+	case ComInfo::ImgProc::Type::GrayScale2Diff:
 	{
 		GrayScale2Diff^ gray2Diff = (GrayScale2Diff^)m_imgProc;
 		bRst = gray2Diff->GoImgProc(_token);
 		break;
 	}
-	case ComInfo::ColorReversal:
+	case ComInfo::ImgProc::Type::ColorReversal:
 	{
 		ColorReversal^ colorReversal = (ColorReversal^)m_imgProc;
 		bRst = colorReversal->GoImgProc(_token);
@@ -236,27 +236,27 @@ bool FormMain::SelectLoadImage(String^ _strImgName)
 
 	switch (nId)
 	{
-	case ComInfo::EdgeDetection:
+	case ComInfo::ImgProc::Type::EdgeDetection:
 	{
 		m_imgProc = gcnew EdgeDetection(m_bitmap);
 		break;
 	}
-	case ComInfo::GrayScale:
+	case ComInfo::ImgProc::Type::GrayScale:
 	{
 		m_imgProc = gcnew GrayScale(m_bitmap);
 		break;
 	}
-	case ComInfo::Binarization:
+	case ComInfo::ImgProc::Type::Binarization:
 	{
 		m_imgProc = gcnew Binarization(m_bitmap);
 		break;
 	}
-	case ComInfo::GrayScale2Diff:
+	case ComInfo::ImgProc::Type::GrayScale2Diff:
 	{
 		m_imgProc = gcnew GrayScale2Diff(m_bitmap);
 		break;
 	}
-	case ComInfo::ColorReversal:
+	case ComInfo::ImgProc::Type::ColorReversal:
 	{
 		m_imgProc = gcnew ColorReversal(m_bitmap);
 		break;
@@ -275,7 +275,7 @@ Bitmap^ FormMain::GetImage(String^ _strImgName)
 
 	switch (nId)
 	{
-	case ComInfo::EdgeDetection:
+	case ComInfo::ImgProc::Type::EdgeDetection:
 	{
 		EdgeDetection^ edge = (EdgeDetection^)m_imgProc;
 		if (edge != nullptr)
@@ -284,7 +284,7 @@ Bitmap^ FormMain::GetImage(String^ _strImgName)
 		}
 		break;
 	}
-	case ComInfo::GrayScale:
+	case ComInfo::ImgProc::Type::GrayScale:
 	{
 		GrayScale^ gray = (GrayScale^)m_imgProc;
 		if (gray != nullptr)
@@ -293,7 +293,7 @@ Bitmap^ FormMain::GetImage(String^ _strImgName)
 		}
 		break;
 	}
-	case ComInfo::Binarization:
+	case ComInfo::ImgProc::Type::Binarization:
 	{
 		Binarization^ binarization = (Binarization^)m_imgProc;
 		if (binarization != nullptr)
@@ -302,7 +302,7 @@ Bitmap^ FormMain::GetImage(String^ _strImgName)
 		}
 		break;
 	}
-	case ComInfo::GrayScale2Diff:
+	case ComInfo::ImgProc::Type::GrayScale2Diff:
 	{
 		GrayScale2Diff^ gray2Diff = (GrayScale2Diff^)m_imgProc;
 		if (gray2Diff != nullptr)
@@ -311,7 +311,7 @@ Bitmap^ FormMain::GetImage(String^ _strImgName)
 		}
 		break;
 	}
-	case ComInfo::ColorReversal:
+	case ComInfo::ImgProc::Type::ColorReversal:
 	{
 		ColorReversal^ colorReversal = (ColorReversal^)m_imgProc;
 		if (colorReversal != nullptr)
@@ -334,31 +334,31 @@ Bitmap^ FormMain::SelectGetBitmap(String^ _strImgName)
 
 	switch (nId)
 	{
-	case ComInfo::EdgeDetection:
+	case ComInfo::ImgProc::Type::EdgeDetection:
 	{
 		EdgeDetection^ edge = (EdgeDetection^)m_imgProc;
 		bitmap = edge->GetBitmapAfter();
 		break;
 	}
-	case ComInfo::GrayScale:
+	case ComInfo::ImgProc::Type::GrayScale:
 	{
 		GrayScale^ gray = (GrayScale^)m_imgProc;
 		bitmap = gray->GetBitmapAfter();
 		break;
 	}
-	case ComInfo::Binarization:
+	case ComInfo::ImgProc::Type::Binarization:
 	{
 		Binarization^ binarization = (Binarization^)m_imgProc;
 		bitmap = binarization->GetBitmapAfter();
 		break;
 	}
-	case ComInfo::GrayScale2Diff:
+	case ComInfo::ImgProc::Type::GrayScale2Diff:
 	{
 		GrayScale2Diff^ gray2Diff = (GrayScale2Diff^)m_imgProc;
 		bitmap = gray2Diff->GetBitmapAfter();
 		break;
 	}
-	case ComInfo::ColorReversal:
+	case ComInfo::ImgProc::Type::ColorReversal:
 	{
 		ColorReversal^ colorReversal = (ColorReversal^)m_imgProc;
 		bitmap = colorReversal->GetBitmapAfter();

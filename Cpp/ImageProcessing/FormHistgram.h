@@ -24,6 +24,7 @@ namespace ImageProcessing {
 			//TODO: ここにコンストラクター コードを追加します
 			//
 			chart->ContextMenuStrip = contextMenu;
+			m_chartArea = gcnew ChartArea();
 		}
 
 	protected:
@@ -47,8 +48,10 @@ namespace ImageProcessing {
 			}
 			delete m_seriesLineOriginal;
 			delete m_seriesLineAfter;
+			delete m_chartArea;
 			m_seriesLineOriginal = nullptr;
 			m_seriesLineAfter = nullptr;
+			m_chartArea = nullptr;
 			m_bIsOpen = false;
 		}
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^ chart;
@@ -136,6 +139,7 @@ namespace ImageProcessing {
 		bool m_bIsOpen;
 		Series^ m_seriesLineOriginal;
 		Series^ m_seriesLineAfter;
+		ChartArea^ m_chartArea;
 	public:
 		Bitmap^ GetBitmapOrg(void) { return m_bitmapOrg; };
 		void SetBitmapOrg(Bitmap^ _bitmap) { m_bitmapOrg = _bitmap; }

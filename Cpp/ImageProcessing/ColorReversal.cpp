@@ -39,9 +39,9 @@ bool ColorReversal::GoImgProc(CancellationToken^ _token)
 
 			Byte* pPixel = (Byte*)bitmapData->Scan0.ToPointer() + nIdxHeight * bitmapData->Stride + nIdxWidth * 4;
 
-			pPixel[ComInfo::Pixel::B] = (Byte)(255 - pPixel[ComInfo::Pixel::B]);
-			pPixel[ComInfo::Pixel::G] = (Byte)(255 - pPixel[ComInfo::Pixel::G]);
-			pPixel[ComInfo::Pixel::R] = (Byte)(255 - pPixel[ComInfo::Pixel::R]);
+			pPixel[ComInfo::Pixel::Type::B] = (Byte)(255 - pPixel[ComInfo::Pixel::Type::B]);
+			pPixel[ComInfo::Pixel::Type::G] = (Byte)(255 - pPixel[ComInfo::Pixel::Type::G]);
+			pPixel[ComInfo::Pixel::Type::R] = (Byte)(255 - pPixel[ComInfo::Pixel::Type::R]);
 		}
 	}
 	bitmapAfter->UnlockBits(bitmapData);

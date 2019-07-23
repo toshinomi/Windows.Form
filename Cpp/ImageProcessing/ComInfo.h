@@ -2,32 +2,54 @@
 
 namespace ImageProcessing
 {
-	public class ComInfo
+	namespace ComInfo
 	{
-	public:
-		enum Pixel
+		namespace Pixel
 		{
-			B = 0,
-			G,
-			R,
-			A,
-		};
+			enum Type
+			{
+				B = 0,
+				G,
+				R,
+				A,
+				MAX,
+			};
+		}
 
-		enum ImgType
+		namespace ImgProc
 		{
-			EdgeDetection = 0,
-			GrayScale,
-			Binarization,
-			GrayScale2Diff,
-			ColorReversal,
-		};
+			enum Type
+			{
+				EdgeDetection = 0,
+				GrayScale,
+				Binarization,
+				GrayScale2Diff,
+				ColorReversal,
+				MAX,
+			};
+		}
 
-		enum ImgDataType
+		namespace ImgData
 		{
-			Jpg = 0,
-			Png,
-		};
-	};
+			enum Type
+			{
+				Jpg = 0,
+				Png,
+				MAX,
+			};
+		}
+
+		namespace Picture
+		{
+			enum Type
+			{
+				Original = 0,
+				After,
+				MAX,
+			};
+		}
+		static const short RGB_MAX = 256;
+	}
 
 	public ref class ComConstStringInfo
 	{

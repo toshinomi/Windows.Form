@@ -64,15 +64,15 @@ bool EdgeDetection::GoImgProc(CancellationToken^ _token)
 					{
 						Byte* pPixel2 = (Byte*)bitmapData->Scan0.ToPointer() + (nIdxHeight + nIdxHightMask) * bitmapData->Stride + (nIdxWidth + nIdxWidthMask) * 4;
 
-						lCalB += pPixel2[ComInfo::Pixel::B] * nMask[nIdxWidthMask][nIdxHightMask];
-						lCalG += pPixel2[ComInfo::Pixel::G] * nMask[nIdxWidthMask][nIdxHightMask];
-						lCalR += pPixel2[ComInfo::Pixel::R] * nMask[nIdxWidthMask][nIdxHightMask];
+						lCalB += pPixel2[ComInfo::Pixel::Type::B] * nMask[nIdxWidthMask][nIdxHightMask];
+						lCalG += pPixel2[ComInfo::Pixel::Type::G] * nMask[nIdxWidthMask][nIdxHightMask];
+						lCalR += pPixel2[ComInfo::Pixel::Type::R] * nMask[nIdxWidthMask][nIdxHightMask];
 					}
 				}
 			}
-			pPixel[ComInfo::Pixel::B] = ComFunc::LongToByte(lCalB);
-			pPixel[ComInfo::Pixel::G] = ComFunc::LongToByte(lCalG);
-			pPixel[ComInfo::Pixel::R] = ComFunc::LongToByte(lCalR);
+			pPixel[ComInfo::Pixel::Type::B] = ComFunc::LongToByte(lCalB);
+			pPixel[ComInfo::Pixel::Type::G] = ComFunc::LongToByte(lCalG);
+			pPixel[ComInfo::Pixel::Type::R] = ComFunc::LongToByte(lCalR);
 		}
 	}
 	bitmapAfter->UnlockBits(bitmapData);

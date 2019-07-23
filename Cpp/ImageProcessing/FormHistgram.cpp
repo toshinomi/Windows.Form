@@ -11,7 +11,15 @@ void FormHistgram::DrawHistgram(void)
 
 	CalHistgram();
 
+	chart->Titles->Clear();
 	chart->Series->Clear();
+	chart->ChartAreas->Clear();
+	if (m_chartArea != nullptr)
+	{
+		delete m_chartArea;
+		m_chartArea = gcnew ChartArea();
+	}
+	chart->ChartAreas->Add(m_chartArea);
 	if (m_seriesLineOriginal != nullptr)
 	{
 		delete m_seriesLineOriginal;
@@ -32,17 +40,17 @@ void FormHistgram::DrawHistgram(void)
 	m_seriesLineAfter->LegendText = "After";
 	m_seriesLineAfter->BorderWidth = 2;
 #ifdef DEBUG
-	int nHistgram0[256];
-	int nHistgram1[256];
-	memset(nHistgram0, 0, sizeof(int) * 256);
-	memset(nHistgram1, 0, sizeof(int) * 256);
-	memcpy(nHistgram0, m_nHistgram[0], sizeof(int) * 256);
-	memcpy(nHistgram1, m_nHistgram[1], sizeof(int) * 256);
+	int nHistgram0[ComInfo::RGP_MAX];
+	int nHistgram1[ComInfo::RGP_MAX];
+	memset(nHistgram0, 0, sizeof(int) * ComInfo::RGP_MAX);
+	memset(nHistgram1, 0, sizeof(int) * ComInfo::RGP_MAX);
+	memcpy(nHistgram0, m_nHistgram[ComInfo::PictureType::Type::Original], sizeof(int) * ComInfo::RGP_MAX);
+	memcpy(nHistgram1, m_nHistgram[ComInfo::PictureType::Type::After], sizeof(int) * ComInfo::RGP_MAX);
 #endif // DEBUG
-	for (int i = 0; i < 256; i++)
+	for (int i = 0; i < ComInfo::RGB_MAX; i++)
 	{
-		m_seriesLineOriginal->Points->AddXY(i, m_nHistgram[0][i]);
-		m_seriesLineAfter->Points->AddXY(i, m_nHistgram[1][i]);
+		m_seriesLineOriginal->Points->AddXY(i, m_nHistgram[ComInfo::Picture::Type::Original][i]);
+		m_seriesLineAfter->Points->AddXY(i, m_nHistgram[ComInfo::Picture::Type::After][i]);
 	}
 	chart->Series->Add(m_seriesLineOriginal);
 	chart->Series->Add(m_seriesLineAfter);
@@ -68,16 +76,16 @@ void FormHistgram::CalHistgram(void)
 		for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
 		{
 			Byte* pPixel = (Byte*)bitmapDataOrg->Scan0.ToPointer() + nIdxHeight * bitmapDataOrg->Stride + nIdxWidth * 4;
-			Byte nGrayScale = (Byte)((pPixel[(int)ComInfo::Pixel::B] + pPixel[(int)ComInfo::Pixel::G] + pPixel[(int)ComInfo::Pixel::R]) / 3);
+			Byte nGrayScale = (Byte)((pPixel[(int)ComInfo::Pixel::Type::B] + pPixel[(int)ComInfo::Pixel::Type::G] + pPixel[(int)ComInfo::Pixel::Type::R]) / 3);
 
-			m_nHistgram[0][nGrayScale] += 1;
+			m_nHistgram[ComInfo::Picture::Type::Original][nGrayScale] += 1;
 
 			if (m_bitmapAfter != nullptr)
 			{
 				pPixel = (Byte*)bitmapDataAfter->Scan0.ToPointer() + nIdxHeight * bitmapDataAfter->Stride + nIdxWidth * 4;
-				nGrayScale = (Byte)((pPixel[(int)ComInfo::Pixel::B] + pPixel[(int)ComInfo::Pixel::G] + pPixel[(int)ComInfo::Pixel::R]) / 3);
+				nGrayScale = (Byte)((pPixel[(int)ComInfo::Pixel::Type::B] + pPixel[(int)ComInfo::Pixel::Type::G] + pPixel[(int)ComInfo::Pixel::Type::R]) / 3);
 
-				m_nHistgram[1][nGrayScale] += 1;
+				m_nHistgram[ComInfo::Picture::Type::After][nGrayScale] += 1;
 			}
 		}
 	}
@@ -92,17 +100,17 @@ void FormHistgram::InitHistgram(void)
 {
 	if (m_nHistgram == nullptr)
 	{
-		m_nHistgram = new int* [2];
+		m_nHistgram = new int* [ComInfo::Picture::Type::MAX];
 	}
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < ComInfo::Picture::Type::MAX; i++)
 	{
-		m_nHistgram[i] = new int[256];
+		m_nHistgram[i] = new int[ComInfo::RGB_MAX];
 	}
 
-	for (int nIdx = 0; nIdx < 256; nIdx++)
+	for (int nIdx = 0; nIdx < ComInfo::RGB_MAX; nIdx++)
 	{
-		m_nHistgram[0][nIdx] = 0;
-		m_nHistgram[1][nIdx] = 0;
+		m_nHistgram[ComInfo::Picture::Type::Original][nIdx] = 0;
+		m_nHistgram[ComInfo::Picture::Type::After][nIdx] = 0;
 	}
 }
 
@@ -129,18 +137,18 @@ void FormHistgram::SaveCsv(void)
 		String^ strDelmiter = ",";
 		StringBuilder^ stringBuilder = gcnew StringBuilder();
 #ifdef DEBUG
-		int nHistgram0[256];
-		int nHistgram1[256];
-		memset(nHistgram0, 0, sizeof(int) * 256);
-		memset(nHistgram1, 0, sizeof(int) * 256);
-		memcpy(nHistgram0, m_nHistgram[0], sizeof(int) * 256);
-		memcpy(nHistgram1, m_nHistgram[1], sizeof(int) * 256);
+		int nHistgram0[ComInfo::RGP_MAX];
+		int nHistgram1[ComInfo::RGP_MAX];
+		memset(nHistgram0, 0, sizeof(int) * ComInfo::RGP_MAX);
+		memset(nHistgram1, 0, sizeof(int) * ComInfo::RGP_MAX);
+		memcpy(nHistgram0, m_nHistgram[ComInfo::PictureType::Original], sizeof(int) * ComInfo::RGP_MAX);
+		memcpy(nHistgram1, m_nHistgram[ComInfo::PictureType::After], sizeof(int) * ComInfo::RGP_MAX);
 #endif // DEBUG
-		for (int nIdx = 0; nIdx < 256; nIdx++)
+		for (int nIdx = 0; nIdx < ComInfo::RGB_MAX; nIdx++)
 		{
 			stringBuilder->Append(nIdx)->Append(strDelmiter);
-			stringBuilder->Append(m_nHistgram[0][nIdx])->Append(strDelmiter);
-			stringBuilder->Append(m_nHistgram[1][nIdx])->Append(strDelmiter);
+			stringBuilder->Append(m_nHistgram[ComInfo::Picture::Type::Original][nIdx])->Append(strDelmiter);
+			stringBuilder->Append(m_nHistgram[ComInfo::Picture::Type::After][nIdx])->Append(strDelmiter);
 			stringBuilder->Append(Environment::NewLine);
 		}
 		saveDialog->StreamWrite(stringBuilder->ToString());

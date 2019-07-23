@@ -65,9 +65,9 @@ bool GrayScale2Diff::GoImgProc(CancellationToken^ _token)
 					{
 						Byte* pPixel2 = (Byte*)bitmapData->Scan0.ToPointer() + (nIdxHeight + nIdxHightMask) * bitmapData->Stride + (nIdxWidth + nIdxWidthMask) * 4;
 
-						lCalB = pPixel2[ComInfo::Pixel::B] * nMask[nIdxWidthMask][nIdxHightMask];
-						lCalG = pPixel2[ComInfo::Pixel::G] * nMask[nIdxWidthMask][nIdxHightMask];
-						lCalR = pPixel2[ComInfo::Pixel::R] * nMask[nIdxWidthMask][nIdxHightMask];
+						lCalB = pPixel2[ComInfo::Pixel::Type::B] * nMask[nIdxWidthMask][nIdxHightMask];
+						lCalG = pPixel2[ComInfo::Pixel::Type::G] * nMask[nIdxWidthMask][nIdxHightMask];
+						lCalR = pPixel2[ComInfo::Pixel::Type::R] * nMask[nIdxWidthMask][nIdxHightMask];
 
 						double dcalGray = (lCalB + lCalG + lCalR) / 3;
 						dCalAve = (dCalAve + dcalGray) / 2;
@@ -76,9 +76,9 @@ bool GrayScale2Diff::GoImgProc(CancellationToken^ _token)
 			}
 			Byte nGrayScale = ComFunc::DoubleToByte(dCalAve);
 
-			pPixel[ComInfo::Pixel::B] = nGrayScale;
-			pPixel[ComInfo::Pixel::G] = nGrayScale;
-			pPixel[ComInfo::Pixel::R] = nGrayScale;
+			pPixel[ComInfo::Pixel::Type::B] = nGrayScale;
+			pPixel[ComInfo::Pixel::Type::G] = nGrayScale;
+			pPixel[ComInfo::Pixel::Type::R] = nGrayScale;
 		}
 	}
 	bitmapAfter->UnlockBits(bitmapData);
