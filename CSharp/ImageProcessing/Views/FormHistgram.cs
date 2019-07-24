@@ -49,6 +49,7 @@ namespace ImageProcessing
         {
             m_bitmapOrg.Dispose();
             m_bitmapAfter.Dispose();
+            m_bIsOpen = false;
         }
 
         public void DrawHistgram()
