@@ -17,9 +17,13 @@ namespace ImageProcessing
             MAX,
         };
 
-        public enum ImgType
+        public enum ImgProcType
         {
             EdgeDetection = 0,
+            GrayScale,
+            Binarization,
+            GrayScale2Diff,
+            ColorReversal,
             MAX,
         }
 
@@ -30,8 +34,17 @@ namespace ImageProcessing
             MAX,
         }
 
+        public enum PictureType
+        {
+            Original = 0,
+            After,
+            MAX,
+        }
+
+        public const short RGB_MAX = 256;
+
         public const string MENU_SETTING_IMAGE_PROCESSING = "Image Processing";
-        public const string MENU_FILE_END = "End(_X)";
+        public const string MENU_FILE_END = "End(&X)";
         public const string MENU_SAVE_CSV = "Save Csv...";
         public const string BTN_OK = "btnOk";
         public const string BTN_CANCEL = "btnCancel";
