@@ -68,6 +68,17 @@ void FormMain::SetButtonEnable()
 	menuMain->Enabled = true;
 }
 
+void ImageProcessing::FormMain::SetControlEnable(void)
+{
+	btnFileSelect->Enabled = true;
+	btnAllClear->Enabled = true;
+	btnStart->Enabled = true;
+	btnStop->Enabled = false;
+	btnSaveImage->Enabled = true;
+	btnShowHistgram->Enabled = true;
+	menuMain->Enabled = true;
+}
+
 void FormMain::SetTextTime(long long _lTime)
 {
 	textBoxTime->Text = _lTime.ToString();
@@ -75,12 +86,12 @@ void FormMain::SetTextTime(long long _lTime)
 	return;
 }
 
-void FormMain::SetPictureBoxStatus()
-{
-	pictureBoxStatus->Visible = false;
-
-	return;
-}
+//void FormMain::SetPictureBoxStatus()
+//{
+//	pictureBoxStatus->Visible = false;
+//
+//	return;
+//}
 
 void FormMain::ExecTaskImageProcessing()
 {
@@ -120,10 +131,12 @@ void FormMain::ExecTaskImageProcessing()
 		}
 		delete bitmap;
 	}
-	//Invoke(gcnew Action(this, &FormMain::SetPictureBoxStatus));
 	ComDelegate::DelegateSetBool^ setDelegatePictureBoxStatusVisible = gcnew ComDelegate::DelegateSetBool(this, &FormMain::SetPictureBoxStatusVisible);
 	this->Invoke(setDelegatePictureBoxStatusVisible, false);
-	Invoke(gcnew Action(this, &FormMain::SetButtonEnable));
+	ComDelegate::DelegateSetControlEnable^ setDelegateControlEnable = gcnew ComDelegate::DelegateSetControlEnable(this, &FormMain::SetControlEnable);
+	this->Invoke(setDelegateControlEnable);
+	delete setDelegatePictureBoxStatusVisible;
+	delete setDelegateControlEnable;
 
 	delete stopwatch;
 	delete m_tokenSource;
@@ -165,8 +178,12 @@ void FormMain::ExecTaskParamAjust()
 		}
 		delete bitmap;
 	}
-	Invoke(gcnew Action(this, &FormMain::SetPictureBoxStatus));
-	Invoke(gcnew Action(this, &FormMain::SetButtonEnable));
+	ComDelegate::DelegateSetBool^ setDelegatePictureBoxStatusVisible = gcnew ComDelegate::DelegateSetBool(this, &FormMain::SetPictureBoxStatusVisible);
+	this->Invoke(setDelegatePictureBoxStatusVisible, false);
+	ComDelegate::DelegateSetControlEnable^ setDelegateControlEnable = gcnew ComDelegate::DelegateSetControlEnable(this, &FormMain::SetControlEnable);
+	this->Invoke(setDelegateControlEnable);
+	delete setDelegatePictureBoxStatusVisible;
+	delete setDelegateControlEnable;
 
 	delete m_tokenSource;
 	delete imgInfo;
@@ -477,11 +494,6 @@ void ImageProcessing::FormMain::OnScrollSliderThresh(System::Object^ sender, Sys
 {
 	auto trackBar = (TrackBar^)sender;
 	labelValue->Text = trackBar->Value.ToString();
-}
-
-void ImageProcessing::FormMain::SetBtnEnable(bool _bValue)
-{
-	throw gcnew System::NotImplementedException();
 }
 
 void FormMain::TaskWorkImageProcessing()

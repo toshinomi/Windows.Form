@@ -18,5 +18,7 @@ namespace ImageProcessing
 		delegate double DelegateGetDouble(void);
 		delegate void  DelegateSetBitmap(Bitmap^ _bitmap);
 		delegate Bitmap^ DelegateGetBitmap(void);
+		delegate void DelegateSetControlEnable(void);
+		delegate void DelegateSetControlVisible(void);
 	};
 }
