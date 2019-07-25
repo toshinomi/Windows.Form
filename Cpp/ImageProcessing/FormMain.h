@@ -7,6 +7,7 @@
 #include "FormHistgram.h"
 #include "ComImgInfo.h"
 #include "ComInfo.h"
+#include "ComDelegate.h"
 
 namespace ImageProcessing {
 
@@ -491,6 +492,12 @@ namespace ImageProcessing {
 			void SetButtonEnable(void);
 			void SetTextTime(long long _lTime);
 			void SetPictureBoxStatus(void);
+			void SetPictureBoxStatusVisible(bool _bValue) { pictureBoxStatus->Visible = _bValue; };
+			//void SetBtnFileSelectEnable(bool _bValue) { btnFileSelect->Visible = _bValue; };
+			//void SetBtnAllClearEnable(bool _bValue) { btnAllClear->Visible = _bValue; };
+			//void SetBtnStartEnable(bool _bValue) { btnStart->Visible = _bValue; };
+			//void SetBtnStopEnable(bool _bValue) { btnStop->Visible = _bValue; };
+			void SetBtnEnable(bool _bValue);
 			void TaskWorkImageProcessing(void);
 			void TaskWorkParamAjust(void);
 			void LoadImage(void);
@@ -518,7 +525,7 @@ namespace ImageProcessing {
 	};
 };
 
-namespace FuncDelegate
-{
-	delegate Byte GetSliderThreshDelegate(void);
-}
+//namespace FuncDelegate
+//{
+//	delegate Byte GetSliderThreshDelegate(void);
+//}

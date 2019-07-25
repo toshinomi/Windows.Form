@@ -171,6 +171,7 @@
   <ItemGroup>
     <ClInclude Include="Binarization.h" />
     <ClInclude Include="ColorReversal.h" />
+    <ClInclude Include="ComDelegate.h" />
     <ClInclude Include="ComFunc.h" />
     <ClInclude Include="ComImageProcessingType.h" />
     <ClInclude Include="ComImgInfo.h" />

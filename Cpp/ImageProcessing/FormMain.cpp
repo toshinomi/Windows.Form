@@ -92,8 +92,8 @@ void FormMain::ExecTaskImageProcessing()
 
 	ComImgInfo^ imgInfo = gcnew ComImgInfo();
 	ComBinarizationInfo^ binarizationInfo = gcnew ComBinarizationInfo();
-	FuncDelegate::GetSliderThreshDelegate^ getSliderThreshDelegate = gcnew FuncDelegate::GetSliderThreshDelegate(this, &FormMain::GetSliderThresh);
-	Byte nThresh = (Byte)this->Invoke(getSliderThreshDelegate);
+	ComDelegate::DelegateGetByte^ getDelegateSliderThresh = gcnew ComDelegate::DelegateGetByte(this, &FormMain::GetSliderThresh);
+	Byte nThresh = (Byte)this->Invoke(getDelegateSliderThresh);
 	binarizationInfo->SetThresh(nThresh);
 	imgInfo->SetCurImgName(m_strCurImgName);
 	imgInfo->SetBinarizationInfo(binarizationInfo);
@@ -120,7 +120,9 @@ void FormMain::ExecTaskImageProcessing()
 		}
 		delete bitmap;
 	}
-	Invoke(gcnew Action(this, &FormMain::SetPictureBoxStatus));
+	//Invoke(gcnew Action(this, &FormMain::SetPictureBoxStatus));
+	ComDelegate::DelegateSetBool^ setDelegatePictureBoxStatusVisible = gcnew ComDelegate::DelegateSetBool(this, &FormMain::SetPictureBoxStatusVisible);
+	this->Invoke(setDelegatePictureBoxStatusVisible, false);
 	Invoke(gcnew Action(this, &FormMain::SetButtonEnable));
 
 	delete stopwatch;
@@ -139,8 +141,8 @@ void FormMain::ExecTaskParamAjust()
 
 	ComImgInfo^ imgInfo = gcnew ComImgInfo();
 	ComBinarizationInfo^ binarizationInfo = gcnew ComBinarizationInfo();
-	FuncDelegate::GetSliderThreshDelegate^ getSliderThreshDelegate = gcnew FuncDelegate::GetSliderThreshDelegate(this, &FormMain::GetSliderThresh);
-	Byte nThresh = (Byte)this->Invoke(getSliderThreshDelegate);
+	ComDelegate::DelegateGetByte^ getDelegateSliderThresh = gcnew ComDelegate::DelegateGetByte(this, &FormMain::GetSliderThresh);
+	Byte nThresh = (Byte)this->Invoke(getDelegateSliderThresh);
 	binarizationInfo->SetThresh(nThresh);
 	imgInfo->SetCurImgName(m_strCurImgName);
 	imgInfo->SetBinarizationInfo(binarizationInfo);
@@ -475,6 +477,11 @@ void ImageProcessing::FormMain::OnScrollSliderThresh(System::Object^ sender, Sys
 {
 	auto trackBar = (TrackBar^)sender;
 	labelValue->Text = trackBar->Value.ToString();
+}
+
+void ImageProcessing::FormMain::SetBtnEnable(bool _bValue)
+{
+	throw gcnew System::NotImplementedException();
 }
 
 void FormMain::TaskWorkImageProcessing()
