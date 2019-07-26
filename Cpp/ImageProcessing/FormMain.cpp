@@ -498,14 +498,18 @@ void ImageProcessing::FormMain::OnScrollSliderThresh(System::Object^ sender, Sys
 
 void FormMain::TaskWorkImageProcessing()
 {
-	Task::Run(gcnew Action(this, &FormMain::ExecTaskImageProcessing));
+	auto actionTask = gcnew Action(this, &FormMain::ExecTaskImageProcessing);
+	Task::Run(actionTask);
+	delete actionTask;
 
 	return;
 }
 
 void FormMain::TaskWorkParamAjust()
 {
-	Task::Run(gcnew Action(this, &FormMain::ExecTaskParamAjust));
+	auto actionTask = gcnew Action(this, &FormMain::ExecTaskParamAjust);
+	Task::Run(actionTask);
+	delete actionTask;
 
 	return;
 }
