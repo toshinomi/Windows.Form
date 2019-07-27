@@ -6,10 +6,10 @@ ComImageProcessingType::ComImageProcessingType()
 {
 }
 
-ComImageProcessingType::ComImageProcessingType(int _Id, String^ _Nmae)
+ComImageProcessingType::ComImageProcessingType(int _nId, String^ _strNmae)
 {
-	m_Id = _Id;
-	m_Name = _Nmae;
+	m_nId = _nId;
+	m_strName = _strNmae;
 }
 
 ComImageProcessingType::~ComImageProcessingType()
