@@ -24,14 +24,24 @@ bool ComSaveFileDialog::ShowDialog(void)
 	return bRst;
 }
 
-void ComSaveFileDialog::StreamWrite(String^ _str)
+bool ComSaveFileDialog::StreamWrite(String^ _str)
 {
-	Stream^ stream = m_saveFileDialog->OpenFile();
+	Stream^ stream;
+	bool bRst = true;
+	try
+	{
+		stream = m_saveFileDialog->OpenFile();
+	}
+	catch (Exception^)
+	{
+		bRst = false;
+		return bRst;
+	}
 	StreamWriter^ streamWriter = gcnew StreamWriter(stream, Encoding::GetEncoding("UTF-8"));
 	streamWriter->Write(_str);
 	streamWriter->Close();
 	stream->Close();
 	delete streamWriter;
 
-	return;
+	return bRst;
 }

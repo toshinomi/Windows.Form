@@ -14,14 +14,14 @@ namespace ImageProcessing
 		String^ m_strName;
 	public:
 		ComImageProcessingType();
-		ComImageProcessingType(int _Id, String^ _Nmae);
+		ComImageProcessingType(int _Id, String^ _strNmae);
 		~ComImageProcessingType();
 		// Id
 		int GetId(void) { return m_nId; };
-		void SetId(int _Id) { m_nId = _Id; };
+		void SetId(int _nId) { m_nId = _nId; };
 		// Name
 		String^ GetName(void) { return m_strName; };
-		void SetName(String^ _Name) { m_strName = _Name; };
+		void SetName(String^ _strName) { m_strName = _strName; };
 		Object^ Clone();
 	};
 }

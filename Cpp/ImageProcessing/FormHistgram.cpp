@@ -151,7 +151,11 @@ void FormHistgram::SaveCsv(void)
 			stringBuilder->Append(m_nHistgram[ComInfo::Picture::Type::After][nIdx])->Append(strDelmiter);
 			stringBuilder->Append(Environment::NewLine);
 		}
-		saveDialog->StreamWrite(stringBuilder->ToString());
+		if (!saveDialog->StreamWrite(stringBuilder->ToString()))
+		{
+			MessageBox::Show(this, "Save CSV File Error", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
 		delete stringBuilder;
 	}
 	delete saveDialog;

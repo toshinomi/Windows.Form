@@ -278,7 +278,7 @@ Bitmap^ FormMain::GetImage(String^ _strImgName)
 		EdgeDetection^ edge = (EdgeDetection^)m_imgProc;
 		if (edge != nullptr)
 		{
-			bitmap = edge->GetBitmap();
+			bitmap = edge->GetBitmapAfter();
 		}
 		break;
 	}
@@ -287,7 +287,7 @@ Bitmap^ FormMain::GetImage(String^ _strImgName)
 		GrayScale^ gray = (GrayScale^)m_imgProc;
 		if (gray != nullptr)
 		{
-			bitmap = gray->GetBitmap();
+			bitmap = gray->GetBitmapAfter();
 		}
 		break;
 	}
@@ -296,7 +296,7 @@ Bitmap^ FormMain::GetImage(String^ _strImgName)
 		Binarization^ binarization = (Binarization^)m_imgProc;
 		if (binarization != nullptr)
 		{
-			bitmap = binarization->GetBitmap();
+			bitmap = binarization->GetBitmapAfter();
 		}
 		break;
 	}
@@ -305,7 +305,7 @@ Bitmap^ FormMain::GetImage(String^ _strImgName)
 		GrayScale2Diff^ gray2Diff = (GrayScale2Diff^)m_imgProc;
 		if (gray2Diff != nullptr)
 		{
-			bitmap = gray2Diff->GetBitmap();
+			bitmap = gray2Diff->GetBitmapAfter();
 		}
 		break;
 	}
@@ -314,7 +314,7 @@ Bitmap^ FormMain::GetImage(String^ _strImgName)
 		ColorReversal^ colorReversal = (ColorReversal^)m_imgProc;
 		if (colorReversal != nullptr)
 		{
-			bitmap = colorReversal->GetBitmap();
+			bitmap = colorReversal->GetBitmapAfter();
 		}
 		break;
 	}
@@ -322,7 +322,7 @@ Bitmap^ FormMain::GetImage(String^ _strImgName)
 		break;
 	}
 
-	return bitmap;
+	return (Bitmap^)bitmap->Clone();
 }
 
 Bitmap^ FormMain::SelectGetBitmap(String^ _strImgName)
@@ -619,7 +619,17 @@ void FormMain::OnClickBtnSaveImage(Object^ sender, EventArgs^ e)
 		auto bitmap = GetImage(m_strCurImgName);
 		if (bitmap != nullptr)
 		{
-			bitmap->Save(strFileName, System::Drawing::Imaging::ImageFormat::Png);
+			try
+			{
+				bitmap->Save(strFileName, System::Drawing::Imaging::ImageFormat::Png);
+			}
+			catch (Exception^)
+			{
+				MessageBox::Show(this, "Save Image File Error", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				delete bitmap;
+				delete saveDialog;
+				return;
+			}
 		}
 		delete bitmap;
 	}

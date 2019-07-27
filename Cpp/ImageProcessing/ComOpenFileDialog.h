@@ -17,31 +17,25 @@ namespace ImageProcessing
 
 	public:
 		// FileName
-		void SetFileName(String^ value) { m_openFileDialog->FileName = value; }
+		void SetFileName(String^ _strFileName) { m_openFileDialog->FileName = _strFileName; }
 		String^ GetFileName(void) { return m_openFileDialog->FileName; }
-
 		// InitialDirectory
-		void SetInitialDirectory(String^ value) { m_openFileDialog->InitialDirectory = value; }
+		void SetInitialDirectory(String^ _strInitialDirectory) { m_openFileDialog->InitialDirectory = _strInitialDirectory; }
 		String^ GetInitialDirectory(void) { return m_openFileDialog->InitialDirectory; }
-
 		// Filter
-		void SetFilter(String^ value) { m_openFileDialog->Filter = value; }
+		void SetFilter(String^ _strFilter) { m_openFileDialog->Filter = _strFilter; }
 		String^ GetFilter(void) { return m_openFileDialog->Filter; }
-
 		// FilterIndex
-		void SetFilterIndex(int value) { m_openFileDialog->FilterIndex = value; }
+		void SetFilterIndex(int _nFilterIndex) { m_openFileDialog->FilterIndex = _nFilterIndex; }
 		int GetFilterIndex(void) { return m_openFileDialog->FilterIndex; }
-
 		// Title
-		void SetTitle(String^ value) { m_openFileDialog->Title = value; }
+		void SetTitle(String^ _strTitle) { m_openFileDialog->Title = _strTitle; }
 		String^ GetTitle(void) { return m_openFileDialog->Title; }
-
 		// CheckFileExists
-		void SetCheckFileExists(bool value) { m_openFileDialog->CheckFileExists = value; }
+		void SetCheckFileExists(bool _bCheckFileExists) { m_openFileDialog->CheckFileExists = _bCheckFileExists; }
 		bool GetCheckFileExists(void) { return m_openFileDialog->CheckFileExists; }
-
 		// CheckPathExists
-		void SetCheckPathExists(bool value) { m_openFileDialog->CheckPathExists = value; }
+		void SetCheckPathExists(bool _bCheckPathExists) { m_openFileDialog->CheckPathExists = _bCheckPathExists; }
 		bool GetCheckPathExists(void) { return m_openFileDialog->CheckPathExists; }
 
 		ComOpenFileDialog();
