@@ -627,9 +627,6 @@ void FormMain::OnClickBtnSaveImage(Object^ sender, EventArgs^ e)
 			catch (Exception^)
 			{
 				MessageBox::Show(this, "Save Image File Error", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				delete bitmap;
-				delete saveDialog;
-				return;
 			}
 		}
 		delete bitmap;

@@ -448,7 +448,6 @@ namespace ImageProcessing
                     catch (Exception)
                     {
                         MessageBox.Show(this, "Save Image File Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
                     }
                     bitmap.Dispose();
                 }
