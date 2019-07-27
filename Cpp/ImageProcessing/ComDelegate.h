@@ -16,6 +16,8 @@ namespace ImageProcessing
 		delegate long DelegateGetLong(void);
 		delegate void DelegateSetDouble(double _dValue);
 		delegate double DelegateGetDouble(void);
+		delegate void DelegateSetLongLong(long long _llValue);
+		delegate long long DelegateGetLongLong(void);
 		delegate void  DelegateSetBitmap(Bitmap^ _bitmap);
 		delegate Bitmap^ DelegateGetBitmap(void);
 		delegate void DelegateSetControlEnable(void);

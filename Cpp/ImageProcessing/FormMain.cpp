@@ -1,18 +1,4 @@
 #include "FormMain.h"
-#include "ComOpenFileDialog.h"
-#include "ComSaveFileDialog.h"
-#include "FormSettingImageProcessing.h"
-#include "FormHistgram.h"
-#include "ComInfo.h"
-
-using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
-using namespace System::Threading;
-using namespace System::Drawing::Imaging;
-using namespace System::Diagnostics;
-using namespace System::Threading::Tasks;
-using namespace System::Windows::Forms;
 
 using namespace ImageProcessing;
 
@@ -86,13 +72,6 @@ void FormMain::SetTextTime(long long _lTime)
 	return;
 }
 
-//void FormMain::SetPictureBoxStatus()
-//{
-//	pictureBoxStatus->Visible = false;
-//
-//	return;
-//}
-
 void FormMain::ExecTaskImageProcessing()
 {
 	Stopwatch^ stopwatch = gcnew Stopwatch();
@@ -103,7 +82,7 @@ void FormMain::ExecTaskImageProcessing()
 
 	ComImgInfo^ imgInfo = gcnew ComImgInfo();
 	ComBinarizationInfo^ binarizationInfo = gcnew ComBinarizationInfo();
-	ComDelegate::DelegateGetByte^ getDelegateSliderThresh = gcnew ComDelegate::DelegateGetByte(this, &FormMain::GetSliderThresh);
+	auto getDelegateSliderThresh = gcnew ComDelegate::DelegateGetByte(this, &FormMain::GetSliderThresh);
 	Byte nThresh = (Byte)this->Invoke(getDelegateSliderThresh);
 	binarizationInfo->SetThresh(nThresh);
 	imgInfo->SetCurImgName(m_strCurImgName);
@@ -116,7 +95,9 @@ void FormMain::ExecTaskImageProcessing()
 
 		stopwatch->Stop();
 
-		Invoke(gcnew Action<long long>(this, &FormMain::SetTextTime), stopwatch->ElapsedMilliseconds);
+		auto setDelegateTextTime = gcnew ComDelegate::DelegateSetLongLong(this, &FormMain::SetTextTime);
+		this->Invoke(setDelegateTextTime, stopwatch->ElapsedMilliseconds);
+		delete setDelegateTextTime;
 
 		Bitmap^ bitmap = gcnew Bitmap(m_strOpenFileName);
 		m_histgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
@@ -127,13 +108,15 @@ void FormMain::ExecTaskImageProcessing()
 		}
 		if (m_histgram->GetIsOpen() == true)
 		{
-			Invoke(gcnew Action(m_histgram, &FormHistgram::DrawHistgram));
+			auto actionDrawHistgram = gcnew Action(m_histgram, &FormHistgram::DrawHistgram);
+			this->Invoke(actionDrawHistgram);
+			delete actionDrawHistgram;
 		}
 		delete bitmap;
 	}
-	ComDelegate::DelegateSetBool^ setDelegatePictureBoxStatusVisible = gcnew ComDelegate::DelegateSetBool(this, &FormMain::SetPictureBoxStatusVisible);
+	auto setDelegatePictureBoxStatusVisible = gcnew ComDelegate::DelegateSetBool(this, &FormMain::SetPictureBoxStatusVisible);
 	this->Invoke(setDelegatePictureBoxStatusVisible, false);
-	ComDelegate::DelegateSetControlEnable^ setDelegateControlEnable = gcnew ComDelegate::DelegateSetControlEnable(this, &FormMain::SetControlEnable);
+	auto setDelegateControlEnable = gcnew ComDelegate::DelegateSetControlEnable(this, &FormMain::SetControlEnable);
 	this->Invoke(setDelegateControlEnable);
 	delete setDelegatePictureBoxStatusVisible;
 	delete setDelegateControlEnable;
@@ -147,15 +130,14 @@ void FormMain::ExecTaskImageProcessing()
 	return;
 }
 
-void FormMain::ExecTaskParamAjust()
+void FormMain::ExecParamAjust()
 {
 	m_tokenSource = gcnew CancellationTokenSource();
 	CancellationToken^ token = m_tokenSource->Token;
 
 	ComImgInfo^ imgInfo = gcnew ComImgInfo();
 	ComBinarizationInfo^ binarizationInfo = gcnew ComBinarizationInfo();
-	ComDelegate::DelegateGetByte^ getDelegateSliderThresh = gcnew ComDelegate::DelegateGetByte(this, &FormMain::GetSliderThresh);
-	Byte nThresh = (Byte)this->Invoke(getDelegateSliderThresh);
+	Byte nThresh = (Byte)sliderThresh->Value;
 	binarizationInfo->SetThresh(nThresh);
 	imgInfo->SetCurImgName(m_strCurImgName);
 	imgInfo->SetBinarizationInfo(binarizationInfo);
@@ -174,16 +156,13 @@ void FormMain::ExecTaskParamAjust()
 		}
 		if (m_histgram->GetIsOpen() == true)
 		{
-			Invoke(gcnew Action(m_histgram, &FormHistgram::DrawHistgram));
+			m_histgram->DrawHistgram();
 		}
 		delete bitmap;
 	}
-	ComDelegate::DelegateSetBool^ setDelegatePictureBoxStatusVisible = gcnew ComDelegate::DelegateSetBool(this, &FormMain::SetPictureBoxStatusVisible);
-	this->Invoke(setDelegatePictureBoxStatusVisible, false);
-	ComDelegate::DelegateSetControlEnable^ setDelegateControlEnable = gcnew ComDelegate::DelegateSetControlEnable(this, &FormMain::SetControlEnable);
-	this->Invoke(setDelegateControlEnable);
-	delete setDelegatePictureBoxStatusVisible;
-	delete setDelegateControlEnable;
+	SetPictureBoxStatusVisible(false);
+	SetControlEnable();
+	SetSliderThreshEnable(true);
 
 	delete m_tokenSource;
 	delete imgInfo;
@@ -472,6 +451,8 @@ void FormMain::OnSliderPreviewMouseUp(System::Object^ sender, System::Windows::F
 
 void FormMain::ParamAjust()
 {
+	sliderThresh->Enabled = false;
+
 	pictureBoxAfter->Image = nullptr;
 
 	btnFileSelect->Enabled = false;
@@ -485,7 +466,7 @@ void FormMain::ParamAjust()
 	btnSaveImage->Enabled = false;
 	btnShowHistgram->Enabled = false;
 
-	TaskWorkParamAjust();
+	ExecParamAjust();
 
 	return;
 }
@@ -499,15 +480,6 @@ void ImageProcessing::FormMain::OnScrollSliderThresh(System::Object^ sender, Sys
 void FormMain::TaskWorkImageProcessing()
 {
 	auto actionTask = gcnew Action(this, &FormMain::ExecTaskImageProcessing);
-	Task::Run(actionTask);
-	delete actionTask;
-
-	return;
-}
-
-void FormMain::TaskWorkParamAjust()
-{
-	auto actionTask = gcnew Action(this, &FormMain::ExecTaskParamAjust);
 	Task::Run(actionTask);
 	delete actionTask;
 

@@ -8,6 +8,11 @@
 #include "ComImgInfo.h"
 #include "ComInfo.h"
 #include "ComDelegate.h"
+#include "ComOpenFileDialog.h"
+#include "ComSaveFileDialog.h"
+#include "FormSettingImageProcessing.h"
+#include "FormHistgram.h"
+#include "ComInfo.h"
 
 namespace ImageProcessing {
 
@@ -18,6 +23,11 @@ namespace ImageProcessing {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace System::Configuration;
+	using namespace System::Drawing;
+	using namespace System::Threading;
+	using namespace System::Drawing::Imaging;
+	using namespace System::Diagnostics;
+	using namespace System::Threading::Tasks;
 
 	/// <summary>
 	/// FormMain ‚ÌŠT—v
@@ -285,6 +295,7 @@ namespace ImageProcessing {
 			// sliderThresh
 			// 
 			this->sliderThresh->AutoSize = false;
+			this->sliderThresh->LargeChange = 1;
 			this->sliderThresh->Location = System::Drawing::Point(810, 30);
 			this->sliderThresh->Maximum = 255;
 			this->sliderThresh->Name = L"sliderThresh";
@@ -491,7 +502,6 @@ namespace ImageProcessing {
 			void SetToolTip(void);
 			void SetButtonEnable(void);
 			void SetTextTime(long long _lTime);
-			//void SetPictureBoxStatus(void);
 			void SetPictureBoxStatusVisible(bool _bValue) { pictureBoxStatus->Visible = _bValue; };
 			void SetControlEnable(void);
 			void SetBtnFileSelectEnable(bool _bValue) { btnFileSelect->Enabled = _bValue; };
@@ -501,8 +511,8 @@ namespace ImageProcessing {
 			void SetBtnSaveImageEnable(bool _bValue) { btnSaveImage->Enabled = _bValue; };
 			void SetBtnShowHistgramEnable(bool _bValue) { btnShowHistgram->Enabled = _bValue; };
 			void SetMenuMainEnable(bool _bValue) { menuMain->Enabled = _bValue; };
+			void SetSliderThreshEnable(bool _bValue) { sliderThresh->Enabled = _bValue; };
 			void TaskWorkImageProcessing(void);
-			void TaskWorkParamAjust(void);
 			void LoadImage(void);
 			void OnFormClosingFormMain(Object^ sender, FormClosingEventArgs^ e);
 			void OnClickBtnFileSelect(Object^ sender, EventArgs^ e);
@@ -512,7 +522,7 @@ namespace ImageProcessing {
 			void OnClickBtnSaveImage(Object^ sender, EventArgs^ e);
 			void OnClickBtnShowHistgram(Object^ sender, EventArgs^ e);
 			void ExecTaskImageProcessing(void);
-			void ExecTaskParamAjust(void);
+			void ExecParamAjust(void);
 			bool SelectGoImgProc(ComImgInfo^ _comImgInfo, CancellationToken^ _token);
 			bool SelectLoadImage(String^ _strImgName);
 			Bitmap^ GetImage(String^ _strImgName);
@@ -527,8 +537,3 @@ namespace ImageProcessing {
 			Byte GetSliderThresh(void) { return (Byte)sliderThresh->Value; };
 	};
 };
-
-//namespace FuncDelegate
-//{
-//	delegate Byte GetSliderThreshDelegate(void);
-//}
