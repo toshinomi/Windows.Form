@@ -166,7 +166,11 @@ namespace ImageProcessing
                     stringBuilder.Append(m_nHistgram[(int)ComInfo.PictureType.After, nIdx]).Append(strDelmiter);
                     stringBuilder.Append(Environment.NewLine);
                 }
-                saveDialog.StreamWrite(stringBuilder.ToString());
+                if (!saveDialog.StreamWrite(stringBuilder.ToString()))
+                {
+                    MessageBox.Show(this, "Save CSV File Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
 
             return;

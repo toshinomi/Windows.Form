@@ -392,42 +392,42 @@ namespace ImageProcessing
                     EdgeDetection edge = (EdgeDetection)m_imgProc;
                     if (edge != null)
                     {
-                        bitmap = edge.Bitmap;
+                        bitmap = edge.BitmapAfter;
                     }
                     break;
                 case ComInfo.IMG_NAME_GRAY_SCALE:
                     GrayScale gray = (GrayScale)m_imgProc;
                     if (gray != null)
                     {
-                        bitmap = gray.Bitmap;
+                        bitmap = gray.BitmapAfter;
                     }
                     break;
                 case ComInfo.IMG_NAME_BINARIZATION:
                     Binarization binarization = (Binarization)m_imgProc;
                     if (binarization != null)
                     {
-                        bitmap = binarization.Bitmap;
+                        bitmap = binarization.BitmapAfter;
                     }
                     break;
                 case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF:
                     GrayScale2Diff gray2Diff = (GrayScale2Diff)m_imgProc;
                     if (gray2Diff != null)
                     {
-                        bitmap = gray2Diff.Bitmap;
+                        bitmap = gray2Diff.BitmapAfter;
                     }
                     break;
                 case ComInfo.IMG_NAME_COLOR_REVERSAL:
                     ColorReversal colorReversal = (ColorReversal)m_imgProc;
                     if (colorReversal != null)
                     {
-                        bitmap = colorReversal.Bitmap;
+                        bitmap = colorReversal.BitmapAfter;
                     }
                     break;
                 default:
                     break;
             }
 
-            return bitmap;
+            return bitmap == null ? bitmap : (Bitmap)bitmap.Clone();
         }
 
         private void OnClickBtnSaveImage(object sender, EventArgs e)
@@ -441,7 +441,15 @@ namespace ImageProcessing
                 var bitmap = GetImage(m_strCurImgName);
                 if (bitmap != null)
                 {
-                    bitmap.Save(strFileName, System.Drawing.Imaging.ImageFormat.Png);
+                    try
+                    {
+                        bitmap.Save(strFileName, System.Drawing.Imaging.ImageFormat.Png);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show(this, "Save Image File Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                     bitmap.Dispose();
                 }
             }
@@ -508,6 +516,7 @@ namespace ImageProcessing
                 sliderThresh.Enabled = m_strCurImgName == ComInfo.IMG_NAME_BINARIZATION ? true : false;
 
                 pictureBoxAfter.Image = null;
+                btnSaveImage.Enabled = false;
                 SelectLoadImage(m_strCurImgName);
                 if (m_histgram != null && m_histgram.IsOpen == true)
                 {

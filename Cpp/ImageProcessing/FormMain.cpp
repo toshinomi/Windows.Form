@@ -322,7 +322,7 @@ Bitmap^ FormMain::GetImage(String^ _strImgName)
 		break;
 	}
 
-	return (Bitmap^)bitmap->Clone();
+	return bitmap == nullptr ? bitmap : (Bitmap^)bitmap->Clone();
 }
 
 Bitmap^ FormMain::SelectGetBitmap(String^ _strImgName)
@@ -397,6 +397,7 @@ void FormMain::ShowSettingImageProcessing(void)
 		sliderThresh->Enabled = m_strCurImgName == (String^)ComConstStringInfo::IMG_NAME_BINARIZATION ? true : false;
 
 		pictureBoxAfter->Image = nullptr;
+		btnSaveImage->Enabled = false;
 		SelectLoadImage(m_strCurImgName);
 		if (m_histgram != nullptr && m_histgram->GetIsOpen() == true)
 		{
