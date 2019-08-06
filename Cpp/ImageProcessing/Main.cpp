@@ -11,7 +11,7 @@ namespace ImageProcessing
 		Application::EnableVisualStyles();
 		Application::SetCompatibleTextRenderingDefault(false);
 
-		Application::Run(gcnew ::ImageProcessing::FormMain());
+		Application::Run(gcnew FormMain());
 
 		return;
 	}

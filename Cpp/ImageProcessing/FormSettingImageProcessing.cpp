@@ -46,7 +46,7 @@ void FormSettingImageProcessing::OnClickOk(System::Object^ sender, System::Event
 	Close();
 }
 
-void ImageProcessing::FormSettingImageProcessing::OnClickCancel(System::Object^ sender, System::EventArgs^ e)
+void FormSettingImageProcessing::OnClickCancel(System::Object^ sender, System::EventArgs^ e)
 {
 	this->DialogResult = System::Windows::Forms::DialogResult::Cancel;
 	Close();

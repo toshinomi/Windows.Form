@@ -9,7 +9,7 @@ Binarization::Binarization(Bitmap^ _bitmap) : ComImgProc(_bitmap)
 	m_nThresh = 0;
 }
 
-ImageProcessing::Binarization::Binarization(Bitmap^ _bitmap, Byte _nThresh) : ComImgProc(_bitmap)
+Binarization::Binarization(Bitmap^ _bitmap, Byte _nThresh) : ComImgProc(_bitmap)
 {
 	m_nThresh = _nThresh;
 }

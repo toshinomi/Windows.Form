@@ -54,7 +54,7 @@ void FormMain::SetButtonEnable()
 	menuMain->Enabled = true;
 }
 
-void ImageProcessing::FormMain::SetControlEnable(void)
+void FormMain::SetControlEnable(void)
 {
 	btnFileSelect->Enabled = true;
 	btnAllClear->Enabled = true;
@@ -369,7 +369,7 @@ Bitmap^ FormMain::SelectGetBitmap(String^ _strImgName)
 	return bitmap;
 }
 
-void ImageProcessing::FormMain::OnClickMenu(System::Object^ sender, System::EventArgs^ e)
+void FormMain::OnClickMenu(System::Object^ sender, System::EventArgs^ e)
 {
 	ToolStripMenuItem^ menuItem = (ToolStripMenuItem^)sender;
 	String^ strText = menuItem->Text;
@@ -407,7 +407,7 @@ void FormMain::ShowSettingImageProcessing(void)
 	delete win;
 }
 
-int ImageProcessing::FormMain::SearchImgTypeId(String^ _strImgName)
+int FormMain::SearchImgTypeId(String^ _strImgName)
 {
 	int nId = -1;
 
@@ -472,7 +472,7 @@ void FormMain::ParamAjust()
 	return;
 }
 
-void ImageProcessing::FormMain::OnScrollSliderThresh(System::Object^ sender, System::EventArgs^ e)
+void FormMain::OnScrollSliderThresh(System::Object^ sender, System::EventArgs^ e)
 {
 	auto trackBar = (TrackBar^)sender;
 	labelValue->Text = trackBar->Value.ToString();

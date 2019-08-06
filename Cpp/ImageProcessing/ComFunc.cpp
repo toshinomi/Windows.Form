@@ -1,6 +1,8 @@
 #include "ComFunc.h"
 
-Byte ImageProcessing::ComFunc::DoubleToByte(double _dValue)
+using namespace ImageProcessing;
+
+Byte ComFunc::DoubleToByte(double _dValue)
 {
 	Byte nCnvValue = 0;
 
@@ -20,7 +22,7 @@ Byte ImageProcessing::ComFunc::DoubleToByte(double _dValue)
 	return nCnvValue;
 }
 
-Byte ImageProcessing::ComFunc::LongToByte(long _lValue)
+Byte ComFunc::LongToByte(long _lValue)
 {
 	Byte nCnvValue = 0;
 

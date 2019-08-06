@@ -1,16 +1,18 @@
 #include "ComOpenFileDialog.h"
 
-ImageProcessing::ComOpenFileDialog::ComOpenFileDialog()
+using namespace ImageProcessing;
+
+ComOpenFileDialog::ComOpenFileDialog()
 {
 	m_openFileDialog = gcnew OpenFileDialog();
 }
 
-ImageProcessing::ComOpenFileDialog::~ComOpenFileDialog()
+ComOpenFileDialog::~ComOpenFileDialog()
 {
 	delete m_openFileDialog;
 }
 
-bool ImageProcessing::ComOpenFileDialog::ShowDialog()
+bool ComOpenFileDialog::ShowDialog()
 {
 	bool bRst = false;
 
