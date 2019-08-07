@@ -83,6 +83,7 @@
     <Compile Include="Lib\ComInfo.vb" />
     <Compile Include="Lib\ComOpenFileDialog.vb" />
     <Compile Include="ImgProc\EdgeDetection.vb" />
+    <Compile Include="Lib\ComSaveFileDialog.vb" />
     <Compile Include="Views\FormMain.vb">
       <SubType>Form</SubType>
     </Compile>
