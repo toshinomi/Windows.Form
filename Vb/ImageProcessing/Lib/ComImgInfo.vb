@@ -51,14 +51,14 @@
     Public Class ComEdgeDetectionInfo
         Public Sub New()
         End Sub
-        Protected Overloads Sub Finalize()
+        Protected Overrides Sub Finalize()
         End Sub
     End Class
 
     Public Class ComGrayScaleInfo
         Public Sub New()
         End Sub
-        Protected Overloads Sub Finalize()
+        Protected Overrides Sub Finalize()
         End Sub
     End Class
 
@@ -76,7 +76,7 @@
 
         Public Sub New()
         End Sub
-        Protected Overloads Sub Finalize()
+        Protected Overrides Sub Finalize()
         End Sub
     End Class
 End Namespace

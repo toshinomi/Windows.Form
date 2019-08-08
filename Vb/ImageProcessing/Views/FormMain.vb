@@ -56,7 +56,7 @@ Public Class FormMain
         Return
     End Sub
 
-    Protected Overloads Sub Finalize()
+    Protected Overrides Sub Finalize()
         MyBase.Finalize()
 
         m_bitmap = Nothing
