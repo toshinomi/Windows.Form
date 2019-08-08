@@ -79,6 +79,7 @@
     <Compile Include="ImgProc\Binarization.vb" />
     <Compile Include="ImgProc\ColorReversal.vb" />
     <Compile Include="Lib\ComFunc.vb" />
+    <Compile Include="Lib\ComImgInfo.vb" />
     <Compile Include="Lib\ComImgProc.vb" />
     <Compile Include="Lib\ComInfo.vb" />
     <Compile Include="Lib\ComOpenFileDialog.vb" />
