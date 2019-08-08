@@ -61,12 +61,12 @@ namespace ImageProcessing
             LineSeries lineSeriesChart1 = new LineSeries()
             {
                 Values = new ChartValues<int>(),
-                Title = "Histgram"
+                Title = "Original Image"
             };
             LineSeries lineSeriesChart2 = new LineSeries()
             {
                 Values = new ChartValues<int>(),
-                Title = "Histgram"
+                Title = "After Image"
             };
 
             for (int nIdx = 0; nIdx < (m_nHistgram.Length >> 1); nIdx++)
