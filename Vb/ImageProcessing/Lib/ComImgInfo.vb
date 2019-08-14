@@ -52,6 +52,7 @@
         Public Sub New()
         End Sub
         Protected Overrides Sub Finalize()
+            MyBase.Finalize()
         End Sub
     End Class
 
@@ -59,6 +60,7 @@
         Public Sub New()
         End Sub
         Protected Overrides Sub Finalize()
+            MyBase.Finalize()
         End Sub
     End Class
 
@@ -77,6 +79,7 @@
         Public Sub New()
         End Sub
         Protected Overrides Sub Finalize()
+            MyBase.Finalize()
         End Sub
     End Class
 End Namespace
