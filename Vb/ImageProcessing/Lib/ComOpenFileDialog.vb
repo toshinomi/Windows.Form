@@ -1,6 +1,4 @@
-﻿Imports Microsoft.Win32
-
-Namespace ImageProcessing
+﻿Namespace ImageProcessing
     Public Class ComOpenFileDialog
         Protected m_openFileDialog As OpenFileDialog
 

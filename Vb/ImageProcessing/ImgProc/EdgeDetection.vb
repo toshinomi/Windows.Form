@@ -40,10 +40,10 @@ Namespace ImageProcessing
 
                     Dim pAdr As IntPtr = bitmapData.Scan0
                     Dim nPos As Integer = nIdxHeight * bitmapData.Stride + nIdxWidth * 4
-                    Dim bytePixelB As Byte = ReadByte(pAdr, nPos + ComInfo.Pixel.B)
-                    Dim bytePixelG As Byte = ReadByte(pAdr, nPos + ComInfo.Pixel.G)
-                    Dim bytePixelR As Byte = ReadByte(pAdr, nPos + ComInfo.Pixel.R)
-                    Dim bytePixelA As Byte = ReadByte(pAdr, nPos + ComInfo.Pixel.A)
+                    Dim nPixelB As Byte = ReadByte(pAdr, nPos + ComInfo.Pixel.B)
+                    Dim nPixelG As Byte = ReadByte(pAdr, nPos + ComInfo.Pixel.G)
+                    Dim nPixelR As Byte = ReadByte(pAdr, nPos + ComInfo.Pixel.R)
+                    Dim nPixelA As Byte = ReadByte(pAdr, nPos + ComInfo.Pixel.A)
 
                     Dim lCalB As Long = 0.0
                     Dim lCalG As Long = 0.0
@@ -68,9 +68,9 @@ Namespace ImageProcessing
                             End If
                         Next
                     Next
-                    WriteByte(pAdr, nPos + ComInfo.Pixel.B, ComFunc.DoubleToByte(lCalB))
-                    WriteByte(pAdr, nPos + ComInfo.Pixel.G, ComFunc.DoubleToByte(lCalG))
-                    WriteByte(pAdr, nPos + ComInfo.Pixel.R, ComFunc.DoubleToByte(lCalR))
+                    WriteByte(pAdr, nPos + ComInfo.Pixel.B, ComFunc.LongToByte(lCalB))
+                    WriteByte(pAdr, nPos + ComInfo.Pixel.G, ComFunc.LongToByte(lCalG))
+                    WriteByte(pAdr, nPos + ComInfo.Pixel.R, ComFunc.LongToByte(lCalR))
                 Next
             Next
             MyBase.m_bitmap.UnlockBits(bitmapData)
