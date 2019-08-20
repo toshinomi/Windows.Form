@@ -196,7 +196,7 @@ Partial Class FormMain
         'imageProcessingToolStripMenuItem
         '
         Me.imageProcessingToolStripMenuItem.Name = "imageProcessingToolStripMenuItem"
-        Me.imageProcessingToolStripMenuItem.Size = New System.Drawing.Size(166, 22)
+        Me.imageProcessingToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.imageProcessingToolStripMenuItem.Text = "Image Processing"
         '
         'menuMain

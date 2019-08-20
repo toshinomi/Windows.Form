@@ -6,6 +6,7 @@ Public Class FormMain
     Private m_edgeDetection As EdgeDetection
     Private m_strOpenFileName As String
     Private m_tokenSource As CancellationTokenSource
+    Private m_strCurImgName As String
 
     Public Sub New()
 
@@ -105,7 +106,7 @@ Public Class FormMain
         Return
     End Sub
 
-    Private Sub OnClickBtnFileSelect(sender As Object, e As EventArgs) 
+    Private Sub OnClickBtnFileSelect(sender As Object, e As EventArgs)
         Dim openFileDlg As ComOpenFileDialog = New ComOpenFileDialog()
         openFileDlg.Filter = "JPG|*.jpg|PNG|*.png"
         openFileDlg.Title = "Open the file"
@@ -126,7 +127,7 @@ Public Class FormMain
         Return
     End Sub
 
-    Private Sub OnClickBtnAllClear(sender As Object, e As EventArgs) 
+    Private Sub OnClickBtnAllClear(sender As Object, e As EventArgs)
         pictureBoxOriginal.ImageLocation = Nothing
         pictureBoxAfter.Image = Nothing
 
@@ -142,7 +143,7 @@ Public Class FormMain
         Return
     End Sub
 
-    Private Async Sub OnClickBtnStart(sender As Object, e As EventArgs) 
+    Private Async Sub OnClickBtnStart(sender As Object, e As EventArgs)
         pictureBoxAfter.Image = Nothing
 
         btnFileSelect.Enabled = False
@@ -177,11 +178,39 @@ Public Class FormMain
         Return
     End Sub
 
-    Private Sub OnClickBtnStop(sender As Object, e As EventArgs) 
+    Private Sub OnClickBtnStop(sender As Object, e As EventArgs)
         If (m_tokenSource IsNot Nothing) Then
             m_tokenSource.Cancel()
         End If
 
         Return
+    End Sub
+
+    Private Sub OnClickMenu(sender As Object, e As EventArgs) Handles imageProcessingToolStripMenuItem.Click
+        Dim menuItem As ToolStripItem = sender
+        Dim strText As String = menuItem.Text
+
+        Select Case strText
+            Case ComInfo.MENU_FILE_END
+                Close()
+            Case ComInfo.MENU_SETTING_IMAGE_PROCESSING
+                ShowSettingImageProcessing()
+            Case Else
+        End Select
+    End Sub
+
+    Public Sub ShowSettingImageProcessing()
+        Dim win = New FormSettingImageProcessing()
+        Dim dialogResult = win.ShowDialog()
+
+        If (dialogResult = DialogResult.OK) Then
+            m_strCurImgName = win.ComboBoxImageProcessingType.SelectedItem
+            Me.Text = "Image Processing ( " + m_strCurImgName + " )"
+
+            sliderThresh.Enabled = If(m_strCurImgName = ComInfo.IMG_NAME_BINARIZATION, True, False)
+
+            pictureBoxAfter.Image = Nothing
+            btnSaveImage.Enabled = False
+        End If
     End Sub
 End Class

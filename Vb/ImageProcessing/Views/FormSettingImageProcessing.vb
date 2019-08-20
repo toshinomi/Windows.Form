@@ -1,6 +1,10 @@
-﻿Imports System.Windows
+﻿Public Class FormSettingImageProcessing
+    Public ReadOnly Property ComboBoxImageProcessingType() As System.Windows.Forms.ComboBox
+        Get
+            Return cmbBoxImageProcessingType
+        End Get
+    End Property
 
-Public Class FormSettingImageProcessing
     Public Sub New()
 
         ' この呼び出しはデザイナーで必要です。
@@ -9,7 +13,6 @@ Public Class FormSettingImageProcessing
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
 
         LoadParam()
-
     End Sub
 
     Public Sub LoadParam()
@@ -31,20 +34,20 @@ Public Class FormSettingImageProcessing
     End Sub
 
     Public Sub SaveParam()
-        Dim imgProcType As ComImageProcessingType = cmbBoxImageProcessingType.SelectedItem
-        My.Settings.ImgTypeSelectName = imgProcType.Name
+        My.Settings.ImgTypeSelectName = cmbBoxImageProcessingType.SelectedItem.ToString()
         My.Settings.Save()
 
         Return
     End Sub
 
-    Private Sub OnClickOk(sender As Object, e As RoutedEventArgs) Handles btnOk.Click
+    Private Sub OnClickOk(sender As Object, e As EventArgs) Handles btnOk.Click
         SaveParam()
-        DialogResult = True
+        Me.DialogResult = DialogResult.OK
         Close()
     End Sub
 
-    Private Sub OnClickCancel(sender As Object, e As RoutedEventArgs) Handles btnCancel.Click
+    Private Sub OnClickCancel(sender As Object, e As EventArgs) Handles btnCancel.Click
+        Me.DialogResult = DialogResult.Cancel
         Close()
     End Sub
 End Class

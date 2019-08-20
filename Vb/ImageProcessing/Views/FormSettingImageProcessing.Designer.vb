@@ -84,7 +84,7 @@ Partial Class FormSettingImageProcessing
         Me.Controls.Add(Me.labelImageProcessingType)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FormSettingImageProcessing"
-        Me.Text = "FormSettingImageProcessing"
+        Me.Text = "Setting Image Processing"
         Me.ResumeLayout(False)
 
     End Sub
