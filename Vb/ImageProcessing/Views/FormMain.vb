@@ -105,7 +105,7 @@ Public Class FormMain
         Return
     End Sub
 
-    Private Sub OnClickBtnFileSelect(sender As Object, e As EventArgs) Handles btnFileSelect.Click
+    Private Sub OnClickBtnFileSelect(sender As Object, e As EventArgs) 
         Dim openFileDlg As ComOpenFileDialog = New ComOpenFileDialog()
         openFileDlg.Filter = "JPG|*.jpg|PNG|*.png"
         openFileDlg.Title = "Open the file"
@@ -126,7 +126,7 @@ Public Class FormMain
         Return
     End Sub
 
-    Private Sub OnClickBtnAllClear(sender As Object, e As EventArgs) Handles btnAllClear.Click
+    Private Sub OnClickBtnAllClear(sender As Object, e As EventArgs) 
         pictureBoxOriginal.ImageLocation = Nothing
         pictureBoxAfter.Image = Nothing
 
@@ -142,7 +142,7 @@ Public Class FormMain
         Return
     End Sub
 
-    Private Async Sub OnClickBtnStart(sender As Object, e As EventArgs) Handles btnStart.Click
+    Private Async Sub OnClickBtnStart(sender As Object, e As EventArgs) 
         pictureBoxAfter.Image = Nothing
 
         btnFileSelect.Enabled = False
@@ -177,7 +177,7 @@ Public Class FormMain
         Return
     End Sub
 
-    Private Sub OnClickBtnStop(sender As Object, e As EventArgs) Handles btnStop.Click
+    Private Sub OnClickBtnStop(sender As Object, e As EventArgs) 
         If (m_tokenSource IsNot Nothing) Then
             m_tokenSource.Cancel()
         End If
