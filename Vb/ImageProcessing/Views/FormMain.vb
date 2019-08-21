@@ -106,7 +106,7 @@ Public Class FormMain
         Return
     End Sub
 
-    Private Sub OnClickBtnFileSelect(sender As Object, e As EventArgs)
+    Private Sub OnClickBtnFileSelect(sender As Object, e As EventArgs) Handles btnFileSelect.Click
         Dim openFileDlg As ComOpenFileDialog = New ComOpenFileDialog()
         openFileDlg.Filter = "JPG|*.jpg|PNG|*.png"
         openFileDlg.Title = "Open the file"
@@ -127,7 +127,7 @@ Public Class FormMain
         Return
     End Sub
 
-    Private Sub OnClickBtnAllClear(sender As Object, e As EventArgs)
+    Private Sub OnClickBtnAllClear(sender As Object, e As EventArgs) Handles btnAllClear.Click
         pictureBoxOriginal.ImageLocation = Nothing
         pictureBoxAfter.Image = Nothing
 
@@ -143,7 +143,7 @@ Public Class FormMain
         Return
     End Sub
 
-    Private Async Sub OnClickBtnStart(sender As Object, e As EventArgs)
+    Private Async Sub OnClickBtnStart(sender As Object, e As EventArgs) Handles btnStart.Click
         pictureBoxAfter.Image = Nothing
 
         btnFileSelect.Enabled = False
@@ -178,7 +178,7 @@ Public Class FormMain
         Return
     End Sub
 
-    Private Sub OnClickBtnStop(sender As Object, e As EventArgs)
+    Private Sub OnClickBtnStop(sender As Object, e As EventArgs) Handles btnStop.Click
         If (m_tokenSource IsNot Nothing) Then
             m_tokenSource.Cancel()
         End If
@@ -186,7 +186,7 @@ Public Class FormMain
         Return
     End Sub
 
-    Private Sub OnClickMenu(sender As Object, e As EventArgs) Handles imageProcessingToolStripMenuItem.Click
+    Private Sub OnClickMenu(sender As Object, e As EventArgs) Handles imageProcessingToolStripMenuItem.Click, endXToolStripMenuItem.Click
         Dim menuItem As ToolStripItem = sender
         Dim strText As String = menuItem.Text
 
@@ -212,5 +212,25 @@ Public Class FormMain
             pictureBoxAfter.Image = Nothing
             btnSaveImage.Enabled = False
         End If
+    End Sub
+
+    Private Sub OnClickBtnSaveImage(sender As Object, e As EventArgs) Handles btnSaveImage.Click
+        Dim saveDialog = New ComSaveFileDialog()
+        saveDialog.Filter = "PNG|*.png"
+        saveDialog.Title = "Save the file"
+        If (saveDialog.ShowDialog() = True) Then
+            Dim strFileName = saveDialog.FileName
+            Dim Bitmap = m_edgeDetection.Bitmap
+            If (Bitmap IsNot Nothing) Then
+                Try
+                    Bitmap.Save(strFileName, System.Drawing.Imaging.ImageFormat.Png)
+                Catch ex As Exception
+                    MessageBox.Show(Me, "Save Image File Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+                Bitmap.Dispose()
+            End If
+        End If
+
+        Return
     End Sub
 End Class

@@ -79,7 +79,7 @@ Namespace ImageProcessing
         Public Function ShowDialog() As Boolean
             Dim bRst As Boolean = False
 
-            If (m_saveFileDialog.ShowDialog() = True) Then
+            If (m_saveFileDialog.ShowDialog() = DialogResult.OK) Then
                 bRst = True
             End If
 

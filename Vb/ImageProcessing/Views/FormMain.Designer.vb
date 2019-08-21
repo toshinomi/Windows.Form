@@ -55,15 +55,15 @@ Partial Class FormMain
         Me.groupBoxOperation = New System.Windows.Forms.GroupBox()
         Me.btnFileSelect = New System.Windows.Forms.Button()
         Me.toolTipBtnStart = New System.Windows.Forms.ToolTip(Me.components)
-        Me.groupBoxProcessingInfo.SuspendLayout()
+        Me.groupBoxProcessingInfo.SuspendLayout
         CType(Me.sliderThresh, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pictureBoxStatus, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pictureBoxAfter, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.menuMain.SuspendLayout()
+        Me.menuMain.SuspendLayout
         CType(Me.pictureBoxOriginal, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.groupBoxImageOutput.SuspendLayout()
-        Me.groupBoxOperation.SuspendLayout()
-        Me.SuspendLayout()
+        Me.groupBoxImageOutput.SuspendLayout
+        Me.groupBoxOperation.SuspendLayout
+        Me.SuspendLayout
         '
         'groupBoxProcessingInfo
         '
@@ -125,7 +125,7 @@ Partial Class FormMain
         'endXToolStripMenuItem
         '
         Me.endXToolStripMenuItem.Name = "endXToolStripMenuItem"
-        Me.endXToolStripMenuItem.Size = New System.Drawing.Size(109, 22)
+        Me.endXToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.endXToolStripMenuItem.Text = "End(&X)"
         '
         'labelValue
@@ -196,7 +196,7 @@ Partial Class FormMain
         'imageProcessingToolStripMenuItem
         '
         Me.imageProcessingToolStripMenuItem.Name = "imageProcessingToolStripMenuItem"
-        Me.imageProcessingToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.imageProcessingToolStripMenuItem.Size = New System.Drawing.Size(166, 22)
         Me.imageProcessingToolStripMenuItem.Text = "Image Processing"
         '
         'menuMain
@@ -342,18 +342,18 @@ Partial Class FormMain
         Me.Name = "FormMain"
         Me.Text = "Image Processing"
         Me.groupBoxProcessingInfo.ResumeLayout(False)
-        Me.groupBoxProcessingInfo.PerformLayout()
+        Me.groupBoxProcessingInfo.PerformLayout
         CType(Me.sliderThresh, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pictureBoxStatus, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pictureBoxAfter, System.ComponentModel.ISupportInitialize).EndInit()
         Me.menuMain.ResumeLayout(False)
-        Me.menuMain.PerformLayout()
+        Me.menuMain.PerformLayout
         CType(Me.pictureBoxOriginal, System.ComponentModel.ISupportInitialize).EndInit()
         Me.groupBoxImageOutput.ResumeLayout(False)
-        Me.groupBoxImageOutput.PerformLayout()
+        Me.groupBoxImageOutput.PerformLayout
         Me.groupBoxOperation.ResumeLayout(False)
         Me.ResumeLayout(False)
-        Me.PerformLayout()
+        Me.PerformLayout
 
     End Sub
 
