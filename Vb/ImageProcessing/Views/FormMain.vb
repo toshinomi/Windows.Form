@@ -99,7 +99,7 @@ Public Class FormMain
         Return
     End Sub
 
-    Public Sub OnFormClosingFormMain(sender As Object, e As FormClosingEventArgs)
+    Public Sub OnFormClosingFormMain(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         If (m_tokenSource IsNot Nothing) Then
             e.Cancel = True
         End If
