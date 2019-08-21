@@ -125,7 +125,7 @@ Partial Class FormMain
         'endXToolStripMenuItem
         '
         Me.endXToolStripMenuItem.Name = "endXToolStripMenuItem"
-        Me.endXToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.endXToolStripMenuItem.Size = New System.Drawing.Size(109, 22)
         Me.endXToolStripMenuItem.Text = "End(&X)"
         '
         'labelValue

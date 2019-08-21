@@ -1,5 +1,4 @@
 ﻿Imports System.Threading
-Imports ImageProcessing.ImageProcessing
 
 Public Class FormMain
     Private m_bitmap As Bitmap
@@ -7,6 +6,7 @@ Public Class FormMain
     Private m_strOpenFileName As String
     Private m_tokenSource As CancellationTokenSource
     Private m_strCurImgName As String
+    Private m_histgram As FormHistgram
 
     Public Sub New()
 
@@ -123,6 +123,22 @@ Public Class FormMain
             pictureBoxOriginal.ImageLocation = m_strOpenFileName
             btnStart.Enabled = True
             textBoxTime.Text = ""
+
+            If (m_histgram Is Nothing) Then
+                m_histgram = New FormHistgram()
+            Else
+                m_histgram.Close()
+                m_histgram = Nothing
+                m_histgram = New FormHistgram()
+            End If
+
+            m_histgram.BitmapOrg = New Bitmap(m_strOpenFileName).Clone()
+            If (m_edgeDetection.Bitmap IsNot Nothing) Then
+                m_histgram.BitmapAfter = m_edgeDetection.Bitmap.Clone()
+            End If
+            m_histgram.DrawHistgram()
+            m_histgram.IsOpen = True
+            m_histgram.Show()
         End If
         Return
     End Sub
@@ -173,7 +189,7 @@ Public Class FormMain
 
         Stopwatch = Nothing
         m_tokenSource = Nothing
-        m_bitmap = Nothing
+        'm_bitmap = Nothing
 
         Return
     End Sub
@@ -230,6 +246,28 @@ Public Class FormMain
                 Bitmap.Dispose()
             End If
         End If
+
+        Return
+    End Sub
+
+    Private Sub OnClickBtnShowHistgram(sender As Object, e As EventArgs) Handles btnShowHistgram.Click
+        If (m_bitmap Is Nothing) Then
+            Return
+        End If
+
+        If (m_histgram IsNot Nothing) Then
+            m_histgram.Close()
+            m_histgram = Nothing
+            m_histgram = New FormHistgram()
+        End If
+
+        m_histgram.BitmapOrg = New Bitmap(m_strOpenFileName).Clone()
+        If (m_edgeDetection.Bitmap IsNot Nothing) Then
+            m_histgram.BitmapAfter = m_edgeDetection.Bitmap.Clone()
+        End If
+        m_histgram.DrawHistgram()
+        m_histgram.IsOpen = True
+        m_histgram.Show()
 
         Return
     End Sub

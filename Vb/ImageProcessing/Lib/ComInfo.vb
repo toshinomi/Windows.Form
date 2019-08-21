@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.InteropServices.Marshal
-Imports ImageProcessing.ImageProcessing
 Imports System.Text
+Imports LiveCharts
 
 Public Class ComInfo
     Public Enum Pixel
@@ -43,4 +43,16 @@ Public Class ComInfo
     Public Const IMG_NAME_BINARIZATION As String = "Binarization"
     Public Const IMG_NAME_GRAY_SCALE_2DIFF As String = "GrayScale 2Diff"
     Public Const IMG_NAME_COLOR_REVERSAL = "ColorReversal"
+
+    Public Class GraphData
+        Private m_seriesCollection As SeriesCollection
+        Public Property seriesCollection() As SeriesCollection
+            Get
+                Return m_seriesCollection
+            End Get
+            Set(ByVal value As SeriesCollection)
+                m_seriesCollection = value
+            End Set
+        End Property
+    End Class
 End Class
