@@ -13,7 +13,7 @@
         End Set
     End Property
 
-    Public Property ComEdgeDetectionInfo() As ComEdgeDetectionInfo
+    Public Property EdgeDetectionInfo() As ComEdgeDetectionInfo
         Get
             Return m_edgeDetectoinInfo
         End Get
@@ -22,7 +22,7 @@
         End Set
     End Property
 
-    Public Property ComGrayScaleInfo() As ComGrayScaleInfo
+    Public Property GrayScaleInfo() As ComGrayScaleInfo
         Get
             Return m_grayScaleInfo
         End Get
@@ -31,7 +31,7 @@
         End Set
     End Property
 
-    Public Property ComBinarizationInfo() As ComBinarizationInfo
+    Public Property BinarizationInfo() As ComBinarizationInfo
         Get
             Return m_binarizationInfo
         End Get

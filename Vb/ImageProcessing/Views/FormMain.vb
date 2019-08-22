@@ -2,7 +2,8 @@
 
 Public Class FormMain
     Private m_bitmap As Bitmap
-    Private m_edgeDetection As EdgeDetection
+    'Private m_edgeDetection As EdgeDetection
+    Private m_imgProc As Object
     Private m_strOpenFileName As String
     Private m_tokenSource As CancellationTokenSource
     Private m_strCurImgName As String
@@ -26,7 +27,8 @@ Public Class FormMain
 
         m_bitmap = Nothing
         m_tokenSource = Nothing
-        m_edgeDetection = Nothing
+        'm_edgeDetection = Nothing
+        m_imgProc = Nothing
     End Sub
 
     Public Sub SetToolTip()
@@ -62,7 +64,82 @@ Public Class FormMain
 
         m_bitmap = Nothing
         m_tokenSource = Nothing
+        m_imgProc = Nothing
     End Sub
+
+    Public Function SelectLoadImage(_strImgName As String) As Boolean
+        Dim bRst As Boolean = True
+
+        If (m_imgProc IsNot Nothing) Then
+            m_imgProc = Nothing
+        End If
+
+        Select Case _strImgName
+            Case ComInfo.IMG_NAME_EDGE_DETECTION
+                m_imgProc = New EdgeDetection(m_bitmap)
+            Case ComInfo.IMG_NAME_GRAY_SCALE
+                m_imgProc = New GrayScale(m_bitmap)
+            Case ComInfo.IMG_NAME_BINARIZATION
+                m_imgProc = New Binarization(m_bitmap)
+            Case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF
+                m_imgProc = New GrayScale2Diff(m_bitmap)
+            Case ComInfo.IMG_NAME_COLOR_REVERSAL
+                m_imgProc = New ColorReversal(m_bitmap)
+            Case Else
+        End Select
+
+        Return bRst
+    End Function
+
+    Public Function SelectGetBitmap(_strImgName As String) As Bitmap
+        Dim bitmap As Bitmap = Nothing
+
+        Select Case _strImgName
+            Case ComInfo.IMG_NAME_EDGE_DETECTION
+                Dim edge As EdgeDetection = m_imgProc
+                bitmap = edge.BitmapAfter
+            Case ComInfo.IMG_NAME_GRAY_SCALE
+                Dim gray As GrayScale = m_imgProc
+                bitmap = gray.BitmapAfter
+            Case ComInfo.IMG_NAME_BINARIZATION
+                Dim binarization As Binarization = m_imgProc
+                bitmap = binarization.BitmapAfter
+            Case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF
+                Dim gray2Diff As GrayScale2Diff = m_imgProc
+                bitmap = gray2Diff.BitmapAfter
+            Case ComInfo.IMG_NAME_COLOR_REVERSAL
+                Dim colorReversal As ColorReversal = m_imgProc
+                bitmap = colorReversal.BitmapAfter
+            Case Else
+        End Select
+
+        Return bitmap
+    End Function
+
+    Public Function SelectGoImgProc(_comImgInfo As ComImgInfo, _token As CancellationToken) As Boolean
+        Dim bRst As Boolean = True
+
+        Select Case _comImgInfo.CurImgName
+            Case ComInfo.IMG_NAME_EDGE_DETECTION
+                Dim edge As EdgeDetection = m_imgProc
+                bRst = edge.GoImgProc(_token)
+            Case ComInfo.IMG_NAME_GRAY_SCALE
+                Dim gray As GrayScale = m_imgProc
+            Case ComInfo.IMG_NAME_BINARIZATION
+                Dim Binarization As Binarization = m_imgProc
+                Binarization.Thresh = _comImgInfo.BinarizationInfo.Thresh
+                bRst = Binarization.GoImgProc(_token)
+            Case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF
+                Dim gray2Diff As GrayScale2Diff = m_imgProc
+                bRst = gray2Diff.GoImgProc(_token)
+            Case ComInfo.IMG_NAME_COLOR_REVERSAL
+                Dim ColorReversal As ColorReversal = m_imgProc
+                bRst = ColorReversal.GoImgProc(_token)
+            Case Else
+        End Select
+
+        Return bRst
+    End Function
 
     Public Sub SetButtonEnable()
         btnFileSelect.Enabled = True
@@ -88,13 +165,18 @@ Public Class FormMain
     Public Function TaskWorkImageProcessing()
         m_tokenSource = New CancellationTokenSource()
         Dim token As CancellationToken = m_tokenSource.Token
-        Dim bRst As Task(Of Boolean) = Task.Run(Function() m_edgeDetection.GoImgProc(token))
+        Dim imgInfo As ComImgInfo = New ComImgInfo()
+        Dim binarizationInfo As ComBinarizationInfo = New ComBinarizationInfo()
+        binarizationInfo.Thresh = sliderThresh.Value
+        imgInfo.CurImgName = m_strCurImgName
+        imgInfo.BinarizationInfo = binarizationInfo
+        Dim bRst As Task(Of Boolean) = Task.Run(Function() SelectGoImgProc(imgInfo, token))
         Return bRst
     End Function
 
     Public Sub LoadImage()
         m_bitmap = New Bitmap(m_strOpenFileName)
-        m_edgeDetection = New EdgeDetection(m_bitmap)
+        SelectLoadImage(m_strCurImgName)
 
         Return
     End Sub
@@ -133,8 +215,8 @@ Public Class FormMain
             End If
 
             m_histgram.BitmapOrg = New Bitmap(m_strOpenFileName).Clone()
-            If (m_edgeDetection.Bitmap IsNot Nothing) Then
-                m_histgram.BitmapAfter = m_edgeDetection.Bitmap.Clone()
+            If (SelectGetBitmap(m_strCurImgName) IsNot Nothing) Then
+                m_histgram.BitmapAfter = SelectGetBitmap(m_strCurImgName).Clone()
             End If
             m_histgram.DrawHistgram()
             m_histgram.IsOpen = True
@@ -178,7 +260,7 @@ Public Class FormMain
         Dim bResult As Boolean = Await TaskWorkImageProcessing()
         If (bResult) Then
             pictureBoxOriginal.ImageLocation = m_strOpenFileName
-            pictureBoxAfter.Image = m_edgeDetection.Bitmap
+            pictureBoxAfter.Image = SelectGetBitmap(m_strCurImgName)
 
             Stopwatch.Stop()
 
@@ -236,7 +318,9 @@ Public Class FormMain
         saveDialog.Title = "Save the file"
         If (saveDialog.ShowDialog() = True) Then
             Dim strFileName = saveDialog.FileName
-            Dim Bitmap = m_edgeDetection.Bitmap
+            'Dim Bitmap = GetImage(m_strCurImgName)
+            Dim edge As EdgeDetection = m_imgProc
+            Dim Bitmap As Bitmap = edge.BitmapAfter
             If (Bitmap IsNot Nothing) Then
                 Try
                     Bitmap.Save(strFileName, System.Drawing.Imaging.ImageFormat.Png)
@@ -262,8 +346,8 @@ Public Class FormMain
         End If
 
         m_histgram.BitmapOrg = New Bitmap(m_strOpenFileName).Clone()
-        If (m_edgeDetection.Bitmap IsNot Nothing) Then
-            m_histgram.BitmapAfter = m_edgeDetection.Bitmap.Clone()
+        If (SelectGetBitmap(m_strCurImgName) IsNot Nothing) Then
+            m_histgram.BitmapAfter = SelectGetBitmap(m_strCurImgName).Clone()
         End If
         m_histgram.DrawHistgram()
         m_histgram.IsOpen = True
