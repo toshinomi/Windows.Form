@@ -312,22 +312,55 @@ Public Class FormMain
         End If
     End Sub
 
+    Public Function GetImage(_strImgName As String) As Bitmap
+        Dim Bitmap As Bitmap = Nothing
+
+        Select Case m_strCurImgName
+            Case ComInfo.IMG_NAME_EDGE_DETECTION
+                Dim edge As EdgeDetection = m_imgProc
+                If (edge IsNot Nothing) Then
+                    Bitmap = edge.BitmapAfter
+                End If
+            Case ComInfo.IMG_NAME_GRAY_SCALE
+                Dim gray As GrayScale = m_imgProc
+                If (gray IsNot Nothing) Then
+                    Bitmap = gray.BitmapAfter
+                End If
+            Case ComInfo.IMG_NAME_BINARIZATION
+                Dim binarization As Binarization = m_imgProc
+                If (binarization IsNot Nothing) Then
+                    Bitmap = binarization.BitmapAfter
+                End If
+            Case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF
+                Dim gray2Diff As GrayScale2Diff = m_imgProc
+                If (gray2Diff IsNot Nothing) Then
+                    Bitmap = gray2Diff.BitmapAfter
+                End If
+            Case ComInfo.IMG_NAME_COLOR_REVERSAL
+                Dim colorReversal As ColorReversal = m_imgProc
+                If (colorReversal IsNot Nothing) Then
+                    Bitmap = colorReversal.BitmapAfter
+                End If
+            Case Else
+        End Select
+
+        Return If(Bitmap Is Nothing, Bitmap, Bitmap.Clone())
+    End Function
+
     Private Sub OnClickBtnSaveImage(sender As Object, e As EventArgs) Handles btnSaveImage.Click
         Dim saveDialog = New ComSaveFileDialog()
         saveDialog.Filter = "PNG|*.png"
         saveDialog.Title = "Save the file"
         If (saveDialog.ShowDialog() = True) Then
             Dim strFileName = saveDialog.FileName
-            'Dim Bitmap = GetImage(m_strCurImgName)
-            Dim edge As EdgeDetection = m_imgProc
-            Dim Bitmap As Bitmap = edge.BitmapAfter
-            If (Bitmap IsNot Nothing) Then
+            Dim bitmap As Bitmap = GetImage(m_strCurImgName)
+            If (bitmap IsNot Nothing) Then
                 Try
-                    Bitmap.Save(strFileName, System.Drawing.Imaging.ImageFormat.Png)
+                    bitmap.Save(strFileName, System.Drawing.Imaging.ImageFormat.Png)
                 Catch ex As Exception
                     MessageBox.Show(Me, "Save Image File Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
-                Bitmap.Dispose()
+                bitmap.Dispose()
             End If
         End If
 
