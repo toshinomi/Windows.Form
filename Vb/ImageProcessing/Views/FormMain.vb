@@ -27,7 +27,6 @@ Public Class FormMain
 
         m_bitmap = Nothing
         m_tokenSource = Nothing
-        'm_edgeDetection = Nothing
         m_imgProc = Nothing
     End Sub
 
@@ -399,5 +398,10 @@ Public Class FormMain
         m_histgram.Show()
 
         Return
+    End Sub
+
+    Private Sub OnScrollSliderThresh(sender As Object, e As EventArgs) Handles sliderThresh.Scroll
+        Dim trackBar As TrackBar = sender
+        labelValue.Text = trackBar.Value.ToString()
     End Sub
 End Class
