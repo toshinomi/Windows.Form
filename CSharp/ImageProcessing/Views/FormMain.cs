@@ -540,7 +540,7 @@ namespace ImageProcessing
             }
         }
 
-        private void OnSliderPreviewMouseUp(object sender, MouseEventArgs e)
+        private void OnSliderMouseUp(object sender, MouseEventArgs e)
         {
             if (pictureBoxAfter.Image != null)
             {

@@ -208,7 +208,7 @@ namespace ImageProcessing
             this.sliderThresh.TabIndex = 8;
             this.sliderThresh.Scroll += new System.EventHandler(this.OnScrollSliderThresh);
             this.sliderThresh.KeyUp += new System.Windows.Forms.KeyEventHandler(this.OnSliderPreviewKeyUp);
-            this.sliderThresh.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnSliderPreviewMouseUp);
+            this.sliderThresh.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnSliderMouseUp);
             // 
             // pictureBoxStatus
             // 
