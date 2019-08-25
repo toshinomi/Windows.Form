@@ -303,7 +303,7 @@ namespace ImageProcessing {
 			this->sliderThresh->TabIndex = 11;
 			this->sliderThresh->Scroll += gcnew System::EventHandler(this, &FormMain::OnScrollSliderThresh);
 			this->sliderThresh->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &FormMain::OnSliderPreviewKeyUp);
-			this->sliderThresh->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &FormMain::OnSliderPreviewMouseUp);
+			this->sliderThresh->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &FormMain::OnSliderMouseUp);
 			// 
 			// pictureBoxOriginal
 			// 
@@ -531,7 +531,7 @@ namespace ImageProcessing {
 			void ShowSettingImageProcessing(void);
 			int SearchImgTypeId(String^ _strImgName);
 			void OnSliderPreviewKeyUp(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e);
-			void OnSliderPreviewMouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e);
+			void OnSliderMouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e);
 			void ParamAjust(void);
 			void OnScrollSliderThresh(System::Object^ sender, System::EventArgs^ e);
 			Byte GetSliderThresh(void) { return (Byte)sliderThresh->Value; };

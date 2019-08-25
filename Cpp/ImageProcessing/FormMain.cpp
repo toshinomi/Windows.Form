@@ -440,7 +440,7 @@ void FormMain::OnSliderPreviewKeyUp(System::Object^ sender, System::Windows::For
 	return;
 }
 
-void FormMain::OnSliderPreviewMouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e)
+void FormMain::OnSliderMouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e)
 {
 	if (pictureBoxAfter->Image != nullptr)
 	{
