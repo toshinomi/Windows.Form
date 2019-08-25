@@ -36,7 +36,9 @@ Public Class Binarization : Inherits ComImgProc
         Dim nWidthSize As Integer = MyBase.m_bitmap.Width
         Dim nHeightSize As Integer = MyBase.m_bitmap.Height
 
-        Dim bitmapData As BitmapData = MyBase.m_bitmap.LockBits(New Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb)
+        MyBase.m_bitmapAfter = New Bitmap(MyBase.m_bitmap)
+
+        Dim bitmapData As BitmapData = MyBase.m_bitmapAfter.LockBits(New Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb)
 
         Dim nIdxWidth As Integer
         Dim nIdxHeight As Integer
@@ -62,7 +64,7 @@ Public Class Binarization : Inherits ComImgProc
                 WriteByte(pAdr, nPos + ComInfo.Pixel.R, CByte(nBinarization))
             Next
         Next
-        MyBase.m_bitmap.UnlockBits(bitmapData)
+        MyBase.m_bitmapAfter.UnlockBits(bitmapData)
 
         Return bRst
     End Function

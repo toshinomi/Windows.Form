@@ -28,6 +28,11 @@ Public Class FormMain
         m_bitmap = Nothing
         m_tokenSource = Nothing
         m_imgProc = Nothing
+
+        m_strCurImgName = My.Settings.ImgTypeSelectName
+        Me.Text = "Image Processing ( " + m_strCurImgName + " )"
+
+        sliderThresh.Enabled = If(m_strCurImgName = ComInfo.IMG_NAME_BINARIZATION, True, False)
     End Sub
 
     Public Sub SetToolTip()
@@ -136,6 +141,7 @@ Public Class FormMain
                 bRst = edge.GoImgProc(_token)
             Case ComInfo.IMG_NAME_GRAY_SCALE
                 Dim gray As GrayScale = m_imgProc
+                bRst = gray.GoImgProc(_token)
             Case ComInfo.IMG_NAME_BINARIZATION
                 Dim Binarization As Binarization = m_imgProc
                 Binarization.Thresh = _comImgInfo.BinarizationInfo.Thresh
@@ -403,5 +409,53 @@ Public Class FormMain
     Private Sub OnScrollSliderThresh(sender As Object, e As EventArgs) Handles sliderThresh.Scroll
         Dim trackBar As TrackBar = sender
         labelValue.Text = trackBar.Value.ToString()
+    End Sub
+
+    Private Sub OnSliderPreviewKeyUp(sender As Object, e As PreviewKeyDownEventArgs) Handles sliderThresh.PreviewKeyDown
+        If (pictureBoxAfter.Image IsNot Nothing) Then
+            ParamAjust()
+        End If
+    End Sub
+
+    Private Sub OnSliderMouseUp(sender As Object, e As MouseEventArgs) Handles sliderThresh.MouseUp
+        If (pictureBoxAfter.Image IsNot Nothing) Then
+            ParamAjust()
+        End If
+    End Sub
+
+    Private Async Sub ParamAjust()
+        pictureBoxAfter.Image = Nothing
+
+        btnFileSelect.Enabled = False
+        btnAllClear.Enabled = False
+        btnStart.Enabled = False
+        menuMain.Enabled = False
+
+        LoadImage()
+
+        btnStop.Enabled = True
+        btnSaveImage.Enabled = False
+        Dim bResult As Boolean = Await TaskWorkImageProcessing()
+        If (bResult) Then
+            pictureBoxOriginal.ImageLocation = m_strOpenFileName
+            pictureBoxAfter.Image = SelectGetBitmap(m_strCurImgName)
+
+            btnSaveImage.Enabled = True
+
+            m_histgram.BitmapOrg = New Bitmap(m_strOpenFileName).Clone()
+            If (SelectGetBitmap(m_strCurImgName) IsNot Nothing) Then
+                m_histgram.BitmapAfter = SelectGetBitmap(m_strCurImgName).Clone()
+            End If
+            If (m_histgram.IsOpen = True) Then
+                m_histgram.DrawHistgram()
+            End If
+        End If
+        Invoke(New Action(AddressOf SetButtonEnable))
+        menuMain.Enabled = True
+        btnShowHistgram.Enabled = True
+
+        m_tokenSource = Nothing
+
+        Return
     End Sub
 End Class
