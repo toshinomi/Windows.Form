@@ -102,6 +102,7 @@ Public Class FormMain
             Case ComInfo.IMG_NAME_COLOR_REVERSAL
                 m_imgProc = New ColorReversal(m_bitmap)
             Case Else
+                m_imgProc = Nothing
         End Select
 
         Return bRst
@@ -126,7 +127,6 @@ Public Class FormMain
             Case ComInfo.IMG_NAME_COLOR_REVERSAL
                 Dim colorReversal As ColorReversal = m_imgProc
                 bitmap = colorReversal.BitmapAfter
-            Case Else
         End Select
 
         Return bitmap
@@ -152,7 +152,6 @@ Public Class FormMain
             Case ComInfo.IMG_NAME_COLOR_REVERSAL
                 Dim ColorReversal As ColorReversal = m_imgProc
                 bRst = ColorReversal.GoImgProc(_token)
-            Case Else
         End Select
 
         Return bRst
