@@ -2,7 +2,6 @@
 
 Public Class FormMain
     Private m_bitmap As Bitmap
-    'Private m_edgeDetection As EdgeDetection
     Private m_imgProc As Object
     Private m_strOpenFileName As String
     Private m_tokenSource As CancellationTokenSource
