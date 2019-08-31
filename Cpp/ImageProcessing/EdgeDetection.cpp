@@ -35,6 +35,12 @@ bool EdgeDetection::GoImgProc(CancellationToken^ _token)
 
 	for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
 	{
+		if (_token->IsCancellationRequested)
+		{
+			bRst = false;
+			break;
+		}
+
 		for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
 		{
 			if (_token->IsCancellationRequested)
