@@ -1,7 +1,5 @@
 #include "ComImageProcessingType.h"
 
-using namespace ImageProcessing;
-
 ComImageProcessingType::ComImageProcessingType()
 {
 }

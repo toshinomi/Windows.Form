@@ -1,7 +1,5 @@
 #include "ComSaveFileDialog.h"
 
-using namespace ImageProcessing;
-
 ComSaveFileDialog::ComSaveFileDialog(void)
 {
 	m_saveFileDialog = gcnew SaveFileDialog();

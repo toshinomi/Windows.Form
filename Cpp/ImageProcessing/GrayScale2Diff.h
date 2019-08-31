@@ -9,14 +9,11 @@ using namespace System::Text;
 using namespace System::Threading;
 using namespace System::Threading::Tasks;
 
-namespace ImageProcessing
+public ref class GrayScale2Diff : ComImgProc
 {
-	public ref class GrayScale2Diff : ComImgProc
-	{
-	private:
-	public:
-		GrayScale2Diff(Bitmap^ _bitmap);
-		~GrayScale2Diff();
-		bool GoImgProc(CancellationToken^ _token) override;
-	};
-}
+private:
+public:
+	GrayScale2Diff(Bitmap^ _bitmap);
+	~GrayScale2Diff();
+	bool GoImgProc(CancellationToken^ _token) override;
+};

@@ -1,7 +1,5 @@
 #include "ComFunc.h"
 
-using namespace ImageProcessing;
-
 Byte ComFunc::DoubleToByte(double _dValue)
 {
 	Byte nCnvValue = 0;

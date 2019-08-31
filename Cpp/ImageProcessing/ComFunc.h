@@ -5,12 +5,9 @@ using namespace System::Collections::Generic;
 using namespace System::Text;
 using namespace System::Threading::Tasks;
 
-namespace ImageProcessing
+public class ComFunc
 {
-	public class ComFunc
-	{
-	public:
-		static Byte DoubleToByte(double _dValue);
-		static Byte LongToByte(long _lValue);
-	};
-}
+public:
+	static Byte DoubleToByte(double _dValue);
+	static Byte LongToByte(long _lValue);
+};

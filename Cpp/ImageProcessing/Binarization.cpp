@@ -2,8 +2,6 @@
 #include "ComFunc.h"
 #include "ComInfo.h"
 
-using namespace ImageProcessing;
-
 Binarization::Binarization(Bitmap^ _bitmap) : ComImgProc(_bitmap)
 {
 	m_nThresh = 0;

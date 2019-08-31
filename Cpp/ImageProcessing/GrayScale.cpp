@@ -2,8 +2,6 @@
 #include "ComFunc.h"
 #include "ComInfo.h"
 
-using namespace ImageProcessing;
-
 GrayScale::GrayScale(Bitmap^ _bitmap) : ComImgProc(_bitmap)
 {
 }

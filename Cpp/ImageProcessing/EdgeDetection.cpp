@@ -2,8 +2,6 @@
 #include "ComFunc.h"
 #include "ComInfo.h"
 
-using namespace ImageProcessing;
-
 EdgeDetection::EdgeDetection(Bitmap^ _bitmap) : ComImgProc(_bitmap)
 {
 }

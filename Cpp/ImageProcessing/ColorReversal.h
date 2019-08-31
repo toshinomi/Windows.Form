@@ -9,15 +9,12 @@ using namespace System::Text;
 using namespace System::Threading;
 using namespace System::Threading::Tasks;
 
-namespace ImageProcessing
+public ref class ColorReversal : public ComImgProc
 {
-	public ref class ColorReversal : public ComImgProc
-	{
-	private:
-		Byte m_nThresh;
-	public:
-		ColorReversal(Bitmap^ _bitmap);
-		~ColorReversal();
-		bool GoImgProc(CancellationToken^ _token) override;
-	};
-}
+private:
+	Byte m_nThresh;
+public:
+	ColorReversal(Bitmap^ _bitmap);
+	~ColorReversal();
+	bool GoImgProc(CancellationToken^ _token) override;
+};

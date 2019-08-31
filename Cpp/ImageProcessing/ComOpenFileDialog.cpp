@@ -1,7 +1,5 @@
 #include "ComOpenFileDialog.h"
 
-using namespace ImageProcessing;
-
 ComOpenFileDialog::ComOpenFileDialog()
 {
 	m_openFileDialog = gcnew OpenFileDialog();

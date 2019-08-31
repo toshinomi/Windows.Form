@@ -10,14 +10,11 @@ using namespace System::Text;
 using namespace System::Threading;
 using namespace System::Threading::Tasks;
 
-namespace ImageProcessing
+public ref class EdgeDetection : public ComImgProc
 {
-	public ref class EdgeDetection : public ComImgProc
-	{
-	private:
-	public:
-		EdgeDetection(Bitmap^ _bitmap);
-		~EdgeDetection();
-		bool GoImgProc(CancellationToken^ _token) override;
-	};
-}
+private:
+public:
+	EdgeDetection(Bitmap^ _bitmap);
+	~EdgeDetection();
+	bool GoImgProc(CancellationToken^ _token) override;
+};
