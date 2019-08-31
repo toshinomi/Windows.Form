@@ -262,6 +262,7 @@ Public Class FormMain
         btnFileSelect.Enabled = False
         btnAllClear.Enabled = False
         btnStart.Enabled = False
+        menuMain.Enabled = False
 
         textBoxTime.Text = ""
 
@@ -272,6 +273,8 @@ Public Class FormMain
         Dim Stopwatch As Stopwatch = New Stopwatch()
         Stopwatch.Start()
         btnStop.Enabled = True
+        btnSaveImage.Enabled = False
+        btnShowHistgram.Enabled = False
         Dim bResult As Boolean = Await TaskWorkImageProcessing()
         If (bResult) Then
             pictureBoxOriginal.ImageLocation = m_strOpenFileName
@@ -280,13 +283,23 @@ Public Class FormMain
             Stopwatch.Stop()
 
             Invoke(New Action(Of Long)(AddressOf SetTextTime), Stopwatch.ElapsedMilliseconds)
+            btnSaveImage.Enabled = True
+
+            m_histgram.BitmapOrg = New Bitmap(m_strOpenFileName).Clone()
+            If (SelectGetBitmap(m_strCurImgName) IsNot Nothing) Then
+                m_histgram.BitmapAfter = SelectGetBitmap(m_strCurImgName).Clone()
+            End If
+            If (m_histgram.IsOpen = True) Then
+                m_histgram.DrawHistgram()
+            End If
         End If
         Invoke(New Action(AddressOf SetPictureBoxStatus))
         Invoke(New Action(AddressOf SetButtonEnable))
+        menuMain.Enabled = True
+        btnShowHistgram.Enabled = True
 
         Stopwatch = Nothing
         m_tokenSource = Nothing
-        'm_bitmap = Nothing
 
         Return
     End Sub
