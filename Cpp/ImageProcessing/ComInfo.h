@@ -63,4 +63,16 @@ public:
 	static const String^ IMG_NAME_BINARIZATION = "Binarization";
 	static const String^ IMG_NAME_GRAY_SCALE_2DIFF = "GrayScale 2Diff";
 	static const String^ IMG_NAME_COLOR_REVERSAL = "ColorReversal";
+
+	static const String^ IMG_TYPE_SELECT_NAME = "ImgTypeSelectName";
+	static const String^ IMG_TYPE_EDGE_ID = "ImgTypeEdgeId";
+	static const String^ IMG_TYPE_EDGE_NAME = "ImgTypeEdgeName";
+	static const String^ IMG_TYPE_GRAY_SCALE_ID = "ImgTypeGrayScaleId";
+	static const String^ IMG_TYPE_GRAY_SCALE_NAME = "ImgTypeGrayScaleName";
+	static const String^ IMG_TYPE_BINARIZATION_ID = "ImgTypeBinarizationId";
+	static const String^ IMG_TYPE_BINARIZATION_NAME = "ImgTypeBinarizationName";
+	static const String^ IMG_TYPE_GRAY_SCALE_2DIFF_ID = "ImgTypeGrayScale2DiffId";
+	static const String^ IMG_TYPE_GRAY_SCALE_2DIFF_NAME = "ImgTypeGrayScale2DiffName";
+	static const String^ IMG_TYPE_COLOR_REVERSAL_ID = "ImgTypeColorReversalId";
+	static const String^ IMG_TYPE_COLOR_REVERSAL_NAME = "ImgTypeColorReversalName";
 };
