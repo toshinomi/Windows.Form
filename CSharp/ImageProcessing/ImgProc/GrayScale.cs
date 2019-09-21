@@ -17,6 +17,12 @@ class GrayScale : ComImgProc
     {
     }
 
+    public void Init()
+    {
+        base.m_bitmap = null;
+        base.m_bitmapAfter = null;
+    }
+
     public override bool GoImgProc(CancellationToken _token)
     {
         bool bRst = true;

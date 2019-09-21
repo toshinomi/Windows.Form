@@ -28,6 +28,13 @@ class Binarization : ComImgProc
         m_nThresh = _nThresh;
     }
 
+   public void Init()
+    {
+        m_nThresh = 0;
+        base.m_bitmap = null;
+        base.m_bitmapAfter = null;
+    }
+
     public override bool GoImgProc(CancellationToken _token)
     {
         bool bRst = true;
