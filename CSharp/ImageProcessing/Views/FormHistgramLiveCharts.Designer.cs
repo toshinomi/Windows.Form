@@ -1,6 +1,6 @@
 ﻿namespace ImageProcessing
 {
-    partial class FormHistgram
+    partial class FormHistgramLiveCharts
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHistgram));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHistgramLiveCharts));
             this.chart = new LiveCharts.WinForms.CartesianChart();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.saveCsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();

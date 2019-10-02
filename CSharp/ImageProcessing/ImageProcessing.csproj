@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CHART_LIVE_CHART</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -29,7 +29,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;CHART_LIVE_CHART</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -71,6 +71,8 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Lib\ComCharts.cs" />
+    <Compile Include="Lib\ComHistgramLiveCharts.cs" />
     <Compile Include="Lib\ComImgInfo.cs" />
     <Compile Include="ImgProc\Binarization.cs" />
     <Compile Include="ImgProc\ColorReversal.cs" />
@@ -81,11 +83,17 @@
     <Compile Include="ImgProc\EdgeDetection.cs" />
     <Compile Include="Lib\ComInfo.cs" />
     <Compile Include="Lib\ComSaveFileDialog.cs" />
-    <Compile Include="Views\FormHistgram.cs">
+    <Compile Include="Views\FormHistgramLiveCharts.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\FormHistgram.Designer.cs">
-      <DependentUpon>FormHistgram.cs</DependentUpon>
+    <Compile Include="Views\FormHistgramLiveCharts.Designer.cs">
+      <DependentUpon>FormHistgramLiveCharts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormHistgramOxyPlot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormHistgramOxyPlot.Designer.cs">
+      <DependentUpon>FormHistgramOxyPlot.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\FormMain.cs">
       <SubType>Form</SubType>
@@ -103,8 +111,11 @@
     <Compile Include="Views\FormSettingImageProcessing.Designer.cs">
       <DependentUpon>FormSettingImageProcessing.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Views\FormHistgram.resx">
-      <DependentUpon>FormHistgram.cs</DependentUpon>
+    <EmbeddedResource Include="Views\FormHistgramLiveCharts.resx">
+      <DependentUpon>FormHistgramLiveCharts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormHistgramOxyPlot.resx">
+      <DependentUpon>FormHistgramOxyPlot.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>

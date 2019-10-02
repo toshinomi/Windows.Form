@@ -17,7 +17,13 @@ namespace ImageProcessing
         private string m_strOpenFileName;
         private CancellationTokenSource m_tokenSource;
         private string m_strCurImgName;
-        private FormHistgram m_histgram;
+#if CHART_LIVE_CHART
+        private FormHistgramLiveCharts m_histgram;
+#elif CHART_OXY_PLOT
+        private FormHistgramOxyPlot m_histgram;
+#else
+        private FormHistgramOxyPlot m_histgram;
+#endif
 
         public FormMain()
         {
@@ -277,13 +283,20 @@ namespace ImageProcessing
 
                 if (m_histgram == null)
                 {
-                    m_histgram = new FormHistgram();
+                    m_histgram = new FormHistgramLiveCharts();
                 }
                 else
                 {
                     m_histgram.Close();
                     m_histgram = null;
-                    m_histgram = new FormHistgram();
+
+#if CHART_LIVE_CHART
+                    m_histgram = new FormHistgramLiveCharts();
+#elif CHART_OXY_PLOT
+                    m_histgram = new FormHistgramLiveCharts();
+#else
+                    m_histgram = new FormHistgramLiveCharts();
+#endif
                 }
 
                 m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
@@ -467,7 +480,13 @@ namespace ImageProcessing
             {
                 m_histgram.Close();
                 m_histgram = null;
-                m_histgram = new FormHistgram();
+#if CHART_LIVE_CHART
+                m_histgram = new FormHistgramLiveCharts();
+#elif CHART_OXY_PLOT
+                m_histgram = new FormHistgramOxyPlot();
+#else
+                m_histgram = new FormHistgramOxyPlot();
+#endif
             }
 
             m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
