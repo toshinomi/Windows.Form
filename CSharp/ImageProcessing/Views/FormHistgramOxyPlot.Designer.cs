@@ -57,12 +57,12 @@
             this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveCsvToolStripMenuItem});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(181, 48);
+            this.contextMenu.Size = new System.Drawing.Size(128, 26);
             // 
             // saveCsvToolStripMenuItem
             // 
             this.saveCsvToolStripMenuItem.Name = "saveCsvToolStripMenuItem";
-            this.saveCsvToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveCsvToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.saveCsvToolStripMenuItem.Text = "Save Csv...";
             this.saveCsvToolStripMenuItem.Click += new System.EventHandler(this.OnClickMenu);
             // 
@@ -76,6 +76,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormHistgramOxyPlot";
             this.Text = "Histgram";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosingFormHistgramOxyPlot);
             this.contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 

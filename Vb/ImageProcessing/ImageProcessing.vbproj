@@ -60,6 +60,12 @@
     <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="OxyPlot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <HintPath>packages\OxyPlot.Core.1.0.0\lib\net45\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.WindowsForms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=245eacd6b5d2d338, processorArchitecture=MSIL">
+      <HintPath>packages\OxyPlot.WindowsForms.1.0.0\lib\net45\OxyPlot.WindowsForms.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -95,6 +101,7 @@
     <Compile Include="Lib\ComCharts.vb" />
     <Compile Include="Lib\ComFunc.vb" />
     <Compile Include="Lib\ComHistgramLiveCharts.vb" />
+    <Compile Include="Lib\ComHistgramOxyPlot.vb" />
     <Compile Include="Lib\ComImageProcessingType.vb" />
     <Compile Include="Lib\ComImgInfo.vb" />
     <Compile Include="Lib\ComImgProc.vb" />
@@ -106,6 +113,12 @@
       <DependentUpon>FormHistgramLiveCharts.vb</DependentUpon>
     </Compile>
     <Compile Include="Views\FormHistgramLiveCharts.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormHistgramOxyPlot.Designer.vb">
+      <DependentUpon>FormHistgramOxyPlot.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormHistgramOxyPlot.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\FormMain.vb">
@@ -142,6 +155,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\FormHistgramLiveCharts.resx">
       <DependentUpon>FormHistgramLiveCharts.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormHistgramOxyPlot.resx">
+      <DependentUpon>FormHistgramOxyPlot.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FormMain.resx">
       <DependentUpon>FormMain.vb</DependentUpon>

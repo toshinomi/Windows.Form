@@ -52,6 +52,13 @@ namespace ImageProcessing
             return;
         }
 
+        private void OnFormClosingFormHistgramOxyPlot(object sender, FormClosingEventArgs e)
+        {
+            m_bIsOpen = false;
+
+            return;
+        }
+
         public void OnClickMenu(object sender, EventArgs e)
         {
             string strHeader = sender.ToString();

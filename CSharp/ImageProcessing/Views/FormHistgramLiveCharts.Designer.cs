@@ -72,6 +72,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormHistgramLiveCharts";
             this.Text = "Histgram";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosingFormHistgramLiveCharts);
             this.contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 

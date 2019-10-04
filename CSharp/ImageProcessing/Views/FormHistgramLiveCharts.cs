@@ -57,6 +57,13 @@ namespace ImageProcessing
             return;
         }
 
+        private void OnFormClosingFormHistgramLiveCharts(object sender, FormClosingEventArgs e)
+        {
+            m_bIsOpen = false;
+
+            return;
+        }
+
         public void OnClickMenu(object sender, EventArgs e)
         {
             string strHeader = sender.ToString();

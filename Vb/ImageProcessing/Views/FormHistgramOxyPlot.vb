@@ -1,8 +1,5 @@
-﻿Imports LiveCharts
-Imports LiveCharts.Wpf
-
-Public Class FormHistgramLiveCharts
-    Private m_histgramChart As ComHistgramLiveCharts
+﻿Public Class FormHistgramOxyPlot
+    Private m_histgramChart As ComHistgramOxyPlot
     Private m_bIsOpen As Boolean
 
     Public Property BitmapOrg() As Bitmap
@@ -19,7 +16,7 @@ Public Class FormHistgramLiveCharts
             m_histgramChart.BitmapAfter = value
         End Set
         Get
-            Return m_histgramChart.BitmapOrg
+            Return m_histgramChart.BitmapAfter
         End Get
     End Property
 
@@ -39,22 +36,20 @@ Public Class FormHistgramLiveCharts
 
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
 
-        m_histgramChart = New ComHistgramLiveCharts()
+        m_histgramChart = New ComHistgramOxyPlot()
     End Sub
 
     Public Sub DrawHistgram()
-        Dim items = New List(Of LineSeries)
-        items = m_histgramChart.DrawHistgram()
-
-        chart.Series.Clear()
-        For nIdx As Integer = 0 To items.Count - 1
-            chart.Series.Add(items(nIdx))
-        Next
+        If (chart.Model IsNot Nothing) Then
+            chart.Model.Series.Clear()
+            chart.Model = Nothing
+        End If
+        chart.Model = m_histgramChart.DrawHistgram()
 
         Return
     End Sub
 
-    Private Sub OnFormClosingFormHistgramLiveCharts(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+    Private Sub FormHistgramOxyPlot_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         m_bIsOpen = False
 
         Return
