@@ -92,7 +92,9 @@
   <ItemGroup>
     <Compile Include="ImgProc\Binarization.vb" />
     <Compile Include="ImgProc\ColorReversal.vb" />
+    <Compile Include="Lib\ComCharts.vb" />
     <Compile Include="Lib\ComFunc.vb" />
+    <Compile Include="Lib\ComHistgramLiveCharts.vb" />
     <Compile Include="Lib\ComImageProcessingType.vb" />
     <Compile Include="Lib\ComImgInfo.vb" />
     <Compile Include="Lib\ComImgProc.vb" />
@@ -100,10 +102,10 @@
     <Compile Include="Lib\ComOpenFileDialog.vb" />
     <Compile Include="ImgProc\EdgeDetection.vb" />
     <Compile Include="Lib\ComSaveFileDialog.vb" />
-    <Compile Include="Views\FormHistgram.Designer.vb">
-      <DependentUpon>FormHistgram.vb</DependentUpon>
+    <Compile Include="Views\FormHistgramLiveCharts.Designer.vb">
+      <DependentUpon>FormHistgramLiveCharts.vb</DependentUpon>
     </Compile>
-    <Compile Include="Views\FormHistgram.vb">
+    <Compile Include="Views\FormHistgramLiveCharts.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\FormMain.vb">
@@ -138,8 +140,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\FormHistgram.resx">
-      <DependentUpon>FormHistgram.vb</DependentUpon>
+    <EmbeddedResource Include="Views\FormHistgramLiveCharts.resx">
+      <DependentUpon>FormHistgramLiveCharts.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FormMain.resx">
       <DependentUpon>FormMain.vb</DependentUpon>

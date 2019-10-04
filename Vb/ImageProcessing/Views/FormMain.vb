@@ -6,7 +6,7 @@ Public Class FormMain
     Private m_strOpenFileName As String
     Private m_tokenSource As CancellationTokenSource
     Private m_strCurImgName As String
-    Private m_histgram As FormHistgram
+    Private m_histgram As FormHistgramLiveCharts
 
     Public Sub New()
 
@@ -222,11 +222,11 @@ Public Class FormMain
             textBoxTime.Text = ""
 
             If (m_histgram Is Nothing) Then
-                m_histgram = New FormHistgram()
+                m_histgram = New FormHistgramLiveCharts()
             Else
                 m_histgram.Close()
                 m_histgram = Nothing
-                m_histgram = New FormHistgram()
+                m_histgram = New FormHistgramLiveCharts()
             End If
 
             m_histgram.BitmapOrg = New Bitmap(m_strOpenFileName).Clone()
@@ -403,7 +403,7 @@ Public Class FormMain
         If (m_histgram IsNot Nothing) Then
             m_histgram.Close()
             m_histgram = Nothing
-            m_histgram = New FormHistgram()
+            m_histgram = New FormHistgramLiveCharts()
         End If
 
         m_histgram.BitmapOrg = New Bitmap(m_strOpenFileName).Clone()
