@@ -11,8 +11,11 @@
 画像処理設定画面  
 ![スクリーンショット](https://github.com/toshinomi/Windows.Form/blob/master/SettingImageProcessing.png)
 
-ヒストグラム表示画面  
-![スクリーンショット](https://github.com/toshinomi/Windows.Form/blob/master/Histgram.png)
+ヒストグラム表示画面(LiveChart)  
+![スクリーンショット](https://github.com/toshinomi/Windows.Form/blob/master/HistgramLiveChart.png)
+
+ヒストグラム表示画面(OxyPlot)  
+![スクリーンショット](https://github.com/toshinomi/Windows.From/blob/master/HistgramOxyPlot.png)
 
 【 WebBrowser 】  
 MDI型のWindowsアプリケーションの例として作成した Windows Form アプリケーションのウェブブラウザです。  
