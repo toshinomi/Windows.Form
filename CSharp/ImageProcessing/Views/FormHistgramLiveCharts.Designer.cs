@@ -41,6 +41,7 @@
             this.chart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.chart.ContextMenuStrip = this.contextMenu;
             this.chart.Location = new System.Drawing.Point(12, 12);
             this.chart.Name = "chart";
             this.chart.Size = new System.Drawing.Size(776, 426);
@@ -61,7 +62,7 @@
             this.saveCsvToolStripMenuItem.Text = "Save Csv...";
             this.saveCsvToolStripMenuItem.Click += new System.EventHandler(this.OnClickMenu);
             // 
-            // FormHistgram
+            // FormHistgramLiveCharts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -69,7 +70,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.chart);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "FormHistgram";
+            this.Name = "FormHistgramLiveCharts";
             this.Text = "Histgram";
             this.contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);

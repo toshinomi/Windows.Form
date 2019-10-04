@@ -12,21 +12,19 @@ namespace ImageProcessing
 {
     public partial class FormHistgramOxyPlot : Form
     {
-        private int[,] m_nHistgram = new int[(int)ComInfo.PictureType.MAX, ComInfo.RGB_MAX];
-        private Bitmap m_bitmapOrg;
-        private Bitmap m_bitmapAfter;
+        private ComHistgramOxyPlot m_histgramChart;
         private bool m_bIsOpen;
 
         public Bitmap BitmapOrg
         {
-            set { m_bitmapOrg = value; }
-            get { return m_bitmapOrg; }
+            set { m_histgramChart.BitmapOrg = value; }
+            get { return m_histgramChart.BitmapOrg; }
         }
 
         public Bitmap BitmapAfter
         {
-            set { m_bitmapAfter = value; }
-            get { return m_bitmapAfter; }
+            set { m_histgramChart.BitmapAfter = value; }
+            get { return m_histgramChart.BitmapAfter; }
         }
 
         public bool IsOpen
@@ -39,7 +37,45 @@ namespace ImageProcessing
         {
             InitializeComponent();
 
-            chart.Model = new OxyPlot.PlotModel { PlotType = OxyPlot.PlotType.XY };
+            m_histgramChart = new ComHistgramOxyPlot();
+        }
+
+        public void DrawHistgram()
+        {
+            if (chart.Model != null)
+            {
+                chart.Model.Series.Clear();
+                chart.Model = null;
+            }
+            chart.Model = m_histgramChart.DrawHistgram();
+
+            return;
+        }
+
+        public void OnClickMenu(object sender, EventArgs e)
+        {
+            string strHeader = sender.ToString();
+
+            switch (strHeader)
+            {
+                case ComInfo.MENU_SAVE_CSV:
+                    SaveCsv();
+                    break;
+                default:
+                    break;
+            }
+
+            return;
+        }
+
+        public void SaveCsv()
+        {
+            if (!m_histgramChart.SaveCsv())
+            {
+                MessageBox.Show(this, "Save CSV File Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return;
         }
     }
 }

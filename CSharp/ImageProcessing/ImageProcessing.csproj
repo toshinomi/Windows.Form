@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CHART_LIVE_CHART</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CHART_OXY_PLOT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Lib\ComCharts.cs" />
     <Compile Include="Lib\ComHistgramLiveCharts.cs" />
+    <Compile Include="Lib\ComHistgramOxyPlot.cs" />
     <Compile Include="Lib\ComImgInfo.cs" />
     <Compile Include="ImgProc\Binarization.cs" />
     <Compile Include="ImgProc\ColorReversal.cs" />

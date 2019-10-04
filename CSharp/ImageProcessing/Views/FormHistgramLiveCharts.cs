@@ -82,6 +82,5 @@ namespace ImageProcessing
 
             return;
         }
-
     }
 }

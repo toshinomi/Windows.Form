@@ -283,7 +283,13 @@ namespace ImageProcessing
 
                 if (m_histgram == null)
                 {
+#if CHART_LIVE_CHART
                     m_histgram = new FormHistgramLiveCharts();
+#elif CHART_OXY_PLOT
+                    m_histgram = new FormHistgramOxyPlot();
+#else
+                    m_histgram = new FormHistgramOxyPlot();
+#endif
                 }
                 else
                 {
@@ -293,9 +299,9 @@ namespace ImageProcessing
 #if CHART_LIVE_CHART
                     m_histgram = new FormHistgramLiveCharts();
 #elif CHART_OXY_PLOT
-                    m_histgram = new FormHistgramLiveCharts();
+                    m_histgram = new FormHistgramOxyPlot();
 #else
-                    m_histgram = new FormHistgramLiveCharts();
+                    m_histgram = new FormHistgramOxyPlot();
 #endif
                 }
 
