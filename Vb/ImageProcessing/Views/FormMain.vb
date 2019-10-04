@@ -6,7 +6,13 @@ Public Class FormMain
     Private m_strOpenFileName As String
     Private m_tokenSource As CancellationTokenSource
     Private m_strCurImgName As String
+#If CHART_LIVE_CHART Then
     Private m_histgram As FormHistgramLiveCharts
+#ElseIf CHART_OXY_PLOT Then
+    private m_histgram As FormHistgramOxyPlot
+#Else
+    Private m_histgram As FormHistgramOxyPlot
+#End If
 
     Public Sub New()
 
@@ -222,11 +228,23 @@ Public Class FormMain
             textBoxTime.Text = ""
 
             If (m_histgram Is Nothing) Then
+#If CHART_LIVE_CHART Then
                 m_histgram = New FormHistgramLiveCharts()
+#ElseIf CHART_OXY_PLOT Then
+                m_histgram = New FormHistgramOxyPlot()
+#Else
+                m_histgram = New FormHistgramOxyPlot()
+#End If
             Else
                 m_histgram.Close()
                 m_histgram = Nothing
+#If CHART_LIVE_CHART Then
                 m_histgram = New FormHistgramLiveCharts()
+#ElseIf CHART_OXY_PLOT Then
+                m_histgram = New FormHistgramOxyPlot()
+#Else
+                m_histgram = New FormHistgramOxyPlot()
+#End If
             End If
 
             m_histgram.BitmapOrg = New Bitmap(m_strOpenFileName).Clone()
@@ -403,7 +421,14 @@ Public Class FormMain
         If (m_histgram IsNot Nothing) Then
             m_histgram.Close()
             m_histgram = Nothing
+            'm_histgram = New FormHistgramLiveCharts()
+#If CHART_LIVE_CHART Then
             m_histgram = New FormHistgramLiveCharts()
+#ElseIf CHART_OXY_PLOT Then
+            m_histgram = New FormHistgramOxyPlot()
+#Else
+            m_histgram = New FormHistgramOxyPlot()
+#End If
         End If
 
         m_histgram.BitmapOrg = New Bitmap(m_strOpenFileName).Clone()
