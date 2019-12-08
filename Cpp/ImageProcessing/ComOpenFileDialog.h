@@ -8,6 +8,9 @@ using namespace System::Threading;
 using namespace System::Threading::Tasks;
 using namespace System::Windows::Forms;
 
+/// <summary>
+/// ファイルオープンのロジック
+/// </summary>
 public ref class ComOpenFileDialog
 {
 protected:

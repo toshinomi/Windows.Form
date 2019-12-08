@@ -7,6 +7,9 @@ using namespace System::Text;
 using namespace System::Threading::Tasks;
 using namespace System::Windows::Forms;
 
+/// <summary>
+/// ファイルセーブのロジック
+/// </summary>
 public ref class ComSaveFileDialog
 {
 protected:
