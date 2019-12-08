@@ -1,5 +1,8 @@
 ﻿Imports System.Threading
 
+''' <summary>
+''' MainFormのロジック
+''' </summary>
 Public Class FormMain
     Private m_bitmap As Bitmap
     Private m_imgProc As Object
@@ -14,6 +17,9 @@ Public Class FormMain
     Private m_histgram As FormHistgramOxyPlot
 #End If
 
+    ''' <summary>
+    ''' コンストラクタ
+    ''' </summary>
     Public Sub New()
 
         ' この呼び出しはデザイナーで必要です。
@@ -40,6 +46,107 @@ Public Class FormMain
         sliderThresh.Enabled = If(m_strCurImgName = ComInfo.IMG_NAME_BINARIZATION, True, False)
     End Sub
 
+    ''' <summary>
+    ''' デスクトラクタ
+    ''' </summary>
+    Protected Overrides Sub Finalize()
+        m_bitmap = Nothing
+        m_tokenSource = Nothing
+        m_imgProc = Nothing
+
+        MyBase.Finalize()
+    End Sub
+
+    ''' <summary>
+    ''' 対象の画像処理オブジェクトにイメージをロードする
+    ''' </summary>
+    ''' <param name="_strImgName">画像処理オブジェクトの名称</param>
+    Public Sub SelectLoadImage(_strImgName As String)
+        If (m_imgProc IsNot Nothing) Then
+            m_imgProc = Nothing
+        End If
+
+        Select Case _strImgName
+            Case ComInfo.IMG_NAME_EDGE_DETECTION
+                m_imgProc = New EdgeDetection(m_bitmap)
+            Case ComInfo.IMG_NAME_GRAY_SCALE
+                m_imgProc = New GrayScale(m_bitmap)
+            Case ComInfo.IMG_NAME_BINARIZATION
+                m_imgProc = New Binarization(m_bitmap)
+            Case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF
+                m_imgProc = New GrayScale2Diff(m_bitmap)
+            Case ComInfo.IMG_NAME_COLOR_REVERSAL
+                m_imgProc = New ColorReversal(m_bitmap)
+            Case Else
+                m_imgProc = Nothing
+        End Select
+
+        Return
+    End Sub
+
+    ''' <summary>
+    ''' 対象の画像処理オブジェクトからWriteableBitmapを取得する
+    ''' </summary>
+    ''' <param name="_strImgName">画像処理オブジェクトの名称</param>
+    ''' <returns>Writeableなビットマップ</returns>
+    Public Function SelectGetBitmap(_strImgName As String) As Bitmap
+        Dim bitmap As Bitmap = Nothing
+
+        Select Case _strImgName
+            Case ComInfo.IMG_NAME_EDGE_DETECTION
+                Dim edge As EdgeDetection = m_imgProc
+                bitmap = edge.BitmapAfter
+            Case ComInfo.IMG_NAME_GRAY_SCALE
+                Dim gray As GrayScale = m_imgProc
+                bitmap = gray.BitmapAfter
+            Case ComInfo.IMG_NAME_BINARIZATION
+                Dim binarization As Binarization = m_imgProc
+                bitmap = binarization.BitmapAfter
+            Case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF
+                Dim gray2Diff As GrayScale2Diff = m_imgProc
+                bitmap = gray2Diff.BitmapAfter
+            Case ComInfo.IMG_NAME_COLOR_REVERSAL
+                Dim colorReversal As ColorReversal = m_imgProc
+                bitmap = colorReversal.BitmapAfter
+        End Select
+
+        Return bitmap
+    End Function
+
+    ''' <summary>
+    ''' 対象の画像処理オブジェクトを実行する
+    ''' </summary>
+    ''' <param name="_comImgInfo">画像処理の設定</param>
+    ''' <param name="_token">キャンセルトークン</param>
+    ''' <returns>画像処理の実行結果 成功/失敗</returns>
+    Public Function SelectGoImgProc(_comImgInfo As ComImgInfo, _token As CancellationToken) As Boolean
+        Dim bRst As Boolean = True
+
+        Select Case _comImgInfo.CurImgName
+            Case ComInfo.IMG_NAME_EDGE_DETECTION
+                Dim edge As EdgeDetection = m_imgProc
+                bRst = edge.GoImgProc(_token)
+            Case ComInfo.IMG_NAME_GRAY_SCALE
+                Dim gray As GrayScale = m_imgProc
+                bRst = gray.GoImgProc(_token)
+            Case ComInfo.IMG_NAME_BINARIZATION
+                Dim Binarization As Binarization = m_imgProc
+                Binarization.Thresh = _comImgInfo.BinarizationInfo.Thresh
+                bRst = Binarization.GoImgProc(_token)
+            Case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF
+                Dim gray2Diff As GrayScale2Diff = m_imgProc
+                bRst = gray2Diff.GoImgProc(_token)
+            Case ComInfo.IMG_NAME_COLOR_REVERSAL
+                Dim ColorReversal As ColorReversal = m_imgProc
+                bRst = ColorReversal.GoImgProc(_token)
+        End Select
+
+        Return bRst
+    End Function
+
+    ''' <summary>
+    ''' ツールチップの設定
+    ''' </summary>
     Public Sub SetToolTip()
         toolTipBtnFileSelect.InitialDelay = 1000
         toolTipBtnFileSelect.ReshowDelay = 1000
@@ -80,88 +187,9 @@ Public Class FormMain
         Return
     End Sub
 
-    Protected Overrides Sub Finalize()
-        MyBase.Finalize()
-
-        m_bitmap = Nothing
-        m_tokenSource = Nothing
-        m_imgProc = Nothing
-    End Sub
-
-    Public Function SelectLoadImage(_strImgName As String) As Boolean
-        Dim bRst As Boolean = True
-
-        If (m_imgProc IsNot Nothing) Then
-            m_imgProc = Nothing
-        End If
-
-        Select Case _strImgName
-            Case ComInfo.IMG_NAME_EDGE_DETECTION
-                m_imgProc = New EdgeDetection(m_bitmap)
-            Case ComInfo.IMG_NAME_GRAY_SCALE
-                m_imgProc = New GrayScale(m_bitmap)
-            Case ComInfo.IMG_NAME_BINARIZATION
-                m_imgProc = New Binarization(m_bitmap)
-            Case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF
-                m_imgProc = New GrayScale2Diff(m_bitmap)
-            Case ComInfo.IMG_NAME_COLOR_REVERSAL
-                m_imgProc = New ColorReversal(m_bitmap)
-            Case Else
-                m_imgProc = Nothing
-        End Select
-
-        Return bRst
-    End Function
-
-    Public Function SelectGetBitmap(_strImgName As String) As Bitmap
-        Dim bitmap As Bitmap = Nothing
-
-        Select Case _strImgName
-            Case ComInfo.IMG_NAME_EDGE_DETECTION
-                Dim edge As EdgeDetection = m_imgProc
-                bitmap = edge.BitmapAfter
-            Case ComInfo.IMG_NAME_GRAY_SCALE
-                Dim gray As GrayScale = m_imgProc
-                bitmap = gray.BitmapAfter
-            Case ComInfo.IMG_NAME_BINARIZATION
-                Dim binarization As Binarization = m_imgProc
-                bitmap = binarization.BitmapAfter
-            Case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF
-                Dim gray2Diff As GrayScale2Diff = m_imgProc
-                bitmap = gray2Diff.BitmapAfter
-            Case ComInfo.IMG_NAME_COLOR_REVERSAL
-                Dim colorReversal As ColorReversal = m_imgProc
-                bitmap = colorReversal.BitmapAfter
-        End Select
-
-        Return bitmap
-    End Function
-
-    Public Function SelectGoImgProc(_comImgInfo As ComImgInfo, _token As CancellationToken) As Boolean
-        Dim bRst As Boolean = True
-
-        Select Case _comImgInfo.CurImgName
-            Case ComInfo.IMG_NAME_EDGE_DETECTION
-                Dim edge As EdgeDetection = m_imgProc
-                bRst = edge.GoImgProc(_token)
-            Case ComInfo.IMG_NAME_GRAY_SCALE
-                Dim gray As GrayScale = m_imgProc
-                bRst = gray.GoImgProc(_token)
-            Case ComInfo.IMG_NAME_BINARIZATION
-                Dim Binarization As Binarization = m_imgProc
-                Binarization.Thresh = _comImgInfo.BinarizationInfo.Thresh
-                bRst = Binarization.GoImgProc(_token)
-            Case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF
-                Dim gray2Diff As GrayScale2Diff = m_imgProc
-                bRst = gray2Diff.GoImgProc(_token)
-            Case ComInfo.IMG_NAME_COLOR_REVERSAL
-                Dim ColorReversal As ColorReversal = m_imgProc
-                bRst = ColorReversal.GoImgProc(_token)
-        End Select
-
-        Return bRst
-    End Function
-
+    ''' <summary>
+    ''' ボタンのEnableを制御する
+    ''' </summary>
     Public Sub SetButtonEnable()
         btnFileSelect.Enabled = True
         btnAllClear.Enabled = True
@@ -171,18 +199,28 @@ Public Class FormMain
         Return
     End Sub
 
+    ''' <summary>
+    ''' 時間を表示するテキストボックスに時間を設定する
+    ''' </summary>
     Public Sub SetTextTime(_lTime As Long)
         textBoxTime.Text = _lTime.ToString()
 
         Return
     End Sub
 
+    ''' <summary>
+    ''' 画像処理の実行中に表示する画像をOFFする
+    ''' </summary>
     Public Sub SetPictureBoxStatus()
         pictureBoxStatus.Visible = False
 
         Return
     End Sub
 
+    ''' <summary>
+    ''' 画像処理実行用のタスク
+    ''' </summary>
+    ''' <returns>画像処理の実行結果 成功/失敗</returns>
     Public Function TaskWorkImageProcessing()
         m_tokenSource = New CancellationTokenSource()
         Dim token As CancellationToken = m_tokenSource.Token
@@ -195,6 +233,9 @@ Public Class FormMain
         Return bRst
     End Function
 
+    ''' <summary>
+    ''' イメージのロード処理
+    ''' </summary>
     Public Sub LoadImage()
         m_bitmap = New Bitmap(m_strOpenFileName)
         SelectLoadImage(m_strCurImgName)
@@ -202,6 +243,11 @@ Public Class FormMain
         Return
     End Sub
 
+    ''' <summary>
+    ''' Formのクローズイベント
+    ''' </summary>
+    ''' <param name="sender">オブジェクト</param>
+    ''' <param name="e">FormClosingイベントのデータ</param>
     Public Sub OnFormClosingFormMain(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         If (m_tokenSource IsNot Nothing) Then
             e.Cancel = True
@@ -209,6 +255,11 @@ Public Class FormMain
         Return
     End Sub
 
+    ''' <summary>
+    ''' ファイル選択ボタンのクリックイベント
+    ''' </summary>
+    ''' <param name="sender">オブジェクト</param>
+    ''' <param name="e">イベントのデータ</param>
     Private Sub OnClickBtnFileSelect(sender As Object, e As EventArgs) Handles btnFileSelect.Click
         Dim openFileDlg As ComOpenFileDialog = New ComOpenFileDialog()
         openFileDlg.Filter = "JPG|*.jpg|PNG|*.png"
@@ -258,6 +309,11 @@ Public Class FormMain
         Return
     End Sub
 
+    ''' <summary>
+    ''' オールクリアボタンのクリックイベント
+    ''' </summary>
+    ''' <param name="sender">オブジェクト</param>
+    ''' <param name="e">イベントのデータ</param>
     Private Sub OnClickBtnAllClear(sender As Object, e As EventArgs) Handles btnAllClear.Click
         pictureBoxOriginal.ImageLocation = Nothing
         pictureBoxAfter.Image = Nothing
@@ -274,6 +330,11 @@ Public Class FormMain
         Return
     End Sub
 
+    ''' <summary>
+    ''' スタートボタンのクリックイベント
+    ''' </summary>
+    ''' <param name="sender">オブジェクト</param>
+    ''' <param name="e">イベントのデータ</param>
     Private Async Sub OnClickBtnStart(sender As Object, e As EventArgs) Handles btnStart.Click
         pictureBoxAfter.Image = Nothing
 
@@ -322,6 +383,11 @@ Public Class FormMain
         Return
     End Sub
 
+    ''' <summary>
+    ''' ストップボタンのクリックイベント
+    ''' </summary>
+    ''' <param name="sender">オブジェクト</param>
+    ''' <param name="e">イベントのデータ</param>
     Private Sub OnClickBtnStop(sender As Object, e As EventArgs) Handles btnStop.Click
         If (m_tokenSource IsNot Nothing) Then
             m_tokenSource.Cancel()
@@ -330,34 +396,11 @@ Public Class FormMain
         Return
     End Sub
 
-    Private Sub OnClickMenu(sender As Object, e As EventArgs) Handles imageProcessingToolStripMenuItem.Click, endXToolStripMenuItem.Click
-        Dim menuItem As ToolStripItem = sender
-        Dim strText As String = menuItem.Text
-
-        Select Case strText
-            Case ComInfo.MENU_FILE_END
-                Close()
-            Case ComInfo.MENU_SETTING_IMAGE_PROCESSING
-                ShowSettingImageProcessing()
-            Case Else
-        End Select
-    End Sub
-
-    Public Sub ShowSettingImageProcessing()
-        Dim win = New FormSettingImageProcessing()
-        Dim dialogResult = win.ShowDialog()
-
-        If (dialogResult = DialogResult.OK) Then
-            m_strCurImgName = win.ComboBoxImageProcessingType.SelectedItem
-            Me.Text = "Image Processing ( " + m_strCurImgName + " )"
-
-            sliderThresh.Enabled = If(m_strCurImgName = ComInfo.IMG_NAME_BINARIZATION, True, False)
-
-            pictureBoxAfter.Image = Nothing
-            btnSaveImage.Enabled = False
-        End If
-    End Sub
-
+    ''' <summary>
+    ''' 画像処理のオブジェクトからイメージの取得
+    ''' </summary>
+    ''' <param name="_strImgName">画像処理の名称</param>
+    ''' <returns>ビットマップ</returns>
     Public Function GetImage(_strImgName As String) As Bitmap
         Dim Bitmap As Bitmap = Nothing
 
@@ -393,6 +436,11 @@ Public Class FormMain
         Return If(Bitmap Is Nothing, Bitmap, Bitmap.Clone())
     End Function
 
+    ''' <summary>
+    ''' イメージの保存ボタンのクリックイベント
+    ''' </summary>
+    ''' <param name="sender">オブジェクト</param>
+    ''' <param name="e">イベントのデータ</param>
     Private Sub OnClickBtnSaveImage(sender As Object, e As EventArgs) Handles btnSaveImage.Click
         Dim saveDialog = New ComSaveFileDialog()
         saveDialog.Filter = "PNG|*.png"
@@ -413,6 +461,11 @@ Public Class FormMain
         Return
     End Sub
 
+    ''' <summary>
+    ''' ヒストグラム表示ボタンのクリックイベント
+    ''' </summary>
+    ''' <param name="sender">オブジェクト</param>
+    ''' <param name="e">イベントのデータ</param>
     Private Sub OnClickBtnShowHistgram(sender As Object, e As EventArgs) Handles btnShowHistgram.Click
         If (m_bitmap Is Nothing) Then
             Return
@@ -442,23 +495,77 @@ Public Class FormMain
         Return
     End Sub
 
+    ''' <summary>
+    ''' メニューのクリックイベント
+    ''' </summary>
+    ''' <param name="sender">オブジェクト</param>
+    ''' <param name="e">イベントのデータ</param>
+    Private Sub OnClickMenu(sender As Object, e As EventArgs) Handles imageProcessingToolStripMenuItem.Click, endXToolStripMenuItem.Click
+        Dim menuItem As ToolStripItem = sender
+        Dim strText As String = menuItem.Text
+
+        Select Case strText
+            Case ComInfo.MENU_FILE_END
+                Close()
+            Case ComInfo.MENU_SETTING_IMAGE_PROCESSING
+                ShowSettingImageProcessing()
+            Case Else
+        End Select
+    End Sub
+
+    ''' <summary>
+    ''' 設定画面の処理
+    ''' </summary>
+    Public Sub ShowSettingImageProcessing()
+        Dim win = New FormSettingImageProcessing()
+        Dim dialogResult = win.ShowDialog()
+
+        If (dialogResult = DialogResult.OK) Then
+            m_strCurImgName = win.ComboBoxImageProcessingType.SelectedItem
+            Me.Text = "Image Processing ( " + m_strCurImgName + " )"
+
+            sliderThresh.Enabled = If(m_strCurImgName = ComInfo.IMG_NAME_BINARIZATION, True, False)
+
+            pictureBoxAfter.Image = Nothing
+            btnSaveImage.Enabled = False
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 2値化の閾値のスライダのスクロールイベント
+    ''' </summary>
+    ''' <param name="sender">オブジェクト</param>
+    ''' <param name="e">イベントのデータ</param>
     Private Sub OnScrollSliderThresh(sender As Object, e As EventArgs) Handles sliderThresh.Scroll
         Dim trackBar As TrackBar = sender
         labelValue.Text = trackBar.Value.ToString()
     End Sub
 
+    ''' <summary>
+    ''' 2値化の閾値のスライダのキーアップイベント
+    ''' </summary>
+    ''' <param name="sender">オブジェクト</param>
+    ''' <param name="e">キーイベントのデータ</param>
     Private Sub OnSliderPreviewKeyUp(sender As Object, e As PreviewKeyDownEventArgs) Handles sliderThresh.PreviewKeyDown
         If (pictureBoxAfter.Image IsNot Nothing) Then
             ParamAjust()
         End If
     End Sub
 
+    ''' <summary>
+    ''' 2値化の閾値のスライダのマウスアップイベント
+    ''' </summary>
+    ''' <param name="sender">オブジェクト</param>
+    ''' <param name="e">マウスボタンイベントのデータ</param>
     Private Sub OnSliderMouseUp(sender As Object, e As MouseEventArgs) Handles sliderThresh.MouseUp
         If (pictureBoxAfter.Image IsNot Nothing) Then
             ParamAjust()
         End If
     End Sub
 
+    ''' <summary>
+    ''' 2値化のスライダを調整したときの処理
+    ''' </summary>
     Private Async Sub ParamAjust()
         pictureBoxAfter.Image = Nothing
 
