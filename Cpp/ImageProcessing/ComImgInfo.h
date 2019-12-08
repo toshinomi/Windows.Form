@@ -8,107 +8,188 @@ using namespace System::Text;
 using namespace System::Threading;
 using namespace System::Threading::Tasks;
 
-public ref class ComEdgeDetectionInfo
+/// <summary>
+/// エッジ検出の設定管理のロジック
+/// </summary>
+public ref class EdgeDetectionInfo
 {
 public:
-	ComEdgeDetectionInfo()
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	EdgeDetectionInfo()
 	{
 	}
 
-	~ComEdgeDetectionInfo()
+	/// <summary>
+	/// デスクトラクタ
+	/// </summary>
+	~EdgeDetectionInfo()
 	{
 	}
 };
 
-public ref class ComGrayScaleInfo
+/// <summary>
+/// グレースケールの設定管理のロジック
+/// </summary>
+public ref class GrayScaleInfo
 {
 public:
-	ComGrayScaleInfo()
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	GrayScaleInfo()
 	{
 	}
 
-	~ComGrayScaleInfo()
+	/// <summary>
+	/// デスクトラクタ
+	/// </summary>
+	~GrayScaleInfo()
 	{
 	}
 };
 
-public ref class ComBinarizationInfo
+/// <summary>
+/// 2値化の設定管理のロジック
+/// </summary>
+public ref class BinarizationInfo
 {
 private:
+	/// <summary>
+	/// 閾値
+	/// </summary>
 	Byte^ m_nThresh;
 public:
 	void SetThresh(Byte^ _nThresh) { m_nThresh = _nThresh; }
 	Byte^ GetThresh(void) { return m_nThresh; }
-	ComBinarizationInfo()
+
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	BinarizationInfo()
 	{
 	}
 
-	~ComBinarizationInfo()
+	/// <summary>
+	/// デスクトラクタ
+	/// </summary>
+	~BinarizationInfo()
 	{
 	}
 };
 
-public ref class ComGrayScale2DiffInfo
+/// <summary>
+/// グレースケール2次微分の設定管理のロジック
+/// </summary>
+public ref class GrayScale2DiffInfo
 {
 public:
-	ComGrayScale2DiffInfo()
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	GrayScale2DiffInfo()
 	{
 	}
 
-	~ComGrayScale2DiffInfo()
+	/// <summary>
+	/// デスクトラクタ
+	/// </summary>
+	~GrayScale2DiffInfo()
 	{
 	}
 };
 
-public ref class ComColorReversalInfo
+/// <summary>
+/// 色反転の設定管理のロジック
+/// </summary>
+public ref class ColorReversalInfo
 {
 public:
-	ComColorReversalInfo()
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	ColorReversalInfo()
 	{
 	}
 
-	~ComColorReversalInfo()
+	/// <summary>
+	/// デスクトラクタ
+	/// </summary>
+	~ColorReversalInfo()
 	{
 	}
 };
 
+/// <summary>
+/// 画像処理の設定管理のロジック
+/// </summary>
 public ref class ComImgInfo
 {
 private:
+	/// <summary>
+	/// 現在の画像処理の名称
+	/// </summary>
 	String^ m_strCurImgName;
-	ComEdgeDetectionInfo^ m_edgeDetectoinInfo;
-	ComGrayScaleInfo^ m_grayScaleInfo;
-	ComBinarizationInfo^ m_binarizationInfo;
-	ComGrayScale2DiffInfo^ m_grayScale2DiffInfo;
-	ComColorReversalInfo^ m_colorReversalInfo;
+
+	/// <summary>
+	/// エッジ検出の設定
+	/// </summary>
+	EdgeDetectionInfo^ m_edgeDetectoinInfo;
+
+	/// <summary>
+	/// グレースケールの設定
+	/// </summary>
+	GrayScaleInfo^ m_grayScaleInfo;
+
+	/// <summary>
+	/// 2値化の設定
+	/// </summary>
+	BinarizationInfo^ m_binarizationInfo;
+
+	/// <summary>
+	/// グレースケール2次微分の設定
+	/// </summary>
+	GrayScale2DiffInfo^ m_grayScale2DiffInfo;
+
+	/// <summary>
+	/// 色反転の設定
+	/// </summary>
+	ColorReversalInfo^ m_colorReversalInfo;
 public:
 	void SetCurImgName(String^ _strCurImgName) { m_strCurImgName = _strCurImgName; }
 	String^ GetCurImgName(void) { return m_strCurImgName; }
 
-	void SetEdgeDetectionInfo(ComEdgeDetectionInfo^ _edgeDetectoinInfo) { m_edgeDetectoinInfo = _edgeDetectoinInfo; }
-	ComEdgeDetectionInfo^ GetEdgeDetectionInfo() { return m_edgeDetectoinInfo; }
+	void SetEdgeDetectionInfo(EdgeDetectionInfo^ _edgeDetectoinInfo) { m_edgeDetectoinInfo = _edgeDetectoinInfo; }
+	EdgeDetectionInfo^ GetEdgeDetectionInfo() { return m_edgeDetectoinInfo; }
 
-	void SetGrayScaleInfo(ComGrayScaleInfo^ _grayScaleInfo) { m_grayScaleInfo = _grayScaleInfo; }
-	ComGrayScaleInfo^ GetGrayScaleInfo(void) { return m_grayScaleInfo; }
+	void SetGrayScaleInfo(GrayScaleInfo^ _grayScaleInfo) { m_grayScaleInfo = _grayScaleInfo; }
+	GrayScaleInfo^ GetGrayScaleInfo(void) { return m_grayScaleInfo; }
 
-	void SetBinarizationInfo(ComBinarizationInfo^ _binarizationInfo) { m_binarizationInfo = _binarizationInfo; }
-	ComBinarizationInfo^ GetBinarizationInfo(void) { return m_binarizationInfo; }
+	void SetBinarizationInfo(BinarizationInfo^ _binarizationInfo) { m_binarizationInfo = _binarizationInfo; }
+	BinarizationInfo^ GetBinarizationInfo(void) { return m_binarizationInfo; }
 
-	void SetGrayScale2DiffInfo(ComGrayScale2DiffInfo^ _grayScale2DiffInfo) { m_grayScale2DiffInfo = _grayScale2DiffInfo; }
-	ComGrayScale2DiffInfo^ GetGrayScale2DiffInfo(void) { return m_grayScale2DiffInfo; }
+	void SetGrayScale2DiffInfo(GrayScale2DiffInfo^ _grayScale2DiffInfo) { m_grayScale2DiffInfo = _grayScale2DiffInfo; }
+	GrayScale2DiffInfo^ GetGrayScale2DiffInfo(void) { return m_grayScale2DiffInfo; }
 
-	void SetColorReversalInfo(ComColorReversalInfo^ _colorReversalInfo) { m_colorReversalInfo = _colorReversalInfo; }
-	ComColorReversalInfo^ GetColorReversalInfo(void) { return m_colorReversalInfo; }
+	void SetColorReversalInfo(ColorReversalInfo^ _colorReversalInfo) { m_colorReversalInfo = _colorReversalInfo; }
+	ColorReversalInfo^ GetColorReversalInfo(void) { return m_colorReversalInfo; }
 
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
 	ComImgInfo()
 	{
-		m_edgeDetectoinInfo = gcnew ComEdgeDetectionInfo();
-		m_grayScaleInfo = gcnew ComGrayScaleInfo();
-		m_binarizationInfo = gcnew ComBinarizationInfo();
-		m_grayScale2DiffInfo = gcnew ComGrayScale2DiffInfo();
-		m_colorReversalInfo = gcnew ComColorReversalInfo();
+		m_edgeDetectoinInfo = gcnew EdgeDetectionInfo();
+		m_grayScaleInfo = gcnew GrayScaleInfo();
+		m_binarizationInfo = gcnew BinarizationInfo();
+		m_grayScale2DiffInfo = gcnew GrayScale2DiffInfo();
+		m_colorReversalInfo = gcnew ColorReversalInfo();
 	}
 
+	/// <summary>
+	/// デスクトラクタ
+	/// </summary>
 	~ComImgInfo()
 	{
 		delete m_edgeDetectoinInfo;

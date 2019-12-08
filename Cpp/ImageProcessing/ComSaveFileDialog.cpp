@@ -1,15 +1,25 @@
 #include "ComSaveFileDialog.h"
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 ComSaveFileDialog::ComSaveFileDialog(void)
 {
 	m_saveFileDialog = gcnew SaveFileDialog();
 }
 
+/// <summary>
+/// デスクトラクタ
+/// </summary>
 ComSaveFileDialog::~ComSaveFileDialog(void)
 {
 	delete m_saveFileDialog;
 }
 
+/// <summary>
+/// ダイアログの表示
+/// </summary>
+/// <returns>結果 成功/失敗</returns>
 bool ComSaveFileDialog::ShowDialog(void)
 {
 	bool bRst = false;
@@ -22,6 +32,11 @@ bool ComSaveFileDialog::ShowDialog(void)
 	return bRst;
 }
 
+/// <summary>
+/// ストリームの書込み
+/// </summary>
+/// <param name="_str">ファイル名称</param>
+/// <returns>実行結果 成功/失敗</returns>
 bool ComSaveFileDialog::StreamWrite(String^ _str)
 {
 	Stream^ stream;

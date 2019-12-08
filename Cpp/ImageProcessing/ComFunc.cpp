@@ -1,5 +1,10 @@
 #include "ComFunc.h"
 
+/// <summary>
+/// Double型のデータからbyte型のデータへの変換
+/// </summary>
+/// <param name="_dValue">Double型のデータ</param>
+/// <returns>byte型のデータ</returns>
 Byte ComFunc::DoubleToByte(double _dValue)
 {
 	Byte nCnvValue = 0;
@@ -20,6 +25,11 @@ Byte ComFunc::DoubleToByte(double _dValue)
 	return nCnvValue;
 }
 
+/// <summary>
+/// long型のデータからbyte型のデータへの変換
+/// </summary>
+/// <param name="_lValue">long型のデータ</param>
+/// <returns>byte型のデータ</returns>
 Byte ComFunc::LongToByte(long _lValue)
 {
 	Byte nCnvValue = 0;

@@ -3,6 +3,9 @@ using namespace System;
 
 namespace ComInfo
 {
+	/// <summary>
+	/// Pixelの列挙
+	/// </summary>
 	namespace Pixel
 	{
 		enum Type
@@ -15,6 +18,9 @@ namespace ComInfo
 		};
 	}
 
+	/// <summary>
+	/// 画像処理のタイプの列挙
+	/// </summary>
 	namespace ImgProc
 	{
 		enum Type
@@ -28,6 +34,9 @@ namespace ComInfo
 		};
 	}
 
+	/// <summary>
+	/// 画像のタイプの列挙
+	/// </summary>
 	namespace ImgData
 	{
 		enum Type
@@ -38,6 +47,9 @@ namespace ComInfo
 		};
 	}
 
+	/// <summary>
+	/// 画像の状態の列挙
+	/// </summary>
 	namespace Picture
 	{
 		enum Type

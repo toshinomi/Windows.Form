@@ -5,6 +5,9 @@ using namespace System::Collections::Generic;
 using namespace System::Text;
 using namespace System::Threading::Tasks;
 
+/// <summary>
+/// ‰æ‘œˆ—İ’è‚ÌƒƒWƒbƒN
+/// </summary>
 public ref class ComImageProcessingType
 {
 private:

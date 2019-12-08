@@ -129,8 +129,8 @@ bool FormMain::SelectGoImgProc(ComImgInfo^ _comImgInfo, CancellationToken^ _toke
 	case ComInfo::ImgProc::Type::Binarization:
 	{
 		Binarization^ binarization = (Binarization^)m_imgProc;
-		ComBinarizationInfo^ comBinarizationInfo = _comImgInfo->GetBinarizationInfo();
-		binarization->SetThresh((Byte)comBinarizationInfo->GetThresh());
+		BinarizationInfo^ binarizationInfo = _comImgInfo->GetBinarizationInfo();
+		binarization->SetThresh((Byte)binarizationInfo->GetThresh());
 		bRst = binarization->GoImgProc(_token);
 		break;
 	}
@@ -247,7 +247,7 @@ void FormMain::ExecTaskImageProcessing()
 	CancellationToken^ token = m_tokenSource->Token;
 
 	ComImgInfo^ imgInfo = gcnew ComImgInfo();
-	ComBinarizationInfo^ binarizationInfo = gcnew ComBinarizationInfo();
+	BinarizationInfo^ binarizationInfo = gcnew BinarizationInfo();
 	auto getDelegateSliderThresh = gcnew ComDelegate::DelegateGetByte(this, &FormMain::GetSliderThresh);
 	Byte nThresh = (Byte)this->Invoke(getDelegateSliderThresh);
 	binarizationInfo->SetThresh(nThresh);
@@ -687,7 +687,7 @@ void FormMain::ExecParamAjust()
 	CancellationToken^ token = m_tokenSource->Token;
 
 	ComImgInfo^ imgInfo = gcnew ComImgInfo();
-	ComBinarizationInfo^ binarizationInfo = gcnew ComBinarizationInfo();
+	BinarizationInfo^ binarizationInfo = gcnew BinarizationInfo();
 	Byte nThresh = (Byte)sliderThresh->Value;
 	binarizationInfo->SetThresh(nThresh);
 	imgInfo->SetCurImgName(m_strCurImgName);
