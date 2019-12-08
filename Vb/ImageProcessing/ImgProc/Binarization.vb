@@ -2,9 +2,15 @@
 Imports System.Runtime.InteropServices.Marshal
 Imports System.Drawing.Imaging
 
+''' <summary>
+''' 2値化のロジック
+''' </summary>
 Public Class Binarization : Inherits ComImgProc
     Private m_nThresh As Byte
 
+    ''' <summary>
+    ''' 閾値
+    ''' </summary>
     Public Property Thresh() As Byte
         Set(value As Byte)
             m_nThresh = value
@@ -14,22 +20,47 @@ Public Class Binarization : Inherits ComImgProc
         End Get
     End Property
 
+    ''' <summary>
+    ''' コンストラクタ
+    ''' </summary>
+    ''' <param name="_bitmap">ビットマップ</param>
     Public Sub New(_bitmap As Bitmap)
         MyBase.New(_bitmap)
 
         m_nThresh = 0
     End Sub
 
+    ''' <summary>
+    ''' コンストラクタ
+    ''' </summary>
+    ''' <param name="_bitmap">ビットマップ</param>
+    ''' <param name="_nThresh">閾値</param>
     Public Sub New(_bitmap As Bitmap, _nThresh As Byte)
         MyBase.New(_bitmap)
 
         m_nThresh = _nThresh
     End Sub
 
+    ''' <summary>
+    ''' デスクトラクタ
+    ''' </summary>
     Protected Overrides Sub Finalize()
         MyBase.Finalize()
     End Sub
 
+    ''' <summary>
+    ''' 初期化
+    ''' </summary>
+    Public Overrides Sub Init()
+        m_nThresh = 0
+        MyBase.Init()
+    End Sub
+
+    ''' <summary>
+    ''' 2値化の実行
+    ''' </summary>
+    ''' <param name="_token">キャンセルトークン</param>
+    ''' <returns>実行結果 成功/失敗</returns>
     Public Overrides Function GoImgProc(_token As CancellationToken) As Boolean
         Dim bRst As Boolean = True
 
