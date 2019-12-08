@@ -4,6 +4,9 @@
 using namespace ImageProcessing;
 using namespace System::Configuration;
 
+/// <summary>
+/// 設定の読込
+/// </summary>
 void FormSettingImageProcessing::LoadParam(void)
 {
 	System::Collections::Generic::Dictionary<int, String^> items;
@@ -31,6 +34,9 @@ void FormSettingImageProcessing::LoadParam(void)
 	return;
 }
 
+/// <summary>
+/// 設定の保存
+/// </summary>
 void FormSettingImageProcessing::SaveParam(void)
 {
 	System::Configuration::Configuration^ config = ConfigurationManager::OpenExeConfiguration(ConfigurationUserLevel::None);
@@ -40,6 +46,11 @@ void FormSettingImageProcessing::SaveParam(void)
 	return;
 }
 
+/// <summary>
+/// OKボタンのクリックイベント
+/// </summary>
+/// <param name="sender">オブジェクト</param>
+/// <param name="e">イベントのデータ</param>
 void FormSettingImageProcessing::OnClickOk(System::Object^ sender, System::EventArgs^ e)
 {
 	SaveParam();
@@ -47,6 +58,11 @@ void FormSettingImageProcessing::OnClickOk(System::Object^ sender, System::Event
 	Close();
 }
 
+/// <summary>
+/// Cancelボタンのクリックイベント
+/// </summary>
+/// <param name="sender">オブジェクト</param>
+/// <param name="e">イベントのデータ</param>
 void FormSettingImageProcessing::OnClickCancel(System::Object^ sender, System::EventArgs^ e)
 {
 	this->DialogResult = System::Windows::Forms::DialogResult::Cancel;

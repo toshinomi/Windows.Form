@@ -5,6 +5,9 @@
 
 using namespace ImageProcessing;
 
+/// <summary>
+/// グラフの描画
+/// </summary>
 void FormHistgram::DrawHistgram(void)
 {
 	InitHistgram();
@@ -56,6 +59,9 @@ void FormHistgram::DrawHistgram(void)
 	chart->Series->Add(m_seriesLineAfter);
 }
 
+/// <summary>
+/// イメージからヒストグラム用のデータ算出
+/// </summary>
 void FormHistgram::CalHistgram(void)
 {
 	int nWidthSize = m_bitmapOrg->Width;
@@ -96,6 +102,9 @@ void FormHistgram::CalHistgram(void)
 	}
 }
 
+/// <summary>
+/// ヒストグラム用のデータ初期化
+/// </summary>
 void FormHistgram::InitHistgram(void)
 {
 	if (m_nHistgram == nullptr)
@@ -114,6 +123,11 @@ void FormHistgram::InitHistgram(void)
 	}
 }
 
+/// <summary>
+/// メニューのクリック
+/// </summary>
+/// <param name="sender">オブジェクト</param>
+/// <param name="e">イベントのデータ</param>
 void FormHistgram::OnClickMenu(System::Object^ sender, System::EventArgs^ e)
 {
 	String^ strHeader = sender->ToString();
@@ -126,6 +140,9 @@ void FormHistgram::OnClickMenu(System::Object^ sender, System::EventArgs^ e)
 	return;
 }
 
+/// <summary>
+/// CSVファイル保存
+/// </summary>
 void FormHistgram::SaveCsv(void)
 {
 	ComSaveFileDialog^ saveDialog = gcnew ComSaveFileDialog();
