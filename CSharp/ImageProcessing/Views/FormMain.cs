@@ -287,7 +287,7 @@ namespace ImageProcessing
         /// Formのクローズイベント
         /// </summary>
         /// <param name="sender">オブジェクト</param>
-        /// <param name="e">フFormClosingイベントのデータ</param>
+        /// <param name="e">FormClosingイベントのデータ</param>
         public void OnFormClosingFormMain(object sender, FormClosingEventArgs e)
         {
             if (m_tokenSource != null)
