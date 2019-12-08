@@ -8,33 +8,55 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
+/// <summary>
+/// ライブチャートのヒストグラム表示のロジック
+/// </summary>
 class ComHistgramLiveCharts : ComCharts
 {
+    /// <summary>
+    /// ヒストグラム用の2次元配列データ　配列の1次元：オリジナルのデータ、配列の2次元：画像処理後のデータ
+    /// </summary>
     public int[,] Histgram
     {
         get { return base.m_nHistgram; }
     }
 
+    /// <summary>
+    /// オリジナルのビットマップ
+    /// </summary>
     public Bitmap BitmapOrg
     {
         set { base.m_bitmapOrg = value; }
         get { return base.m_bitmapOrg; }
     }
 
+    /// <summary>
+    /// 画像処理後のビットマップ
+    /// </summary>
     public Bitmap BitmapAfter
     {
         set { base.m_bitmapAfter = value; }
         get { return base.m_bitmapAfter; }
     }
 
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
     public ComHistgramLiveCharts()
     {
     }
 
+    /// <summary>
+    /// デスクトラクタ
+    /// </summary>
     ~ComHistgramLiveCharts()
     {
     }
 
+    /// <summary>
+    /// ヒストグラムの描画データ処理
+    /// </summary>
+    /// <returns>ヒストグラムのデータ</returns>
     public List<LineSeries> DrawHistgram()
     {
         base.InitHistgram();

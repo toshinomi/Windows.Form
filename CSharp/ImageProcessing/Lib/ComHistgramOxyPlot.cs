@@ -7,41 +7,67 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// OXYプロットのヒストグラム表示のロジック
+/// </summary>
 class ComHistgramOxyPlot : ComCharts
 {
     private PlotModel m_pModel;
+
+    /// <summary>
+    /// プロットモデル
+    /// </summary>
     public PlotModel PModel
     {
         get { return m_pModel; }
         set { m_pModel = value; }
     }
 
+    /// <summary>
+    /// ヒストグラム用の2次元配列データ　配列の1次元：オリジナルのデータ、配列の2次元：画像処理後のデータ
+    /// </summary>
     public int[,] Histgram
     {
         get { return base.m_nHistgram; }
     }
 
+    /// <summary>
+    /// オリジナルのビットマップ
+    /// </summary>
     public Bitmap BitmapOrg
     {
         set { base.m_bitmapOrg = value; }
         get { return base.m_bitmapOrg; }
     }
 
+    /// <summary>
+    /// 画像処理後のビットマップ
+    /// </summary>
     public Bitmap BitmapAfter
     {
         set { base.m_bitmapAfter = value; }
         get { return base.m_bitmapAfter; }
     }
 
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
     public ComHistgramOxyPlot()
     {
         m_pModel = new PlotModel();
     }
 
+    /// <summary>
+    /// デスクトラクタ
+    /// </summary>
     ~ComHistgramOxyPlot()
     {
     }
 
+    /// <summary>
+    /// ヒストグラムの描画データ処理
+    /// </summary>
+    /// <returns>ヒストグラムのデータ</returns>
     public PlotModel DrawHistgram()
     {
         base.InitHistgram();
