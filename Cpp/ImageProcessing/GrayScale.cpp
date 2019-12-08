@@ -2,14 +2,34 @@
 #include "ComFunc.h"
 #include "ComInfo.h"
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="_bitmap">ビットマップ</param>
 GrayScale::GrayScale(Bitmap^ _bitmap) : ComImgProc(_bitmap)
 {
 }
 
+/// <summary>
+/// デスクトラクタ
+/// </summary>
 GrayScale::~GrayScale()
 {
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
+void GrayScale::Init(void)
+{
+	this->Init();
+}
+
+/// <summary>
+/// グレースケールの実行
+/// </summary>
+/// <param name="_token">キャンセルトークン</param>
+/// <returns>実行結果 成功/失敗</returns>
 bool GrayScale::GoImgProc(CancellationToken^ _token)
 {
 	bool bRst = true;

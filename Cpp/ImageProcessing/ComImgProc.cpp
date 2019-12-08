@@ -8,3 +8,9 @@ ComImgProc::ComImgProc(Bitmap^ _bitmap)
 ComImgProc::~ComImgProc()
 {
 }
+
+void ComImgProc::Init(void)
+{
+	m_bitmap = nullptr;
+	m_bitmapAfter = nullptr;
+}

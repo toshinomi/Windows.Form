@@ -2,20 +2,46 @@
 #include "ComFunc.h"
 #include "ComInfo.h"
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="_bitmap">ビットマップ</param>
 Binarization::Binarization(Bitmap^ _bitmap) : ComImgProc(_bitmap)
 {
 	m_nThresh = 0;
 }
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="_bitmap">ビットマップ</param>
+/// <param name="_nThresh">閾値</param>
 Binarization::Binarization(Bitmap^ _bitmap, Byte _nThresh) : ComImgProc(_bitmap)
 {
 	m_nThresh = _nThresh;
 }
 
+/// <summary>
+/// デスクトラクタ
+/// </summary>
 Binarization::~Binarization()
 {
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
+void Binarization::Init(void)
+{
+	m_nThresh = 0;
+	this->Init();
+}
+
+/// <summary>
+/// 2値化の実行
+/// </summary>
+/// <param name="_token">キャンセルトークン</param>
+/// <returns>実行結果 成功/失敗</returns>
 bool Binarization::GoImgProc(CancellationToken^ _token)
 {
 	bool bRst = true;

@@ -9,11 +9,15 @@ using namespace System::Text;
 using namespace System::Threading;
 using namespace System::Threading::Tasks;
 
+/// <summary>
+/// グレースケールのロジック
+/// </summary>
 public ref class GrayScale : public ComImgProc
 {
 private:
 public:
 	GrayScale(Bitmap^ _bitmap);
 	~GrayScale();
+	void Init(void) override;
 	bool GoImgProc(CancellationToken^ _token) override;
 };

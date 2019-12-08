@@ -2,14 +2,34 @@
 #include "ComFunc.h"
 #include "ComInfo.h"
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="_bitmap">ビットマップ</param>
 GrayScale2Diff::GrayScale2Diff(Bitmap^ _bitmap) : ComImgProc(_bitmap)
 {
 }
 
+/// <summary>
+/// デスクトラクタ
+/// </summary>
 GrayScale2Diff::~GrayScale2Diff()
 {
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
+void GrayScale2Diff::Init(void)
+{
+	this->Init();
+}
+
+/// <summary>
+/// グレースケール2次微分の実行
+/// </summary>
+/// <param name="_token">キャンセルトークン</param>
+/// <returns>実行結果 成功/失敗</returns>
 bool GrayScale2Diff::GoImgProc(CancellationToken^ _token)
 {
 	bool bRst = true;

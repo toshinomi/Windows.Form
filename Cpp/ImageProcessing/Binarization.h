@@ -9,6 +9,9 @@ using namespace System::Text;
 using namespace System::Threading;
 using namespace System::Threading::Tasks;
 
+/// <summary>
+/// 2値化のロジック
+/// </summary>
 public ref class Binarization : public ComImgProc
 {
 private:
@@ -17,6 +20,7 @@ public:
 	Binarization(Bitmap^ _bitmap);
 	Binarization(Bitmap^ _bitmap, Byte _nThresh);
 	~Binarization();
+	void Init(void) override;
 	Byte GetThresh() { return m_nThresh; }
 	void SetThresh(Byte _nThresh) { m_nThresh = _nThresh; }
 	bool GoImgProc(CancellationToken^ _token) override;

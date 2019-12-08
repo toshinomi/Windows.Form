@@ -2,14 +2,34 @@
 #include "ComFunc.h"
 #include "ComInfo.h"
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="_bitmap">ビットマップ</param>
 ColorReversal::ColorReversal(Bitmap^ _bitmap) : ComImgProc(_bitmap)
 {
 }
 
+/// <summary>
+/// デスクトラクタ
+/// </summary>
 ColorReversal::~ColorReversal()
 {
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
+void ColorReversal::Init(void)
+{
+	this->Init();
+}
+
+/// <summary>
+/// 色反転の実行
+/// </summary>
+/// <param name="_token">キャンセルトークン</param>
+/// <returns>実行結果 成功/失敗</returns>
 bool ColorReversal::GoImgProc(CancellationToken^ _token)
 {
 	bool bRst = true;

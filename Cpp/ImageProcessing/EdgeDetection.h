@@ -10,11 +10,15 @@ using namespace System::Text;
 using namespace System::Threading;
 using namespace System::Threading::Tasks;
 
+/// <summary>
+/// エッジ検出のロジック
+/// </summary>
 public ref class EdgeDetection : public ComImgProc
 {
 private:
 public:
 	EdgeDetection(Bitmap^ _bitmap);
 	~EdgeDetection();
+	void Init(void) override;
 	bool GoImgProc(CancellationToken^ _token) override;
 };

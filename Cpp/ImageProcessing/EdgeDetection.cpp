@@ -2,14 +2,34 @@
 #include "ComFunc.h"
 #include "ComInfo.h"
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="_bitmap">ビットマップ</param>
 EdgeDetection::EdgeDetection(Bitmap^ _bitmap) : ComImgProc(_bitmap)
 {
 }
 
+/// <summary>
+/// デスクトラクタ
+/// </summary>
 EdgeDetection::~EdgeDetection()
 {
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
+void EdgeDetection::Init(void)
+{
+	this->Init();
+}
+
+/// <summary>
+/// エッジ検出の実行
+/// </summary>
+/// <param name="_token">キャンセルトークン</param>
+/// <returns>実行結果 成功/失敗</returns>
 bool EdgeDetection::GoImgProc(CancellationToken^ _token)
 {
 	bool bRst = true;

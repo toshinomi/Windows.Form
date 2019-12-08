@@ -9,6 +9,9 @@ using namespace System::Text;
 using namespace System::Threading;
 using namespace System::Threading::Tasks;
 
+/// <summary>
+/// 色反転のロジック
+/// </summary>
 public ref class ColorReversal : public ComImgProc
 {
 private:
@@ -16,5 +19,6 @@ private:
 public:
 	ColorReversal(Bitmap^ _bitmap);
 	~ColorReversal();
+	void Init(void) override;
 	bool GoImgProc(CancellationToken^ _token) override;
 };

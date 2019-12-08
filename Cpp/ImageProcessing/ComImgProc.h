@@ -16,6 +16,7 @@ protected:
 public:
 	ComImgProc(Bitmap^ _bitmap);
 	~ComImgProc();
+	virtual void Init(void);
 	Bitmap^ GetBitmap() { return m_bitmap; }
 	void SetBitmap(Bitmap^ _bitmap) { m_bitmap = _bitmap; }
 	Bitmap^ GetBitmapAfter() { return m_bitmapAfter; }
