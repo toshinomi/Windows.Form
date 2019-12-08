@@ -19,6 +19,13 @@ abstract public class ComImgProc
     ~ComImgProc()
     {
         m_bitmap = null;
+        m_bitmapAfter = null;
+    }
+
+    virtual public void Init()
+    {
+        m_bitmap = null;
+        m_bitmapAfter = null;
     }
 
     public Bitmap Bitmap

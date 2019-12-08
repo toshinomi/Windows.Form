@@ -7,22 +7,40 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+/// <summary>
+/// グレースケールのロジック
+/// </summary>
 class GrayScale : ComImgProc
 {
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
+    /// <param name="_bitmap">ビットマップ</param>
     public GrayScale(Bitmap _bitmap) : base(_bitmap)
     {
     }
 
+    /// <summary>
+    /// デスクトラクタ
+    /// </summary>
     ~GrayScale()
     {
     }
 
-    public void Init()
+    /// <summary>
+    /// 初期化
+    /// </summary>
+    public override void Init()
     {
         base.m_bitmap = null;
         base.m_bitmapAfter = null;
     }
 
+    /// <summary>
+    /// グレースケールの実行
+    /// </summary>
+    /// <param name="_token">キャンセルトークン</param>
+    /// <returns>実行結果 成功/失敗</returns>
     public override bool GoImgProc(CancellationToken _token)
     {
         bool bRst = true;

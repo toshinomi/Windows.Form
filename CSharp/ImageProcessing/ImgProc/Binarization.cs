@@ -8,33 +8,55 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
+/// <summary>
+/// 2値化のロジック
+/// </summary>
 class Binarization : ComImgProc
 {
     private byte m_nThresh;
 
+    /// <summary>
+    /// 閾値
+    /// </summary>
     public byte Thresh
     {
         set { m_nThresh = value; }
         get { return m_nThresh; }
     }
 
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
+    /// <param name="_bitmap">ビットマップ</param>
     public Binarization(Bitmap _bitmap) : base(_bitmap)
     {
         m_nThresh = 0;
     }
 
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
+    /// <param name="_bitmap">ビットマップ</param>
+    /// <param name="_nThresh">閾値</param>
     public Binarization(Bitmap _bitmap, byte _nThresh) : base(_bitmap)
     {
         m_nThresh = _nThresh;
     }
 
-   public void Init()
+    /// <summary>
+    /// 初期化
+    /// </summary>
+    public override void Init()
     {
         m_nThresh = 0;
-        base.m_bitmap = null;
-        base.m_bitmapAfter = null;
+        base.Init();
     }
 
+    /// <summary>
+    /// 2値化の実行
+    /// </summary>
+    /// <param name="_token">キャンセルトークン</param>
+    /// <returns>実行結果 成功/失敗</returns>
     public override bool GoImgProc(CancellationToken _token)
     {
         bool bRst = true;
