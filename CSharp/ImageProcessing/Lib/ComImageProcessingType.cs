@@ -35,7 +35,6 @@ class ComImageProcessingType
     /// </summary>
     public ComImageProcessingType()
     {
-
     }
 
     /// <summary>

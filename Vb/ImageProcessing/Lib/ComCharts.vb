@@ -2,18 +2,30 @@
 Imports System.Runtime.InteropServices.Marshal
 Imports System.Text
 
+''' <summary>
+''' チャートのロジック
+''' </summary>
 Public MustInherit Class ComCharts
     Protected m_nHistgram(ComInfo.PictureType.MAX - 1, ComInfo.RGB_MAX - 1) As Integer
     Protected m_bitmapOrg As Bitmap
     Protected m_bitmapAfter As Bitmap
 
+    ''' <summary>
+    ''' コンストラクタ
+    ''' </summary>
     Public Sub New()
     End Sub
 
+    ''' <summary>
+    ''' デスクトラクタ
+    ''' </summary>
     Protected Overrides Sub Finalize()
         MyBase.Finalize()
     End Sub
 
+    ''' <summary>
+    ''' イメージからヒストグラム用のデータ算出
+    ''' </summary>
     Public Sub CalHistgram()
         Dim nWidthSize As Integer = m_bitmapOrg.Width
         Dim nHeightSize As Integer = m_bitmapOrg.Height
@@ -55,6 +67,9 @@ Public MustInherit Class ComCharts
         Next
     End Sub
 
+    ''' <summary>
+    ''' ヒストグラム用のデータ初期化
+    ''' </summary>
     Public Sub InitHistgram()
         For nIdx As Integer = 0 To (m_nHistgram.Length >> 1) - 1 Step 1
             m_nHistgram(ComInfo.PictureType.Original, nIdx) = 0
@@ -62,6 +77,10 @@ Public MustInherit Class ComCharts
         Next
     End Sub
 
+    ''' <summary>
+    ''' ヒストグラム用のデータCSV保存
+    ''' </summary>
+    ''' <returns>CSV保存の結果 成功/失敗</returns>
     Public Function SaveCsv() As Boolean
         Dim bRst As Boolean = True
         Dim saveDialog As ComSaveFileDialog = New ComSaveFileDialog()

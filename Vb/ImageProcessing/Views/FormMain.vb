@@ -225,7 +225,7 @@ Public Class FormMain
         m_tokenSource = New CancellationTokenSource()
         Dim token As CancellationToken = m_tokenSource.Token
         Dim imgInfo As ComImgInfo = New ComImgInfo()
-        Dim binarizationInfo As ComBinarizationInfo = New ComBinarizationInfo()
+        Dim binarizationInfo As BinarizationInfo = New BinarizationInfo()
         binarizationInfo.Thresh = sliderThresh.Value
         imgInfo.CurImgName = m_strCurImgName
         imgInfo.BinarizationInfo = binarizationInfo

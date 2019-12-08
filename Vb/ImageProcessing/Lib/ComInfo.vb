@@ -2,7 +2,13 @@
 Imports System.Text
 Imports LiveCharts
 
+''' <summary>
+''' 共通情報のロジック
+''' </summary>
 Public Class ComInfo
+    ''' <summary>
+    ''' Pixelの列挙
+    ''' </summary>
     Public Enum Pixel
         B = 0
         G
@@ -10,6 +16,9 @@ Public Class ComInfo
         A
     End Enum
 
+    ''' <summary>
+    ''' 画像処理のタイプの列挙
+    ''' </summary>
     Public Enum ImgType
         EdgeDetection = 0
         GrayScale
@@ -19,12 +28,18 @@ Public Class ComInfo
         MAX
     End Enum
 
+    ''' <summary>
+    ''' 画像のタイプの列挙
+    ''' </summary>
     Public Enum ImgDataType
         Jpg = 0
         Png
         MAX
     End Enum
 
+    ''' <summary>
+    ''' 画像の状態の列挙
+    ''' </summary>
     Public Enum PictureType
         Original = 0
         After
@@ -43,16 +58,4 @@ Public Class ComInfo
     Public Const IMG_NAME_BINARIZATION As String = "Binarization"
     Public Const IMG_NAME_GRAY_SCALE_2DIFF As String = "GrayScale 2Diff"
     Public Const IMG_NAME_COLOR_REVERSAL = "ColorReversal"
-
-    Public Class GraphData
-        Private m_seriesCollection As SeriesCollection
-        Public Property seriesCollection() As SeriesCollection
-            Get
-                Return m_seriesCollection
-            End Get
-            Set(ByVal value As SeriesCollection)
-                m_seriesCollection = value
-            End Set
-        End Property
-    End Class
 End Class
