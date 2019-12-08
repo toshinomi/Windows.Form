@@ -10,6 +10,9 @@ using System.Windows.Media.Imaging;
 
 namespace ImageProcessing
 {
+    /// <summary>
+    /// MainFormのロジック
+    /// </summary>
     public partial class FormMain : Form
     {
         private Bitmap m_bitmap;
@@ -25,6 +28,9 @@ namespace ImageProcessing
         private FormHistgramOxyPlot m_histgram;
 #endif
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public FormMain()
         {
             InitializeComponent();
@@ -49,6 +55,9 @@ namespace ImageProcessing
             sliderThresh.Enabled = m_strCurImgName == ComInfo.IMG_NAME_BINARIZATION ? true : false;
         }
 
+        /// <summary>
+        /// デスクトラクタ
+        /// </summary>
         ~FormMain()
         {
             m_bitmap = null;
@@ -56,10 +65,12 @@ namespace ImageProcessing
             m_imgProc = null;
         }
 
-        public bool SelectLoadImage(string _strImgName)
+        /// <summary>
+        /// 対象の画像処理オブジェクトにイメージをロードする
+        /// </summary>
+        /// <param name="_strImgName">画像処理オブジェクトの名称</param>
+        public void SelectLoadImage(string _strImgName)
         {
-            bool bRst = true;
-
             if (m_imgProc != null)
             {
                 m_imgProc = null;
@@ -86,9 +97,14 @@ namespace ImageProcessing
                     break;
             }
 
-            return bRst;
+            return;
         }
 
+        /// <summary>
+        /// 対象の画像処理オブジェクトからWriteableBitmapを取得する
+        /// </summary>
+        /// <param name="_strImgName">画像処理オブジェクトの名称</param>
+        /// <returns>Writeableなビットマップ</returns>
         public Bitmap SelectGetBitmap(string _strImgName)
         {
             Bitmap bitmap = null;
@@ -122,6 +138,12 @@ namespace ImageProcessing
             return bitmap;
         }
 
+        /// <summary>
+        /// 対象の画像処理オブジェクトを実行する
+        /// </summary>
+        /// <param name="_comImgInfo">画像処理の設定</param>
+        /// <param name="_token">キャンセルトークン</param>
+        /// <returns>画像処理の実行結果 成功/失敗</returns>
         public bool SelectGoImgProc(ComImgInfo _comImgInfo, CancellationToken _token)
         {
             bool bRst = true;
@@ -156,6 +178,9 @@ namespace ImageProcessing
             return bRst;
         }
 
+        /// <summary>
+        /// ツールチップの設定
+        /// </summary>
         public void SetToolTip()
         {
             toolTipBtnFileSelect.InitialDelay = 1000;
@@ -197,6 +222,9 @@ namespace ImageProcessing
             return;
         }
 
+        /// <summary>
+        /// ボタンのEnableを制御する
+        /// </summary>
         public void SetButtonEnable()
         {
             btnFileSelect.Enabled = true;
@@ -207,6 +235,9 @@ namespace ImageProcessing
             return;
         }
 
+        /// <summary>
+        /// 時間を表示するテキストボックスに時間を設定する
+        /// </summary>
         public void SetTextTime(long _lTime)
         {
             textBoxTime.Text = _lTime.ToString();
@@ -214,6 +245,9 @@ namespace ImageProcessing
             return;
         }
 
+        /// <summary>
+        /// 画像処理の実行中に表示する画像をOFFする
+        /// </summary>
         public void SetPictureBoxStatus()
         {
             pictureBoxStatus.Visible = false;
@@ -221,6 +255,10 @@ namespace ImageProcessing
             return;
         }
 
+        /// <summary>
+        /// 画像処理実行用のタスク
+        /// </summary>
+        /// <returns>画像処理の実行結果 成功/失敗</returns>
         public async Task<bool> TaskWorkImageProcessing()
         {
             m_tokenSource = new CancellationTokenSource();
@@ -234,6 +272,9 @@ namespace ImageProcessing
             return bRst;
         }
 
+        /// <summary>
+        /// イメージのロード処理
+        /// </summary>
         public void LoadImage()
         {
             m_bitmap = new Bitmap(m_strOpenFileName);
@@ -242,6 +283,11 @@ namespace ImageProcessing
             return;
         }
 
+        /// <summary>
+        /// Formのクローズイベント
+        /// </summary>
+        /// <param name="sender">オブジェクト</param>
+        /// <param name="e">フFormClosingイベントのデータ</param>
         public void OnFormClosingFormMain(object sender, FormClosingEventArgs e)
         {
             if (m_tokenSource != null)
@@ -258,6 +304,11 @@ namespace ImageProcessing
             return;
         }
 
+        /// <summary>
+        /// ファイル選択ボタンのクリックイベント
+        /// </summary>
+        /// <param name="sender">オブジェクト</param>
+        /// <param name="e">イベントのデータ</param>
         public void OnClickBtnFileSelect(object sender, EventArgs e)
         {
             ComOpenFileDialog openFileDlg = new ComOpenFileDialog();
@@ -317,6 +368,11 @@ namespace ImageProcessing
             return;
         }
 
+        /// <summary>
+        /// オールクリアボタンのクリックイベント
+        /// </summary>
+        /// <param name="sender">オブジェクト</param>
+        /// <param name="e">イベントのデータ</param>
         private void OnClickBtnAllClear(object sender, EventArgs e)
         {
             pictureBoxOriginal.ImageLocation = null;
@@ -340,6 +396,11 @@ namespace ImageProcessing
             return;
         }
 
+        /// <summary>
+        /// スタートボタンのクリックイベント
+        /// </summary>
+        /// <param name="sender">オブジェクト</param>
+        /// <param name="e">イベントのデータ</param>
         private async void OnClickBtnStart(object sender, EventArgs e)
         {
             pictureBoxAfter.Image = null;
@@ -392,6 +453,11 @@ namespace ImageProcessing
             return;
         }
 
+        /// <summary>
+        /// ストップボタンのクリックイベント
+        /// </summary>
+        /// <param name="sender">オブジェクト</param>
+        /// <param name="e">イベントのデータ</param>
         private void OnClickBtnStop(object sender, EventArgs e)
         {
             if (m_tokenSource != null)
@@ -402,10 +468,15 @@ namespace ImageProcessing
             return;
         }
 
+        /// <summary>
+        /// 画像処理のオブジェクトからイメージの取得
+        /// </summary>
+        /// <param name="_strImgName">画像処理の名称</param>
+        /// <returns>ビットマップ</returns>
         public Bitmap GetImage(string _strImgName)
         {
             Bitmap bitmap = null;
-            switch (m_strCurImgName)
+            switch (_strImgName)
             {
                 case ComInfo.IMG_NAME_EDGE_DETECTION:
                     EdgeDetection edge = (EdgeDetection)m_imgProc;
@@ -449,6 +520,11 @@ namespace ImageProcessing
             return bitmap == null ? bitmap : (Bitmap)bitmap.Clone();
         }
 
+        /// <summary>
+        /// イメージの保存ボタンのクリックイベント
+        /// </summary>
+        /// <param name="sender">オブジェクト</param>
+        /// <param name="e">イベントのデータ</param>
         private void OnClickBtnSaveImage(object sender, EventArgs e)
         {
             ComSaveFileDialog saveDialog = new ComSaveFileDialog();
@@ -475,6 +551,11 @@ namespace ImageProcessing
             return;
         }
 
+        /// <summary>
+        /// ヒストグラム表示ボタンのクリックイベント
+        /// </summary>
+        /// <param name="sender">オブジェクト</param>
+        /// <param name="e">イベントのデータ</param>
         private void OnClickBtnShowHistgram(object sender, EventArgs e)
         {
             if (m_bitmap == null)
@@ -507,6 +588,11 @@ namespace ImageProcessing
             return;
         }
 
+        /// <summary>
+        /// メニューのクリックイベント
+        /// </summary>
+        /// <param name="sender">オブジェクト</param>
+        /// <param name="e">イベントのデータ</param>
         private void OnClickMenu(object sender, EventArgs e)
         {
             ToolStripMenuItem menuItem = (ToolStripMenuItem)sender;
@@ -527,6 +613,9 @@ namespace ImageProcessing
             return;
         }
 
+        /// <summary>
+        /// 設定画面の処理
+        /// </summary>
         public void ShowSettingImageProcessing()
         {
             FormSettingImageProcessing win = new FormSettingImageProcessing();
@@ -551,12 +640,22 @@ namespace ImageProcessing
             return;
         }
 
+        /// <summary>
+        /// 2値化の閾値のスライダのスクロールイベント
+        /// </summary>
+        /// <param name="sender">オブジェクト</param>
+        /// <param name="e">イベントのデータ</param>
         private void OnScrollSliderThresh(object sender, EventArgs e)
         {
             var trackBar = (TrackBar)sender;
             labelValue.Text = trackBar.Value.ToString();
         }
 
+        /// <summary>
+        /// 2値化の閾値のスライダのキーアップイベント
+        /// </summary>
+        /// <param name="sender">オブジェクト</param>
+        /// <param name="e">キーイベントのデータ</param>
         private void OnSliderPreviewKeyUp(object sender, KeyEventArgs e)
         {
             if (pictureBoxAfter.Image != null)
@@ -565,6 +664,11 @@ namespace ImageProcessing
             }
         }
 
+        /// <summary>
+        /// 2値化の閾値のスライダのマウスアップイベント
+        /// </summary>
+        /// <param name="sender">オブジェクト</param>
+        /// <param name="e">マウスボタンイベントのデータ</param>
         private void OnSliderMouseUp(object sender, MouseEventArgs e)
         {
             if (pictureBoxAfter.Image != null)
@@ -573,6 +677,9 @@ namespace ImageProcessing
             }
         }
 
+        /// <summary>
+        /// 2値化のスライダを調整したときの処理
+        /// </summary>
         private async void ParamAjust()
         {
             pictureBoxAfter.Image = null;

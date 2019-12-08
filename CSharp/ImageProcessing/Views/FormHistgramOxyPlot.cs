@@ -10,29 +10,44 @@ using System.Windows.Forms;
 
 namespace ImageProcessing
 {
+    /// <summary>
+    /// HFormHistgramOxyPlot のロジック
+    /// </summary>
     public partial class FormHistgramOxyPlot : Form
     {
         private ComHistgramOxyPlot m_histgramChart;
         private bool m_bIsOpen;
 
+        /// <summary>
+        /// オリジナルのビットマップ
+        /// </summary>
         public Bitmap BitmapOrg
         {
             set { m_histgramChart.BitmapOrg = value; }
             get { return m_histgramChart.BitmapOrg; }
         }
 
+        /// <summary>
+        /// 画像処理後のビットマップ
+        /// </summary>
         public Bitmap BitmapAfter
         {
             set { m_histgramChart.BitmapAfter = value; }
             get { return m_histgramChart.BitmapAfter; }
         }
 
+        /// <summary>
+        /// Formのオープン状態
+        /// </summary>
         public bool IsOpen
         {
             set { m_bIsOpen = value; }
             get { return m_bIsOpen; }
         }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public FormHistgramOxyPlot()
         {
             InitializeComponent();
@@ -40,6 +55,9 @@ namespace ImageProcessing
             m_histgramChart = new ComHistgramOxyPlot();
         }
 
+        /// <summary>
+        /// グラフの描画
+        /// </summary>
         public void DrawHistgram()
         {
             if (chart.Model != null)
@@ -52,6 +70,11 @@ namespace ImageProcessing
             return;
         }
 
+        /// <summary>
+        /// Formのクローズ処理
+        /// </summary>
+        /// <param name="sender">オブジェクト</param>
+        /// <param name="e">FormClosingイベントのデータ</param>
         private void OnFormClosingFormHistgramOxyPlot(object sender, FormClosingEventArgs e)
         {
             m_bIsOpen = false;
@@ -59,6 +82,11 @@ namespace ImageProcessing
             return;
         }
 
+        /// <summary>
+        /// メニューのクリック
+        /// </summary>
+        /// <param name="sender">オブジェクト</param>
+        /// <param name="e">イベントのデータ</param>
         public void OnClickMenu(object sender, EventArgs e)
         {
             string strHeader = sender.ToString();
@@ -75,6 +103,9 @@ namespace ImageProcessing
             return;
         }
 
+        /// <summary>
+        /// CSVファイル保存
+        /// </summary>
         public void SaveCsv()
         {
             if (!m_histgramChart.SaveCsv())
