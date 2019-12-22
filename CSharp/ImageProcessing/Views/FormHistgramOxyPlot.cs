@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace ImageProcessing
 {
     /// <summary>
-    /// HFormHistgramOxyPlot のロジック
+    /// FormHistgramOxyPlot のロジック
     /// </summary>
     public partial class FormHistgramOxyPlot : Form
     {
