@@ -11,6 +11,17 @@ using namespace System::Threading::Tasks;
 public class ComFunc
 {
 public:
+	/// <summary>
+	/// Double型のデータからbyte型のデータへの変換
+	/// </summary>
+	/// <param name="_dValue">Double型のデータ</param>
+	/// <returns>byte型のデータ</returns>
 	static Byte DoubleToByte(double _dValue);
+
+	/// <summary>
+	/// long型のデータからbyte型のデータへの変換
+	/// </summary>
+	/// <param name="_lValue">long型のデータ</param>
+	/// <returns>byte型のデータ</returns>
 	static Byte LongToByte(long _lValue);
 };

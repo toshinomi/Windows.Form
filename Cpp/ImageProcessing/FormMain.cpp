@@ -214,6 +214,7 @@ void FormMain::SetButtonEnable()
 /// <summary>
 /// 時間を表示するテキストボックスに時間を設定する
 /// </summary>
+/// <param name="_lTime">時間</param>
 void FormMain::SetTextTime(long long _lTime)
 {
 	textBoxTime->Text = _lTime.ToString();

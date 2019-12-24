@@ -2,6 +2,9 @@
 using namespace System;
 using namespace System::Drawing;
 
+/// <summary>
+/// ƒfƒŠƒQ[ƒg
+/// </summary>
 namespace ComDelegate
 {
 	delegate void DelegateSetBool(bool _bValue);

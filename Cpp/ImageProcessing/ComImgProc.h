@@ -24,12 +24,44 @@ protected:
 	/// </summary>
 	Bitmap^ m_bitmapAfter;
 public:
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="_bitmap">ビットマップ</param>
 	ComImgProc(Bitmap^ _bitmap);
+
+	/// <summary>
+	/// デスクトラクタ
+	/// </summary>
 	~ComImgProc();
+
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	virtual void Init(void);
+
+	/// <summary>
+	/// オリジナルのビットマップの取得
+	/// </summary>
+	/// <returns>ビットマップ</returns>
 	Bitmap^ GetBitmap() { return m_bitmap; }
+
+	/// <summary>
+	/// オリジナルのビットマップの設定
+	/// </summary>
+	/// <param name="_bitmap">ビットマップ</param>
 	void SetBitmap(Bitmap^ _bitmap) { m_bitmap = _bitmap; }
+
+	/// <summary>
+	/// 画像処理後のビットマップの取得
+	/// </summary>
+	/// <returns>ビットマップ</returns>
 	Bitmap^ GetBitmapAfter() { return m_bitmapAfter; }
+
+	/// <summary>
+	/// 画像処理後のビットマップの設定
+	/// </summary>
+	/// <returns>ビットマップ</returns>
 	void SetBitmapAfter(Bitmap^ _bitmap) { m_bitmapAfter = _bitmap; }
 
 	/// <summary>

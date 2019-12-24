@@ -62,6 +62,9 @@ namespace ComInfo
 	static const short RGB_MAX = 256;
 }
 
+/// <summary>
+/// ‹¤’Ê‚Ì•¶Žš—ñ
+/// </summary>
 public ref class ComConstStringInfo
 {
 public:

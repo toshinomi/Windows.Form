@@ -131,11 +131,34 @@ namespace ImageProcessing {
 #pragma endregion
 	private:
 	public:
+		/// <summary>
+		/// 設定の読込
+		/// </summary>
 		void LoadParam(void);
+
+		/// <summary>
+		/// 設定の保存
+		/// </summary>
 		void SaveParam(void);
+
+		/// <summary>
+		/// 画像処理タイプのコンボボックス情報の取得
+		/// </summary>
+		/// <returns>画像処理タイプのコンボボックス情報</returns>
 		ComboBox^ GetCmbBoxImageProcessingType(void) { return cmbBoxImageProcessingType; };
 	private:
+		/// <summary>
+		/// OKボタンのクリックイベント
+		/// </summary>
+		/// <param name="sender">オブジェクト</param>
+		/// <param name="e">イベントのデータ</param>
 		void OnClickOk(System::Object^ sender, System::EventArgs^ e);
+
+		/// <summary>
+		/// Cancelボタンのクリックイベント
+		/// </summary>
+		/// <param name="sender">オブジェクト</param>
+		/// <param name="e">イベントのデータ</param>
 		void OnClickCancel(System::Object^ sender, System::EventArgs^ e);
 	};
 }

@@ -492,48 +492,257 @@ namespace ImageProcessing {
 		}
 #pragma endregion
 		private:
+			/// <summary>
+			/// ビットマップ
+			/// </summary>
 			Bitmap^ m_bitmap;
+
+			/// <summary>
+			/// 画像処理実行用の情報
+			/// </summary>
 			Object^ m_imgProc;
+
+			/// <summary>
+			/// オープンしている画像のファイル名称
+			/// </summary>
 			String^ m_strOpenFileName;
+
+			/// <summary>
+			/// キャンセルトークン
+			/// </summary>
 			CancellationTokenSource^ m_tokenSource;
+
+			/// <summary>
+			/// 現在選択中の画像処理の名称
+			/// </summary>
 			String^ m_strCurImgName;
+
+			/// <summary>
+			/// ヒストグラム用のデータ
+			/// </summary>
 			FormHistgram^ m_histgram;
 		public:
+			/// <summary>
+			/// 対象の画像処理オブジェクトにイメージをロードする
+			/// </summary>
+			/// <param name="_strImgName">画像処理オブジェクトの名称</param>
 			void SelectLoadImage(String^ _strImgName);
+
+			/// <summary>
+			/// 対象の画像処理オブジェクトからWriteableBitmapを取得する
+			/// </summary>
+			/// <param name="_strImgName">画像処理オブジェクトの名称</param>
+			/// <returns>Writeableなビットマップ</returns>
 			Bitmap^ SelectGetBitmap(String^ _strImgName);
+
+			/// <summary>
+			/// 対象の画像処理オブジェクトを実行する
+			/// </summary>
+			/// <param name="_comImgInfo">画像処理の設定</param>
+			/// <param name="_token">キャンセルトークン</param>
+			/// <returns>画像処理の実行結果 成功/失敗</returns>
 			bool SelectGoImgProc(ComImgInfo^ _comImgInfo, CancellationToken^ _token);
+
+			/// <summary>
+			/// ツールチップの設定
+			/// </summary>
 			void SetToolTip(void);
+
+			/// <summary>
+			/// ボタンのEnableを制御する
+			/// </summary>
 			void SetButtonEnable(void);
+
+			/// <summary>
+			/// 時間を表示するテキストボックスに時間を設定する
+			/// </summary>
+			/// <param name="_lTime">時間</param>
 			void SetTextTime(long long _lTime);
+
+			/// <summary>
+			/// コントロールのEnableを制御する
+			/// </summary>
 			void SetControlEnable(void);
+
+			/// <summary>
+			/// 画像処理実行用のタスク
+			/// </summary>
 			void ExecTaskImageProcessing(void);
+
+			/// <summary>
+			/// 画像処理のタスク実行
+			/// </summary>
 			void TaskWorkImageProcessing(void);
+
+			/// <summary>
+			/// イメージのロード処理
+			/// </summary>
 			void LoadImage(void);
+
+			/// <summary>
+			/// Formのクローズイベント
+			/// </summary>
+			/// <param name="sender">オブジェクト</param>
+			/// <param name="e">FormClosingイベントのデータ</param>
 			void OnFormClosingFormMain(Object^ sender, FormClosingEventArgs^ e);
+
+			/// <summary>
+			/// ファイル選択ボタンのクリックイベント
+			/// </summary>
+			/// <param name="sender">オブジェクト</param>
+			/// <param name="e">イベントのデータ</param>
 			void OnClickBtnFileSelect(Object^ sender, EventArgs^ e);
+
+			/// <summary>
+			/// オールクリアボタンのクリックイベント
+			/// </summary>
+			/// <param name="sender">オブジェクト</param>
+			/// <param name="e">イベントのデータ</param>
 			void OnClickBtnAllClear(Object^ sender, EventArgs^ e);
+
+			/// <summary>
+			/// スタートボタンのクリックイベント
+			/// </summary>
+			/// <param name="sender">オブジェクト</param>
+			/// <param name="e">イベントのデータ</param>
 			void OnClickBtnStart(Object^ sender, EventArgs^ e);
+
+			/// <summary>
+			/// ストップボタンのクリックイベント
+			/// </summary>
+			/// <param name="sender">オブジェクト</param>
+			/// <param name="e">イベントのデータ</param>
 			void OnClickBtnStop(Object^ sender, EventArgs^ e);
+
+			/// <summary>
+			/// 画像処理のオブジェクトからイメージの取得
+			/// </summary>
+			/// <param name="_strImgName">画像処理の名称</param>
+			/// <returns>ビットマップ</returns>
 			Bitmap^ GetImage(String^ _strImgName);
+
+			/// <summary>
+			/// イメージの保存ボタンのクリックイベント
+			/// </summary>
+			/// <param name="sender">オブジェクト</param>
+			/// <param name="e">イベントのデータ</param>
 			void OnClickBtnSaveImage(Object^ sender, EventArgs^ e);
+
+			/// <summary>
+			/// ヒストグラム表示ボタンのクリックイベント
+			/// </summary>
+			/// <param name="sender">オブジェクト</param>
+			/// <param name="e">イベントのデータ</param>
 			void OnClickBtnShowHistgram(Object^ sender, EventArgs^ e);
+
+			/// <summary>
+			/// メニューのクリックイベント
+			/// </summary>
+			/// <param name="sender">オブジェクト</param>
+			/// <param name="e">イベントのデータ</param>
 			void OnClickMenu(System::Object^ sender, System::EventArgs^ e);
+
+			/// <summary>
+			/// 設定画面の処理
+			/// </summary>
 			void ShowSettingImageProcessing(void);
+
+			/// <summary>
+			/// 2値化の閾値のスライダのスクロールイベント
+			/// </summary>
+			/// <param name="sender">オブジェクト</param>
+			/// <param name="e">イベントのデータ</param>
 			void OnScrollSliderThresh(System::Object^ sender, System::EventArgs^ e);
+
+			/// <summary>
+			/// 2値化の閾値のスライダのキーアップイベント
+			/// </summary>
+			/// <param name="sender">オブジェクト</param>
+			/// <param name="e">キーイベントのデータ</param>
 			void OnSliderPreviewKeyUp(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e);
+
+			/// <summary>
+			/// 2値化の閾値のスライダのマウスアップイベント
+			/// </summary>
+			/// <param name="sender">オブジェクト</param>
+			/// <param name="e">マウスボタンイベントのデータ</param>
 			void OnSliderMouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e);
+
+			/// <summary>
+			/// 2値化のスライダを調整したときの処理
+			/// </summary>
 			void ExecParamAjust(void);
+
+			/// <summary>
+			/// 2値化のスライダを調整したときの処理
+			/// </summary>
 			void ParamAjust(void);
+
+			/// <summary>
+			/// 2値化のスライダを調整したときの処理
+			/// </summary>
+			/// <param name="_strImgName">画像処理の名称</param>
+			/// <returns>画像処理のID</returns>
 			int SearchImgTypeId(String^ _strImgName);
+
+			/// <summary>
+			/// 画像処理中に表示させる画像の表示/非表示の設定
+			/// </summary>
+			/// <param name="_bValue">表示/非表示</param>
 			void SetPictureBoxStatusVisible(bool _bValue) { pictureBoxStatus->Visible = _bValue; };
+
+			/// <summary>
+			/// 選択ボタンの有効/無効の設定
+			/// </summary>
+			/// <param name="_bValue">有効/無効</param>
 			void SetBtnFileSelectEnable(bool _bValue) { btnFileSelect->Enabled = _bValue; };
+
+			/// <summary>
+			/// 全てクリアボタンの有効/無効の設定
+			/// </summary>
+			/// <param name="_bValue">有効/無効</param>
 			void SetBtnAllClearEnable(bool _bValue) { btnAllClear->Enabled = _bValue; };
+
+			/// <summary>
+			/// スタートボタンの有効/無効の設定
+			/// </summary>
+			/// <param name="_bValue">有効/無効</param>
 			void SetBtnStartEnable(bool _bValue) { btnStart->Enabled = _bValue; };
+
+			/// <summary>
+			/// ストップボタンの有効/無効の設定
+			/// </summary>
+			/// <param name="_bValue">有効/無効</param>
 			void SetBtnStopEnable(bool _bValue) { btnStop->Enabled = _bValue; };
+
+			/// <summary>
+			/// 画像保存ボタンの有効/無効の設定
+			/// </summary>
+			/// <param name="_bValue">有効/無効</param>
 			void SetBtnSaveImageEnable(bool _bValue) { btnSaveImage->Enabled = _bValue; };
+
+			/// <summary>
+			/// ヒストグラム表示ボタンの有効/無効の設定
+			/// </summary>
+			/// <param name="_bValue">有効/無効</param>
 			void SetBtnShowHistgramEnable(bool _bValue) { btnShowHistgram->Enabled = _bValue; };
+
+			/// <summary>
+			/// メインメニューの有効/無効の設定
+			/// </summary>
+			/// <param name="_bValue">有効/無効</param>
 			void SetMenuMainEnable(bool _bValue) { menuMain->Enabled = _bValue; };
+
+			/// <summary>
+			/// 閾値のスライダの有効/無効の設定
+			/// </summary>
+			/// <param name="_bValue">有効/無効</param>
 			void SetSliderThreshEnable(bool _bValue) { sliderThresh->Enabled = _bValue; };
+
+			/// <summary>
+			/// 閾値のスライダの値の取得
+			/// </summary>
+			/// <returns>閾値のスライダの値</returns>
 			Byte GetSliderThresh(void) { return (Byte)sliderThresh->Value; };
 	};
 };

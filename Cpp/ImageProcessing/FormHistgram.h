@@ -136,33 +136,126 @@ namespace ImageProcessing {
 		}
 #pragma endregion
 	private:
+		/// <summary>
+		/// ヒストグラムデータ
+		/// </summary>
 		int** m_nHistgram;
+
+		/// <summary>
+		/// オリジナルのビットマップ
+		/// </summary>
 		Bitmap^ m_bitmapOrg;
+
+		/// <summary>
+		/// 画像処理後のビットマップ
+		/// </summary>
 		Bitmap^ m_bitmapAfter;
+
+		/// <summary>
+		/// オープン状態
+		/// </summary>
 		bool m_bIsOpen;
+
+		/// <summary>
+		/// オリジナルのヒストグラムのデータ
+		/// </summary>
 		Series^ m_seriesLineOriginal;
+
+		/// <summary>
+		/// 画像処理後のヒストグラムのデータ
+		/// </summary>
 		Series^ m_seriesLineAfter;
+
+		/// <summary>
+		/// グラフエリア
+		/// </summary>
 		ChartArea^ m_chartArea;
 	public:
+		/// <summary>
+		/// オリジナルのビットマップの取得
+		/// </summary>
+		/// <returns>ビットマップ</returns>
 		Bitmap^ GetBitmapOrg(void) { return m_bitmapOrg; };
+
+		/// <summary>
+		/// オリジナルのビットマップの設定
+		/// </summary>
+		/// <param name="_bitmap">ビットマップ</param>
 		void SetBitmapOrg(Bitmap^ _bitmap) { m_bitmapOrg = _bitmap; }
 
+		/// <summary>
+		/// 画像処理後のビットマップの取得
+		/// </summary>
+		/// <returns>ビットマップ</returns>
 		Bitmap^ GetBitmapAfter(void) { return m_bitmapAfter; };
+
+		/// <summary>
+		/// オリジナルのビットマップの設定
+		/// </summary>
+		/// <param name="_bitmap">ビットマップ</param>
 		void SetBitmapAfter(Bitmap^ _bitmap) { m_bitmapAfter = _bitmap; }
 
+		/// <summary>
+		/// ヒストグラム画面のオープン状態の取得
+		/// </summary>
+		/// <returns>ヒストグラム画面のオープン状態</returns>
 		bool GetIsOpen(void) { return m_bIsOpen; };
+
+		/// <summary>
+		/// ヒストグラム画面のオープン状態の設定
+		/// </summary>
+		/// <param name="_isOpen">ストグラム画面のオープン状態</param>
 		void SetIsOpen(bool _isOpen) { m_bIsOpen = _isOpen; };
 
+		/// <summary>
+		/// オリジナルのヒストグラムのデータ情報の取得
+		/// </summary>
+		/// <returns>オリジナルのヒストグラムのデータ情報</returns>
 		Series^ GetSeriesLineOriginal(void) { return m_seriesLineOriginal; };
+
+		/// <summary>
+		/// オリジナルのヒストグラムのデータ情報の設定
+		/// </summary>
+		/// <param name="_series">オリジナルのヒストグラムのデータ情報</param>
 		void SetSeriesLineOriginal(Series^ _series) { m_seriesLineOriginal = _series; };
 
+		/// <summary>
+		/// 画像処理後のヒストグラムのデータ情報の取得
+		/// </summary>
+		/// <returns>画像処理後のヒストグラムのデータ情報</returns>
 		Series^ GetSeriesLineAfter(void) { return m_seriesLineAfter; };
+
+		/// <summary>
+		/// 画像処理後のヒストグラムのデータ情報の設定
+		/// </summary>
+		/// <param name="_series">画像処理後のヒストグラムのデータ情報</param>
 		void SetSeriesLineAfter(Series^ _series) { m_seriesLineAfter = _series; };
 
+		/// <summary>
+		/// グラフの描画
+		/// </summary>
 		void DrawHistgram(void);
+
+		/// <summary>
+		/// イメージからヒストグラム用のデータ算出
+		/// </summary>
 		void CalHistgram(void);
+
+		/// <summary>
+		/// ヒストグラム用のデータ初期化
+		/// </summary>
 		void InitHistgram(void);
-		void SaveCsv(void);
+
+		/// <summary>
+		/// メニューのクリック
+		/// </summary>
+		/// <param name="sender">オブジェクト</param>
+		/// <param name="e">イベントのデータ</param>
 		void OnClickMenu(System::Object^ sender, System::EventArgs^ e);
+
+		/// <summary>
+		/// CSVファイル保存
+		/// </summary>
+		void SaveCsv(void);
 	};
 }
