@@ -383,9 +383,9 @@ namespace ImageProcessing
         /// 画像処理の実行
         /// </summary>
         /// <param name="imageProcessingName">画像処理オブジェクトの名称</param>
-        /// <param name="_token">キャンセルトークン</param>
+        /// <param name="token">キャンセルトークン</param>
         /// <returns>実行結果 成功/失敗</returns>
-        public override bool GoImageProcessing(string imageProcessingName, CancellationToken _token)
+        public override bool GoImageProcessing(string imageProcessingName, CancellationToken token)
         {
             int index = 0;
 
@@ -410,7 +410,7 @@ namespace ImageProcessing
                     break;
             }
 
-            return array[index].processing(_token);
+            return array[index].processing(token);
         }
     }
 }
