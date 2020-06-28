@@ -80,9 +80,11 @@ class ComHistgramLiveCharts : ComCharts
             lineSeriesChart2.Values.Add(m_nHistgram[(int)ComInfo.PictureType.After, nIdx]);
         }
 
-        List<LineSeries> items = new List<LineSeries>();
-        items.Add(lineSeriesChart1);
-        items.Add(lineSeriesChart2);
+        var items = new List<LineSeries>
+        {
+            lineSeriesChart1,
+            lineSeriesChart2
+        };
 
         return items;
     }

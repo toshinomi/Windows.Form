@@ -52,7 +52,7 @@ namespace ImageProcessing
             m_strCurImgName = Properties.Settings.Default.ImgTypeSelectName;
             this.Text = "Image Processing ( " + m_strCurImgName + " )";
 
-            sliderThresh.Enabled = m_strCurImgName == ComInfo.IMG_NAME_BINARIZATION ? true : false;
+            sliderThresh.Enabled = m_strCurImgName == ComInfo.IMG_NAME_BINARIZATION;
         }
 
         /// <summary>
@@ -186,8 +186,10 @@ namespace ImageProcessing
             m_tokenSource = new CancellationTokenSource();
             CancellationToken token = m_tokenSource.Token;
             ComImgInfo imgInfo = new ComImgInfo();
-            BinarizationInfo binarizationInfo = new BinarizationInfo();
-            binarizationInfo.Thresh = (byte)sliderThresh.Value;
+            var binarizationInfo = new BinarizationInfo
+            {
+                Thresh = (byte)sliderThresh.Value
+            };
             imgInfo.CurImgName = m_strCurImgName;
             imgInfo.BinarizationInfo = binarizationInfo;
             bool bRst = await Task.Run(() => SelectGoImgProc(imgInfo, token));
@@ -233,9 +235,11 @@ namespace ImageProcessing
         /// <param name="e">イベントのデータ</param>
         public void OnClickBtnFileSelect(object sender, EventArgs e)
         {
-            ComOpenFileDialog openFileDlg = new ComOpenFileDialog();
-            openFileDlg.Filter = "JPG|*.jpg|PNG|*.png";
-            openFileDlg.Title = "Open the file";
+            var openFileDlg = new ComOpenFileDialog
+            {
+                Filter = "JPG|*.jpg|PNG|*.png",
+                Title = "Open the file"
+            };
             if (openFileDlg.ShowDialog() == true)
             {
                 pictureBoxOriginal.Image = null;
@@ -408,9 +412,11 @@ namespace ImageProcessing
         /// <param name="e">イベントのデータ</param>
         private void OnClickBtnSaveImage(object sender, EventArgs e)
         {
-            ComSaveFileDialog saveDialog = new ComSaveFileDialog();
-            saveDialog.Filter = "PNG|*.png";
-            saveDialog.Title = "Save the file";
+            var saveDialog = new ComSaveFileDialog
+            {
+                Filter = "PNG|*.png",
+                Title = "Save the file"
+            };
             if (saveDialog.ShowDialog() == true)
             {
                 string strFileName = saveDialog.FileName;
@@ -507,7 +513,7 @@ namespace ImageProcessing
                 m_strCurImgName = (string)win.CmbBoxImageProcessingType.SelectedItem;
                 this.Text = "Image Processing ( " + m_strCurImgName + " )";
 
-                sliderThresh.Enabled = m_strCurImgName == ComInfo.IMG_NAME_BINARIZATION ? true : false;
+                sliderThresh.Enabled = m_strCurImgName == ComInfo.IMG_NAME_BINARIZATION;
 
                 pictureBoxAfter.Image = null;
                 btnSaveImage.Enabled = false;

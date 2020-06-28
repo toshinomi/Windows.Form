@@ -16,8 +16,7 @@ public class ComFunc
     /// <returns>byte型のデータ</returns>
     static public byte DoubleToByte(double dValue)
     {
-        byte nCnvValue = 0;
-
+        byte nCnvValue;
         if (dValue > 255.0)
         {
             nCnvValue = 255;
@@ -41,8 +40,7 @@ public class ComFunc
     /// <returns>byte型のデータ</returns>
     static public byte LongToByte(long lValue)
     {
-        byte nCnvValue = 0;
-            
+        byte nCnvValue;
         if (lValue > 255)
         {
             nCnvValue = 255;

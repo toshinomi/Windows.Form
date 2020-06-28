@@ -18,7 +18,7 @@ namespace ImageProcessing
     /// </summary>
     public partial class FormHistgramLiveCharts : Form
     {
-        private ComHistgramLiveCharts m_histgramChart;
+        private readonly ComHistgramLiveCharts m_histgramChart;
         private bool m_bIsOpen;
 
         /// <summary>
@@ -63,8 +63,7 @@ namespace ImageProcessing
         /// </summary>
         public void DrawHistgram()
         {
-            List<LineSeries> items = new List<LineSeries>();
-            items = m_histgramChart.DrawHistgram();
+            var items = m_histgramChart.DrawHistgram();
 
             chart.Series.Clear();
             for (int nIdx = 0; nIdx < items.Count; nIdx++)

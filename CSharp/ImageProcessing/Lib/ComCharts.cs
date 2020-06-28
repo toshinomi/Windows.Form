@@ -96,10 +96,12 @@ abstract class ComCharts
     public bool SaveCsv()
     {
         bool bRst = true;
-        ComSaveFileDialog saveDialog = new ComSaveFileDialog();
-        saveDialog.Filter = "CSV|*.csv";
-        saveDialog.Title = "Save the csv file";
-        saveDialog.FileName = "default.csv";
+        var saveDialog = new ComSaveFileDialog
+        {
+            Filter = "CSV|*.csv",
+            Title = "Save the csv file",
+            FileName = "default.csv"
+        };
         if (saveDialog.ShowDialog() == true)
         {
             string strDelmiter = ",";

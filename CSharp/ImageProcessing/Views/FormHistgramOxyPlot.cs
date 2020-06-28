@@ -15,8 +15,7 @@ namespace ImageProcessing
     /// </summary>
     public partial class FormHistgramOxyPlot : Form
     {
-        private ComHistgramOxyPlot m_histgramChart;
-        private bool m_bIsOpen;
+        private readonly ComHistgramOxyPlot m_histgramChart;
 
         /// <summary>
         /// オリジナルのビットマップ
@@ -39,11 +38,7 @@ namespace ImageProcessing
         /// <summary>
         /// Formのオープン状態
         /// </summary>
-        public bool IsOpen
-        {
-            set { m_bIsOpen = value; }
-            get { return m_bIsOpen; }
-        }
+        public bool IsOpen { set; get; }
 
         /// <summary>
         /// コンストラクタ
@@ -77,7 +72,7 @@ namespace ImageProcessing
         /// <param name="e">FormClosingイベントのデータ</param>
         private void OnFormClosingFormHistgramOxyPlot(object sender, FormClosingEventArgs e)
         {
-            m_bIsOpen = false;
+            IsOpen = false;
 
             return;
         }
