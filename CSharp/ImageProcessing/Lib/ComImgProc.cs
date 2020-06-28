@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// 画像処理の共通のロジック
 /// </summary>
-abstract public class ComImgProc
+abstract public class ComImageProcessing
 {
     protected Bitmap m_bitmap;
     protected Bitmap m_bitmapAfter;
@@ -18,7 +18,7 @@ abstract public class ComImgProc
     /// コンストラクタ
     /// </summary>
     /// <param name="_bitmap">ビットマップ</param>
-    public ComImgProc(Bitmap _bitmap)
+    public ComImageProcessing(Bitmap _bitmap)
     {
         m_bitmap = _bitmap;
     }
@@ -26,7 +26,7 @@ abstract public class ComImgProc
     /// <summary>
     /// デスクトラクタ
     /// </summary>
-    ~ComImgProc()
+    ~ComImageProcessing()
     {
         m_bitmap = null;
         m_bitmapAfter = null;
@@ -62,7 +62,8 @@ abstract public class ComImgProc
     /// <summary>
     /// 画像処理実行の抽象
     /// </summary>
+    /// <param name="_strImgName">画像処理オブジェクトの名称</param>
     /// <param name="_token">キャンセルトークン</param>
     /// <returns>実行結果 成功/失敗</returns>
-    abstract public bool GoImgProc(CancellationToken _token);
+    abstract public bool GoImageProcessing(string _strImgName, CancellationToken _token);
 }

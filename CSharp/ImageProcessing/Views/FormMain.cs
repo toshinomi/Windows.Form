@@ -16,7 +16,7 @@ namespace ImageProcessing
     public partial class FormMain : Form
     {
         private Bitmap m_bitmap;
-        private object m_imgProc;
+        private ImageProcessing m_imageProcessing;
         private string m_strOpenFileName;
         private CancellationTokenSource m_tokenSource;
         private string m_strCurImgName;
@@ -47,7 +47,7 @@ namespace ImageProcessing
 
             m_bitmap = null;
             m_tokenSource = null;
-            m_imgProc = null;
+            m_imageProcessing = null;
 
             m_strCurImgName = Properties.Settings.Default.ImgTypeSelectName;
             this.Text = "Image Processing ( " + m_strCurImgName + " )";
@@ -62,40 +62,15 @@ namespace ImageProcessing
         {
             m_bitmap = null;
             m_tokenSource = null;
-            m_imgProc = null;
+            m_imageProcessing = null;
         }
 
         /// <summary>
         /// 対象の画像処理オブジェクトにイメージをロードする
         /// </summary>
-        /// <param name="_strImgName">画像処理オブジェクトの名称</param>
-        public void SelectLoadImage(string _strImgName)
+        public void SelectLoadImage()
         {
-            if (m_imgProc != null)
-            {
-                m_imgProc = null;
-            }
-
-            switch (_strImgName)
-            {
-                case ComInfo.IMG_NAME_EDGE_DETECTION:
-                    m_imgProc = new EdgeDetection(m_bitmap);
-                    break;
-                case ComInfo.IMG_NAME_GRAY_SCALE:
-                    m_imgProc = new GrayScale(m_bitmap);
-                    break;
-                case ComInfo.IMG_NAME_BINARIZATION:
-                    m_imgProc = new Binarization(m_bitmap);
-                    break;
-                case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF:
-                    m_imgProc = new GrayScale2Diff(m_bitmap);
-                    break;
-                case ComInfo.IMG_NAME_COLOR_REVERSAL:
-                    m_imgProc = new ColorReversal(m_bitmap);
-                    break;
-                default:
-                    break;
-            }
+            m_imageProcessing = new ImageProcessing(m_bitmap);
 
             return;
         }
@@ -103,37 +78,10 @@ namespace ImageProcessing
         /// <summary>
         /// 対象の画像処理オブジェクトからWriteableBitmapを取得する
         /// </summary>
-        /// <param name="_strImgName">画像処理オブジェクトの名称</param>
         /// <returns>Writeableなビットマップ</returns>
-        public Bitmap SelectGetBitmap(string _strImgName)
+        public Bitmap SelectGetBitmap()
         {
-            Bitmap bitmap = null;
-
-            switch (_strImgName)
-            {
-                case ComInfo.IMG_NAME_EDGE_DETECTION:
-                    EdgeDetection edge = (EdgeDetection)m_imgProc;
-                    bitmap = edge.BitmapAfter;
-                    break;
-                case ComInfo.IMG_NAME_GRAY_SCALE:
-                    GrayScale gray = (GrayScale)m_imgProc;
-                    bitmap = gray.BitmapAfter;
-                    break;
-                case ComInfo.IMG_NAME_BINARIZATION:
-                    Binarization binarization = (Binarization)m_imgProc;
-                    bitmap = binarization.BitmapAfter;
-                    break;
-                case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF:
-                    GrayScale2Diff gray2Diff = (GrayScale2Diff)m_imgProc;
-                    bitmap = gray2Diff.BitmapAfter;
-                    break;
-                case ComInfo.IMG_NAME_COLOR_REVERSAL:
-                    ColorReversal colorReversal = (ColorReversal)m_imgProc;
-                    bitmap = colorReversal.BitmapAfter;
-                    break;
-                default:
-                    break;
-            }
+            Bitmap bitmap = m_imageProcessing.BitmapAfter;
 
             return bitmap;
         }
@@ -146,34 +94,8 @@ namespace ImageProcessing
         /// <returns>画像処理の実行結果 成功/失敗</returns>
         public bool SelectGoImgProc(ComImgInfo _comImgInfo, CancellationToken _token)
         {
-            bool bRst = true;
-
-            switch (_comImgInfo.CurImgName)
-            {
-                case ComInfo.IMG_NAME_EDGE_DETECTION:
-                    EdgeDetection edge = (EdgeDetection)m_imgProc;
-                    bRst = edge.GoImgProc(_token);
-                    break;
-                case ComInfo.IMG_NAME_GRAY_SCALE:
-                    GrayScale gray = (GrayScale)m_imgProc;
-                    bRst = gray.GoImgProc(_token);
-                    break;
-                case ComInfo.IMG_NAME_BINARIZATION:
-                    Binarization binarization = (Binarization)m_imgProc;
-                    binarization.Thresh = _comImgInfo.BinarizationInfo.Thresh;
-                    bRst = binarization.GoImgProc(_token);
-                    break;
-                case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF:
-                    GrayScale2Diff gray2Diff = (GrayScale2Diff)m_imgProc;
-                    bRst = gray2Diff.GoImgProc(_token);
-                    break;
-                case ComInfo.IMG_NAME_COLOR_REVERSAL:
-                    ColorReversal colorReversal = (ColorReversal)m_imgProc;
-                    bRst = colorReversal.GoImgProc(_token);
-                    break;
-                default:
-                    break;
-            }
+            m_imageProcessing.Thresh = _comImgInfo.BinarizationInfo.Thresh;
+            bool bRst = m_imageProcessing.GoImageProcessing(m_strCurImgName, _token);
 
             return bRst;
         }
@@ -278,7 +200,7 @@ namespace ImageProcessing
         public void LoadImage()
         {
             m_bitmap = new Bitmap(m_strOpenFileName);
-            SelectLoadImage(m_strCurImgName);
+            SelectLoadImage();
 
             return;
         }
@@ -357,9 +279,9 @@ namespace ImageProcessing
                 }
 
                 m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
-                if (SelectGetBitmap(m_strCurImgName) != null)
+                if (SelectGetBitmap() != null)
                 {
-                    m_histgram.BitmapAfter = (Bitmap)SelectGetBitmap(m_strCurImgName).Clone();
+                    m_histgram.BitmapAfter = (Bitmap)SelectGetBitmap().Clone();
                 }
                 m_histgram.DrawHistgram();
                 m_histgram.IsOpen = true;
@@ -425,7 +347,7 @@ namespace ImageProcessing
             if (bResult)
             {
                 pictureBoxOriginal.ImageLocation = m_strOpenFileName;
-                pictureBoxAfter.Image = SelectGetBitmap(m_strCurImgName);
+                pictureBoxAfter.Image = SelectGetBitmap();
 
                 stopwatch.Stop();
 
@@ -433,9 +355,9 @@ namespace ImageProcessing
                 btnSaveImage.Enabled = true;
 
                 m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
-                if (SelectGetBitmap(m_strCurImgName) != null)
+                if (SelectGetBitmap() != null)
                 {
-                    m_histgram.BitmapAfter = (Bitmap)SelectGetBitmap(m_strCurImgName).Clone();
+                    m_histgram.BitmapAfter = (Bitmap)SelectGetBitmap().Clone();
                 }
                 if (m_histgram.IsOpen == true)
                 {
@@ -471,51 +393,10 @@ namespace ImageProcessing
         /// <summary>
         /// 画像処理のオブジェクトからイメージの取得
         /// </summary>
-        /// <param name="_strImgName">画像処理の名称</param>
         /// <returns>ビットマップ</returns>
-        public Bitmap GetImage(string _strImgName)
+        public Bitmap GetImage()
         {
-            Bitmap bitmap = null;
-            switch (_strImgName)
-            {
-                case ComInfo.IMG_NAME_EDGE_DETECTION:
-                    EdgeDetection edge = (EdgeDetection)m_imgProc;
-                    if (edge != null)
-                    {
-                        bitmap = edge.BitmapAfter;
-                    }
-                    break;
-                case ComInfo.IMG_NAME_GRAY_SCALE:
-                    GrayScale gray = (GrayScale)m_imgProc;
-                    if (gray != null)
-                    {
-                        bitmap = gray.BitmapAfter;
-                    }
-                    break;
-                case ComInfo.IMG_NAME_BINARIZATION:
-                    Binarization binarization = (Binarization)m_imgProc;
-                    if (binarization != null)
-                    {
-                        bitmap = binarization.BitmapAfter;
-                    }
-                    break;
-                case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF:
-                    GrayScale2Diff gray2Diff = (GrayScale2Diff)m_imgProc;
-                    if (gray2Diff != null)
-                    {
-                        bitmap = gray2Diff.BitmapAfter;
-                    }
-                    break;
-                case ComInfo.IMG_NAME_COLOR_REVERSAL:
-                    ColorReversal colorReversal = (ColorReversal)m_imgProc;
-                    if (colorReversal != null)
-                    {
-                        bitmap = colorReversal.BitmapAfter;
-                    }
-                    break;
-                default:
-                    break;
-            }
+            Bitmap bitmap = m_imageProcessing.BitmapAfter;
 
             return bitmap == null ? bitmap : (Bitmap)bitmap.Clone();
         }
@@ -533,7 +414,7 @@ namespace ImageProcessing
             if (saveDialog.ShowDialog() == true)
             {
                 string strFileName = saveDialog.FileName;
-                var bitmap = GetImage(m_strCurImgName);
+                var bitmap = GetImage();
                 if (bitmap != null)
                 {
                     try
@@ -577,9 +458,9 @@ namespace ImageProcessing
             }
 
             m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
-            if (SelectGetBitmap(m_strCurImgName) != null)
+            if (SelectGetBitmap() != null)
             {
-                m_histgram.BitmapAfter = (Bitmap)SelectGetBitmap(m_strCurImgName).Clone();
+                m_histgram.BitmapAfter = (Bitmap)SelectGetBitmap().Clone();
             }
             m_histgram.DrawHistgram();
             m_histgram.IsOpen = true;
@@ -630,7 +511,7 @@ namespace ImageProcessing
 
                 pictureBoxAfter.Image = null;
                 btnSaveImage.Enabled = false;
-                SelectLoadImage(m_strCurImgName);
+                SelectLoadImage();
                 if (m_histgram != null && m_histgram.IsOpen == true)
                 {
                     OnClickBtnShowHistgram(this, null);
@@ -697,14 +578,14 @@ namespace ImageProcessing
             if (bResult)
             {
                 pictureBoxOriginal.ImageLocation = m_strOpenFileName;
-                pictureBoxAfter.Image = SelectGetBitmap(m_strCurImgName);
+                pictureBoxAfter.Image = SelectGetBitmap();
 
                 btnSaveImage.Enabled = true;
 
                 m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
-                if (SelectGetBitmap(m_strCurImgName) != null)
+                if (SelectGetBitmap() != null)
                 {
-                    m_histgram.BitmapAfter = (Bitmap)SelectGetBitmap(m_strCurImgName).Clone();
+                    m_histgram.BitmapAfter = (Bitmap)SelectGetBitmap().Clone();
                 }
                 if (m_histgram.IsOpen == true)
                 {

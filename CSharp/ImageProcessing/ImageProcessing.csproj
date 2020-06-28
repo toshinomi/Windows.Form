@@ -71,17 +71,15 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageProcessing\ImageProcessing.cs" />
     <Compile Include="Lib\ComCharts.cs" />
     <Compile Include="Lib\ComHistgramLiveCharts.cs" />
     <Compile Include="Lib\ComHistgramOxyPlot.cs" />
     <Compile Include="Lib\ComImgInfo.cs" />
-    <Compile Include="ImgProc\Binarization.cs" />
-    <Compile Include="ImgProc\ColorReversal.cs" />
     <Compile Include="Lib\ComFunc.cs" />
     <Compile Include="Lib\ComImageProcessingType.cs" />
     <Compile Include="Lib\ComImgProc.cs" />
     <Compile Include="Lib\ComOpenFileDialog.cs" />
-    <Compile Include="ImgProc\EdgeDetection.cs" />
     <Compile Include="Lib\ComInfo.cs" />
     <Compile Include="Lib\ComSaveFileDialog.cs" />
     <Compile Include="Views\FormHistgramLiveCharts.cs">
@@ -102,8 +100,6 @@
     <Compile Include="Views\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImgProc\GrayScale.cs" />
-    <Compile Include="ImgProc\GrayScale2Diff.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\FormSettingImageProcessing.cs">
