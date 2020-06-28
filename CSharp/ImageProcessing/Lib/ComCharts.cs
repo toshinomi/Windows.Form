@@ -102,7 +102,7 @@ abstract class ComCharts
         saveDialog.FileName = "default.csv";
         if (saveDialog.ShowDialog() == true)
         {
-            String strDelmiter = ",";
+            string strDelmiter = ",";
             StringBuilder stringBuilder = new StringBuilder();
             for (int nIdx = 0; nIdx < (m_nHistgram.Length >> 1); nIdx++)
             {

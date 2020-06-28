@@ -9,26 +9,16 @@ using System.Threading.Tasks;
 /// </summary>
 class ComImageProcessingType
 {
-    private int m_nId;
-    private string m_strName;
 
     /// <summary>
     /// ID
     /// </summary>
-    public int Id
-    {
-        set { m_nId = value; }
-        get { return m_nId; }
-    }
+    public int Id { set; get; }
 
     /// <summary>
     /// 名称
     /// </summary>
-    public string Name
-    {
-        set { m_strName = value; }
-        get { return m_strName; }
-    }
+    public string Name { set; get; }
 
     /// <summary>
     /// コンストラクタ
@@ -40,12 +30,12 @@ class ComImageProcessingType
     /// <summary>
     /// コンストラクタ
     /// </summary>
-    /// <param name="_nId">ID</param>
+    /// <param name="nId">ID</param>
     /// <param name="_strNmae">名称</param>
-    public ComImageProcessingType(int _nId, string _strNmae)
+    public ComImageProcessingType(int nId, string strNmae)
     {
-        m_nId = _nId;
-        m_strName = _strNmae;
+        Id = nId;
+        Name = strNmae;
     }
 
     /// <summary>

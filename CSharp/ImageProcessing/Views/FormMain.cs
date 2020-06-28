@@ -89,13 +89,13 @@ namespace ImageProcessing
         /// <summary>
         /// 対象の画像処理オブジェクトを実行する
         /// </summary>
-        /// <param name="_comImgInfo">画像処理の設定</param>
-        /// <param name="_token">キャンセルトークン</param>
+        /// <param name="comImgInfo">画像処理の設定</param>
+        /// <param name="token">キャンセルトークン</param>
         /// <returns>画像処理の実行結果 成功/失敗</returns>
-        public bool SelectGoImgProc(ComImgInfo _comImgInfo, CancellationToken _token)
+        public bool SelectGoImgProc(ComImgInfo comImgInfo, CancellationToken token)
         {
-            m_imageProcessing.Thresh = _comImgInfo.BinarizationInfo.Thresh;
-            bool bRst = m_imageProcessing.GoImageProcessing(m_strCurImgName, _token);
+            m_imageProcessing.Thresh = comImgInfo.BinarizationInfo.Thresh;
+            bool bRst = m_imageProcessing.GoImageProcessing(m_strCurImgName, token);
 
             return bRst;
         }
@@ -160,9 +160,9 @@ namespace ImageProcessing
         /// <summary>
         /// 時間を表示するテキストボックスに時間を設定する
         /// </summary>
-        public void SetTextTime(long _lTime)
+        public void SetTextTime(long lTime)
         {
-            textBoxTime.Text = _lTime.ToString();
+            textBoxTime.Text = lTime.ToString();
 
             return;
         }

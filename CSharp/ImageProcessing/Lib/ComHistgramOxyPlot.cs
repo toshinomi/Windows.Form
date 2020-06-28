@@ -12,16 +12,10 @@ using System.Threading.Tasks;
 /// </summary>
 class ComHistgramOxyPlot : ComCharts
 {
-    private PlotModel m_pModel;
-
     /// <summary>
     /// プロットモデル
     /// </summary>
-    public PlotModel PModel
-    {
-        get { return m_pModel; }
-        set { m_pModel = value; }
-    }
+    public PlotModel PModel { get; set; }
 
     /// <summary>
     /// ヒストグラム用の2次元配列データ　配列の1次元：オリジナルのデータ、配列の2次元：画像処理後のデータ
@@ -54,7 +48,7 @@ class ComHistgramOxyPlot : ComCharts
     /// </summary>
     public ComHistgramOxyPlot()
     {
-        m_pModel = new PlotModel();
+        PModel = new PlotModel();
     }
 
     /// <summary>
@@ -85,7 +79,7 @@ class ComHistgramOxyPlot : ComCharts
             Title = "Original",
             ItemsSource = dataList1,
         };
-        m_pModel.Series.Add(series1);
+        PModel.Series.Add(series1);
 
         var dataList2 = new List<DataPoint>();
         for (int nIdx = 0; nIdx < (m_nHistgram.Length >> 1); nIdx++)
@@ -98,8 +92,8 @@ class ComHistgramOxyPlot : ComCharts
             Title = "After",
             ItemsSource = dataList2,
         };
-        m_pModel.Series.Add(series2);
+        PModel.Series.Add(series2);
 
-        return m_pModel;
+        return PModel;
     }
 }

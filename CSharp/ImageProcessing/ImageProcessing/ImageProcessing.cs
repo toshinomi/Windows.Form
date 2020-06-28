@@ -25,8 +25,8 @@ namespace ImageProcessing
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="_bitmap">ビットマップ</param>
-        public ImageProcessing(Bitmap _bitmap) : base(_bitmap)
+        /// <param name="bitmap">ビットマップ</param>
+        public ImageProcessing(Bitmap bitmap) : base(bitmap)
         {
             array[(int)ComInfo.ImgProcType.EdgeDetection].processing = EdgeDetection;
             array[(int)ComInfo.ImgProcType.GrayScale].processing = GrayScale;
@@ -60,9 +60,9 @@ namespace ImageProcessing
         /// <summary>
         /// エッジ検出の実行
         /// </summary>
-        /// <param name="_token">キャンセルトークン</param>
+        /// <param name="token">キャンセルトークン</param>
         /// <returns>実行結果 成功/失敗</returns>
-        private bool EdgeDetection(CancellationToken _token)
+        private bool EdgeDetection(CancellationToken token)
         {
             bool bRst = true;
 
@@ -88,7 +88,7 @@ namespace ImageProcessing
             {
                 for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
                 {
-                    if (_token.IsCancellationRequested)
+                    if (token.IsCancellationRequested)
                     {
                         bRst = false;
                         break;
@@ -96,7 +96,7 @@ namespace ImageProcessing
 
                     for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
                     {
-                        if (_token.IsCancellationRequested)
+                        if (token.IsCancellationRequested)
                         {
                             bRst = false;
                             break;
@@ -141,9 +141,9 @@ namespace ImageProcessing
         /// <summary>
         /// グレースケールの実行
         /// </summary>
-        /// <param name="_token">キャンセルトークン</param>
+        /// <param name="token">キャンセルトークン</param>
         /// <returns>実行結果 成功/失敗</returns>
-        private bool GrayScale(CancellationToken _token)
+        private bool GrayScale(CancellationToken token)
         {
             bool bRst = true;
 
@@ -161,7 +161,7 @@ namespace ImageProcessing
             {
                 for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
                 {
-                    if (_token.IsCancellationRequested)
+                    if (token.IsCancellationRequested)
                     {
                         bRst = false;
                         break;
@@ -169,7 +169,7 @@ namespace ImageProcessing
 
                     for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
                     {
-                        if (_token.IsCancellationRequested)
+                        if (token.IsCancellationRequested)
                         {
                             bRst = false;
                             break;
@@ -192,9 +192,9 @@ namespace ImageProcessing
         /// <summary>
         /// 2値化の実行
         /// </summary>
-        /// <param name="_token">キャンセルトークン</param>
+        /// <param name="token">キャンセルトークン</param>
         /// <returns>実行結果 成功/失敗</returns>
-        private bool Binarization(CancellationToken _token)
+        private bool Binarization(CancellationToken token)
         {
             bool bRst = true;
 
@@ -212,7 +212,7 @@ namespace ImageProcessing
             {
                 for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
                 {
-                    if (_token.IsCancellationRequested)
+                    if (token.IsCancellationRequested)
                     {
                         bRst = false;
                         break;
@@ -220,7 +220,7 @@ namespace ImageProcessing
 
                     for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
                     {
-                        if (_token.IsCancellationRequested)
+                        if (token.IsCancellationRequested)
                         {
                             bRst = false;
                             break;
@@ -244,9 +244,9 @@ namespace ImageProcessing
         /// <summary>
         /// グレースケール2次微分の実行
         /// </summary>
-        /// <param name="_token">キャンセルトークン</param>
+        /// <param name="token">キャンセルトークン</param>
         /// <returns>実行結果 成功/失敗</returns>
-        private bool GrayScale2Diff(CancellationToken _token)
+        private bool GrayScale2Diff(CancellationToken token)
         {
             bool bRst = true;
 
@@ -272,7 +272,7 @@ namespace ImageProcessing
             {
                 for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
                 {
-                    if (_token.IsCancellationRequested)
+                    if (token.IsCancellationRequested)
                     {
                         bRst = false;
                         break;
@@ -280,7 +280,7 @@ namespace ImageProcessing
 
                     for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
                     {
-                        if (_token.IsCancellationRequested)
+                        if (token.IsCancellationRequested)
                         {
                             bRst = false;
                             break;
@@ -332,9 +332,9 @@ namespace ImageProcessing
         /// <summary>
         /// 色反転の実行
         /// </summary>
-        /// <param name="_token">キャンセルトークン</param>
+        /// <param name="token">キャンセルトークン</param>
         /// <returns>実行結果 成功/失敗</returns>
-        private bool ColorReversal(CancellationToken _token)
+        private bool ColorReversal(CancellationToken token)
         {
             bool bRst = true;
 
@@ -352,7 +352,7 @@ namespace ImageProcessing
             {
                 for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
                 {
-                    if (_token.IsCancellationRequested)
+                    if (token.IsCancellationRequested)
                     {
                         bRst = false;
                         break;
@@ -360,7 +360,7 @@ namespace ImageProcessing
 
                     for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
                     {
-                        if (_token.IsCancellationRequested)
+                        if (token.IsCancellationRequested)
                         {
                             bRst = false;
                             break;
@@ -382,14 +382,14 @@ namespace ImageProcessing
         /// <summary>
         /// 画像処理の実行
         /// </summary>
-        /// <param name="_strImgName">画像処理オブジェクトの名称</param>
+        /// <param name="imageProcessingName">画像処理オブジェクトの名称</param>
         /// <param name="_token">キャンセルトークン</param>
         /// <returns>実行結果 成功/失敗</returns>
-        public override bool GoImageProcessing(string _strImgName, CancellationToken _token)
+        public override bool GoImageProcessing(string imageProcessingName, CancellationToken _token)
         {
             int index = 0;
 
-            switch (_strImgName)
+            switch (imageProcessingName)
             {
                 case ComInfo.IMG_NAME_EDGE_DETECTION:
                     index = (int)ComInfo.ImgProcType.EdgeDetection;

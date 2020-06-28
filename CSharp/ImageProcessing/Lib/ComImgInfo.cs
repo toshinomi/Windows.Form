@@ -9,77 +9,46 @@ using System.Threading.Tasks;
 /// </summary>
 public class ComImgInfo
 {
-    private string m_strCurImgName;
-    private EdgeDetectionInfo m_edgeDetectoinInfo;
-    private GrayScaleInfo m_grayScaleInfo;
-    private BinarizationInfo m_binarizationInfo;
-    private GrayScale2DiffInfo m_grayScale2DiffInfo;
-    private ColorReversalInfo m_colorReversalInfo;
-
     /// <summary>
     /// 現在の画像処理の名称
     /// </summary>
-    public string CurImgName
-    {
-        set { m_strCurImgName = value; }
-        get { return m_strCurImgName; }
-    }
+    public string CurImgName { set; get; }
 
     /// <summary>
     /// エッジ検出の設定
     /// </summary>
-    public EdgeDetectionInfo EdgeDetectoinInfo
-    {
-        set { m_edgeDetectoinInfo = value; }
-        get { return m_edgeDetectoinInfo; }
-    }
+    public EdgeDetectionInfo EdgeDetectoinInfo { set; get; }
 
     /// <summary>
     /// グレースケールの設定
     /// </summary>
-    public GrayScaleInfo GrayScaleInfo
-    {
-        set { m_grayScaleInfo = value; }
-        get { return m_grayScaleInfo; }
-    }
+    public GrayScaleInfo GrayScaleInfo { set; get; }
 
     /// <summary>
     /// 2値化の設定
     /// </summary>
-    public BinarizationInfo BinarizationInfo
-    {
-        set { m_binarizationInfo = value; }
-        get { return m_binarizationInfo; }
-    }
+    public BinarizationInfo BinarizationInfo { set; get; }
 
     /// <summary>
     /// グレースケール2次微分の設定
     /// </summary>
-    public GrayScale2DiffInfo GrayScale2DiffInfo
-    {
-        set { m_grayScale2DiffInfo = value; }
-        get { return m_grayScale2DiffInfo; }
-    }
+    public GrayScale2DiffInfo GrayScale2DiffInfo { set; get; }
 
     /// <summary>
     /// 色反転の設定
     /// </summary>
-    public ColorReversalInfo ColorReversalInfo
-    {
-        set { m_colorReversalInfo = value; }
-        get { return m_colorReversalInfo; }
-    }
+    public ColorReversalInfo ColorReversalInfo { set; get; }
 
     /// <summary>
     /// コンストラクタ
     /// </summary>
     public ComImgInfo()
     {
-        m_edgeDetectoinInfo = new EdgeDetectionInfo();
-        m_grayScaleInfo = new GrayScaleInfo();
-        m_binarizationInfo = new BinarizationInfo();
-        m_grayScale2DiffInfo = new GrayScale2DiffInfo();
-        m_colorReversalInfo = new ColorReversalInfo();
+        EdgeDetectoinInfo = new EdgeDetectionInfo();
+        GrayScaleInfo = new GrayScaleInfo();
+        BinarizationInfo = new BinarizationInfo();
+        GrayScale2DiffInfo = new GrayScale2DiffInfo();
+        ColorReversalInfo = new ColorReversalInfo();
     }
 
     /// <summary>
@@ -135,16 +104,10 @@ public class GrayScaleInfo
 /// </summary>
 public class BinarizationInfo
 {
-    private byte m_nThresh;
-
     /// <summary>
     /// 閾値
     /// </summary>
-    public byte Thresh
-    {
-        set { m_nThresh = value; }
-        get { return m_nThresh; }
-    }
+    public byte Thresh { set; get; }
 
     /// <summary>
     /// コンストラクタ

@@ -15,7 +15,7 @@ public class ComOpenFileDialog
     /// <summary>
     /// ファイル名称
     /// </summary>
-    public String FileName
+    public string FileName
     {
         set { m_openFileDialog.FileName = value; }
         get { return m_openFileDialog.FileName; }
@@ -24,7 +24,7 @@ public class ComOpenFileDialog
     /// <summary>
     /// ファイルダイアログに表示される初期ディレクトリ
     /// </summary>
-    public String InitialDirectory
+    public string InitialDirectory
     {
         set { m_openFileDialog.InitialDirectory = value; }
         get { return m_openFileDialog.InitialDirectory; }
@@ -33,7 +33,7 @@ public class ComOpenFileDialog
     /// <summary>
     /// ファイルの種類のフィルタ
     /// </summary>
-    public String Filter
+    public string Filter
     {
         set { m_openFileDialog.Filter = value; }
         get { return m_openFileDialog.Filter; }
@@ -51,7 +51,7 @@ public class ComOpenFileDialog
     /// <summary>
     /// ファイルダイアログに表示されるタイトル
     /// </summary>
-    public String Title
+    public string Title
     {
         set { m_openFileDialog.Title = value; }
         get { return m_openFileDialog.Title; }

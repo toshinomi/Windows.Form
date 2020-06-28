@@ -17,10 +17,10 @@ abstract public class ComImageProcessing
     /// <summary>
     /// コンストラクタ
     /// </summary>
-    /// <param name="_bitmap">ビットマップ</param>
-    public ComImageProcessing(Bitmap _bitmap)
+    /// <param name="bitmap">ビットマップ</param>
+    public ComImageProcessing(Bitmap bitmap)
     {
-        m_bitmap = _bitmap;
+        m_bitmap = bitmap;
     }
 
     /// <summary>
@@ -62,8 +62,8 @@ abstract public class ComImageProcessing
     /// <summary>
     /// 画像処理実行の抽象
     /// </summary>
-    /// <param name="_strImgName">画像処理オブジェクトの名称</param>
-    /// <param name="_token">キャンセルトークン</param>
+    /// <param name="imageProcessingName">画像処理オブジェクトの名称</param>
+    /// <param name="token">キャンセルトークン</param>
     /// <returns>実行結果 成功/失敗</returns>
-    abstract public bool GoImageProcessing(string _strImgName, CancellationToken _token);
+    abstract public bool GoImageProcessing(string imageProcessingName, CancellationToken token);
 }

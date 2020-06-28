@@ -16,7 +16,7 @@ class ComSaveFileDialog
     /// <summary>
     /// ファイル名称
     /// </summary>
-    public String FileName
+    public string FileName
     {
         set { m_saveFileDialog.FileName = value; }
         get { return m_saveFileDialog.FileName; }
@@ -25,7 +25,7 @@ class ComSaveFileDialog
     /// <summary>
     /// ファイルダイアログに表示される初期ディレクトリ
     /// </summary>
-    public String InitialDirectory
+    public string InitialDirectory
     {
         set { m_saveFileDialog.InitialDirectory = value; }
         get { return m_saveFileDialog.InitialDirectory; }
@@ -34,7 +34,7 @@ class ComSaveFileDialog
     /// <summary>
     /// ファイルの種類のフィルタ
     /// </summary>
-    public String Filter
+    public string Filter
     {
         set { m_saveFileDialog.Filter = value; }
         get { return m_saveFileDialog.Filter; }
@@ -52,7 +52,7 @@ class ComSaveFileDialog
     /// <summary>
     /// ファイルダイアログに表示されるタイトル
     /// </summary>
-    public String Title
+    public string Title
     {
         set { m_saveFileDialog.Title = value; }
         get { return m_saveFileDialog.Title; }
@@ -110,9 +110,9 @@ class ComSaveFileDialog
     /// <summary>
     /// ストリームの書込み
     /// </summary>
-    /// <param name="_str">ファイル名称</param>
+    /// <param name="str">ファイル名称</param>
     /// <returns>実行結果 成功/失敗</returns>
-    public bool StreamWrite(string _str)
+    public bool StreamWrite(string str)
     {
         Stream stream;
         bool bRst = true;
@@ -126,7 +126,7 @@ class ComSaveFileDialog
             return bRst;
         }
         StreamWriter streamWriter = new StreamWriter(stream, Encoding.GetEncoding("UTF-8"));
-        streamWriter.Write(_str);
+        streamWriter.Write(str);
         streamWriter.Close();
         stream.Close();
 
