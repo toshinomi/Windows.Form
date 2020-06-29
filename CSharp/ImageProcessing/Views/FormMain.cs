@@ -81,7 +81,7 @@ namespace ImageProcessing
         /// <returns>Writeableなビットマップ</returns>
         public Bitmap SelectGetBitmap()
         {
-            Bitmap bitmap = m_imageProcessing.BitmapAfter;
+            Bitmap bitmap = m_imageProcessing.Bitmap;
 
             return bitmap;
         }
@@ -400,7 +400,7 @@ namespace ImageProcessing
         /// <returns>ビットマップ</returns>
         public Bitmap GetImage()
         {
-            Bitmap bitmap = m_imageProcessing.BitmapAfter;
+            Bitmap bitmap = m_imageProcessing.Bitmap;
 
             return bitmap == null ? bitmap : (Bitmap)bitmap.Clone();
         }
