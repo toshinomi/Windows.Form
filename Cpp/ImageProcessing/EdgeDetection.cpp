@@ -5,8 +5,7 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="_bitmap">ビットマップ</param>
-EdgeDetection::EdgeDetection(Bitmap^ _bitmap) : ComImgProc(_bitmap)
+EdgeDetection::EdgeDetection()
 {
 }
 
@@ -18,19 +17,12 @@ EdgeDetection::~EdgeDetection()
 }
 
 /// <summary>
-/// 初期化
-/// </summary>
-void EdgeDetection::Init(void)
-{
-	this->Init();
-}
-
-/// <summary>
 /// エッジ検出の実行
 /// </summary>
-/// <param name="_token">キャンセルトークン</param>
+/// <param name="bitmap">ビットマップ</param>
+/// <param name="token">キャンセルトークン</param>
 /// <returns>実行結果 成功/失敗</returns>
-bool EdgeDetection::GoImgProc(CancellationToken^ _token)
+bool EdgeDetection::ImageProcessing(Bitmap^ bitmap, CancellationToken^ token)
 {
 	bool bRst = true;
 
@@ -41,21 +33,18 @@ bool EdgeDetection::GoImgProc(CancellationToken^ _token)
 		{ 1,  1, 1 }
 	};
 
-	Bitmap^ bitmap = this->GetBitmap();
 	int nWidthSize = bitmap->Width;
 	int nHeightSize = bitmap->Height;
 	int nMasksize = 3;
-
-	Bitmap^ bitmapAfter = gcnew Bitmap(bitmap);
 	
-	BitmapData^ bitmapData = bitmapAfter->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
+	auto bitmapData = bitmap->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
 
 	int nIdxWidth;
 	int nIdxHeight;
 
 	for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
 	{
-		if (_token->IsCancellationRequested)
+		if (token->IsCancellationRequested)
 		{
 			bRst = false;
 			break;
@@ -63,7 +52,7 @@ bool EdgeDetection::GoImgProc(CancellationToken^ _token)
 
 		for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
 		{
-			if (_token->IsCancellationRequested)
+			if (token->IsCancellationRequested)
 			{
 				bRst = false;
 				break;
@@ -99,9 +88,7 @@ bool EdgeDetection::GoImgProc(CancellationToken^ _token)
 			pPixel[ComInfo::Pixel::Type::R] = ComFunc::LongToByte(lCalR);
 		}
 	}
-	bitmapAfter->UnlockBits(bitmapData);
-	this->m_bitmapAfter = (Bitmap^)bitmapAfter->Clone();
-	delete bitmapAfter;
+	bitmap->UnlockBits(bitmapData);
 
 	return bRst;
 }

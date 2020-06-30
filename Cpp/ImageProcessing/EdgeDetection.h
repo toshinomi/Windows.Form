@@ -1,6 +1,6 @@
 #pragma once
 #include <string.h>
-#include "ComImgProc.h"
+#include "ComImageProcessing.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -13,15 +13,13 @@ using namespace System::Threading::Tasks;
 /// <summary>
 /// エッジ検出のロジック
 /// </summary>
-public ref class EdgeDetection : public ComImgProc
+public ref class EdgeDetection
 {
-private:
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	/// <param name="_bitmap">ビットマップ</param>
-	EdgeDetection(Bitmap^ _bitmap);
+	EdgeDetection();
 
 	/// <summary>
 	/// デスクトラクタ
@@ -29,14 +27,10 @@ public:
 	~EdgeDetection();
 
 	/// <summary>
-	/// 初期化
-	/// </summary>
-	void Init(void) override;
-
-	/// <summary>
 	/// エッジ検出の実行
 	/// </summary>
-	/// <param name="_token">キャンセルトークン</param>
+	/// <param name="bitmap">ビットマップ</param>
+	/// <param name="token">キャンセルトークン</param>
 	/// <returns>実行結果 成功/失敗</returns>
-	bool GoImgProc(CancellationToken^ _token) override;
+	bool ImageProcessing(Bitmap^ bitmap, CancellationToken^ token);
 };

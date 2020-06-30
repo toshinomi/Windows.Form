@@ -59,19 +59,19 @@ private:
 	/// <summary>
 	/// 閾値
 	/// </summary>
-	Byte^ m_nThresh;
+	Byte m_nThresh;
 public:
 	/// <summary>
 	/// 閾値の設定
 	/// </summary>
 	/// <param name="_nThresh">閾値</param>
-	void SetThresh(Byte^ _nThresh) { m_nThresh = _nThresh; }
+	void SetThresh(Byte _nThresh) { m_nThresh = _nThresh; }
 
 	/// <summary>
 	/// 閾値の取得
 	/// </summary>
 	/// <returns>閾値</returns>
-	Byte^ GetThresh(void) { return m_nThresh; }
+	Byte GetThresh(void) { return m_nThresh; }
 
 	/// <summary>
 	/// コンストラクタ

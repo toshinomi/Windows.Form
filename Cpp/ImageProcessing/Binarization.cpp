@@ -5,20 +5,8 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="_bitmap">ビットマップ</param>
-Binarization::Binarization(Bitmap^ _bitmap) : ComImgProc(_bitmap)
+Binarization::Binarization()
 {
-	m_nThresh = 0;
-}
-
-/// <summary>
-/// コンストラクタ
-/// </summary>
-/// <param name="_bitmap">ビットマップ</param>
-/// <param name="_nThresh">閾値</param>
-Binarization::Binarization(Bitmap^ _bitmap, Byte _nThresh) : ComImgProc(_bitmap)
-{
-	m_nThresh = _nThresh;
 }
 
 /// <summary>
@@ -29,37 +17,27 @@ Binarization::~Binarization()
 }
 
 /// <summary>
-/// 初期化
-/// </summary>
-void Binarization::Init(void)
-{
-	m_nThresh = 0;
-	this->Init();
-}
-
-/// <summary>
 /// 2値化の実行
 /// </summary>
-/// <param name="_token">キャンセルトークン</param>
+/// <param name="bitmap">ビットマップ</param>
+/// <param name="token">キャンセルトークン</param>
+/// <param name="thresh">閾値</param>
 /// <returns>実行結果 成功/失敗</returns>
-bool Binarization::GoImgProc(CancellationToken^ _token)
+bool Binarization::ImageProcessing(Bitmap^ bitmap, CancellationToken^ token, Byte thresh)
 {
 	bool bRst = true;
 
-	Bitmap^ bitmap = this->GetBitmap();
 	int nWidthSize = bitmap->Width;
 	int nHeightSize = bitmap->Height;
 
-	Bitmap^ bitmapAfter = gcnew Bitmap(bitmap);
-
-	BitmapData^ bitmapData = bitmapAfter->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
+	auto bitmapData = bitmap->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
 
 	int nIdxWidth;
 	int nIdxHeight;
 
 	for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
 	{
-		if (_token->IsCancellationRequested)
+		if (token->IsCancellationRequested)
 		{
 			bRst = false;
 			break;
@@ -67,7 +45,7 @@ bool Binarization::GoImgProc(CancellationToken^ _token)
 
 		for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
 		{
-			if (_token->IsCancellationRequested)
+			if (token->IsCancellationRequested)
 			{
 				bRst = false;
 				break;
@@ -76,16 +54,14 @@ bool Binarization::GoImgProc(CancellationToken^ _token)
 			Byte* pPixel = (Byte*)bitmapData->Scan0.ToPointer() + nIdxHeight * bitmapData->Stride + nIdxWidth * 4;
 			Byte nGrayScale = (Byte)((pPixel[ComInfo::Pixel::Type::B] + pPixel[ComInfo::Pixel::Type::G] + pPixel[ComInfo::Pixel::Type::R]) / 3);
 
-			Byte nBinarization = nGrayScale >= m_nThresh ? (Byte)255 : (Byte)0;
+			Byte nBinarization = nGrayScale >= thresh ? (Byte)255 : (Byte)0;
 
 			pPixel[ComInfo::Pixel::Type::B] = nBinarization;
 			pPixel[ComInfo::Pixel::Type::G] = nBinarization;
 			pPixel[ComInfo::Pixel::Type::R] = nBinarization;
 		}
 	}
-	bitmapAfter->UnlockBits(bitmapData);
-	this->m_bitmapAfter = (Bitmap^)bitmapAfter->Clone();
-	delete bitmapAfter;
+	bitmap->UnlockBits(bitmapData);
 
 	return bRst;
 }

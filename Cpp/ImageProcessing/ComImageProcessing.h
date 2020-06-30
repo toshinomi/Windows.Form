@@ -11,7 +11,7 @@ using namespace System::Threading::Tasks;
 /// <summary>
 /// 画像処理の共通のロジック
 /// </summary>
-public  ref class  ComImgProc abstract
+public  ref class ComImageProcessing abstract
 {
 protected:
 	/// <summary>
@@ -19,21 +19,17 @@ protected:
 	/// </summary>
 	Bitmap^ m_bitmap;
 
-	/// <summary>
-	/// 画像処理後のビットマップ
-	/// </summary>
-	Bitmap^ m_bitmapAfter;
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_bitmap">ビットマップ</param>
-	ComImgProc(Bitmap^ _bitmap);
+	ComImageProcessing(Bitmap^ bitmap);
 
 	/// <summary>
 	/// デスクトラクタ
 	/// </summary>
-	~ComImgProc();
+	~ComImageProcessing();
 
 	/// <summary>
 	/// 初期化
@@ -49,25 +45,14 @@ public:
 	/// <summary>
 	/// オリジナルのビットマップの設定
 	/// </summary>
-	/// <param name="_bitmap">ビットマップ</param>
-	void SetBitmap(Bitmap^ _bitmap) { m_bitmap = _bitmap; }
-
-	/// <summary>
-	/// 画像処理後のビットマップの取得
-	/// </summary>
-	/// <returns>ビットマップ</returns>
-	Bitmap^ GetBitmapAfter() { return m_bitmapAfter; }
-
-	/// <summary>
-	/// 画像処理後のビットマップの設定
-	/// </summary>
-	/// <returns>ビットマップ</returns>
-	void SetBitmapAfter(Bitmap^ _bitmap) { m_bitmapAfter = _bitmap; }
+	/// <param name="bitmap">ビットマップ</param>
+	void SetBitmap(Bitmap^ bitmap) { m_bitmap = bitmap; }
 
 	/// <summary>
 	/// 画像処理実行の抽象
 	/// </summary>
-	/// <param name="_token">キャンセルトークン</param>
+	/// <param name="imageProcessingName">画像処理オブジェクトの名称</param>
+	/// <param name="token">キャンセルトークン</param>
 	/// <returns>実行結果 成功/失敗</returns>
-	virtual bool GoImgProc(CancellationToken^ _token) = 0;
+	virtual bool GoImageProcessing(String^ imageProcessingName, CancellationToken^ token) = 0;
 };

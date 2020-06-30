@@ -5,8 +5,7 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="_bitmap">ビットマップ</param>
-ColorReversal::ColorReversal(Bitmap^ _bitmap) : ComImgProc(_bitmap)
+ColorReversal::ColorReversal()
 {
 }
 
@@ -18,36 +17,26 @@ ColorReversal::~ColorReversal()
 }
 
 /// <summary>
-/// 初期化
-/// </summary>
-void ColorReversal::Init(void)
-{
-	this->Init();
-}
-
-/// <summary>
 /// 色反転の実行
 /// </summary>
-/// <param name="_token">キャンセルトークン</param>
+/// <param name="bitmap">ビットマップ</param>
+/// <param name="token">キャンセルトークン</param>
 /// <returns>実行結果 成功/失敗</returns>
-bool ColorReversal::GoImgProc(CancellationToken^ _token)
+bool ColorReversal::ImageProcessing(Bitmap^ bitmap, CancellationToken^ token)
 {
 	bool bRst = true;
 
-	Bitmap^ bitmap = this->GetBitmap();
 	int nWidthSize = bitmap->Width;
 	int nHeightSize = bitmap->Height;
 
-	Bitmap^ bitmapAfter = gcnew Bitmap(bitmap);
-
-	BitmapData^ bitmapData = bitmapAfter->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
+	auto bitmapData = bitmap->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
 
 	int nIdxWidth;
 	int nIdxHeight;
 
 	for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
 	{
-		if (_token->IsCancellationRequested)
+		if (token->IsCancellationRequested)
 		{
 			bRst = false;
 			break;
@@ -55,7 +44,7 @@ bool ColorReversal::GoImgProc(CancellationToken^ _token)
 
 		for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
 		{
-			if (_token->IsCancellationRequested)
+			if (token->IsCancellationRequested)
 			{
 				bRst = false;
 				break;
@@ -68,9 +57,7 @@ bool ColorReversal::GoImgProc(CancellationToken^ _token)
 			pPixel[ComInfo::Pixel::Type::R] = (Byte)(255 - pPixel[ComInfo::Pixel::Type::R]);
 		}
 	}
-	bitmapAfter->UnlockBits(bitmapData);
-	this->m_bitmapAfter = (Bitmap^)bitmapAfter->Clone();
-	delete bitmapAfter;
+	bitmap->UnlockBits(bitmapData);
 
 	return bRst;
 }

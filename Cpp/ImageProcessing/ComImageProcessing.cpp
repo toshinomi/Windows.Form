@@ -1,26 +1,25 @@
-#include "ComImgProc.h"
+#include "ComImageProcessing.h"
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// <param name="_bitmap">ビットマップ</param>
-ComImgProc::ComImgProc(Bitmap^ _bitmap)
+ComImageProcessing::ComImageProcessing(Bitmap^ bitmap)
 {
-	m_bitmap = _bitmap;
+	m_bitmap = bitmap;
 }
 
 /// <summary>
 /// デスクトラクタ
 /// </summary>
-ComImgProc::~ComImgProc()
+ComImageProcessing::~ComImageProcessing()
 {
 }
 
 /// <summary>
 /// 初期化
 /// </summary>
-void ComImgProc::Init(void)
+void ComImageProcessing::Init(void)
 {
 	m_bitmap = nullptr;
-	m_bitmapAfter = nullptr;
 }

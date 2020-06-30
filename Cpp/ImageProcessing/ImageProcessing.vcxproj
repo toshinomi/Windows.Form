@@ -148,7 +148,7 @@
     <ClCompile Include="ColorReversal.cpp" />
     <ClCompile Include="ComFunc.cpp" />
     <ClCompile Include="ComImageProcessingType.cpp" />
-    <ClCompile Include="ComImgProc.cpp" />
+    <ClCompile Include="ComImageProcessing.cpp" />
     <ClCompile Include="ComOpenFileDialog.cpp" />
     <ClCompile Include="ComSaveFileDialog.cpp" />
     <ClCompile Include="EdgeDetection.cpp" />
@@ -157,6 +157,7 @@
     <ClCompile Include="FormSettingImageProcessing.cpp" />
     <ClCompile Include="GrayScale.cpp" />
     <ClCompile Include="GrayScale2Diff.cpp" />
+    <ClCompile Include="ImageProcessing.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -175,7 +176,7 @@
     <ClInclude Include="ComFunc.h" />
     <ClInclude Include="ComImageProcessingType.h" />
     <ClInclude Include="ComImgInfo.h" />
-    <ClInclude Include="ComImgProc.h" />
+    <ClInclude Include="ComImageProcessing.h" />
     <ClInclude Include="ComInfo.h" />
     <ClInclude Include="ComOpenFileDialog.h" />
     <ClInclude Include="ComSaveFileDialog.h" />
@@ -191,6 +192,7 @@
     </ClInclude>
     <ClInclude Include="GrayScale.h" />
     <ClInclude Include="GrayScale2Diff.h" />
+    <ClInclude Include="ImageProcessing.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

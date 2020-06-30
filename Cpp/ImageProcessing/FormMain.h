@@ -13,6 +13,7 @@
 #include "FormSettingImageProcessing.h"
 #include "FormHistgram.h"
 #include "ComInfo.h"
+#include "ImageProcessing.h"
 
 namespace ImageProcessing {
 
@@ -53,7 +54,7 @@ namespace ImageProcessing {
 
 			m_bitmap = nullptr;
 			m_tokenSource = nullptr;
-			m_imgProc = nullptr;
+			m_imageProcessing = nullptr;
 
 			System::Configuration::Configuration^ config = ConfigurationManager::OpenExeConfiguration(ConfigurationUserLevel::None);
 			m_strCurImgName = config->AppSettings->Settings["ImgTypeSelectName"]->Value;
@@ -74,7 +75,7 @@ namespace ImageProcessing {
 
 				delete m_bitmap;
 				delete m_tokenSource;
-				delete m_imgProc;
+				delete m_imageProcessing;
 				delete m_histgram;
 			}
 		}
@@ -500,7 +501,7 @@ namespace ImageProcessing {
 			/// <summary>
 			/// 画像処理実行用の情報
 			/// </summary>
-			Object^ m_imgProc;
+			ImageProcessing^ m_imageProcessing;
 
 			/// <summary>
 			/// オープンしている画像のファイル名称
@@ -523,25 +524,18 @@ namespace ImageProcessing {
 			FormHistgram^ m_histgram;
 		public:
 			/// <summary>
-			/// 対象の画像処理オブジェクトにイメージをロードする
+			/// ビットマップを取得する
 			/// </summary>
-			/// <param name="_strImgName">画像処理オブジェクトの名称</param>
-			void SelectLoadImage(String^ _strImgName);
-
-			/// <summary>
-			/// 対象の画像処理オブジェクトからWriteableBitmapを取得する
-			/// </summary>
-			/// <param name="_strImgName">画像処理オブジェクトの名称</param>
-			/// <returns>Writeableなビットマップ</returns>
-			Bitmap^ SelectGetBitmap(String^ _strImgName);
+			/// <returns>ビットマップ</returns>
+			Bitmap^ GetBitmap();
 
 			/// <summary>
 			/// 対象の画像処理オブジェクトを実行する
 			/// </summary>
-			/// <param name="_comImgInfo">画像処理の設定</param>
-			/// <param name="_token">キャンセルトークン</param>
+			/// <param name="comImgInfo">画像処理の設定</param>
+			/// <param name="token">キャンセルトークン</param>
 			/// <returns>画像処理の実行結果 成功/失敗</returns>
-			bool SelectGoImgProc(ComImgInfo^ _comImgInfo, CancellationToken^ _token);
+			bool GoImageProcessing(ComImgInfo^ _comImgInfo, CancellationToken^ _token);
 
 			/// <summary>
 			/// ツールチップの設定
@@ -619,7 +613,7 @@ namespace ImageProcessing {
 			/// </summary>
 			/// <param name="_strImgName">画像処理の名称</param>
 			/// <returns>ビットマップ</returns>
-			Bitmap^ GetImage(String^ _strImgName);
+			Bitmap^ GetImage();
 
 			/// <summary>
 			/// イメージの保存ボタンのクリックイベント

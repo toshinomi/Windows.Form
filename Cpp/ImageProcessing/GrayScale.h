@@ -1,5 +1,5 @@
 #pragma once
-#include "ComImgProc.h"
+#include "ComImageProcessing.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -12,15 +12,14 @@ using namespace System::Threading::Tasks;
 /// <summary>
 /// グレースケールのロジック
 /// </summary>
-public ref class GrayScale : public ComImgProc
+public ref class GrayScale
 {
 private:
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	/// <param name="_bitmap">ビットマップ</param>
-	GrayScale(Bitmap^ _bitmap);
+	GrayScale();
 
 	/// <summary>
 	/// デスクトラクタ
@@ -28,14 +27,10 @@ public:
 	~GrayScale();
 
 	/// <summary>
-	/// 初期化
-	/// </summary>
-	void Init(void) override;
-
-	/// <summary>
 	/// グレースケールの実行
 	/// </summary>
-	/// <param name="_token">キャンセルトークン</param>
+	/// <param name="bitmap">ビットマップ</param>
+	/// <param name="token">キャンセルトークン</param>
 	/// <returns>実行結果 成功/失敗</returns>
-	bool GoImgProc(CancellationToken^ _token) override;
+	bool ImageProcessing(Bitmap^ bitmap, CancellationToken^ token);
 };

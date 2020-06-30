@@ -3,98 +3,12 @@
 using namespace ImageProcessing;
 
 /// <summary>
-/// 対象の画像処理オブジェクトにイメージをロードする
+/// ビットマップを取得する
 /// </summary>
-/// <param name="_strImgName">画像処理オブジェクトの名称</param>
-void FormMain::SelectLoadImage(String^ _strImgName)
+/// <returns>ビットマップ</returns>
+Bitmap^ FormMain::GetBitmap()
 {
-	if (m_imgProc != nullptr)
-	{
-		m_imgProc = nullptr;
-		delete m_imgProc;
-	}
-
-	int nId = SearchImgTypeId(_strImgName);
-
-	switch (nId)
-	{
-	case ComInfo::ImgProc::Type::EdgeDetection:
-	{
-		m_imgProc = gcnew EdgeDetection(m_bitmap);
-		break;
-	}
-	case ComInfo::ImgProc::Type::GrayScale:
-	{
-		m_imgProc = gcnew GrayScale(m_bitmap);
-		break;
-	}
-	case ComInfo::ImgProc::Type::Binarization:
-	{
-		m_imgProc = gcnew Binarization(m_bitmap);
-		break;
-	}
-	case ComInfo::ImgProc::Type::GrayScale2Diff:
-	{
-		m_imgProc = gcnew GrayScale2Diff(m_bitmap);
-		break;
-	}
-	case ComInfo::ImgProc::Type::ColorReversal:
-	{
-		m_imgProc = gcnew ColorReversal(m_bitmap);
-		break;
-	}
-	default:
-		break;
-	}
-
-	return;
-}
-
-/// <summary>
-/// 対象の画像処理オブジェクトからWriteableBitmapを取得する
-/// </summary>
-/// <param name="_strImgName">画像処理オブジェクトの名称</param>
-/// <returns>Writeableなビットマップ</returns>
-Bitmap^ FormMain::SelectGetBitmap(String^ _strImgName)
-{
-	Bitmap^ bitmap = nullptr;
-	int nId = SearchImgTypeId(_strImgName);
-
-	switch (nId)
-	{
-	case ComInfo::ImgProc::Type::EdgeDetection:
-	{
-		EdgeDetection^ edge = (EdgeDetection^)m_imgProc;
-		bitmap = edge->GetBitmapAfter();
-		break;
-	}
-	case ComInfo::ImgProc::Type::GrayScale:
-	{
-		GrayScale^ gray = (GrayScale^)m_imgProc;
-		bitmap = gray->GetBitmapAfter();
-		break;
-	}
-	case ComInfo::ImgProc::Type::Binarization:
-	{
-		Binarization^ binarization = (Binarization^)m_imgProc;
-		bitmap = binarization->GetBitmapAfter();
-		break;
-	}
-	case ComInfo::ImgProc::Type::GrayScale2Diff:
-	{
-		GrayScale2Diff^ gray2Diff = (GrayScale2Diff^)m_imgProc;
-		bitmap = gray2Diff->GetBitmapAfter();
-		break;
-	}
-	case ComInfo::ImgProc::Type::ColorReversal:
-	{
-		ColorReversal^ colorReversal = (ColorReversal^)m_imgProc;
-		bitmap = colorReversal->GetBitmapAfter();
-		break;
-	}
-	default:
-		break;
-	}
+	Bitmap^ bitmap = m_imageProcessing->GetBitmap();
 
 	return bitmap;
 }
@@ -105,50 +19,10 @@ Bitmap^ FormMain::SelectGetBitmap(String^ _strImgName)
 /// <param name="_comImgInfo">画像処理の設定</param>
 /// <param name="_token">キャンセルトークン</param>
 /// <returns>画像処理の実行結果 成功/失敗</returns>
-bool FormMain::SelectGoImgProc(ComImgInfo^ _comImgInfo, CancellationToken^ _token)
+bool FormMain::GoImageProcessing(ComImgInfo^ _comImgInfo, CancellationToken^ _token)
 {
-	bool bRst = true;
-
-	String^ strCurName = _comImgInfo->GetCurImgName();
-	int nId = SearchImgTypeId(strCurName);
-
-	switch (nId)
-	{
-	case ComInfo::ImgProc::Type::EdgeDetection:
-	{
-		EdgeDetection^ edge = (EdgeDetection^)m_imgProc;
-		bRst = edge->GoImgProc(_token);
-		break;
-	}
-	case ComInfo::ImgProc::Type::GrayScale:
-	{
-		GrayScale^ gray = (GrayScale^)m_imgProc;
-		bRst = gray->GoImgProc(_token);
-		break;
-	}
-	case ComInfo::ImgProc::Type::Binarization:
-	{
-		Binarization^ binarization = (Binarization^)m_imgProc;
-		BinarizationInfo^ binarizationInfo = _comImgInfo->GetBinarizationInfo();
-		binarization->SetThresh((Byte)binarizationInfo->GetThresh());
-		bRst = binarization->GoImgProc(_token);
-		break;
-	}
-	case ComInfo::ImgProc::Type::GrayScale2Diff:
-	{
-		GrayScale2Diff^ gray2Diff = (GrayScale2Diff^)m_imgProc;
-		bRst = gray2Diff->GoImgProc(_token);
-		break;
-	}
-	case ComInfo::ImgProc::Type::ColorReversal:
-	{
-		ColorReversal^ colorReversal = (ColorReversal^)m_imgProc;
-		bRst = colorReversal->GoImgProc(_token);
-		break;
-	}
-	default:
-		break;
-	}
+	m_imageProcessing->SetThresh(_comImgInfo->GetBinarizationInfo()->GetThresh());
+	bool bRst = m_imageProcessing->GoImageProcessing(m_strCurImgName, _token);
 
 	return bRst;
 }
@@ -254,11 +128,11 @@ void FormMain::ExecTaskImageProcessing()
 	binarizationInfo->SetThresh(nThresh);
 	imgInfo->SetCurImgName(m_strCurImgName);
 	imgInfo->SetBinarizationInfo(binarizationInfo);
-	bool bRst = SelectGoImgProc(imgInfo, token);
+	bool bRst = GoImageProcessing(imgInfo, token);
 	if (bRst)
 	{
 		pictureBoxOriginal->ImageLocation = m_strOpenFileName;
-		pictureBoxAfter->Image = SelectGetBitmap(m_strCurImgName);
+		pictureBoxAfter->Image = GetBitmap();
 
 		stopwatch->Stop();
 
@@ -268,10 +142,10 @@ void FormMain::ExecTaskImageProcessing()
 
 		Bitmap^ bitmap = gcnew Bitmap(m_strOpenFileName);
 		m_histgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
-		if (SelectGetBitmap(m_strCurImgName) != nullptr)
+		if (GetBitmap() != nullptr)
 		{
 			System::Threading::Thread::Sleep(50);
-			m_histgram->SetBitmapAfter((Bitmap^)SelectGetBitmap(m_strCurImgName)->Clone());
+			m_histgram->SetBitmapAfter((Bitmap^)GetBitmap()->Clone());
 		}
 		if (m_histgram->GetIsOpen() == true)
 		{
@@ -315,7 +189,7 @@ void FormMain::TaskWorkImageProcessing()
 void FormMain::LoadImage(void)
 {
 	m_bitmap = gcnew Bitmap(m_strOpenFileName);
-	SelectLoadImage(m_strCurImgName);
+	m_imageProcessing = gcnew ImageProcessing(m_bitmap);
 
 	return;
 }
@@ -375,9 +249,9 @@ void FormMain::OnClickBtnFileSelect(Object^ sender, EventArgs^ e)
 
 		Bitmap^ bitmap = gcnew Bitmap(m_strOpenFileName);
 		m_histgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
-		if (SelectGetBitmap(m_strCurImgName) != nullptr)
+		if (GetBitmap() != nullptr)
 		{
-			m_histgram->SetBitmapAfter((Bitmap^)SelectGetBitmap(m_strCurImgName)->Clone());
+			m_histgram->SetBitmapAfter((Bitmap^)GetBitmap()->Clone());
 		}
 		m_histgram->DrawHistgram();
 		m_histgram->SetIsOpen(true);
@@ -465,61 +339,9 @@ void FormMain::OnClickBtnStop(Object^ sender, EventArgs^ e)
 /// </summary>
 /// <param name="_strImgName">画像処理の名称</param>
 /// <returns>ビットマップ</returns>
-Bitmap^ FormMain::GetImage(String^ _strImgName)
+Bitmap^ FormMain::GetImage()
 {
-	Bitmap^ bitmap = nullptr;
-	int nId = SearchImgTypeId(_strImgName);
-
-	switch (nId)
-	{
-	case ComInfo::ImgProc::Type::EdgeDetection:
-	{
-		EdgeDetection^ edge = (EdgeDetection^)m_imgProc;
-		if (edge != nullptr)
-		{
-			bitmap = edge->GetBitmapAfter();
-		}
-		break;
-	}
-	case ComInfo::ImgProc::Type::GrayScale:
-	{
-		GrayScale^ gray = (GrayScale^)m_imgProc;
-		if (gray != nullptr)
-		{
-			bitmap = gray->GetBitmapAfter();
-		}
-		break;
-	}
-	case ComInfo::ImgProc::Type::Binarization:
-	{
-		Binarization^ binarization = (Binarization^)m_imgProc;
-		if (binarization != nullptr)
-		{
-			bitmap = binarization->GetBitmapAfter();
-		}
-		break;
-	}
-	case ComInfo::ImgProc::Type::GrayScale2Diff:
-	{
-		GrayScale2Diff^ gray2Diff = (GrayScale2Diff^)m_imgProc;
-		if (gray2Diff != nullptr)
-		{
-			bitmap = gray2Diff->GetBitmapAfter();
-		}
-		break;
-	}
-	case ComInfo::ImgProc::Type::ColorReversal:
-	{
-		ColorReversal^ colorReversal = (ColorReversal^)m_imgProc;
-		if (colorReversal != nullptr)
-		{
-			bitmap = colorReversal->GetBitmapAfter();
-		}
-		break;
-	}
-	default:
-		break;
-	}
+	Bitmap^ bitmap = m_imageProcessing->GetBitmap();
 
 	return bitmap == nullptr ? bitmap : (Bitmap^)bitmap->Clone();
 }
@@ -537,7 +359,7 @@ void FormMain::OnClickBtnSaveImage(Object^ sender, EventArgs^ e)
 	if (saveDialog->ShowDialog() == true)
 	{
 		String^ strFileName = saveDialog->GetFileName();
-		auto bitmap = GetImage(m_strCurImgName);
+		auto bitmap = GetImage();
 		if (bitmap != nullptr)
 		{
 			try
@@ -578,9 +400,9 @@ void FormMain::OnClickBtnShowHistgram(Object^ sender, EventArgs^ e)
 
 	Bitmap^ bitmap = gcnew Bitmap(m_strOpenFileName);
 	m_histgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
-	if (SelectGetBitmap(m_strCurImgName) != nullptr)
+	if (GetBitmap() != nullptr)
 	{
-		m_histgram->SetBitmapAfter((Bitmap^)SelectGetBitmap(m_strCurImgName)->Clone());
+		m_histgram->SetBitmapAfter((Bitmap^)GetBitmap()->Clone());
 	}
 
 	m_histgram->DrawHistgram();
@@ -629,7 +451,8 @@ void FormMain::ShowSettingImageProcessing(void)
 
 		pictureBoxAfter->Image = nullptr;
 		btnSaveImage->Enabled = false;
-		SelectLoadImage(m_strCurImgName);
+		m_bitmap = gcnew Bitmap(m_strOpenFileName);
+		m_imageProcessing = gcnew ImageProcessing(m_bitmap);
 		if (m_histgram != nullptr && m_histgram->GetIsOpen() == true)
 		{
 			OnClickBtnShowHistgram(this, nullptr);
@@ -693,18 +516,18 @@ void FormMain::ExecParamAjust()
 	binarizationInfo->SetThresh(nThresh);
 	imgInfo->SetCurImgName(m_strCurImgName);
 	imgInfo->SetBinarizationInfo(binarizationInfo);
-	bool bRst = SelectGoImgProc(imgInfo, token);
+	bool bRst = GoImageProcessing(imgInfo, token);
 	if (bRst)
 	{
 		pictureBoxOriginal->ImageLocation = m_strOpenFileName;
-		pictureBoxAfter->Image = SelectGetBitmap(m_strCurImgName);
+		pictureBoxAfter->Image = GetBitmap();
 
 		Bitmap^ bitmap = gcnew Bitmap(m_strOpenFileName);
 		m_histgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
-		if (SelectGetBitmap(m_strCurImgName) != nullptr)
+		if (GetBitmap() != nullptr)
 		{
 			System::Threading::Thread::Sleep(50);
-			m_histgram->SetBitmapAfter((Bitmap^)SelectGetBitmap(m_strCurImgName)->Clone());
+			m_histgram->SetBitmapAfter((Bitmap^)GetBitmap()->Clone());
 		}
 		if (m_histgram->GetIsOpen() == true)
 		{

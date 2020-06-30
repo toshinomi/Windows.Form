@@ -5,8 +5,7 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="_bitmap">ビットマップ</param>
-GrayScale2Diff::GrayScale2Diff(Bitmap^ _bitmap) : ComImgProc(_bitmap)
+GrayScale2Diff::GrayScale2Diff()
 {
 }
 
@@ -18,19 +17,12 @@ GrayScale2Diff::~GrayScale2Diff()
 }
 
 /// <summary>
-/// 初期化
-/// </summary>
-void GrayScale2Diff::Init(void)
-{
-	this->Init();
-}
-
-/// <summary>
 /// グレースケール2次微分の実行
 /// </summary>
-/// <param name="_token">キャンセルトークン</param>
+/// <param name="bitmap">ビットマップ</param>
+/// <param name="token">キャンセルトークン</param>
 /// <returns>実行結果 成功/失敗</returns>
-bool GrayScale2Diff::GoImgProc(CancellationToken^ _token)
+bool GrayScale2Diff::ImageProcessing(Bitmap^ bitmap, CancellationToken^ token)
 {
 	bool bRst = true;
 
@@ -41,21 +33,18 @@ bool GrayScale2Diff::GoImgProc(CancellationToken^ _token)
 		{ 1,  1, 1 }
 	};
 
-	Bitmap^ bitmap = this->GetBitmap();
 	int nWidthSize = bitmap->Width;
 	int nHeightSize = bitmap->Height;
 	int nMasksize = 3;
 
-	Bitmap^ bitmapAfter = gcnew Bitmap(bitmap);
-
-	BitmapData^ bitmapData = bitmapAfter->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
+	auto bitmapData = bitmap->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
 
 	int nIdxWidth;
 	int nIdxHeight;
 
 	for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
 	{
-		if (_token->IsCancellationRequested)
+		if (token->IsCancellationRequested)
 		{
 			bRst = false;
 			break;
@@ -63,7 +52,7 @@ bool GrayScale2Diff::GoImgProc(CancellationToken^ _token)
 
 		for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
 		{
-			if (_token->IsCancellationRequested)
+			if (token->IsCancellationRequested)
 			{
 				bRst = false;
 				break;
@@ -105,9 +94,7 @@ bool GrayScale2Diff::GoImgProc(CancellationToken^ _token)
 			pPixel[ComInfo::Pixel::Type::R] = nGrayScale;
 		}
 	}
-	bitmapAfter->UnlockBits(bitmapData);
-	this->m_bitmapAfter = (Bitmap^)bitmapAfter->Clone();
-	delete bitmapAfter;
+	bitmap->UnlockBits(bitmapData);
 
 	return bRst;
 }
