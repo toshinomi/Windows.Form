@@ -15,7 +15,7 @@ namespace ImageProcessing
 {
     class ImageProcessing : ComImageProcessing
     {
-        private readonly Object[] array = new object[(int)ComInfo.ImgProcType.MAX];
+        private readonly Object[] arrayImageProcessing = new object[(int)ComInfo.ImgProcType.MAX];
 
         /// <summary>
         /// 閾値
@@ -29,15 +29,15 @@ namespace ImageProcessing
         public ImageProcessing(Bitmap bitmap) : base(bitmap)
         {
             var edgeDetection = new EdgeDetection();
-            array[(int)ComInfo.ImgProcType.EdgeDetection] = edgeDetection;
+            arrayImageProcessing[(int)ComInfo.ImgProcType.EdgeDetection] = edgeDetection;
             var grayScale = new GrayScale();
-            array[(int)ComInfo.ImgProcType.GrayScale] = grayScale;
+            arrayImageProcessing[(int)ComInfo.ImgProcType.GrayScale] = grayScale;
             var binarization = new Binarization();
-            array[(int)ComInfo.ImgProcType.Binarization] = binarization;
+            arrayImageProcessing[(int)ComInfo.ImgProcType.Binarization] = binarization;
             var grayScale2Diff = new GrayScale2Diff();
-            array[(int)ComInfo.ImgProcType.GrayScale2Diff] = grayScale2Diff;
+            arrayImageProcessing[(int)ComInfo.ImgProcType.GrayScale2Diff] = grayScale2Diff;
             var colorReversal = new ColorReversal();
-            array[(int)ComInfo.ImgProcType.ColorReversal] = colorReversal;
+            arrayImageProcessing[(int)ComInfo.ImgProcType.ColorReversal] = colorReversal;
         }
 
         /// <summary>
@@ -63,34 +63,34 @@ namespace ImageProcessing
         /// <returns>実行結果 成功/失敗</returns>
         public override bool GoImageProcessing(string imageProcessingName, CancellationToken token)
         {
-            int index = 0;
             bool result = false;
 
+            int index;
             switch (imageProcessingName)
             {
                 case ComInfo.IMG_NAME_EDGE_DETECTION:
                     index = (int)ComInfo.ImgProcType.EdgeDetection;
-                    var edgeDetection = (EdgeDetection)array[index];
+                    var edgeDetection = (EdgeDetection)arrayImageProcessing[index];
                     result = edgeDetection.ImageProcessing(ref base.m_bitmap, token);
                     break;
                 case ComInfo.IMG_NAME_GRAY_SCALE:
                     index = (int)ComInfo.ImgProcType.GrayScale;
-                    var grayScale = (GrayScale)array[index];
+                    var grayScale = (GrayScale)arrayImageProcessing[index];
                     result = grayScale.ImageProcessing(ref base.m_bitmap, token);
                     break;
                 case ComInfo.IMG_NAME_BINARIZATION:
                     index = (int)ComInfo.ImgProcType.Binarization;
-                    var binarization = (Binarization)array[index];
+                    var binarization = (Binarization)arrayImageProcessing[index];
                     result = binarization.ImageProcessing(ref base.m_bitmap, token, Thresh);
                     break;
                 case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF:
                     index = (int)ComInfo.ImgProcType.GrayScale2Diff;
-                    var grayScale2Diff = (GrayScale2Diff)array[index];
+                    var grayScale2Diff = (GrayScale2Diff)arrayImageProcessing[index];
                     result = grayScale2Diff.ImageProcessing(ref base.m_bitmap, token);
                     break;
                 case ComInfo.IMG_NAME_COLOR_REVERSAL:
                     index = (int)ComInfo.ImgProcType.ColorReversal;
-                    var colorReversal = (ColorReversal)array[index];
+                    var colorReversal = (ColorReversal)arrayImageProcessing[index];
                     result = colorReversal.ImageProcessing(ref base.m_bitmap, token);
                     break;
                 default:

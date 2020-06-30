@@ -66,20 +66,10 @@ namespace ImageProcessing
         }
 
         /// <summary>
-        /// 対象の画像処理オブジェクトにイメージをロードする
+        /// ビットマップを取得する
         /// </summary>
-        public void SelectLoadImage()
-        {
-            m_imageProcessing = new ImageProcessing(m_bitmap);
-
-            return;
-        }
-
-        /// <summary>
-        /// 対象の画像処理オブジェクトからWriteableBitmapを取得する
-        /// </summary>
-        /// <returns>Writeableなビットマップ</returns>
-        public Bitmap SelectGetBitmap()
+        /// <returns>ビットマップ</returns>
+        public Bitmap GetBitmap()
         {
             Bitmap bitmap = m_imageProcessing.Bitmap;
 
@@ -92,7 +82,7 @@ namespace ImageProcessing
         /// <param name="comImgInfo">画像処理の設定</param>
         /// <param name="token">キャンセルトークン</param>
         /// <returns>画像処理の実行結果 成功/失敗</returns>
-        public bool SelectGoImgProc(ComImgInfo comImgInfo, CancellationToken token)
+        public bool GoImageProcessing(ComImgInfo comImgInfo, CancellationToken token)
         {
             m_imageProcessing.Thresh = comImgInfo.BinarizationInfo.Thresh;
             bool bRst = m_imageProcessing.GoImageProcessing(m_strCurImgName, token);
@@ -192,7 +182,7 @@ namespace ImageProcessing
             };
             imgInfo.CurImgName = m_strCurImgName;
             imgInfo.BinarizationInfo = binarizationInfo;
-            bool bRst = await Task.Run(() => SelectGoImgProc(imgInfo, token));
+            bool bRst = await Task.Run(() => GoImageProcessing(imgInfo, token));
             return bRst;
         }
 
@@ -202,7 +192,7 @@ namespace ImageProcessing
         public void LoadImage()
         {
             m_bitmap = new Bitmap(m_strOpenFileName);
-            SelectLoadImage();
+            m_imageProcessing = new ImageProcessing(m_bitmap);
 
             return;
         }
@@ -283,9 +273,9 @@ namespace ImageProcessing
                 }
 
                 m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
-                if (SelectGetBitmap() != null)
+                if (GetBitmap() != null)
                 {
-                    m_histgram.BitmapAfter = (Bitmap)SelectGetBitmap().Clone();
+                    m_histgram.BitmapAfter = (Bitmap)GetBitmap().Clone();
                 }
                 m_histgram.DrawHistgram();
                 m_histgram.IsOpen = true;
@@ -351,7 +341,7 @@ namespace ImageProcessing
             if (bResult)
             {
                 pictureBoxOriginal.ImageLocation = m_strOpenFileName;
-                pictureBoxAfter.Image = SelectGetBitmap();
+                pictureBoxAfter.Image = GetBitmap();
 
                 stopwatch.Stop();
 
@@ -359,9 +349,9 @@ namespace ImageProcessing
                 btnSaveImage.Enabled = true;
 
                 m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
-                if (SelectGetBitmap() != null)
+                if (GetBitmap() != null)
                 {
-                    m_histgram.BitmapAfter = (Bitmap)SelectGetBitmap().Clone();
+                    m_histgram.BitmapAfter = (Bitmap)GetBitmap().Clone();
                 }
                 if (m_histgram.IsOpen == true)
                 {
@@ -464,9 +454,9 @@ namespace ImageProcessing
             }
 
             m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
-            if (SelectGetBitmap() != null)
+            if (GetBitmap() != null)
             {
-                m_histgram.BitmapAfter = (Bitmap)SelectGetBitmap().Clone();
+                m_histgram.BitmapAfter = (Bitmap)GetBitmap().Clone();
             }
             m_histgram.DrawHistgram();
             m_histgram.IsOpen = true;
@@ -517,7 +507,8 @@ namespace ImageProcessing
 
                 pictureBoxAfter.Image = null;
                 btnSaveImage.Enabled = false;
-                SelectLoadImage();
+                m_bitmap = new Bitmap(m_strOpenFileName);
+                m_imageProcessing = new ImageProcessing(m_bitmap);
                 if (m_histgram != null && m_histgram.IsOpen == true)
                 {
                     OnClickBtnShowHistgram(this, null);
@@ -584,14 +575,14 @@ namespace ImageProcessing
             if (bResult)
             {
                 pictureBoxOriginal.ImageLocation = m_strOpenFileName;
-                pictureBoxAfter.Image = SelectGetBitmap();
+                pictureBoxAfter.Image = GetBitmap();
 
                 btnSaveImage.Enabled = true;
 
                 m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
-                if (SelectGetBitmap() != null)
+                if (GetBitmap() != null)
                 {
-                    m_histgram.BitmapAfter = (Bitmap)SelectGetBitmap().Clone();
+                    m_histgram.BitmapAfter = (Bitmap)GetBitmap().Clone();
                 }
                 if (m_histgram.IsOpen == true)
                 {
