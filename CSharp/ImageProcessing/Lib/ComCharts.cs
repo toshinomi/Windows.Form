@@ -12,9 +12,9 @@ using System.Windows.Media.Imaging;
 /// </summary>
 abstract class ComCharts
 {
-    protected int[,] m_nHistgram;
-    protected Bitmap m_bitmapOrg;
-    protected Bitmap m_bitmapAfter;
+    protected int[,] mHistgram;
+    protected Bitmap mBitmapOrg;
+    protected Bitmap mBitmapAfter;
 
     /// <summary>
     /// コンストラクタ
@@ -36,43 +36,43 @@ abstract class ComCharts
     /// </summary>
     public void CalHistgram()
     {
-        int nWidthSize = m_bitmapOrg.Width;
-        int nHeightSize = m_bitmapOrg.Height;
+        int widthSize = m_bitmapOrg.Width;
+        int heightSize = m_bitmapOrg.Height;
 
         BitmapData bitmapDataOrg = m_bitmapOrg.LockBits(new Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
         BitmapData bitmapDataAfter = null;
-        if (m_bitmapAfter != null)
+        if (mBitmapAfter != null)
         {
             bitmapDataAfter = m_bitmapAfter.LockBits(new Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
         }
 
-        int nIdxWidth;
-        int nIdxHeight;
+        int indexWidth;
+        int indexHeight;
 
         unsafe
         {
-            for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
+            for (indexHeight = 0; indexHeight < heightSize; indexHeight++)
             {
-                for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
+                for (indexWidth = 0; indexWidth < widthSize; indexWidth++)
                 {
-                    byte* pPixel = (byte*)bitmapDataOrg.Scan0 + nIdxHeight * bitmapDataOrg.Stride + nIdxWidth * 4;
-                    byte nGrayScale = (byte)((pPixel[(int)ComInfo.Pixel.B] + pPixel[(int)ComInfo.Pixel.G] + pPixel[(int)ComInfo.Pixel.R]) / 3);
+                    byte* pixel = (byte*)bitmapDataOrg.Scan0 + indexHeight * bitmapDataOrg.Stride + indexWidth * 4;
+                    byte grayScale = (byte)((pixel[(int)ComInfo.Pixel.B] + pixel[(int)ComInfo.Pixel.G] + pixel[(int)ComInfo.Pixel.R]) / 3);
 
-                    m_nHistgram[(int)ComInfo.PictureType.Original, nGrayScale] += 1;
+                    mHistgram[(int)ComInfo.PictureType.Original, nGrayScale] += 1;
 
-                    if (m_bitmapAfter != null)
+                    if (mBitmapAfter != null)
                     {
-                        pPixel = (byte*)bitmapDataAfter.Scan0 + nIdxHeight * bitmapDataAfter.Stride + nIdxWidth * 4;
-                        nGrayScale = (byte)((pPixel[(int)ComInfo.Pixel.B] + pPixel[(int)ComInfo.Pixel.G] + pPixel[(int)ComInfo.Pixel.R]) / 3);
+                        pixel = (byte*)bitmapDataAfter.Scan0 + indexHeight * bitmapDataAfter.Stride + indexWidth * 4;
+                        grayScale = (byte)((pixel[(int)ComInfo.Pixel.B] + pixel[(int)ComInfo.Pixel.G] + pixel[(int)ComInfo.Pixel.R]) / 3);
 
-                        m_nHistgram[(int)ComInfo.PictureType.After, nGrayScale] += 1;
+                        mHistgram[(int)ComInfo.PictureType.After, grayScale] += 1;
                     }
                 }
             }
-            m_bitmapOrg.UnlockBits(bitmapDataOrg);
-            if (m_bitmapAfter != null)
+            mBitmapOrg.UnlockBits(bitmapDataOrg);
+            if (mBitmapAfter != null)
             {
-                m_bitmapAfter.UnlockBits(bitmapDataAfter);
+                mBitmapAfter.UnlockBits(bitmapDataAfter);
             }
         }
     }
@@ -82,10 +82,10 @@ abstract class ComCharts
     /// </summary>
     public void InitHistgram()
     {
-        for (int nIdx = 0; nIdx < (m_nHistgram.Length >> 1); nIdx++)
+        for (int index = 0; index < (mHistgram.Length >> 1); index++)
         {
-            m_nHistgram[(int)ComInfo.PictureType.Original, nIdx] = 0;
-            m_nHistgram[(int)ComInfo.PictureType.After, nIdx] = 0;
+            mHistgram[(int)ComInfo.PictureType.Original, index] = 0;
+            mHistgram[(int)ComInfo.PictureType.After, index] = 0;
         }
     }
 
@@ -95,7 +95,7 @@ abstract class ComCharts
     /// <returns>CSV保存の結果 成功/失敗</returns>
     public bool SaveCsv()
     {
-        bool bRst = true;
+        bool result = true;
         var saveDialog = new ComSaveFileDialog
         {
             Filter = "CSV|*.csv",
@@ -104,21 +104,21 @@ abstract class ComCharts
         };
         if (saveDialog.ShowDialog() == true)
         {
-            string strDelmiter = ",";
+            string delmiter = ",";
             StringBuilder stringBuilder = new StringBuilder();
-            for (int nIdx = 0; nIdx < (m_nHistgram.Length >> 1); nIdx++)
+            for (int index = 0; index < (mHistgram.Length >> 1); index++)
             {
-                stringBuilder.Append(nIdx).Append(strDelmiter);
-                stringBuilder.Append(m_nHistgram[(int)ComInfo.PictureType.Original, nIdx]).Append(strDelmiter);
-                stringBuilder.Append(m_nHistgram[(int)ComInfo.PictureType.After, nIdx]).Append(strDelmiter);
+                stringBuilder.Append(nIdx).Append(delmiter);
+                stringBuilder.Append(mHistgram[(int)ComInfo.PictureType.Original, index]).Append(delmiter);
+                stringBuilder.Append(mHistgram[(int)ComInfo.PictureType.After, index]).Append(delmiter);
                 stringBuilder.Append(Environment.NewLine);
             }
             if (!saveDialog.StreamWrite(stringBuilder.ToString()))
             {
-                bRst = false;
+                result = false;
             }
         }
 
-        return bRst;
+        return result;
     }
 }
