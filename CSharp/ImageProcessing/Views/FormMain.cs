@@ -15,17 +15,17 @@ namespace ImageProcessing
     /// </summary>
     public partial class FormMain : Form
     {
-        private Bitmap m_bitmap;
-        private ImageProcessing m_imageProcessing;
-        private string m_strOpenFileName;
-        private CancellationTokenSource m_tokenSource;
-        private string m_strCurImgName;
+        private Bitmap mBitmap;
+        private ImageProcessing mImageProcessing;
+        private string mOpenFileName;
+        private CancellationTokenSource mTokenSource;
+        private string mCurrentImageProcessingName;
 #if CHART_LIVE_CHART
-        private FormHistgramLiveCharts m_histgram;
+        private FormHistgramLiveCharts mHistgram;
 #elif CHART_OXY_PLOT
-        private FormHistgramOxyPlot m_histgram;
+        private FormHistgramOxyPlot mHistgram;
 #else
-        private FormHistgramOxyPlot m_histgram;
+        private FormHistgramOxyPlot mHistgram;
 #endif
 
         /// <summary>
@@ -45,14 +45,14 @@ namespace ImageProcessing
 
             SetToolTip();
 
-            m_bitmap = null;
-            m_tokenSource = null;
-            m_imageProcessing = null;
+            mBitmap = null;
+            mTokenSource = null;
+            mImageProcessing = null;
 
-            m_strCurImgName = Properties.Settings.Default.ImgTypeSelectName;
-            this.Text = "Image Processing ( " + m_strCurImgName + " )";
+            mCurrentImageProcessingName = Properties.Settings.Default.ImageTypeSelectName;
+            this.Text = "Image Processing ( " + mCurrentImageProcessingName + " )";
 
-            sliderThresh.Enabled = m_strCurImgName == ComInfo.IMG_NAME_BINARIZATION;
+            sliderThresh.Enabled = mCurrentImageProcessingName == ComInfo.IMG_NAME_BINARIZATION;
         }
 
         /// <summary>
@@ -60,9 +60,9 @@ namespace ImageProcessing
         /// </summary>
         ~FormMain()
         {
-            m_bitmap = null;
-            m_tokenSource = null;
-            m_imageProcessing = null;
+            mBitmap = null;
+            mTokenSource = null;
+            mImageProcessing = null;
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace ImageProcessing
         /// <returns>ビットマップ</returns>
         public Bitmap GetBitmap()
         {
-            Bitmap bitmap = m_imageProcessing.Bitmap;
+            Bitmap bitmap = mImageProcessing.Bitmap;
 
             return bitmap;
         }
@@ -79,13 +79,13 @@ namespace ImageProcessing
         /// <summary>
         /// 対象の画像処理オブジェクトを実行する
         /// </summary>
-        /// <param name="comImgInfo">画像処理の設定</param>
+        /// <param name="comImageProcessingInfo">画像処理の設定</param>
         /// <param name="token">キャンセルトークン</param>
         /// <returns>画像処理の実行結果 成功/失敗</returns>
-        public bool GoImageProcessing(ComImgInfo comImgInfo, CancellationToken token)
+        public bool GoImageProcessing(ComImageProcessingInfo comImageProcessingInfo, CancellationToken token)
         {
-            m_imageProcessing.Thresh = comImgInfo.BinarizationInfo.Thresh;
-            bool bRst = m_imageProcessing.GoImageProcessing(m_strCurImgName, token);
+            mImageProcessing.Thresh = comImageProcessingInfo.BinarizationInfo.Thresh;
+            bool bRst = mImageProcessing.GoImageProcessing(mCurrentImageProcessingName, token);
 
             return bRst;
         }
@@ -150,9 +150,10 @@ namespace ImageProcessing
         /// <summary>
         /// 時間を表示するテキストボックスに時間を設定する
         /// </summary>
-        public void SetTextTime(long lTime)
+        /// <param name="time">時間</param>
+        public void SetTextTime(long time)
         {
-            textBoxTime.Text = lTime.ToString();
+            textBoxTime.Text = time.ToString();
 
             return;
         }
@@ -173,16 +174,16 @@ namespace ImageProcessing
         /// <returns>画像処理の実行結果 成功/失敗</returns>
         public async Task<bool> TaskWorkImageProcessing()
         {
-            m_tokenSource = new CancellationTokenSource();
-            CancellationToken token = m_tokenSource.Token;
-            ComImgInfo imgInfo = new ComImgInfo();
+            mTokenSource = new CancellationTokenSource();
+            var token = mTokenSource.Token;
+            var imageProcessingInfo = new ComImageProcessingInfo();
             var binarizationInfo = new BinarizationInfo
             {
                 Thresh = (byte)sliderThresh.Value
             };
-            imgInfo.CurImgName = m_strCurImgName;
-            imgInfo.BinarizationInfo = binarizationInfo;
-            bool bRst = await Task.Run(() => GoImageProcessing(imgInfo, token));
+            imageProcessingInfo.CurrentImageProcessingName = mCurrentImageProcessingName;
+            imageProcessingInfo.BinarizationInfo = binarizationInfo;
+            bool bRst = await Task.Run(() => GoImageProcessing(imageProcessingInfo, token));
             return bRst;
         }
 
@@ -191,8 +192,8 @@ namespace ImageProcessing
         /// </summary>
         public void LoadImage()
         {
-            m_bitmap = new Bitmap(m_strOpenFileName);
-            m_imageProcessing = new ImageProcessing(m_bitmap);
+            mBitmap = new Bitmap(mOpenFileName);
+            mImageProcessing = new ImageProcessing(mBitmap);
 
             return;
         }
@@ -204,15 +205,15 @@ namespace ImageProcessing
         /// <param name="e">FormClosingイベントのデータ</param>
         public void OnFormClosingFormMain(object sender, FormClosingEventArgs e)
         {
-            if (m_tokenSource != null)
+            if (mTokenSource != null)
             {
                 e.Cancel = true;
             }
 
-            if (m_histgram != null)
+            if (mHistgram != null)
             {
-                m_histgram.Close();
-                m_histgram = null;
+                mHistgram.Close();
+                mHistgram = null;
             }
 
             return;
@@ -234,7 +235,7 @@ namespace ImageProcessing
             {
                 pictureBoxOriginal.Image = null;
                 pictureBoxAfter.Image = null;
-                m_strOpenFileName = openFileDlg.FileName;
+                mOpenFileName = openFileDlg.FileName;
                 try
                 {
                     LoadImage();
@@ -244,42 +245,42 @@ namespace ImageProcessing
                     MessageBox.Show(this, "Open File Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                pictureBoxOriginal.ImageLocation = m_strOpenFileName;
+                pictureBoxOriginal.ImageLocation = mOpenFileName;
                 btnStart.Enabled = true;
                 textBoxTime.Text = "";
 
-                if (m_histgram == null)
+                if (mHistgram == null)
                 {
 #if CHART_LIVE_CHART
-                    m_histgram = new FormHistgramLiveCharts();
+                    mHistgram = new FormHistgramLiveCharts();
 #elif CHART_OXY_PLOT
-                    m_histgram = new FormHistgramOxyPlot();
+                    mHistgram = new FormHistgramOxyPlot();
 #else
-                    m_histgram = new FormHistgramOxyPlot();
+                    mHistgram = new FormHistgramOxyPlot();
 #endif
                 }
                 else
                 {
-                    m_histgram.Close();
-                    m_histgram = null;
+                    mHistgram.Close();
+                    mHistgram = null;
 
 #if CHART_LIVE_CHART
-                    m_histgram = new FormHistgramLiveCharts();
+                    mHistgram = new FormHistgramLiveCharts();
 #elif CHART_OXY_PLOT
-                    m_histgram = new FormHistgramOxyPlot();
+                    mHistgram = new FormHistgramOxyPlot();
 #else
-                    m_histgram = new FormHistgramOxyPlot();
+                    mHistgram = new FormHistgramOxyPlot();
 #endif
                 }
 
-                m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
+                mHistgram.BitmapOrg = (Bitmap)new Bitmap(mOpenFileName).Clone();
                 if (GetBitmap() != null)
                 {
-                    m_histgram.BitmapAfter = (Bitmap)GetBitmap().Clone();
+                    mHistgram.BitmapAfter = (Bitmap)GetBitmap().Clone();
                 }
-                m_histgram.DrawHistgram();
-                m_histgram.IsOpen = true;
-                m_histgram.Show();
+                mHistgram.DrawHistgram();
+                mHistgram.IsOpen = true;
+                mHistgram.Show();
             }
             return;
         }
@@ -294,8 +295,8 @@ namespace ImageProcessing
             pictureBoxOriginal.ImageLocation = null;
             pictureBoxAfter.Image = null;
 
-            m_bitmap = null;
-            m_strOpenFileName = "";
+            mBitmap = null;
+            mOpenFileName = "";
 
             textBoxTime.Text = "";
 
@@ -304,9 +305,9 @@ namespace ImageProcessing
             btnStart.Enabled = false;
             btnSaveImage.Enabled = false;
 
-            if (m_histgram != null)
+            if (mHistgram != null)
             {
-                m_histgram.Close();
+                mHistgram.Close();
             }
 
             return;
@@ -340,7 +341,7 @@ namespace ImageProcessing
             bool bResult = await TaskWorkImageProcessing();
             if (bResult)
             {
-                pictureBoxOriginal.ImageLocation = m_strOpenFileName;
+                pictureBoxOriginal.ImageLocation = mOpenFileName;
                 pictureBoxAfter.Image = GetBitmap();
 
                 stopwatch.Stop();
@@ -348,14 +349,14 @@ namespace ImageProcessing
                 Invoke(new Action<long>(SetTextTime), stopwatch.ElapsedMilliseconds);
                 btnSaveImage.Enabled = true;
 
-                m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
+                mHistgram.BitmapOrg = (Bitmap)new Bitmap(mOpenFileName).Clone();
                 if (GetBitmap() != null)
                 {
-                    m_histgram.BitmapAfter = (Bitmap)GetBitmap().Clone();
+                    mHistgram.BitmapAfter = (Bitmap)GetBitmap().Clone();
                 }
-                if (m_histgram.IsOpen == true)
+                if (mHistgram.IsOpen == true)
                 {
-                    m_histgram.DrawHistgram();
+                    mHistgram.DrawHistgram();
                 }
             }
             Invoke(new Action(SetPictureBoxStatus));
@@ -364,7 +365,7 @@ namespace ImageProcessing
             btnShowHistgram.Enabled = true;
 
             stopwatch = null;
-            m_tokenSource = null;
+            mTokenSource = null;
 
             return;
         }
@@ -376,9 +377,9 @@ namespace ImageProcessing
         /// <param name="e">イベントのデータ</param>
         private void OnClickBtnStop(object sender, EventArgs e)
         {
-            if (m_tokenSource != null)
+            if (mTokenSource != null)
             {
-                m_tokenSource.Cancel();
+                mTokenSource.Cancel();
             }
 
             return;
@@ -390,7 +391,7 @@ namespace ImageProcessing
         /// <returns>ビットマップ</returns>
         public Bitmap GetImage()
         {
-            Bitmap bitmap = m_imageProcessing.Bitmap;
+            Bitmap bitmap = mImageProcessing.Bitmap;
 
             return bitmap == null ? bitmap : (Bitmap)bitmap.Clone();
         }
@@ -435,32 +436,32 @@ namespace ImageProcessing
         /// <param name="e">イベントのデータ</param>
         private void OnClickBtnShowHistgram(object sender, EventArgs e)
         {
-            if (m_bitmap == null)
+            if (mBitmap == null)
             {
                 return;
             }
 
-            if (m_histgram != null)
+            if (mHistgram != null)
             {
-                m_histgram.Close();
-                m_histgram = null;
+                mHistgram.Close();
+                mHistgram = null;
 #if CHART_LIVE_CHART
-                m_histgram = new FormHistgramLiveCharts();
+                mHistgram = new FormHistgramLiveCharts();
 #elif CHART_OXY_PLOT
-                m_histgram = new FormHistgramOxyPlot();
+                mHistgram = new FormHistgramOxyPlot();
 #else
-                m_histgram = new FormHistgramOxyPlot();
+                mHistgram = new FormHistgramOxyPlot();
 #endif
             }
 
-            m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
+            mHistgram.BitmapOrg = (Bitmap)new Bitmap(mOpenFileName).Clone();
             if (GetBitmap() != null)
             {
-                m_histgram.BitmapAfter = (Bitmap)GetBitmap().Clone();
+                mHistgram.BitmapAfter = (Bitmap)GetBitmap().Clone();
             }
-            m_histgram.DrawHistgram();
-            m_histgram.IsOpen = true;
-            m_histgram.Show();
+            mHistgram.DrawHistgram();
+            mHistgram.IsOpen = true;
+            mHistgram.Show();
 
             return;
         }
@@ -495,21 +496,21 @@ namespace ImageProcessing
         /// </summary>
         public void ShowSettingImageProcessing()
         {
-            FormSettingImageProcessing win = new FormSettingImageProcessing();
-            var dialogResult = win.ShowDialog();
+            FormSettingImageProcessing formSettingImageProcessing = new FormSettingImageProcessing();
+            var dialogResult = formSettingImageProcessing.ShowDialog();
 
             if (dialogResult == DialogResult.OK)
             {
-                m_strCurImgName = (string)win.CmbBoxImageProcessingType.SelectedItem;
-                this.Text = "Image Processing ( " + m_strCurImgName + " )";
+                mCurrentImageProcessingName = (string)formSettingImageProcessing.CmbBoxImageProcessingType.SelectedItem;
+                this.Text = "Image Processing ( " + mCurrentImageProcessingName + " )";
 
-                sliderThresh.Enabled = m_strCurImgName == ComInfo.IMG_NAME_BINARIZATION;
+                sliderThresh.Enabled = mCurrentImageProcessingName == ComInfo.IMG_NAME_BINARIZATION;
 
                 pictureBoxAfter.Image = null;
                 btnSaveImage.Enabled = false;
-                m_bitmap = new Bitmap(m_strOpenFileName);
-                m_imageProcessing = new ImageProcessing(m_bitmap);
-                if (m_histgram != null && m_histgram.IsOpen == true)
+                mBitmap = new Bitmap(mOpenFileName);
+                mImageProcessing = new ImageProcessing(mBitmap);
+                if (mHistgram != null && mHistgram.IsOpen == true)
                 {
                     OnClickBtnShowHistgram(this, null);
                 }
@@ -574,26 +575,26 @@ namespace ImageProcessing
             bool bResult = await TaskWorkImageProcessing();
             if (bResult)
             {
-                pictureBoxOriginal.ImageLocation = m_strOpenFileName;
+                pictureBoxOriginal.ImageLocation = mOpenFileName;
                 pictureBoxAfter.Image = GetBitmap();
 
                 btnSaveImage.Enabled = true;
 
-                m_histgram.BitmapOrg = (Bitmap)new Bitmap(m_strOpenFileName).Clone();
+                mHistgram.BitmapOrg = (Bitmap)new Bitmap(mOpenFileName).Clone();
                 if (GetBitmap() != null)
                 {
-                    m_histgram.BitmapAfter = (Bitmap)GetBitmap().Clone();
+                    mHistgram.BitmapAfter = (Bitmap)GetBitmap().Clone();
                 }
-                if (m_histgram.IsOpen == true)
+                if (mHistgram.IsOpen == true)
                 {
-                    m_histgram.DrawHistgram();
+                    mHistgram.DrawHistgram();
                 }
             }
             Invoke(new Action(SetButtonEnable));
             menuMain.Enabled = true;
             btnShowHistgram.Enabled = true;
 
-            m_tokenSource = null;
+            mTokenSource = null;
 
             return;
         }

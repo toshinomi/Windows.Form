@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 /// </summary>
 abstract public class ComImageProcessing
 {
-    protected Bitmap m_bitmap;
+    protected Bitmap mBitmap;
 
     /// <summary>
     /// コンストラクタ
@@ -19,7 +19,7 @@ abstract public class ComImageProcessing
     /// <param name="bitmap">ビットマップ</param>
     public ComImageProcessing(Bitmap bitmap)
     {
-        m_bitmap = bitmap;
+        mBitmap = bitmap;
     }
 
     /// <summary>
@@ -27,7 +27,7 @@ abstract public class ComImageProcessing
     /// </summary>
     ~ComImageProcessing()
     {
-        m_bitmap = null;
+        mBitmap = null;
     }
 
     /// <summary>
@@ -35,7 +35,7 @@ abstract public class ComImageProcessing
     /// </summary>
     virtual public void Init()
     {
-        m_bitmap = null;
+        mBitmap = null;
     }
 
     /// <summary>
@@ -43,8 +43,8 @@ abstract public class ComImageProcessing
     /// </summary>
     public Bitmap Bitmap
     {
-        set { m_bitmap = value; }
-        get { return m_bitmap; }
+        set { mBitmap = value; }
+        get { return mBitmap; }
     }
 
     /// <summary>

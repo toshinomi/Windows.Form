@@ -18,16 +18,15 @@ namespace ImageProcessing
     /// </summary>
     public partial class FormHistgramLiveCharts : Form
     {
-        private readonly ComHistgramLiveCharts m_histgramChart;
-        private bool m_bIsOpen;
+        private readonly ComHistgramLiveCharts mHistgramChart;
 
         /// <summary>
         /// オリジナルのビットマップ
         /// </summary>
         public Bitmap BitmapOrg
         {
-            set { m_histgramChart.BitmapOrg = value; }
-            get { return m_histgramChart.BitmapOrg; }
+            set { mHistgramChart.BitmapOrg = value; }
+            get { return mHistgramChart.BitmapOrg; }
         }
 
         /// <summary>
@@ -35,18 +34,14 @@ namespace ImageProcessing
         /// </summary>
         public Bitmap BitmapAfter
         {
-            set { m_histgramChart.BitmapAfter = value; }
-            get { return m_histgramChart.BitmapAfter; }
+            set { mHistgramChart.BitmapAfter = value; }
+            get { return mHistgramChart.BitmapAfter; }
         }
 
         /// <summary>
         /// Formのオープン状態
         /// </summary>
-        public bool IsOpen
-        {
-            set { m_bIsOpen = value; }
-            get { return m_bIsOpen; }
-        }
+        public bool IsOpen { set; get; }
 
         /// <summary>
         /// コンストラクタ
@@ -55,7 +50,7 @@ namespace ImageProcessing
         {
             InitializeComponent();
 
-            m_histgramChart = new ComHistgramLiveCharts();
+            mHistgramChart = new ComHistgramLiveCharts();
         }
 
         /// <summary>
@@ -63,12 +58,12 @@ namespace ImageProcessing
         /// </summary>
         public void DrawHistgram()
         {
-            var items = m_histgramChart.DrawHistgram();
+            var items = mHistgramChart.DrawHistgram();
 
             chart.Series.Clear();
-            for (int nIdx = 0; nIdx < items.Count; nIdx++)
+            for (int index = 0; index < items.Count; index++)
             {
-                chart.Series.Add(items[nIdx]);
+                chart.Series.Add(items[index]);
             }
 
             return;
@@ -81,7 +76,7 @@ namespace ImageProcessing
         /// <param name="e">FormClosingイベントのデータ</param>
         private void OnFormClosingFormHistgramLiveCharts(object sender, FormClosingEventArgs e)
         {
-            m_bIsOpen = false;
+            IsOpen = false;
 
             return;
         }
@@ -93,9 +88,9 @@ namespace ImageProcessing
         /// <param name="e">イベントのデータ</param>
         public void OnClickMenu(object sender, EventArgs e)
         {
-            string strHeader = sender.ToString();
+            string menuTitle = sender.ToString();
 
-            switch (strHeader)
+            switch (menuTitle)
             {
                 case ComInfo.MENU_SAVE_CSV:
                     SaveCsv();
@@ -112,7 +107,7 @@ namespace ImageProcessing
         /// </summary>
         public void SaveCsv()
         {
-            if (!m_histgramChart.SaveCsv())
+            if (!mHistgramChart.SaveCsv())
             {
                 MessageBox.Show(this, "Save CSV File Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

@@ -15,14 +15,14 @@ class ComHistgramOxyPlot : ComCharts
     /// <summary>
     /// プロットモデル
     /// </summary>
-    public PlotModel PModel { get; set; }
+    public PlotModel PlotModel { get; set; }
 
     /// <summary>
     /// ヒストグラム用の2次元配列データ　配列の1次元：オリジナルのデータ、配列の2次元：画像処理後のデータ
     /// </summary>
     public int[,] Histgram
     {
-        get { return base.m_nHistgram; }
+        get { return base.mHistgram; }
     }
 
     /// <summary>
@@ -30,8 +30,8 @@ class ComHistgramOxyPlot : ComCharts
     /// </summary>
     public Bitmap BitmapOrg
     {
-        set { base.m_bitmapOrg = value; }
-        get { return base.m_bitmapOrg; }
+        set { base.mBitmapOrg = value; }
+        get { return base.mBitmapOrg; }
     }
 
     /// <summary>
@@ -39,8 +39,8 @@ class ComHistgramOxyPlot : ComCharts
     /// </summary>
     public Bitmap BitmapAfter
     {
-        set { base.m_bitmapAfter = value; }
-        get { return base.m_bitmapAfter; }
+        set { base.mBitmapAfter = value; }
+        get { return base.mBitmapAfter; }
     }
 
     /// <summary>
@@ -48,7 +48,7 @@ class ComHistgramOxyPlot : ComCharts
     /// </summary>
     public ComHistgramOxyPlot()
     {
-        PModel = new PlotModel();
+        PlotModel = new PlotModel();
     }
 
     /// <summary>
@@ -68,32 +68,32 @@ class ComHistgramOxyPlot : ComCharts
 
         base.CalHistgram();
 
-        var dataList1 = new List<DataPoint>();
-        for (int nIdx = 0; nIdx < (m_nHistgram.Length >> 1); nIdx++)
+        var dataListOriginal = new List<DataPoint>();
+        for (int index = 0; index < (mHistgram.Length >> 1); index++)
         {
-            var dataPoint = new DataPoint(nIdx, base.m_nHistgram[(int)ComInfo.PictureType.Original, nIdx]);
-            dataList1.Add(dataPoint);
+            var dataPoint = new DataPoint(index, base.mHistgram[(int)ComInfo.PictureType.Original, index]);
+            dataListOriginal.Add(dataPoint);
         }
         var series1 = new LineSeries
         {
             Title = "Original",
-            ItemsSource = dataList1,
+            ItemsSource = dataListOriginal,
         };
-        PModel.Series.Add(series1);
+        PlotModel.Series.Add(series1);
 
-        var dataList2 = new List<DataPoint>();
-        for (int nIdx = 0; nIdx < (m_nHistgram.Length >> 1); nIdx++)
+        var dataListAfter = new List<DataPoint>();
+        for (int index = 0; index < (mHistgram.Length >> 1); index++)
         {
-            var dataPoint = new DataPoint(nIdx, base.m_nHistgram[(int)ComInfo.PictureType.After, nIdx]);
-            dataList2.Add(dataPoint);
+            var dataPoint = new DataPoint(index, base.mHistgram[(int)ComInfo.PictureType.After, index]);
+            dataListAfter.Add(dataPoint);
         }
         var series2 = new LineSeries
         {
             Title = "After",
-            ItemsSource = dataList2,
+            ItemsSource = dataListAfter,
         };
-        PModel.Series.Add(series2);
+        PlotModel.Series.Add(series2);
 
-        return PModel;
+        return PlotModel;
     }
 }

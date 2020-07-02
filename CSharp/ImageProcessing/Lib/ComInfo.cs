@@ -24,7 +24,7 @@ public class ComInfo
     /// <summary>
     /// 画像処理のタイプの列挙
     /// </summary>
-    public enum ImgProcType
+    public enum ImageProcessingType
     {
         EdgeDetection = 0,
         GrayScale,
@@ -37,7 +37,7 @@ public class ComInfo
     /// <summary>
     /// 画像のタイプの列挙
     /// </summary>
-    public enum ImgDataType
+    public enum ImageDataType
     {
         Jpg = 0,
         Png,

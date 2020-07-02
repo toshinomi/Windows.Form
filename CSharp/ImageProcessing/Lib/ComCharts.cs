@@ -21,7 +21,7 @@ abstract class ComCharts
     /// </summary>
     public ComCharts()
     {
-        m_nHistgram = new int[(int)ComInfo.PictureType.MAX, ComInfo.RGB_MAX];
+        mHistgram = new int[(int)ComInfo.PictureType.MAX, ComInfo.RGB_MAX];
     }
 
     /// <summary>
@@ -36,14 +36,14 @@ abstract class ComCharts
     /// </summary>
     public void CalHistgram()
     {
-        int widthSize = m_bitmapOrg.Width;
-        int heightSize = m_bitmapOrg.Height;
+        int widthSize = mBitmapOrg.Width;
+        int heightSize = mBitmapOrg.Height;
 
-        BitmapData bitmapDataOrg = m_bitmapOrg.LockBits(new Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+        BitmapData bitmapDataOrg = mBitmapOrg.LockBits(new Rectangle(0, 0, widthSize, heightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
         BitmapData bitmapDataAfter = null;
         if (mBitmapAfter != null)
         {
-            bitmapDataAfter = m_bitmapAfter.LockBits(new Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+            bitmapDataAfter = mBitmapAfter.LockBits(new Rectangle(0, 0, widthSize, heightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
         }
 
         int indexWidth;
@@ -58,7 +58,7 @@ abstract class ComCharts
                     byte* pixel = (byte*)bitmapDataOrg.Scan0 + indexHeight * bitmapDataOrg.Stride + indexWidth * 4;
                     byte grayScale = (byte)((pixel[(int)ComInfo.Pixel.B] + pixel[(int)ComInfo.Pixel.G] + pixel[(int)ComInfo.Pixel.R]) / 3);
 
-                    mHistgram[(int)ComInfo.PictureType.Original, nGrayScale] += 1;
+                    mHistgram[(int)ComInfo.PictureType.Original, grayScale] += 1;
 
                     if (mBitmapAfter != null)
                     {
@@ -108,7 +108,7 @@ abstract class ComCharts
             StringBuilder stringBuilder = new StringBuilder();
             for (int index = 0; index < (mHistgram.Length >> 1); index++)
             {
-                stringBuilder.Append(nIdx).Append(delmiter);
+                stringBuilder.Append(index).Append(delmiter);
                 stringBuilder.Append(mHistgram[(int)ComInfo.PictureType.Original, index]).Append(delmiter);
                 stringBuilder.Append(mHistgram[(int)ComInfo.PictureType.After, index]).Append(delmiter);
                 stringBuilder.Append(Environment.NewLine);

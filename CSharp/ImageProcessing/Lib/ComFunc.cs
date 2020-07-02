@@ -12,48 +12,48 @@ public class ComFunc
     /// <summary>
     /// Double型のデータからbyte型のデータへの変換
     /// </summary>
-    /// <param name="dValue">Double型のデータ</param>
+    /// <param name="value">Double型のデータ</param>
     /// <returns>byte型のデータ</returns>
-    static public byte DoubleToByte(double dValue)
+    static public byte DoubleToByte(double value)
     {
-        byte nCnvValue;
-        if (dValue > 255.0)
+        byte ConvertValue;
+        if (value > 255.0)
         {
-            nCnvValue = 255;
+            ConvertValue = 255;
         }
-        else if (dValue < 0)
+        else if (value < 0)
         {
-            nCnvValue = 0;
+            ConvertValue = 0;
         }
         else
         {
-            nCnvValue = (byte)dValue;
+            ConvertValue = (byte)value;
         }
 
-        return nCnvValue;
+        return ConvertValue;
     }
 
     /// <summary>
     /// long型のデータからbyte型のデータへの変換
     /// </summary>
-    /// <param name="lValue">long型のデータ</param>
+    /// <param name="value">long型のデータ</param>
     /// <returns>byte型のデータ</returns>
-    static public byte LongToByte(long lValue)
+    static public byte LongToByte(long value)
     {
-        byte nCnvValue;
-        if (lValue > 255)
+        byte ConvertValue;
+        if (value > 255)
         {
-            nCnvValue = 255;
+            ConvertValue = 255;
         }
-        else if (lValue < 0)
+        else if (value < 0)
         {
-            nCnvValue = 0;
+            ConvertValue = 0;
         }
         else
         {
-            nCnvValue = (byte)lValue;
+            ConvertValue = (byte)value;
         }
 
-        return nCnvValue;
+        return ConvertValue;
     }
 }

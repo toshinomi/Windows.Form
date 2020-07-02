@@ -35,7 +35,7 @@ class GrayScale2Diff
     /// <returns>実行結果 成功/失敗</returns>
     public bool ImageProcessing(ref Bitmap bitmap, CancellationToken token)
     {
-        bool bRst = true;
+        bool result = true;
 
         short[,] nMask =
         {
@@ -44,73 +44,73 @@ class GrayScale2Diff
             {1,  1, 1}
         };
 
-        int nWidthSize = bitmap.Width;
-        int nHeightSize = bitmap.Height;
-        int nMasksize = nMask.GetLength(0);
+        int widthSize = bitmap.Width;
+        int heightSize = bitmap.Height;
+        int maskSize = nMask.GetLength(0);
 
-        var bitmapData = bitmap.LockBits(new Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+        var bitmapData = bitmap.LockBits(new Rectangle(0, 0, widthSize, heightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
-        int nIdxWidth;
-        int nIdxHeight;
+        int indexWidth;
+        int indexHeight;
 
         unsafe
         {
-            for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
+            for (indexHeight = 0; indexHeight < heightSize; indexHeight++)
             {
                 if (token.IsCancellationRequested)
                 {
-                    bRst = false;
+                    result = false;
                     break;
                 }
 
-                for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
+                for (indexWidth = 0; indexWidth < widthSize; indexWidth++)
                 {
                     if (token.IsCancellationRequested)
                     {
-                        bRst = false;
+                        result = false;
                         break;
                     }
 
-                    byte* pPixel = (byte*)bitmapData.Scan0 + nIdxHeight * bitmapData.Stride + nIdxWidth * 4;
+                    byte* pixel = (byte*)bitmapData.Scan0 + indexHeight * bitmapData.Stride + indexWidth * 4;
 
-                    long lCalB = 0;
-                    long lCalG = 0;
-                    long lCalR = 0;
-                    double dCalAve = 0.0;
-                    int nIdxWidthMask;
-                    int nIdxHightMask;
+                    long blue = 0;
+                    long green = 0;
+                    long red = 0;
+                    double averageGrayScale = 0.0;
+                    int indexWidthMask;
+                    int indexHightMask;
 
 
-                    for (nIdxHightMask = 0; nIdxHightMask < nMasksize; nIdxHightMask++)
+                    for (indexHightMask = 0; indexHightMask < maskSize; indexHightMask++)
                     {
-                        for (nIdxWidthMask = 0; nIdxWidthMask < nMasksize; nIdxWidthMask++)
+                        for (indexWidthMask = 0; indexWidthMask < maskSize; indexWidthMask++)
                         {
-                            if (nIdxWidth + nIdxWidthMask > 0 &&
-                                nIdxWidth + nIdxWidthMask < nWidthSize &&
-                                nIdxHeight + nIdxHightMask > 0 &&
-                                nIdxHeight + nIdxHightMask < nHeightSize)
+                            if (indexWidth + indexWidthMask > 0 &&
+                                indexWidth + indexWidthMask < widthSize &&
+                                indexHeight + indexHightMask > 0 &&
+                                indexHeight + indexHightMask < heightSize)
                             {
-                                byte* pPixel2 = (byte*)bitmapData.Scan0 + (nIdxHeight + nIdxHightMask) * bitmapData.Stride + (nIdxWidth + nIdxWidthMask) * 4;
+                                byte* pixelMaskArea = (byte*)bitmapData.Scan0 + (indexHeight + indexHightMask) * bitmapData.Stride + (indexWidth + indexWidthMask) * 4;
 
-                                lCalB = pPixel2[(int)ComInfo.Pixel.B] * nMask[nIdxWidthMask, nIdxHightMask];
-                                lCalG = pPixel2[(int)ComInfo.Pixel.G] * nMask[nIdxWidthMask, nIdxHightMask];
-                                lCalR = pPixel2[(int)ComInfo.Pixel.R] * nMask[nIdxWidthMask, nIdxHightMask];
+                                blue = pixelMaskArea[(int)ComInfo.Pixel.B] * nMask[indexWidthMask, indexHightMask];
+                                green = pixelMaskArea[(int)ComInfo.Pixel.G] * nMask[indexWidthMask, indexHightMask];
+                                red = pixelMaskArea[(int)ComInfo.Pixel.R] * nMask[indexWidthMask, indexHightMask];
 
-                                double dcalGray = (lCalB + lCalG + lCalR) / 3;
-                                dCalAve = (dCalAve + dcalGray) / 2;
+                                double gray = (blue + green + red) / 3;
+                                averageGrayScale = (averageGrayScale + gray) / 2;
                             }
                         }
                     }
-                    byte nGrayScale = ComFunc.DoubleToByte(dCalAve);
+                    byte grayScale = ComFunc.DoubleToByte(averageGrayScale);
 
-                    pPixel[(int)ComInfo.Pixel.B] = nGrayScale;
-                    pPixel[(int)ComInfo.Pixel.G] = nGrayScale;
-                    pPixel[(int)ComInfo.Pixel.R] = nGrayScale;
+                    pixel[(int)ComInfo.Pixel.B] = grayScale;
+                    pixel[(int)ComInfo.Pixel.G] = grayScale;
+                    pixel[(int)ComInfo.Pixel.R] = grayScale;
                 }
             }
             bitmap.UnlockBits(bitmapData);
         }
 
-        return bRst;
+        return result;
     }
 }

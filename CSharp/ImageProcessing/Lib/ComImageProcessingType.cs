@@ -30,12 +30,12 @@ class ComImageProcessingType
     /// <summary>
     /// コンストラクタ
     /// </summary>
-    /// <param name="nId">ID</param>
-    /// <param name="_strNmae">名称</param>
-    public ComImageProcessingType(int nId, string strNmae)
+    /// <param name="Id">ID</param>
+    /// <param name="Nmae">名称</param>
+    public ComImageProcessingType(int Id, string Nmae)
     {
-        Id = nId;
-        Name = strNmae;
+        this.Id = Id;
+        this.Name = Nmae;
     }
 
     /// <summary>

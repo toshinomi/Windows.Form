@@ -35,44 +35,44 @@ class ColorReversal
     /// <returns>実行結果 成功/失敗</returns>
     public bool ImageProcessing(ref Bitmap bitmap, CancellationToken token)
     {
-        bool bRst = true;
+        bool result = true;
 
-        int nWidthSize = bitmap.Width;
-        int nHeightSize = bitmap.Height;
+        int widthSize = bitmap.Width;
+        int heightSize = bitmap.Height;
 
-        var bitmapData = bitmap.LockBits(new Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+        var bitmapData = bitmap.LockBits(new Rectangle(0, 0, widthSize, heightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
-        int nIdxWidth;
-        int nIdxHeight;
+        int indexWidth;
+        int indexHeight;
 
         unsafe
         {
-            for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
+            for (indexHeight = 0; indexHeight < heightSize; indexHeight++)
             {
                 if (token.IsCancellationRequested)
                 {
-                    bRst = false;
+                    result = false;
                     break;
                 }
 
-                for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
+                for (indexWidth = 0; indexWidth < widthSize; indexWidth++)
                 {
                     if (token.IsCancellationRequested)
                     {
-                        bRst = false;
+                        result = false;
                         break;
                     }
 
-                    byte* pPixel = (byte*)bitmapData.Scan0 + nIdxHeight * bitmapData.Stride + nIdxWidth * 4;
+                    byte* pixel = (byte*)bitmapData.Scan0 + indexHeight * bitmapData.Stride + indexWidth * 4;
 
-                    pPixel[(int)ComInfo.Pixel.B] = (byte)(255 - pPixel[(int)ComInfo.Pixel.B]);
-                    pPixel[(int)ComInfo.Pixel.G] = (byte)(255 - pPixel[(int)ComInfo.Pixel.G]);
-                    pPixel[(int)ComInfo.Pixel.R] = (byte)(255 - pPixel[(int)ComInfo.Pixel.R]);
+                    pixel[(int)ComInfo.Pixel.B] = (byte)(255 - pixel[(int)ComInfo.Pixel.B]);
+                    pixel[(int)ComInfo.Pixel.G] = (byte)(255 - pixel[(int)ComInfo.Pixel.G]);
+                    pixel[(int)ComInfo.Pixel.R] = (byte)(255 - pixel[(int)ComInfo.Pixel.R]);
                 }
             }
             bitmap.UnlockBits(bitmapData);
         }
 
-        return bRst;
+        return result;
     }
 }

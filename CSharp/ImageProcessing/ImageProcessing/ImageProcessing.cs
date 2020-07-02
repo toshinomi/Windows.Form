@@ -15,7 +15,7 @@ namespace ImageProcessing
 {
     class ImageProcessing : ComImageProcessing
     {
-        private readonly Object[] arrayImageProcessing = new object[(int)ComInfo.ImgProcType.MAX];
+        private readonly Object[] arrayImageProcessing = new object[(int)ComInfo.ImageProcessingType.MAX];
 
         /// <summary>
         /// 閾値
@@ -29,15 +29,15 @@ namespace ImageProcessing
         public ImageProcessing(Bitmap bitmap) : base(bitmap)
         {
             var edgeDetection = new EdgeDetection();
-            arrayImageProcessing[(int)ComInfo.ImgProcType.EdgeDetection] = edgeDetection;
+            arrayImageProcessing[(int)ComInfo.ImageProcessingType.EdgeDetection] = edgeDetection;
             var grayScale = new GrayScale();
-            arrayImageProcessing[(int)ComInfo.ImgProcType.GrayScale] = grayScale;
+            arrayImageProcessing[(int)ComInfo.ImageProcessingType.GrayScale] = grayScale;
             var binarization = new Binarization();
-            arrayImageProcessing[(int)ComInfo.ImgProcType.Binarization] = binarization;
+            arrayImageProcessing[(int)ComInfo.ImageProcessingType.Binarization] = binarization;
             var grayScale2Diff = new GrayScale2Diff();
-            arrayImageProcessing[(int)ComInfo.ImgProcType.GrayScale2Diff] = grayScale2Diff;
+            arrayImageProcessing[(int)ComInfo.ImageProcessingType.GrayScale2Diff] = grayScale2Diff;
             var colorReversal = new ColorReversal();
-            arrayImageProcessing[(int)ComInfo.ImgProcType.ColorReversal] = colorReversal;
+            arrayImageProcessing[(int)ComInfo.ImageProcessingType.ColorReversal] = colorReversal;
         }
 
         /// <summary>
@@ -69,29 +69,29 @@ namespace ImageProcessing
             switch (imageProcessingName)
             {
                 case ComInfo.IMG_NAME_EDGE_DETECTION:
-                    index = (int)ComInfo.ImgProcType.EdgeDetection;
+                    index = (int)ComInfo.ImageProcessingType.EdgeDetection;
                     var edgeDetection = (EdgeDetection)arrayImageProcessing[index];
-                    result = edgeDetection.ImageProcessing(ref base.m_bitmap, token);
+                    result = edgeDetection.ImageProcessing(ref base.mBitmap, token);
                     break;
                 case ComInfo.IMG_NAME_GRAY_SCALE:
-                    index = (int)ComInfo.ImgProcType.GrayScale;
+                    index = (int)ComInfo.ImageProcessingType.GrayScale;
                     var grayScale = (GrayScale)arrayImageProcessing[index];
-                    result = grayScale.ImageProcessing(ref base.m_bitmap, token);
+                    result = grayScale.ImageProcessing(ref base.mBitmap, token);
                     break;
                 case ComInfo.IMG_NAME_BINARIZATION:
-                    index = (int)ComInfo.ImgProcType.Binarization;
+                    index = (int)ComInfo.ImageProcessingType.Binarization;
                     var binarization = (Binarization)arrayImageProcessing[index];
-                    result = binarization.ImageProcessing(ref base.m_bitmap, token, Thresh);
+                    result = binarization.ImageProcessing(ref base.mBitmap, token, Thresh);
                     break;
                 case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF:
-                    index = (int)ComInfo.ImgProcType.GrayScale2Diff;
+                    index = (int)ComInfo.ImageProcessingType.GrayScale2Diff;
                     var grayScale2Diff = (GrayScale2Diff)arrayImageProcessing[index];
-                    result = grayScale2Diff.ImageProcessing(ref base.m_bitmap, token);
+                    result = grayScale2Diff.ImageProcessing(ref base.mBitmap, token);
                     break;
                 case ComInfo.IMG_NAME_COLOR_REVERSAL:
-                    index = (int)ComInfo.ImgProcType.ColorReversal;
+                    index = (int)ComInfo.ImageProcessingType.ColorReversal;
                     var colorReversal = (ColorReversal)arrayImageProcessing[index];
-                    result = colorReversal.ImageProcessing(ref base.m_bitmap, token);
+                    result = colorReversal.ImageProcessing(ref base.mBitmap, token);
                     break;
                 default:
                     break;

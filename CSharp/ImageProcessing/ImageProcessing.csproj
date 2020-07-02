@@ -80,7 +80,7 @@
     <Compile Include="Lib\ComCharts.cs" />
     <Compile Include="Lib\ComHistgramLiveCharts.cs" />
     <Compile Include="Lib\ComHistgramOxyPlot.cs" />
-    <Compile Include="Lib\ComImgInfo.cs" />
+    <Compile Include="Lib\ComImageProcessingInfo.cs" />
     <Compile Include="Lib\ComFunc.cs" />
     <Compile Include="Lib\ComImageProcessingType.cs" />
     <Compile Include="Lib\ComImageProcessing.cs" />

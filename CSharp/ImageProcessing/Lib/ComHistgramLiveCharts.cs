@@ -18,7 +18,7 @@ class ComHistgramLiveCharts : ComCharts
     /// </summary>
     public int[,] Histgram
     {
-        get { return base.m_nHistgram; }
+        get { return base.mHistgram; }
     }
 
     /// <summary>
@@ -26,8 +26,8 @@ class ComHistgramLiveCharts : ComCharts
     /// </summary>
     public Bitmap BitmapOrg
     {
-        set { base.m_bitmapOrg = value; }
-        get { return base.m_bitmapOrg; }
+        set { base.mBitmapOrg = value; }
+        get { return base.mBitmapOrg; }
     }
 
     /// <summary>
@@ -35,8 +35,8 @@ class ComHistgramLiveCharts : ComCharts
     /// </summary>
     public Bitmap BitmapAfter
     {
-        set { base.m_bitmapAfter = value; }
-        get { return base.m_bitmapAfter; }
+        set { base.mBitmapAfter = value; }
+        get { return base.mBitmapAfter; }
     }
 
     /// <summary>
@@ -63,27 +63,27 @@ class ComHistgramLiveCharts : ComCharts
 
         base.CalHistgram();
 
-        LineSeries lineSeriesChart1 = new LineSeries()
+        var lineSeriesChartOriginal = new LineSeries()
         {
             Values = new ChartValues<int>(),
             Title = "Original Image"
         };
-        LineSeries lineSeriesChart2 = new LineSeries()
+        var lineSeriesChartAfter = new LineSeries()
         {
             Values = new ChartValues<int>(),
             Title = "After Image"
         };
 
-        for (int nIdx = 0; nIdx < (base.m_nHistgram.Length >> 1); nIdx++)
+        for (int index = 0; index < (base.mHistgram.Length >> 1); index++)
         {
-            lineSeriesChart1.Values.Add(m_nHistgram[(int)ComInfo.PictureType.Original, nIdx]);
-            lineSeriesChart2.Values.Add(m_nHistgram[(int)ComInfo.PictureType.After, nIdx]);
+            lineSeriesChartOriginal.Values.Add(mHistgram[(int)ComInfo.PictureType.Original, index]);
+            lineSeriesChartAfter.Values.Add(mHistgram[(int)ComInfo.PictureType.After, index]);
         }
 
         var items = new List<LineSeries>
         {
-            lineSeriesChart1,
-            lineSeriesChart2
+            lineSeriesChartOriginal,
+            lineSeriesChartAfter
         };
 
         return items;

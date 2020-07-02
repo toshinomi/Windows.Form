@@ -10,15 +10,15 @@ using System.Windows.Forms;
 /// </summary>
 public class ComOpenFileDialog
 {
-    protected OpenFileDialog m_openFileDialog;
+    protected OpenFileDialog mOpenFileDialog;
 
     /// <summary>
     /// ファイル名称
     /// </summary>
     public string FileName
     {
-        set { m_openFileDialog.FileName = value; }
-        get { return m_openFileDialog.FileName; }
+        set { mOpenFileDialog.FileName = value; }
+        get { return mOpenFileDialog.FileName; }
     }
 
     /// <summary>
@@ -26,8 +26,8 @@ public class ComOpenFileDialog
     /// </summary>
     public string InitialDirectory
     {
-        set { m_openFileDialog.InitialDirectory = value; }
-        get { return m_openFileDialog.InitialDirectory; }
+        set { mOpenFileDialog.InitialDirectory = value; }
+        get { return mOpenFileDialog.InitialDirectory; }
     }
 
     /// <summary>
@@ -35,8 +35,8 @@ public class ComOpenFileDialog
     /// </summary>
     public string Filter
     {
-        set { m_openFileDialog.Filter = value; }
-        get { return m_openFileDialog.Filter; }
+        set { mOpenFileDialog.Filter = value; }
+        get { return mOpenFileDialog.Filter; }
     }
 
     /// <summary>
@@ -44,8 +44,8 @@ public class ComOpenFileDialog
     /// </summary>
     public int FilterIndex
     {
-        set { m_openFileDialog.FilterIndex = value; }
-        get { return m_openFileDialog.FilterIndex; }
+        set { mOpenFileDialog.FilterIndex = value; }
+        get { return mOpenFileDialog.FilterIndex; }
     }
 
     /// <summary>
@@ -53,8 +53,8 @@ public class ComOpenFileDialog
     /// </summary>
     public string Title
     {
-        set { m_openFileDialog.Title = value; }
-        get { return m_openFileDialog.Title; }
+        set { mOpenFileDialog.Title = value; }
+        get { return mOpenFileDialog.Title; }
     }
 
     /// <summary>
@@ -62,8 +62,8 @@ public class ComOpenFileDialog
     /// </summary>
     public bool CheckFileExists
     {
-        set { m_openFileDialog.CheckFileExists = value; }
-        get { return m_openFileDialog.CheckFileExists; }
+        set { mOpenFileDialog.CheckFileExists = value; }
+        get { return mOpenFileDialog.CheckFileExists; }
     }
 
     /// <summary>
@@ -71,8 +71,8 @@ public class ComOpenFileDialog
     /// </summary>
     public bool CheckPathExists
     {
-        set { m_openFileDialog.CheckPathExists = value; }
-        get { return m_openFileDialog.CheckPathExists; }
+        set { mOpenFileDialog.CheckPathExists = value; }
+        get { return mOpenFileDialog.CheckPathExists; }
     }
 
     /// <summary>
@@ -80,7 +80,7 @@ public class ComOpenFileDialog
     /// </summary>
     public ComOpenFileDialog()
     {
-        m_openFileDialog = new OpenFileDialog();
+        mOpenFileDialog = new OpenFileDialog();
     }
 
     /// <summary>
@@ -96,13 +96,13 @@ public class ComOpenFileDialog
     /// <returns>結果 成功/失敗</returns>
     public bool ShowDialog()
     {
-        bool bRst = false;
+        bool result = false;
 
-        if (m_openFileDialog.ShowDialog() == DialogResult.OK)
+        if (mOpenFileDialog.ShowDialog() == DialogResult.OK)
         {
-            bRst = true;
+            result = true;
         }
 
-        return bRst;
+        return result;
     }
 }

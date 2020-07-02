@@ -47,19 +47,19 @@ namespace ImageProcessing
         {
             var items = new List<ComImageProcessingType>
             {
-                new ComImageProcessingType(Properties.Settings.Default.ImgTypeEdgeId, Properties.Settings.Default.ImgTypeEdgeName),
-                new ComImageProcessingType(Properties.Settings.Default.ImgTypeGrayScaleId, Properties.Settings.Default.ImgTypeGrayScaleName),
-                new ComImageProcessingType(Properties.Settings.Default.ImgTypeBinarizationId, Properties.Settings.Default.ImgTypeBinarizationName),
-                new ComImageProcessingType(Properties.Settings.Default.ImgTypeGrayScale2DiffId, Properties.Settings.Default.ImgTypeGrayScale2DiffName),
-                new ComImageProcessingType(Properties.Settings.Default.ImgTypeColorReversalId, Properties.Settings.Default.ImgTypeColorReversalName)
+                new ComImageProcessingType(Properties.Settings.Default.ImageTypeEdgeId, Properties.Settings.Default.ImageTypeEdgeName),
+                new ComImageProcessingType(Properties.Settings.Default.ImageTypeGrayScaleId, Properties.Settings.Default.ImageTypeGrayScaleName),
+                new ComImageProcessingType(Properties.Settings.Default.ImageTypeBinarizationId, Properties.Settings.Default.ImageTypeBinarizationName),
+                new ComImageProcessingType(Properties.Settings.Default.ImageTypeGrayScale2DiffId, Properties.Settings.Default.ImageTypeGrayScale2DiffName),
+                new ComImageProcessingType(Properties.Settings.Default.ImageTypeColorReversalId, Properties.Settings.Default.ImageTypeColorReversalName)
             };
 
-            cmbBoxImageProcessingType.Items.Add(Properties.Settings.Default.ImgTypeEdgeName);
-            cmbBoxImageProcessingType.Items.Add(Properties.Settings.Default.ImgTypeGrayScaleName);
-            cmbBoxImageProcessingType.Items.Add(Properties.Settings.Default.ImgTypeBinarizationName);
-            cmbBoxImageProcessingType.Items.Add(Properties.Settings.Default.ImgTypeGrayScale2DiffName);
-            cmbBoxImageProcessingType.Items.Add(Properties.Settings.Default.ImgTypeColorReversalName);
-            cmbBoxImageProcessingType.SelectedIndex = (int)items.Find(x => x.Name == Properties.Settings.Default.ImgTypeSelectName)?.Id - 1;
+            cmbBoxImageProcessingType.Items.Add(Properties.Settings.Default.ImageTypeEdgeName);
+            cmbBoxImageProcessingType.Items.Add(Properties.Settings.Default.ImageTypeGrayScaleName);
+            cmbBoxImageProcessingType.Items.Add(Properties.Settings.Default.ImageTypeBinarizationName);
+            cmbBoxImageProcessingType.Items.Add(Properties.Settings.Default.ImageTypeGrayScale2DiffName);
+            cmbBoxImageProcessingType.Items.Add(Properties.Settings.Default.ImageTypeColorReversalName);
+            cmbBoxImageProcessingType.SelectedIndex = (int)items.Find(x => x.Name == Properties.Settings.Default.ImageTypeSelectName)?.Id - 1;
 
             return;
         }
@@ -69,7 +69,7 @@ namespace ImageProcessing
         /// </summary>
         public void SaveParam()
         {
-            Properties.Settings.Default.ImgTypeSelectName = (string)cmbBoxImageProcessingType.SelectedItem;
+            Properties.Settings.Default.ImageTypeSelectName = (string)cmbBoxImageProcessingType.SelectedItem;
             Properties.Settings.Default.Save();
 
             return;

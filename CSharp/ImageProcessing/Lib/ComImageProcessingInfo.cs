@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 /// <summary>
 /// 画像処理の設定管理のロジック
 /// </summary>
-public class ComImgInfo
+public class ComImageProcessingInfo
 {
     /// <summary>
     /// 現在の画像処理の名称
     /// </summary>
-    public string CurImgName { set; get; }
+    public string CurrentImageProcessingName { set; get; }
 
     /// <summary>
     /// エッジ検出の設定
@@ -42,7 +42,7 @@ public class ComImgInfo
     /// <summary>
     /// コンストラクタ
     /// </summary>
-    public ComImgInfo()
+    public ComImageProcessingInfo()
     {
         EdgeDetectoinInfo = new EdgeDetectionInfo();
         GrayScaleInfo = new GrayScaleInfo();
@@ -54,7 +54,7 @@ public class ComImgInfo
     /// <summary>
     /// デスクトラクタ
     /// </summary>
-    ~ComImgInfo()
+    ~ComImageProcessingInfo()
     {
     }
 }

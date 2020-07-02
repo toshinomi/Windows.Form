@@ -15,15 +15,15 @@ namespace ImageProcessing
     /// </summary>
     public partial class FormHistgramOxyPlot : Form
     {
-        private readonly ComHistgramOxyPlot m_histgramChart;
+        private readonly ComHistgramOxyPlot mHistgramChart;
 
         /// <summary>
         /// オリジナルのビットマップ
         /// </summary>
         public Bitmap BitmapOrg
         {
-            set { m_histgramChart.BitmapOrg = value; }
-            get { return m_histgramChart.BitmapOrg; }
+            set { mHistgramChart.BitmapOrg = value; }
+            get { return mHistgramChart.BitmapOrg; }
         }
 
         /// <summary>
@@ -31,8 +31,8 @@ namespace ImageProcessing
         /// </summary>
         public Bitmap BitmapAfter
         {
-            set { m_histgramChart.BitmapAfter = value; }
-            get { return m_histgramChart.BitmapAfter; }
+            set { mHistgramChart.BitmapAfter = value; }
+            get { return mHistgramChart.BitmapAfter; }
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace ImageProcessing
         {
             InitializeComponent();
 
-            m_histgramChart = new ComHistgramOxyPlot();
+            mHistgramChart = new ComHistgramOxyPlot();
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace ImageProcessing
                 chart.Model.Series.Clear();
                 chart.Model = null;
             }
-            chart.Model = m_histgramChart.DrawHistgram();
+            chart.Model = mHistgramChart.DrawHistgram();
 
             return;
         }
@@ -84,9 +84,9 @@ namespace ImageProcessing
         /// <param name="e">イベントのデータ</param>
         public void OnClickMenu(object sender, EventArgs e)
         {
-            string strHeader = sender.ToString();
+            string menuTitle = sender.ToString();
 
-            switch (strHeader)
+            switch (menuTitle)
             {
                 case ComInfo.MENU_SAVE_CSV:
                     SaveCsv();
@@ -103,7 +103,7 @@ namespace ImageProcessing
         /// </summary>
         public void SaveCsv()
         {
-            if (!m_histgramChart.SaveCsv())
+            if (!mHistgramChart.SaveCsv())
             {
                 MessageBox.Show(this, "Save CSV File Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

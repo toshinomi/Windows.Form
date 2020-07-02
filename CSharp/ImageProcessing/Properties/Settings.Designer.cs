@@ -26,132 +26,142 @@ namespace ImageProcessing.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("EdgeDetection")]
-        public string ImgTypeSelectName {
+        public string ImageTypeSelectName {
             get {
-                return ((string)(this["ImgTypeSelectName"]));
+                return ((string)(this["ImageTypeSelectName"]));
             }
             set {
-                this["ImgTypeSelectName"] = value;
+                this["ImageTypeSelectName"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int ImgTypeEdgeId {
+        public int ImageTypeEdgeId
+        {
             get {
-                return ((int)(this["ImgTypeEdgeId"]));
+                return ((int)(this["ImageTypeEdgeId"]));
             }
             set {
-                this["ImgTypeEdgeId"] = value;
+                this["ImageTypeEdgeId"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("EdgeDetection")]
-        public string ImgTypeEdgeName {
+        public string ImageTypeEdgeName
+        {
             get {
-                return ((string)(this["ImgTypeEdgeName"]));
+                return ((string)(this["ImageTypeEdgeName"]));
             }
             set {
-                this["ImgTypeEdgeName"] = value;
+                this["ImageTypeEdgeName"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("2")]
-        public int ImgTypeGrayScaleId {
+        public int ImageTypeGrayScaleId
+        {
             get {
-                return ((int)(this["ImgTypeGrayScaleId"]));
+                return ((int)(this["ImageTypeGrayScaleId"]));
             }
             set {
-                this["ImgTypeGrayScaleId"] = value;
+                this["ImageTypeGrayScaleId"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("GrayScale")]
-        public string ImgTypeGrayScaleName {
+        public string ImageTypeGrayScaleName
+        {
             get {
-                return ((string)(this["ImgTypeGrayScaleName"]));
+                return ((string)(this["ImageTypeGrayScaleName"]));
             }
             set {
-                this["ImgTypeGrayScaleName"] = value;
+                this["ImageTypeGrayScaleName"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("3")]
-        public int ImgTypeBinarizationId {
+        public int ImageTypeBinarizationId
+        {
             get {
-                return ((int)(this["ImgTypeBinarizationId"]));
+                return ((int)(this["IImageTypeBinarizationId"]));
             }
             set {
-                this["ImgTypeBinarizationId"] = value;
+                this["ImageTypeBinarizationId"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Binarization")]
-        public string ImgTypeBinarizationName {
+        public string ImageTypeBinarizationName
+        {
             get {
-                return ((string)(this["ImgTypeBinarizationName"]));
+                return ((string)(this["ImageTypeBinarizationName"]));
             }
             set {
-                this["ImgTypeBinarizationName"] = value;
+                this["ImageTypeBinarizationName"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("4")]
-        public int ImgTypeGrayScale2DiffId {
+        public int ImageTypeGrayScale2DiffId
+        {
             get {
-                return ((int)(this["ImgTypeGrayScale2DiffId"]));
+                return ((int)(this["ImageTypeGrayScale2DiffId"]));
             }
             set {
-                this["ImgTypeGrayScale2DiffId"] = value;
+                this["ImageTypeGrayScale2DiffId"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("GrayScale 2Diff")]
-        public string ImgTypeGrayScale2DiffName {
+        public string ImageTypeGrayScale2DiffName
+        {
             get {
-                return ((string)(this["ImgTypeGrayScale2DiffName"]));
+                return ((string)(this["ImageTypeGrayScale2DiffName"]));
             }
             set {
-                this["ImgTypeGrayScale2DiffName"] = value;
+                this["ImageTypeGrayScale2DiffName"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("5")]
-        public int ImgTypeColorReversalId {
+        public int ImageTypeColorReversalId
+        {
             get {
-                return ((int)(this["ImgTypeColorReversalId"]));
+                return ((int)(this["ImageTypeColorReversalId"]));
             }
             set {
-                this["ImgTypeColorReversalId"] = value;
+                this["ImageTypeColorReversalId"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("ColorReversal")]
-        public string ImgTypeColorReversalName {
+        public string ImageTypeColorReversalName
+        {
             get {
-                return ((string)(this["ImgTypeColorReversalName"]));
+                return ((string)(this["ImageTypeColorReversalName"]));
             }
             set {
-                this["ImgTypeColorReversalName"] = value;
+                this["ImageTypeColorReversalName"] = value;
             }
         }
     }

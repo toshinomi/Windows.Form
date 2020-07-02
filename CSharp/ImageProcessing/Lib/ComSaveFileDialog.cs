@@ -11,15 +11,15 @@ using System.Windows.Forms;
 /// </summary>
 class ComSaveFileDialog
 {
-    protected SaveFileDialog m_saveFileDialog;
+    protected SaveFileDialog mSaveFileDialog;
 
     /// <summary>
     /// ファイル名称
     /// </summary>
     public string FileName
     {
-        set { m_saveFileDialog.FileName = value; }
-        get { return m_saveFileDialog.FileName; }
+        set { mSaveFileDialog.FileName = value; }
+        get { return mSaveFileDialog.FileName; }
     }
 
     /// <summary>
@@ -27,8 +27,8 @@ class ComSaveFileDialog
     /// </summary>
     public string InitialDirectory
     {
-        set { m_saveFileDialog.InitialDirectory = value; }
-        get { return m_saveFileDialog.InitialDirectory; }
+        set { mSaveFileDialog.InitialDirectory = value; }
+        get { return mSaveFileDialog.InitialDirectory; }
     }
 
     /// <summary>
@@ -36,8 +36,8 @@ class ComSaveFileDialog
     /// </summary>
     public string Filter
     {
-        set { m_saveFileDialog.Filter = value; }
-        get { return m_saveFileDialog.Filter; }
+        set { mSaveFileDialog.Filter = value; }
+        get { return mSaveFileDialog.Filter; }
     }
 
     /// <summary>
@@ -45,8 +45,8 @@ class ComSaveFileDialog
     /// </summary>
     public int FilterIndex
     {
-        set { m_saveFileDialog.FilterIndex = value; }
-        get { return m_saveFileDialog.FilterIndex; }
+        set { mSaveFileDialog.FilterIndex = value; }
+        get { return mSaveFileDialog.FilterIndex; }
     }
 
     /// <summary>
@@ -54,8 +54,8 @@ class ComSaveFileDialog
     /// </summary>
     public string Title
     {
-        set { m_saveFileDialog.Title = value; }
-        get { return m_saveFileDialog.Title; }
+        set { mSaveFileDialog.Title = value; }
+        get { return mSaveFileDialog.Title; }
     }
 
     /// <summary>
@@ -63,8 +63,8 @@ class ComSaveFileDialog
     /// </summary>
     public bool CheckFileExists
     {
-        set { m_saveFileDialog.CheckFileExists = value; }
-        get { return m_saveFileDialog.CheckFileExists; }
+        set { mSaveFileDialog.CheckFileExists = value; }
+        get { return mSaveFileDialog.CheckFileExists; }
     }
 
     /// <summary>
@@ -72,8 +72,8 @@ class ComSaveFileDialog
     /// </summary>
     public bool CheckPathExists
     {
-        set { m_saveFileDialog.CheckPathExists = value; }
-        get { return m_saveFileDialog.CheckPathExists; }
+        set { mSaveFileDialog.CheckPathExists = value; }
+        get { return mSaveFileDialog.CheckPathExists; }
     }
 
     /// <summary>
@@ -81,7 +81,7 @@ class ComSaveFileDialog
     /// </summary>
     public ComSaveFileDialog() : base()
     {
-        m_saveFileDialog = new SaveFileDialog();
+        mSaveFileDialog = new SaveFileDialog();
     }
 
     /// <summary>
@@ -97,39 +97,39 @@ class ComSaveFileDialog
     /// <returns>結果 成功/失敗</returns>
     public bool ShowDialog()
     {
-        bool bRst = false;
+        bool result = false;
 
-        if (m_saveFileDialog.ShowDialog() == DialogResult.OK)
+        if (mSaveFileDialog.ShowDialog() == DialogResult.OK)
         {
-            bRst = true;
+            result = true;
         }
 
-        return bRst;
+        return result;
     }
 
     /// <summary>
     /// ストリームの書込み
     /// </summary>
-    /// <param name="str">ファイル名称</param>
+    /// <param name="fileName">ファイル名称</param>
     /// <returns>実行結果 成功/失敗</returns>
-    public bool StreamWrite(string str)
+    public bool StreamWrite(string fileName)
     {
         Stream stream;
-        bool bRst = true;
+        bool result = true;
         try
         {
-            stream = m_saveFileDialog.OpenFile();
+            stream = mSaveFileDialog.OpenFile();
         }
         catch (Exception)
         {
-            bRst = true;
-            return bRst;
+            result = true;
+            return result;
         }
         StreamWriter streamWriter = new StreamWriter(stream, Encoding.GetEncoding("UTF-8"));
-        streamWriter.Write(str);
+        streamWriter.Write(fileName);
         streamWriter.Close();
         stream.Close();
 
-        return bRst;
+        return result;
     }
 }

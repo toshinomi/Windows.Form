@@ -34,45 +34,45 @@ class GrayScale
     /// <returns>実行結果 成功/失敗</returns>
     public bool ImageProcessing(ref Bitmap bitmap, CancellationToken token)
     {
-        bool bRst = true;
+        bool result = true;
 
-        int nWidthSize = bitmap.Width;
-        int nHeightSize = bitmap.Height;
+        int widthSize = bitmap.Width;
+        int heightSize = bitmap.Height;
 
-        var bitmapData = bitmap.LockBits(new Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+        var bitmapData = bitmap.LockBits(new Rectangle(0, 0, widthSize, heightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
-        int nIdxWidth;
-        int nIdxHeight;
+        int indexWidth;
+        int indexHeight;
 
         unsafe
         {
-            for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
+            for (indexHeight = 0; indexHeight < heightSize; indexHeight++)
             {
                 if (token.IsCancellationRequested)
                 {
-                    bRst = false;
+                    result = false;
                     break;
                 }
 
-                for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
+                for (indexWidth = 0; indexWidth < widthSize; indexWidth++)
                 {
                     if (token.IsCancellationRequested)
                     {
-                        bRst = false;
+                        result = false;
                         break;
                     }
 
-                    byte* pPixel = (byte*)bitmapData.Scan0 + nIdxHeight * bitmapData.Stride + nIdxWidth * 4;
-                    byte nGrayScale = (byte)((pPixel[(int)ComInfo.Pixel.B] + pPixel[(int)ComInfo.Pixel.G] + pPixel[(int)ComInfo.Pixel.R]) / 3);
+                    byte* pixel = (byte*)bitmapData.Scan0 + indexHeight * bitmapData.Stride + indexWidth * 4;
+                    byte grayScale = (byte)((pixel[(int)ComInfo.Pixel.B] + pixel[(int)ComInfo.Pixel.G] + pixel[(int)ComInfo.Pixel.R]) / 3);
 
-                    pPixel[(int)ComInfo.Pixel.B] = nGrayScale;
-                    pPixel[(int)ComInfo.Pixel.G] = nGrayScale;
-                    pPixel[(int)ComInfo.Pixel.R] = nGrayScale;
+                    pixel[(int)ComInfo.Pixel.B] = grayScale;
+                    pixel[(int)ComInfo.Pixel.G] = grayScale;
+                    pixel[(int)ComInfo.Pixel.R] = grayScale;
                 }
             }
             bitmap.UnlockBits(bitmapData);
         }
             
-        return bRst;
+        return result;
     }
 }
