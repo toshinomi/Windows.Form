@@ -16,8 +16,8 @@ namespace WebBrowser
     public partial class FormWebBrowser : Form
     {
         private const string HOME_URL = "https://www.bing.com/";
-        private string m_strUrl;
-        private ToolTip m_toolTip;
+        private string mUrl;
+        private ToolTip mToolTip;
 
         /// <summary>
         /// コンストラクタ
@@ -25,7 +25,7 @@ namespace WebBrowser
         public FormWebBrowser()
         {
             InitializeComponent();
-            m_strUrl = "";
+            mUrl = "";
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace WebBrowser
         /// </summary>
         ~FormWebBrowser()
         {
-            m_toolTip = null;
+            mToolTip = null;
         }
 
         /// <summary>
@@ -105,8 +105,8 @@ namespace WebBrowser
         {
             if (e.KeyCode == Keys.Enter)
             {
-                m_strUrl = textUrl.Text;
-                webBrowser.Navigate(m_strUrl);
+                mUrl = textUrl.Text;
+                webBrowser.Navigate(mUrl);
             }
         }
 
@@ -126,8 +126,8 @@ namespace WebBrowser
         /// </summary>
         public void SetInitToolTip()
         {
-            m_toolTip = new ToolTip();
-            m_toolTip.SetToolTip(textUrl, "URL入力後、Enterキーを押してください!!!");
+            mToolTip = new ToolTip();
+            mToolTip.SetToolTip(textUrl, "URL入力後、Enterキーを押してください!!!");
         }
 
         /// <summary>
@@ -137,8 +137,8 @@ namespace WebBrowser
         {
             Uri uri = new Uri(HOME_URL);
             webBrowser.Navigate(uri);
-            textUrl.Text = m_strUrl;
-            this.Text = m_strUrl;
+            textUrl.Text = mUrl;
+            this.Text = mUrl;
         }
     }
 }

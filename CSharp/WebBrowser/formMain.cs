@@ -15,8 +15,8 @@ namespace WebBrowser
     /// </summary>
     public partial class FormMain : Form
     {
-        private uint m_nCountWebBrowser;
-        private Dictionary<uint, FormWebBrowser> m_listWebBrowser;
+        private uint mCountWebBrowser;
+        private Dictionary<uint, FormWebBrowser> mListWebBrowser;
 
         /// <summary>
         /// コンストラクタ
@@ -24,7 +24,7 @@ namespace WebBrowser
         public FormMain()
         {
             InitializeComponent();
-            m_listWebBrowser = new Dictionary<uint, FormWebBrowser>();
+            mListWebBrowser = new Dictionary<uint, FormWebBrowser>();
         }
 
         /// <summary>
@@ -32,9 +32,9 @@ namespace WebBrowser
         /// </summary>
         ~FormMain()
         {
-            m_listWebBrowser.Clear();
-            m_listWebBrowser = null;
-            m_nCountWebBrowser = 0;
+            mListWebBrowser.Clear();
+            mListWebBrowser = null;
+            mCountWebBrowser = 0;
         }
 
         /// <summary>
@@ -95,9 +95,9 @@ namespace WebBrowser
         /// <param name="e">イベントのデータ</param>
         public void OnClickMenuFileEnd(object sender, EventArgs e)
         {
-            foreach (uint nKey in m_listWebBrowser.Keys)
+            foreach (uint key in mListWebBrowser.Keys)
             {
-                FormWebBrowser form = m_listWebBrowser[nKey];
+                FormWebBrowser form = mListWebBrowser[key];
                 form = null;
             }
             this.Close();
@@ -110,8 +110,8 @@ namespace WebBrowser
         /// <param name="e">FormClosedイベントのデータ</param>
         public void OnFormClosedFormMain(object sender, FormClosedEventArgs e)
         {
-            m_listWebBrowser.Clear();
-            m_listWebBrowser = null;
+            mListWebBrowser.Clear();
+            mListWebBrowser = null;
         }
 
         /// <summary>
@@ -131,10 +131,10 @@ namespace WebBrowser
             form.MdiParent = this;
             form.WindowState = FormWindowState.Minimized;
             form.Show();
-            form.Name = m_nCountWebBrowser.ToString();
+            form.Name = mCountWebBrowser.ToString();
             form.WindowState = FormWindowState.Maximized;
-            m_listWebBrowser.Add(uint.Parse(form.Name), form);
-            m_nCountWebBrowser += 1;
+            mListWebBrowser.Add(uint.Parse(form.Name), form);
+            mCountWebBrowser += 1;
         }
 
         /// <summary>
@@ -142,18 +142,18 @@ namespace WebBrowser
         /// </summary>
         /// <param name="nKey">キー</param>
         /// <returns>Webブラウザ情報</returns>
-        public FormWebBrowser GetFormWebBrowser(uint nKey)
+        public FormWebBrowser GetFormWebBrowser(uint key)
         {
-            return m_listWebBrowser[nKey];
+            return mListWebBrowser[key];
         }
 
         /// <summary>
         /// Webブラウザの情報の削除
         /// </summary>
         /// <param name="nKey">キー</param>
-        public void RemoveListWebBrowser(uint nKey)
+        public void RemoveListWebBrowser(uint key)
         {
-            m_listWebBrowser.Remove(nKey);
+            mListWebBrowser.Remove(key);
         }
     }
 }
