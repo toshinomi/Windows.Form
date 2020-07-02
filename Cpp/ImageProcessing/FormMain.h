@@ -673,13 +673,6 @@ namespace ImageProcessing {
 			void ParamAjust(void);
 
 			/// <summary>
-			/// 2値化のスライダを調整したときの処理
-			/// </summary>
-			/// <param name="_strImgName">画像処理の名称</param>
-			/// <returns>画像処理のID</returns>
-			int SearchImgTypeId(String^ _strImgName);
-
-			/// <summary>
 			/// 画像処理中に表示させる画像の表示/非表示の設定
 			/// </summary>
 			/// <param name="_bValue">表示/非表示</param>

@@ -571,31 +571,3 @@ void FormMain::ParamAjust()
 
 	return;
 }
-
-/// <summary>
-/// 2値化のスライダを調整したときの処理
-/// </summary>
-/// <param name="_strImgName">画像処理の名称</param>
-/// <returns>画像処理のID</returns>
-int FormMain::SearchImgTypeId(String^ _strImgName)
-{
-	int nId = -1;
-
-	System::Collections::Generic::Dictionary<int, String^> items;
-	System::Configuration::Configuration^ config = ConfigurationManager::OpenExeConfiguration(ConfigurationUserLevel::None);
-	items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeEdgeId"]->Value), (String^)config->AppSettings->Settings["ImgTypeEdgeName"]->Value);
-	items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeGrayScaleId"]->Value), (String^)config->AppSettings->Settings["ImgTypeGrayScaleName"]->Value);
-	items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeBinarizationId"]->Value), (String^)config->AppSettings->Settings["ImgTypeBinarizationName"]->Value);
-	items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeGrayScale2DiffId"]->Value), (String^)config->AppSettings->Settings["ImgTypeGrayScale2DiffName"]->Value);
-	items.Add(Convert::ToInt32(config->AppSettings->Settings["ImgTypeColorReversalId"]->Value), (String^)config->AppSettings->Settings["ImgTypeColorReversalName"]->Value);
-
-	for each (unsigned int nKey in items.Keys)
-	{
-		if (items[nKey] == _strImgName)
-		{
-			nId = nKey - 1;
-		}
-	}
-
-	return nId;
-}
