@@ -3,65 +3,65 @@
 #include "ComInfo.h"
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 Binarization::Binarization()
 {
 }
 
 /// <summary>
-/// ƒfƒXƒNƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ã‚¯ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 Binarization::~Binarization()
 {
 }
 
 /// <summary>
-/// 2’l‰»‚ÌÀs
+/// 2å€¤åŒ–ã®å®Ÿè¡Œ
 /// </summary>
-/// <param name="bitmap">ƒrƒbƒgƒ}ƒbƒv</param>
-/// <param name="token">ƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“</param>
-/// <param name="thresh">è‡’l</param>
-/// <returns>ÀsŒ‹‰Ê ¬Œ÷/¸”s</returns>
+/// <param name="bitmap">ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—</param>
+/// <param name="token">ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒˆãƒ¼ã‚¯ãƒ³</param>
+/// <param name="thresh">é–¾å€¤</param>
+/// <returns>å®Ÿè¡Œçµæœ æˆåŠŸ/å¤±æ•—</returns>
 bool Binarization::ImageProcessing(Bitmap^ bitmap, CancellationToken^ token, Byte thresh)
 {
-	bool bRst = true;
+	bool result = true;
 
-	int nWidthSize = bitmap->Width;
-	int nHeightSize = bitmap->Height;
+	int widthSize = bitmap->Width;
+	int heightSize = bitmap->Height;
 
 	auto bitmapData = bitmap->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
 
-	int nIdxWidth;
-	int nIdxHeight;
+	int indexWidth;
+	int indexHeight;
 
-	for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
+	for (indexHeight = 0; indexHeight < heightSize; indexHeight++)
 	{
 		if (token->IsCancellationRequested)
 		{
-			bRst = false;
+			result = false;
 			break;
 		}
 
-		for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
+		for (indexWidth = 0; indexWidth < widthSize; indexWidth++)
 		{
 			if (token->IsCancellationRequested)
 			{
-				bRst = false;
+				result = false;
 				break;
 			}
 
-			Byte* pPixel = (Byte*)bitmapData->Scan0.ToPointer() + nIdxHeight * bitmapData->Stride + nIdxWidth * 4;
-			Byte nGrayScale = (Byte)((pPixel[ComInfo::Pixel::Type::B] + pPixel[ComInfo::Pixel::Type::G] + pPixel[ComInfo::Pixel::Type::R]) / 3);
+			Byte* pPixel = (Byte*)bitmapData->Scan0.ToPointer() + indexHeight * bitmapData->Stride + indexWidth * 4;
+			Byte grayScale = (Byte)((pPixel[ComInfo::Pixel::Type::B] + pPixel[ComInfo::Pixel::Type::G] + pPixel[ComInfo::Pixel::Type::R]) / 3);
 
-			Byte nBinarization = nGrayScale >= thresh ? (Byte)255 : (Byte)0;
+			Byte binarization = grayScale >= thresh ? (Byte)255 : (Byte)0;
 
-			pPixel[ComInfo::Pixel::Type::B] = nBinarization;
-			pPixel[ComInfo::Pixel::Type::G] = nBinarization;
-			pPixel[ComInfo::Pixel::Type::R] = nBinarization;
+			pPixel[ComInfo::Pixel::Type::B] = binarization;
+			pPixel[ComInfo::Pixel::Type::G] = binarization;
+			pPixel[ComInfo::Pixel::Type::R] = binarization;
 		}
 	}
 	bitmap->UnlockBits(bitmapData);
 
-	return bRst;
+	return result;
 }
