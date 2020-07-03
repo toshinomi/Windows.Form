@@ -3,61 +3,61 @@
 #include "ComInfo.h"
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 ColorReversal::ColorReversal()
 {
 }
 
 /// <summary>
-/// ƒfƒXƒNƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ã‚¯ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 ColorReversal::~ColorReversal()
 {
 }
 
 /// <summary>
-/// F”½“]‚ÌÀs
+/// è‰²åè»¢ã®å®Ÿè¡Œ
 /// </summary>
-/// <param name="bitmap">ƒrƒbƒgƒ}ƒbƒv</param>
-/// <param name="token">ƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“</param>
-/// <returns>ÀsŒ‹‰Ê ¬Œ÷/¸”s</returns>
+/// <param name="bitmap">ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—</param>
+/// <param name="token">ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒˆãƒ¼ã‚¯ãƒ³</param>
+/// <returns>å®Ÿè¡Œçµæœ æˆåŠŸ/å¤±æ•—</returns>
 bool ColorReversal::ImageProcessing(Bitmap^ bitmap, CancellationToken^ token)
 {
-	bool bRst = true;
+	bool result = true;
 
-	int nWidthSize = bitmap->Width;
-	int nHeightSize = bitmap->Height;
+	int widthSize = bitmap->Width;
+	int heightSize = bitmap->Height;
 
-	auto bitmapData = bitmap->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
+	auto bitmapData = bitmap->LockBits(System::Drawing::Rectangle(0, 0, widthSize, heightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
 
-	int nIdxWidth;
-	int nIdxHeight;
+	int indexWidth;
+	int indexHeight;
 
-	for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
+	for (indexHeight = 0; indexHeight < heightSize; indexHeight++)
 	{
 		if (token->IsCancellationRequested)
 		{
-			bRst = false;
+			result = false;
 			break;
 		}
 
-		for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
+		for (indexWidth = 0; indexWidth < widthSize; indexWidth++)
 		{
 			if (token->IsCancellationRequested)
 			{
-				bRst = false;
+				result = false;
 				break;
 			}
 
-			Byte* pPixel = (Byte*)bitmapData->Scan0.ToPointer() + nIdxHeight * bitmapData->Stride + nIdxWidth * 4;
+			Byte* pixel = (Byte*)bitmapData->Scan0.ToPointer() + indexHeight * bitmapData->Stride + indexWidth * 4;
 
-			pPixel[ComInfo::Pixel::Type::B] = (Byte)(255 - pPixel[ComInfo::Pixel::Type::B]);
-			pPixel[ComInfo::Pixel::Type::G] = (Byte)(255 - pPixel[ComInfo::Pixel::Type::G]);
-			pPixel[ComInfo::Pixel::Type::R] = (Byte)(255 - pPixel[ComInfo::Pixel::Type::R]);
+			pixel[ComInfo::Pixel::Type::B] = (Byte)(255 - pixel[ComInfo::Pixel::Type::B]);
+			pixel[ComInfo::Pixel::Type::G] = (Byte)(255 - pixel[ComInfo::Pixel::Type::G]);
+			pixel[ComInfo::Pixel::Type::R] = (Byte)(255 - pixel[ComInfo::Pixel::Type::R]);
 		}
 	}
 	bitmap->UnlockBits(bitmapData);
 
-	return bRst;
+	return result;
 }
