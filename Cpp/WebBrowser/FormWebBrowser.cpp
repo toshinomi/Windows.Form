@@ -4,10 +4,10 @@
 using namespace WebBrowser;
 
 /// <summary>
-/// Form‚ÌƒNƒ[ƒYƒCƒxƒ“ƒg
+/// Formã®ã‚¯ãƒ­ãƒ¼ã‚ºã‚¤ãƒ™ãƒ³ãƒˆ
 /// </summary>
-/// <param name="sender">ƒIƒuƒWƒFƒNƒg</param>
-/// <param name="e">FormClosedƒCƒxƒ“ƒg‚Ìƒf[ƒ^</param>
+/// <param name="sender">ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+/// <param name="e">FormClosedã‚¤ãƒ™ãƒ³ãƒˆã®ãƒ‡ãƒ¼ã‚¿</param>
 void FormWebBrowser::OnFormClosedFormWebBrowser(Object^ sender, FormClosedEventArgs^ e)
 {
 	FormMain^ formMain = (FormMain^)this->MdiParent;
@@ -17,10 +17,10 @@ void FormWebBrowser::OnFormClosedFormWebBrowser(Object^ sender, FormClosedEventA
 }
 
 /// <summary>
-/// FormWebBrowser‚Ìƒ[ƒhƒCƒxƒ“ƒg
+/// FormWebBrowserã®ãƒ­ãƒ¼ãƒ‰ã‚¤ãƒ™ãƒ³ãƒˆ
 /// </summary>
-/// <param name="sender">ƒIƒuƒWƒFƒNƒg</param>
-/// <param name="e">ƒCƒxƒ“ƒg‚Ìƒf[ƒ^</param>
+/// <param name="sender">ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+/// <param name="e">ã‚¤ãƒ™ãƒ³ãƒˆã®ãƒ‡ãƒ¼ã‚¿</param>
 void FormWebBrowser::OnLoadFormWebBrowser(Object^ sender, EventArgs^ e)
 {
 	SetInitToolTip();
@@ -28,10 +28,10 @@ void FormWebBrowser::OnLoadFormWebBrowser(Object^ sender, EventArgs^ e)
 }
 
 /// <summary>
-/// ‘O‚Ìƒy[ƒW‚É–ß‚·ƒNƒŠƒbƒNƒCƒxƒ“ƒg
+/// å‰ã®ãƒšãƒ¼ã‚¸ã«æˆ»ã™ã‚¯ãƒªãƒƒã‚¯ã‚¤ãƒ™ãƒ³ãƒˆ
 /// </summary>
-/// <param name="sender">ƒIƒuƒWƒFƒNƒg</param>
-/// <param name="e">ƒCƒxƒ“ƒg‚Ìƒf[ƒ^</param>
+/// <param name="sender">ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+/// <param name="e">ã‚¤ãƒ™ãƒ³ãƒˆã®ãƒ‡ãƒ¼ã‚¿</param>
 void FormWebBrowser::OnClickBack(Object^ sender, EventArgs^ e)
 {
 	if (webBrowser->CanGoBack == true)
@@ -41,10 +41,10 @@ void FormWebBrowser::OnClickBack(Object^ sender, EventArgs^ e)
 }
 
 /// <summary>
-/// Ÿ‚Ìƒy[ƒW‚ÉˆÚ“®ƒNƒŠƒbƒNƒCƒxƒ“ƒg
+/// æ¬¡ã®ãƒšãƒ¼ã‚¸ã«ç§»å‹•ã‚¯ãƒªãƒƒã‚¯ã‚¤ãƒ™ãƒ³ãƒˆ
 /// </summary>
-/// <param name="sender">ƒIƒuƒWƒFƒNƒg</param>
-/// <param name="e">ƒCƒxƒ“ƒg‚Ìƒf[ƒ^</param>
+/// <param name="sender">ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+/// <param name="e">ã‚¤ãƒ™ãƒ³ãƒˆã®ãƒ‡ãƒ¼ã‚¿</param>
 void FormWebBrowser::OnClickForward(Object^ sender, EventArgs^ e)
 {
 	if (webBrowser->CanGoForward == true)
@@ -54,34 +54,34 @@ void FormWebBrowser::OnClickForward(Object^ sender, EventArgs^ e)
 }
 
 /// <summary>
-/// XV‚ÌƒNƒŠƒbƒNƒCƒxƒ“ƒg
+/// æ›´æ–°ã®ã‚¯ãƒªãƒƒã‚¯ã‚¤ãƒ™ãƒ³ãƒˆ
 /// </summary>
-/// <param name="sender">ƒIƒuƒWƒFƒNƒg</param>
-/// <param name="e">ƒCƒxƒ“ƒg‚Ìƒf[ƒ^</param>
+/// <param name="sender">ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+/// <param name="e">ã‚¤ãƒ™ãƒ³ãƒˆã®ãƒ‡ãƒ¼ã‚¿</param>
 void FormWebBrowser::OnClickRefresh(Object^ sender, EventArgs^ e)
 {
 	webBrowser->Refresh();
 }
 
 /// <summary>
-/// URL“ü—Í‚ÌƒeƒLƒXƒgƒ{ƒbƒNƒX‚ÌƒL[ƒ_ƒEƒ“ƒCƒxƒ“ƒg
+/// URLå…¥åŠ›ã®ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã®ã‚­ãƒ¼ãƒ€ã‚¦ãƒ³ã‚¤ãƒ™ãƒ³ãƒˆ
 /// </summary>
-/// <param name="sender">ƒIƒuƒWƒFƒNƒg</param>
-/// <param name="e">ƒL[ƒCƒxƒ“ƒg‚Ìƒf[ƒ^</param>
+/// <param name="sender">ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+/// <param name="e">ã‚­ãƒ¼ã‚¤ãƒ™ãƒ³ãƒˆã®ãƒ‡ãƒ¼ã‚¿</param>
 void FormWebBrowser::OnKeyDownTextUrl(Object^ sender, KeyEventArgs^ e)
 {
 	if (e->KeyCode == Keys::Enter)
 	{
-		m_strUrl = textUrl->Text;
-		webBrowser->Navigate(m_strUrl);
+		mUrl = textUrl->Text;
+		webBrowser->Navigate(mUrl);
 	}
 }
 
 /// <summary>
-/// WebBrowser‚ÌNavigatedƒCƒxƒ“ƒg
+/// WebBrowserã®Navigatedã‚¤ãƒ™ãƒ³ãƒˆ
 /// </summary>
-/// <param name="sender">ƒIƒuƒWƒFƒNƒg</param>
-/// <param name="e">WebBrowserNavigatedƒCƒxƒ“ƒg‚Ìƒf[ƒ^</param>
+/// <param name="sender">ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+/// <param name="e">WebBrowserNavigatedã‚¤ãƒ™ãƒ³ãƒˆã®ãƒ‡ãƒ¼ã‚¿</param>
 void FormWebBrowser::OnNavigatedWebBrowser(Object^ sender, WebBrowserNavigatedEventArgs^ e)
 {
 	textUrl->Text = webBrowser->Url->AbsoluteUri;
@@ -89,21 +89,21 @@ void FormWebBrowser::OnNavigatedWebBrowser(Object^ sender, WebBrowserNavigatedEv
 }
 
 /// <summary>
-/// ƒc[ƒ‹ƒ`ƒbƒv‚Ìİ’è
+/// ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ã®è¨­å®š
 /// </summary>
 void FormWebBrowser::SetInitToolTip(void)
 {
-	m_toolTip = gcnew ToolTip();
-	m_toolTip->SetToolTip(textUrl, "URL“ü—ÍŒãAEnterƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢!!!");
+	mToolTip = gcnew ToolTip();
+	mToolTip->SetToolTip(textUrl, "URLå…¥åŠ›å¾Œã€Enterã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ãã ã•ã„!!!");
 }
 
 /// <summary>
-/// ƒz[ƒ€‚Ìˆ—
+/// ãƒ›ãƒ¼ãƒ ã®å‡¦ç†
 /// </summary>
 void FormWebBrowser::HomeWebBrowser(void)
 {
 	Uri^ uri = gcnew Uri((String^)HOME_URL);
 	webBrowser->Navigate(uri);
-	textUrl->Text = m_strUrl;
-	this->Text = m_strUrl;
+	textUrl->Text = mUrl;
+	this->Text = mUrl;
 }
