@@ -6,10 +6,10 @@ using namespace System;
 using namespace System::Windows::Forms;
 
 /// <summary>
-/// FormMain‚Ìƒ[ƒhƒCƒxƒ“ƒg
+/// FormMainã®ãƒ­ãƒ¼ãƒ‰ã‚¤ãƒ™ãƒ³ãƒˆ
 /// </summary>
-/// <param name="sender">ƒIƒuƒWƒFƒNƒg</param>
-/// <param name="e">ƒCƒxƒ“ƒg‚Ìƒf[ƒ^</param>
+/// <param name="sender">ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+/// <param name="e">ã‚¤ãƒ™ãƒ³ãƒˆã®ãƒ‡ãƒ¼ã‚¿</param>
 void FormMain::OnLoadFormMain(Object^ sender, EventArgs^ e)
 {
 	SetFormMain();
@@ -17,55 +17,55 @@ void FormMain::OnLoadFormMain(Object^ sender, EventArgs^ e)
 }
 
 /// <summary>
-/// ƒƒjƒ…[‚ÌV‹KƒEƒBƒ“ƒhƒE‚ğŠJ‚­‚ÌƒNƒŠƒbƒNƒCƒxƒ“ƒg
+/// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®æ–°è¦ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‹ãã®ã‚¯ãƒªãƒƒã‚¯ã‚¤ãƒ™ãƒ³ãƒˆ
 /// </summary>
-/// <param name="sender">ƒIƒuƒWƒFƒNƒg</param>
-/// <param name="e">ƒCƒxƒ“ƒg‚Ìƒf[ƒ^</param>
+/// <param name="sender">ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+/// <param name="e">ã‚¤ãƒ™ãƒ³ãƒˆã®ãƒ‡ãƒ¼ã‚¿</param>
 void FormMain::OnClickMenuFileNewOpen(Object^ sender, EventArgs^ e)
 {
 	SetFormChild();
 }
 
 /// <summary>
-/// ƒƒjƒ…[‚Ìd‚Ë‚Ä•\¦‚ÌƒNƒŠƒbƒNƒCƒxƒ“ƒg
+/// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®é‡ã­ã¦è¡¨ç¤ºã®ã‚¯ãƒªãƒƒã‚¯ã‚¤ãƒ™ãƒ³ãƒˆ
 /// </summary>
-/// <param name="sender">ƒIƒuƒWƒFƒNƒg</param>
-/// <param name="e">ƒCƒxƒ“ƒg‚Ìƒf[ƒ^</param>
+/// <param name="sender">ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+/// <param name="e">ã‚¤ãƒ™ãƒ³ãƒˆã®ãƒ‡ãƒ¼ã‚¿</param>
 void FormMain::OnClickMenuWindowCascade(Object^ sender, EventArgs^ e)
 {
 	this->LayoutMdi(MdiLayout::Cascade);
 }
 
 /// <summary>
-/// ƒƒjƒ…[‚Ìã‰º‚É•À‚×‚Ä•\¦‚ÌƒNƒŠƒbƒNƒCƒxƒ“ƒg
+/// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®ä¸Šä¸‹ã«ä¸¦ã¹ã¦è¡¨ç¤ºã®ã‚¯ãƒªãƒƒã‚¯ã‚¤ãƒ™ãƒ³ãƒˆ
 /// </summary>
-/// <param name="sender">ƒIƒuƒWƒFƒNƒg</param>
-/// <param name="e">ƒCƒxƒ“ƒg‚Ìƒf[ƒ^</param>
+/// <param name="sender">ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+/// <param name="e">ã‚¤ãƒ™ãƒ³ãƒˆã®ãƒ‡ãƒ¼ã‚¿</param>
 void FormMain::OnClickMenuWindowTileHorizontal(Object^ sender, EventArgs^ e)
 {
 	this->LayoutMdi(MdiLayout::TileHorizontal);
 }
 
 /// <summary>
-/// ƒƒjƒ…[‚Ì¶‰E‚É•À‚×‚Ä•\¦‚ÌƒNƒŠƒbƒNƒCƒxƒ“ƒg
+/// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®å·¦å³ã«ä¸¦ã¹ã¦è¡¨ç¤ºã®ã‚¯ãƒªãƒƒã‚¯ã‚¤ãƒ™ãƒ³ãƒˆ
 /// </summary>
-/// <param name="sender">ƒIƒuƒWƒFƒNƒg</param>
-/// <param name="e">ƒCƒxƒ“ƒg‚Ìƒf[ƒ^</param>
+/// <param name="sender">ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+/// <param name="e">ã‚¤ãƒ™ãƒ³ãƒˆã®ãƒ‡ãƒ¼ã‚¿</param>
 void FormMain::OnClickMenuWindowTileVertical(Object^ sender, EventArgs^ e)
 {
 	this->LayoutMdi(MdiLayout::TileVertical);
 }
 
 /// <summary>
-/// ƒƒjƒ…[‚ÌI—¹‚ÌƒNƒŠƒbƒNƒCƒxƒ“ƒg
+/// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®çµ‚äº†ã®ã‚¯ãƒªãƒƒã‚¯ã‚¤ãƒ™ãƒ³ãƒˆ
 /// </summary>
-/// <param name="sender">ƒIƒuƒWƒFƒNƒg</param>
-/// <param name="e">ƒCƒxƒ“ƒg‚Ìƒf[ƒ^</param>
+/// <param name="sender">ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+/// <param name="e">ã‚¤ãƒ™ãƒ³ãƒˆã®ãƒ‡ãƒ¼ã‚¿</param>
 void FormMain::OnClickMenuFileEnd(Object^ sender, EventArgs^ e)
 {
-	for each (unsigned int nKey in m_listWebBrowser.Keys)
+	for each (unsigned int key in m_listWebBrowser.Keys)
 	{
-		FormWebBrowser^ form = m_listWebBrowser[nKey];
+		FormWebBrowser^ form = m_listWebBrowser[key];
 		form = nullptr;
 	}
 	this->Close();
@@ -73,17 +73,17 @@ void FormMain::OnClickMenuFileEnd(Object^ sender, EventArgs^ e)
 }
 
 /// <summary>
-/// Form‚ÌƒNƒ[ƒYƒCƒxƒ“ƒg
+/// Formã®ã‚¯ãƒ­ãƒ¼ã‚ºã‚¤ãƒ™ãƒ³ãƒˆ
 /// </summary>
-/// <param name="sender">ƒIƒuƒWƒFƒNƒg</param>
-/// <param name="e">FormClosedƒCƒxƒ“ƒg‚Ìƒf[ƒ^</param>
+/// <param name="sender">ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+/// <param name="e">FormClosedã‚¤ãƒ™ãƒ³ãƒˆã®ãƒ‡ãƒ¼ã‚¿</param>
 void FormMain::OnFormClosedFormMain(Object^ sender, FormClosedEventArgs^ e)
 {
 	m_listWebBrowser.Clear();
 }
 
 /// <summary>
-/// FormMain‚Ìİ’è
+/// FormMainã®è¨­å®š
 /// </summary>
 void FormMain::SetFormMain(void)
 {
@@ -91,7 +91,7 @@ void FormMain::SetFormMain(void)
 }
 
 /// <summary>
-/// FormMain‚ÌqƒEƒBƒ“ƒhƒE‚Ìİ’è
+/// FormMainã®å­ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è¨­å®š
 /// </summary>
 void FormMain::SetFormChild(void)
 {
