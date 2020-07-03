@@ -3,92 +3,92 @@
 #include "ComInfo.h"
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 EdgeDetection::EdgeDetection()
 {
 }
 
 /// <summary>
-/// ƒfƒXƒNƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ã‚¯ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 EdgeDetection::~EdgeDetection()
 {
 }
 
 /// <summary>
-/// ƒGƒbƒWŒŸo‚ÌÀs
+/// ã‚¨ãƒƒã‚¸æ¤œå‡ºã®å®Ÿè¡Œ
 /// </summary>
-/// <param name="bitmap">ƒrƒbƒgƒ}ƒbƒv</param>
-/// <param name="token">ƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“</param>
-/// <returns>ÀsŒ‹‰Ê ¬Œ÷/¸”s</returns>
+/// <param name="bitmap">ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—</param>
+/// <param name="token">ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒˆãƒ¼ã‚¯ãƒ³</param>
+/// <returns>å®Ÿè¡Œçµæœ æˆåŠŸ/å¤±æ•—</returns>
 bool EdgeDetection::ImageProcessing(Bitmap^ bitmap, CancellationToken^ token)
 {
-	bool bRst = true;
+	bool result = true;
 
-	short nMask[3][3] =
+	short mask[3][3] =
 	{
 		{ 1,  1, 1 },
 		{ 1, -8, 1 },
 		{ 1,  1, 1 }
 	};
 
-	int nWidthSize = bitmap->Width;
-	int nHeightSize = bitmap->Height;
-	int nMasksize = 3;
+	int widthSize = bitmap->Width;
+	int heightSize = bitmap->Height;
+	int maskSize = 3;
 	
-	auto bitmapData = bitmap->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
+	auto bitmapData = bitmap->LockBits(System::Drawing::Rectangle(0, 0, widthSize, heightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
 
-	int nIdxWidth;
-	int nIdxHeight;
+	int indexWidth;
+	int indexHeight;
 
-	for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
+	for (indexHeight = 0; indexHeight < heightSize; indexHeight++)
 	{
 		if (token->IsCancellationRequested)
 		{
-			bRst = false;
+			result = false;
 			break;
 		}
 
-		for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
+		for (indexWidth = 0; indexWidth < widthSize; indexWidth++)
 		{
 			if (token->IsCancellationRequested)
 			{
-				bRst = false;
+				result = false;
 				break;
 			}
 
-			Byte* pPixel = (Byte*)bitmapData->Scan0.ToPointer() + nIdxHeight * bitmapData->Stride + nIdxWidth * 4;
+			Byte* pixel = (Byte*)bitmapData->Scan0.ToPointer() + indexHeight * bitmapData->Stride + indexWidth * 4;
 
-			long lCalB = 0;
-			long lCalG = 0;
-			long lCalR = 0;
-			int nIdxWidthMask;
-			int nIdxHightMask;
+			long totalBlue = 0;
+			long totalGreen = 0;
+			long totalRed = 0;
+			int indexWidthMask;
+			int indexHightMask;
 
-			for (nIdxHightMask = 0; nIdxHightMask < nMasksize; nIdxHightMask++)
+			for (indexHightMask = 0; indexHightMask < maskSize; indexHightMask++)
 			{
-				for (nIdxWidthMask = 0; nIdxWidthMask < nMasksize; nIdxWidthMask++)
+				for (indexWidthMask = 0; indexWidthMask < maskSize; indexWidthMask++)
 				{
-					if (nIdxWidth + nIdxWidthMask > 0 &&
-						nIdxWidth + nIdxWidthMask < nWidthSize &&
-						nIdxHeight + nIdxHightMask > 0 &&
-						nIdxHeight + nIdxHightMask < nHeightSize)
+					if (indexWidth + indexWidthMask > 0 &&
+						indexWidth + indexWidthMask < widthSize &&
+						indexHeight + indexHightMask > 0 &&
+						indexHeight + indexHightMask < heightSize)
 					{
-						Byte* pPixel2 = (Byte*)bitmapData->Scan0.ToPointer() + (nIdxHeight + nIdxHightMask) * bitmapData->Stride + (nIdxWidth + nIdxWidthMask) * 4;
+						Byte* pixelMaskArea = (Byte*)bitmapData->Scan0.ToPointer() + (indexHeight + indexHightMask) * bitmapData->Stride + (indexWidth + indexWidthMask) * 4;
 
-						lCalB += pPixel2[ComInfo::Pixel::Type::B] * nMask[nIdxWidthMask][nIdxHightMask];
-						lCalG += pPixel2[ComInfo::Pixel::Type::G] * nMask[nIdxWidthMask][nIdxHightMask];
-						lCalR += pPixel2[ComInfo::Pixel::Type::R] * nMask[nIdxWidthMask][nIdxHightMask];
+						totalBlue += pixelMaskArea[ComInfo::Pixel::Type::B] * mask[indexWidthMask][indexHightMask];
+						totalGreen += pixelMaskArea[ComInfo::Pixel::Type::G] * mask[indexWidthMask][indexHightMask];
+						totalRed += pixelMaskArea[ComInfo::Pixel::Type::R] * mask[indexWidthMask][indexHightMask];
 					}
 				}
 			}
-			pPixel[ComInfo::Pixel::Type::B] = ComFunc::LongToByte(lCalB);
-			pPixel[ComInfo::Pixel::Type::G] = ComFunc::LongToByte(lCalG);
-			pPixel[ComInfo::Pixel::Type::R] = ComFunc::LongToByte(lCalR);
+			pixel[ComInfo::Pixel::Type::B] = ComFunc::LongToByte(totalBlue);
+			pixel[ComInfo::Pixel::Type::G] = ComFunc::LongToByte(totalGreen);
+			pixel[ComInfo::Pixel::Type::R] = ComFunc::LongToByte(totalRed);
 		}
 	}
 	bitmap->UnlockBits(bitmapData);
 
-	return bRst;
+	return result;
 }
