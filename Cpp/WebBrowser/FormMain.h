@@ -12,7 +12,7 @@ namespace WebBrowser {
 	using namespace WebBrowser;
 
 	/// <summary>
-	/// FormMain ‚ÌŠT—v
+	/// FormMain ã®æ¦‚è¦
 	/// </summary>
 	public ref class FormMain : public System::Windows::Forms::Form
 	{
@@ -21,14 +21,14 @@ namespace WebBrowser {
 		{
 			InitializeComponent();
 			//
-			//TODO: ‚±‚±‚ÉƒRƒ“ƒXƒgƒ‰ƒNƒ^[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·
+			//TODO: ã“ã“ã«ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™
 			//
 			System::Collections::Generic::Dictionary<unsigned int, FormWebBrowser^>(m_listWebBrowser);
 		}
 
 	protected:
 		/// <summary>
-		/// g—p’†‚ÌƒŠƒ\[ƒX‚ğ‚·‚×‚ÄƒNƒŠ[ƒ“ƒAƒbƒv‚µ‚Ü‚·B
+		/// ä½¿ç”¨ä¸­ã®ãƒªã‚½ãƒ¼ã‚¹ã‚’ã™ã¹ã¦ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—ã—ã¾ã™ã€‚
 		/// </summary>
 		~FormMain()
 		{
@@ -53,14 +53,14 @@ namespace WebBrowser {
 
 	private:
 		/// <summary>
-		/// •K—v‚ÈƒfƒUƒCƒi[•Ï”‚Å‚·B
+		/// å¿…è¦ãªãƒ‡ã‚¶ã‚¤ãƒŠãƒ¼å¤‰æ•°ã§ã™ã€‚
 		/// </summary>
 		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// ƒfƒUƒCƒi[ ƒTƒ|[ƒg‚É•K—v‚Èƒƒ\ƒbƒh‚Å‚·B‚±‚Ìƒƒ\ƒbƒh‚Ì“à—e‚ğ
-		/// ƒR[ƒh ƒGƒfƒBƒ^[‚Å•ÏX‚µ‚È‚¢‚Å‚­‚¾‚³‚¢B
+		/// ãƒ‡ã‚¶ã‚¤ãƒŠãƒ¼ ã‚µãƒãƒ¼ãƒˆã«å¿…è¦ãªãƒ¡ã‚½ãƒƒãƒ‰ã§ã™ã€‚ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã®å†…å®¹ã‚’
+		/// ã‚³ãƒ¼ãƒ‰ ã‚¨ãƒ‡ã‚£ã‚¿ãƒ¼ã§å¤‰æ›´ã—ãªã„ã§ãã ã•ã„ã€‚
 		/// </summary>
 		void InitializeComponent(void)
 		{
@@ -93,14 +93,14 @@ namespace WebBrowser {
 			});
 			this->menuFile->Name = L"menuFile";
 			this->menuFile->Size = System::Drawing::Size(67, 20);
-			this->menuFile->Text = L"ƒtƒ@ƒCƒ‹(&F)";
+			this->menuFile->Text = L"ãƒ•ã‚¡ã‚¤ãƒ«(&F)";
 			// 
 			// menuFile_NewOpen
 			// 
 			this->menuFile_NewOpen->Name = L"menuFile_NewOpen";
 			this->menuFile_NewOpen->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Control | System::Windows::Forms::Keys::N));
 			this->menuFile_NewOpen->Size = System::Drawing::Size(227, 22);
-			this->menuFile_NewOpen->Text = L"V‹KƒEƒBƒ“ƒhƒE‚ğŠJ‚­(&N)";
+			this->menuFile_NewOpen->Text = L"æ–°è¦ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‹ã(&N)";
 			this->menuFile_NewOpen->Click += gcnew System::EventHandler(this, &FormMain::OnClickMenuFileNewOpen);
 			// 
 			// menuFile_End
@@ -108,7 +108,7 @@ namespace WebBrowser {
 			this->menuFile_End->Name = L"menuFile_End";
 			this->menuFile_End->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Alt | System::Windows::Forms::Keys::F4));
 			this->menuFile_End->Size = System::Drawing::Size(227, 22);
-			this->menuFile_End->Text = L"I—¹(&X)";
+			this->menuFile_End->Text = L"çµ‚äº†(&X)";
 			this->menuFile_End->Click += gcnew System::EventHandler(this, &FormMain::OnClickMenuFileEnd);
 			// 
 			// menuWindow
@@ -119,7 +119,7 @@ namespace WebBrowser {
 			});
 			this->menuWindow->Name = L"menuWindow";
 			this->menuWindow->Size = System::Drawing::Size(80, 20);
-			this->menuWindow->Text = L"ƒEƒBƒ“ƒhƒE(&W)";
+			this->menuWindow->Text = L"ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦(&W)";
 			// 
 			// menuWindow_Cascade
 			// 
@@ -127,7 +127,7 @@ namespace WebBrowser {
 			this->menuWindow_Cascade->ShortcutKeys = static_cast<System::Windows::Forms::Keys>(((System::Windows::Forms::Keys::Control | System::Windows::Forms::Keys::Alt)
 				| System::Windows::Forms::Keys::E));
 			this->menuWindow_Cascade->Size = System::Drawing::Size(244, 22);
-			this->menuWindow_Cascade->Text = L"d‚Ë‚Ä•\¦(&E)";
+			this->menuWindow_Cascade->Text = L"é‡ã­ã¦è¡¨ç¤º(&E)";
 			this->menuWindow_Cascade->Click += gcnew System::EventHandler(this, &FormMain::OnClickMenuWindowCascade);
 			// 
 			// menuWindow_TileHorizontal
@@ -136,7 +136,7 @@ namespace WebBrowser {
 			this->menuWindow_TileHorizontal->ShortcutKeys = static_cast<System::Windows::Forms::Keys>(((System::Windows::Forms::Keys::Control | System::Windows::Forms::Keys::Alt)
 				| System::Windows::Forms::Keys::H));
 			this->menuWindow_TileHorizontal->Size = System::Drawing::Size(244, 22);
-			this->menuWindow_TileHorizontal->Text = L"ã‰º‚É•À‚×‚Ä•\¦(&H)";
+			this->menuWindow_TileHorizontal->Text = L"ä¸Šä¸‹ã«ä¸¦ã¹ã¦è¡¨ç¤º(&H)";
 			this->menuWindow_TileHorizontal->Click += gcnew System::EventHandler(this, &FormMain::OnClickMenuWindowTileHorizontal);
 			// 
 			// menuWindow_TileVertical
@@ -145,7 +145,7 @@ namespace WebBrowser {
 			this->menuWindow_TileVertical->ShortcutKeys = static_cast<System::Windows::Forms::Keys>(((System::Windows::Forms::Keys::Control | System::Windows::Forms::Keys::Alt)
 				| System::Windows::Forms::Keys::T));
 			this->menuWindow_TileVertical->Size = System::Drawing::Size(244, 22);
-			this->menuWindow_TileVertical->Text = L"¶‰E‚É•À‚×‚Ä•\¦(&T)";
+			this->menuWindow_TileVertical->Text = L"å·¦å³ã«ä¸¦ã¹ã¦è¡¨ç¤º(&T)";
 			this->menuWindow_TileVertical->Click += gcnew System::EventHandler(this, &FormMain::OnClickMenuWindowTileVertical);
 			// 
 			// FormMain
@@ -169,8 +169,8 @@ namespace WebBrowser {
 		}
 #pragma endregion
 	public:
-		unsigned int m_nCountWebBrowser;
-		System::Collections::Generic::Dictionary<unsigned int, FormWebBrowser^> m_listWebBrowser;
+		unsigned int mCountWebBrowser;
+		System::Collections::Generic::Dictionary<unsigned int, FormWebBrowser^> mListWebBrowser;
 	public:
 		void OnLoadFormMain(Object^ sender, EventArgs^ e);
 		void OnClickMenuFileNewOpen(Object^ sender, EventArgs^ e);
@@ -182,14 +182,14 @@ namespace WebBrowser {
 		void SetFormMain(void);
 		void SetFormChild(void);
 
-		FormWebBrowser^ GetFormWebBrowser(unsigned int nKey)
+		FormWebBrowser^ GetFormWebBrowser(unsigned int key)
 		{
-			return m_listWebBrowser[nKey];
+			return mListWebBrowser[key];
 		}
 
-		void RemoveListWebBrowser(unsigned int nKey)
+		void RemoveListWebBrowser(unsigned int key)
 		{
-			m_listWebBrowser.Remove(nKey);
+			mListWebBrowser.Remove(key);
 		}
 };
 }
