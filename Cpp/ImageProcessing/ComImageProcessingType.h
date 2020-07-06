@@ -14,12 +14,12 @@ private:
 	/// <summary>
 	/// ID
 	/// </summary>
-	int m_nId;
+	int mId;
 
 	/// <summary>
 	/// 名称
 	/// </summary>
-	String^ m_strName;
+	String^ mName;
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -29,9 +29,9 @@ public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	/// <param name="_nId">ID</param>
-	/// <param name="_strNmae">名称</param>
-	ComImageProcessingType(int _Id, String^ _strNmae);
+	/// <param name="Id">ID</param>
+	/// <param name="Nmae">名称</param>
+	ComImageProcessingType(int Id, String^ Nmae);
 
 	/// <summary>
 	/// デスクトラクタ
@@ -42,25 +42,25 @@ public:
 	/// IDの取得
 	/// </summary>
 	/// <returns>ID</returns>
-	int GetId(void) { return m_nId; };
+	int GetId(void) { return mId; };
 
 	/// <summary>
 	/// IDの設定
 	/// </summary>
-	/// <param name="_nId">ID</param>
-	void SetId(int _nId) { m_nId = _nId; };
+	/// <param name="id">ID</param>
+	void SetId(int id) { mId = id; };
 
 	/// <summary>
 	/// 名称の取得
 	/// </summary>
 	/// <returns>名称</returns>
-	String^ GetName(void) { return m_strName; };
+	String^ GetName(void) { return mName; };
 
 	/// <summary>
 	/// 名称の設定
 	/// </summary>
-	/// <param name="_strName">名称</param>
-	void SetName(String^ _strName) { m_strName = _strName; };
+	/// <param name="name">名称</param>
+	void SetName(String^ name) { mName = name; };
 
 	/// <summary>
 	/// クローン

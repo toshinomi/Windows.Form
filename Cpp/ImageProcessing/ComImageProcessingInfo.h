@@ -59,19 +59,19 @@ private:
 	/// <summary>
 	/// 閾値
 	/// </summary>
-	Byte m_nThresh;
+	Byte mThresh;
 public:
 	/// <summary>
 	/// 閾値の設定
 	/// </summary>
 	/// <param name="_nThresh">閾値</param>
-	void SetThresh(Byte _nThresh) { m_nThresh = _nThresh; }
+	void SetThresh(Byte Thresh) { mThresh = Thresh; }
 
 	/// <summary>
 	/// 閾値の取得
 	/// </summary>
 	/// <returns>閾値</returns>
-	Byte GetThresh(void) { return m_nThresh; }
+	Byte GetThresh(void) { return mThresh; }
 
 	/// <summary>
 	/// コンストラクタ
@@ -139,115 +139,115 @@ private:
 	/// <summary>
 	/// 現在の画像処理の名称
 	/// </summary>
-	String^ m_strCurImgName;
+	String^ mCurrentImageProcessingName;
 
 	/// <summary>
 	/// エッジ検出の設定
 	/// </summary>
-	EdgeDetectionInfo^ m_edgeDetectoinInfo;
+	EdgeDetectionInfo^ mEdgeDetectoinInfo;
 
 	/// <summary>
 	/// グレースケールの設定
 	/// </summary>
-	GrayScaleInfo^ m_grayScaleInfo;
+	GrayScaleInfo^ mGrayScaleInfo;
 
 	/// <summary>
 	/// 2値化の設定
 	/// </summary>
-	BinarizationInfo^ m_binarizationInfo;
+	BinarizationInfo^ mBinarizationInfo;
 
 	/// <summary>
 	/// グレースケール2次微分の設定
 	/// </summary>
-	GrayScale2DiffInfo^ m_grayScale2DiffInfo;
+	GrayScale2DiffInfo^ mGrayScale2DiffInfo;
 
 	/// <summary>
 	/// 色反転の設定
 	/// </summary>
-	ColorReversalInfo^ m_colorReversalInfo;
+	ColorReversalInfo^ mColorReversalInfo;
 public:
 	/// <summary>
 	/// 現在の画像処理タイプの名称の設定
 	/// </summary>
-	/// <param name="_strCurImgName">画像処理タイプの名称</param>
-	void SetCurImgName(String^ _strCurImgName) { m_strCurImgName = _strCurImgName; }
+	/// <param name="currentImageProcessingName">画像処理タイプの名称</param>
+	void SetCurrentImageProcessingName(String^ currentImageProcessingName) { mCurrentImageProcessingName = currentImageProcessingName; }
 
 	/// <summary>
 	/// 現在の画像処理タイプの名称の取得
 	/// </summary>
 	/// <returns>画像処理タイプの名称</returns>
-	String^ GetCurImgName(void) { return m_strCurImgName; }
+	String^ GetCurImgName(void) { return mCurrentImageProcessingName; }
 
 	/// <summary>
 	/// エッジ検出情報の設定
 	/// </summary>
-	/// <param name="_edgeDetectoinInfo">エッジ検出情報</param>
-	void SetEdgeDetectionInfo(EdgeDetectionInfo^ _edgeDetectoinInfo) { m_edgeDetectoinInfo = _edgeDetectoinInfo; }
+	/// <param name="edgeDetectoinInfo">エッジ検出情報</param>
+	void SetEdgeDetectionInfo(EdgeDetectionInfo^ edgeDetectoinInfo) { mEdgeDetectoinInfo = edgeDetectoinInfo; }
 
 	/// <summary>
 	/// エッジ検出情報の取得
 	/// </summary>
 	/// <returns>エッジ検出情報</returns>
-	EdgeDetectionInfo^ GetEdgeDetectionInfo() { return m_edgeDetectoinInfo; }
+	EdgeDetectionInfo^ GetEdgeDetectionInfo() { return mEdgeDetectoinInfo; }
 
 	/// <summary>
 	/// グレースケール情報の設定
 	/// </summary>
-	/// <param name="_grayScaleInfo">グレースケール情報</param>
-	void SetGrayScaleInfo(GrayScaleInfo^ _grayScaleInfo) { m_grayScaleInfo = _grayScaleInfo; }
+	/// <param name="grayScaleInfo">グレースケール情報</param>
+	void SetGrayScaleInfo(GrayScaleInfo^ grayScaleInfo) { mGrayScaleInfo = grayScaleInfo; }
 
 	/// <summary>
 	/// グレースケール情報の取得
 	/// </summary>
 	/// <returns>グレースケール情報</returns>
-	GrayScaleInfo^ GetGrayScaleInfo(void) { return m_grayScaleInfo; }
+	GrayScaleInfo^ GetGrayScaleInfo(void) { return mGrayScaleInfo; }
 
 	/// <summary>
 	/// 2値化情報の設定
 	/// </summary>
-	/// <param name="_binarizationInfo">2値化情報</param>
-	void SetBinarizationInfo(BinarizationInfo^ _binarizationInfo) { m_binarizationInfo = _binarizationInfo; }
+	/// <param name="binarizationInfo">2値化情報</param>
+	void SetBinarizationInfo(BinarizationInfo^ binarizationInfo) { mBinarizationInfo = binarizationInfo; }
 
 	/// <summary>
 	/// 2値化情報の取得
 	/// </summary>
 	/// <returns>2値化情報</returns>
-	BinarizationInfo^ GetBinarizationInfo(void) { return m_binarizationInfo; }
+	BinarizationInfo^ GetBinarizationInfo(void) { return mBinarizationInfo; }
 
 	/// <summary>
 	/// グレースケール2次微分情報の設定
 	/// </summary>
-	/// <param name="_grayScale2DiffInfo">グレースケール2次微分情報</param>
-	void SetGrayScale2DiffInfo(GrayScale2DiffInfo^ _grayScale2DiffInfo) { m_grayScale2DiffInfo = _grayScale2DiffInfo; }
+	/// <param name="grayScale2DiffInfo">グレースケール2次微分情報</param>
+	void SetGrayScale2DiffInfo(GrayScale2DiffInfo^ grayScale2DiffInfo) { mGrayScale2DiffInfo = grayScale2DiffInfo; }
 
 	/// <summary>
 	/// グレースケール2次微分情報の取得
 	/// </summary>
 	/// <returns>グレースケール2次微分情報</returns>
-	GrayScale2DiffInfo^ GetGrayScale2DiffInfo(void) { return m_grayScale2DiffInfo; }
+	GrayScale2DiffInfo^ GetGrayScale2DiffInfo(void) { return mGrayScale2DiffInfo; }
 
 	/// <summary>
 	/// 色反転情報の設定
 	/// </summary>
-	/// <param name="_colorReversalInfo">色反転情報</param>
-	void SetColorReversalInfo(ColorReversalInfo^ _colorReversalInfo) { m_colorReversalInfo = _colorReversalInfo; }
+	/// <param name="colorReversalInfo">色反転情報</param>
+	void SetColorReversalInfo(ColorReversalInfo^ colorReversalInfo) { mColorReversalInfo = colorReversalInfo; }
 
 	/// <summary>
 	/// 色反転情報の取得
 	/// </summary>
 	/// <returns>色反転情報</returns>
-	ColorReversalInfo^ GetColorReversalInfo(void) { return m_colorReversalInfo; }
+	ColorReversalInfo^ GetColorReversalInfo(void) { return mColorReversalInfo; }
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	ComImgInfo()
 	{
-		m_edgeDetectoinInfo = gcnew EdgeDetectionInfo();
-		m_grayScaleInfo = gcnew GrayScaleInfo();
-		m_binarizationInfo = gcnew BinarizationInfo();
-		m_grayScale2DiffInfo = gcnew GrayScale2DiffInfo();
-		m_colorReversalInfo = gcnew ColorReversalInfo();
+		mEdgeDetectoinInfo = gcnew EdgeDetectionInfo();
+		mGrayScaleInfo = gcnew GrayScaleInfo();
+		mBinarizationInfo = gcnew BinarizationInfo();
+		mGrayScale2DiffInfo = gcnew GrayScale2DiffInfo();
+		mColorReversalInfo = gcnew ColorReversalInfo();
 	}
 
 	/// <summary>
@@ -255,10 +255,5 @@ public:
 	/// </summary>
 	~ComImgInfo()
 	{
-		delete m_edgeDetectoinInfo;
-		delete m_grayScaleInfo;
-		delete m_binarizationInfo;
-		delete m_grayScale2DiffInfo;
-		delete m_colorReversalInfo;
 	}
 };

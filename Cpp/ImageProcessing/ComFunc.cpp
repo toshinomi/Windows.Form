@@ -3,23 +3,23 @@
 /// <summary>
 /// Double型のデータからbyte型のデータへの変換
 /// </summary>
-/// <param name="_dValue">Double型のデータ</param>
+/// <param name="value">Double型のデータ</param>
 /// <returns>byte型のデータ</returns>
-Byte ComFunc::DoubleToByte(double _dValue)
+Byte ComFunc::DoubleToByte(double value)
 {
 	Byte nCnvValue = 0;
 
-	if (_dValue > 255.0)
+	if (value > 255.0)
 	{
 		nCnvValue = 255;
 	}
-	else if (_dValue < 0)
+	else if (value < 0)
 	{
 		nCnvValue = 0;
 	}
 	else
 	{
-		nCnvValue = (Byte)_dValue;
+		nCnvValue = (Byte)value;
 	}
 
 	return nCnvValue;
@@ -28,23 +28,23 @@ Byte ComFunc::DoubleToByte(double _dValue)
 /// <summary>
 /// long型のデータからbyte型のデータへの変換
 /// </summary>
-/// <param name="_lValue">long型のデータ</param>
+/// <param name="value">long型のデータ</param>
 /// <returns>byte型のデータ</returns>
-Byte ComFunc::LongToByte(long _lValue)
+Byte ComFunc::LongToByte(long value)
 {
 	Byte nCnvValue = 0;
 
-	if (_lValue > 255)
+	if (value > 255)
 	{
 		nCnvValue = 255;
 	}
-	else if (_lValue < 0)
+	else if (value < 0)
 	{
 		nCnvValue = 0;
 	}
 	else
 	{
-		nCnvValue = (Byte)_lValue;
+		nCnvValue = (Byte)value;
 	}
 
 	return nCnvValue;

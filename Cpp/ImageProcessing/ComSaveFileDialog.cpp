@@ -5,7 +5,7 @@
 /// </summary>
 ComSaveFileDialog::ComSaveFileDialog(void)
 {
-	m_saveFileDialog = gcnew SaveFileDialog();
+	mSaveFileDialog = gcnew SaveFileDialog();
 }
 
 /// <summary>
@@ -13,7 +13,6 @@ ComSaveFileDialog::ComSaveFileDialog(void)
 /// </summary>
 ComSaveFileDialog::~ComSaveFileDialog(void)
 {
-	delete m_saveFileDialog;
 }
 
 /// <summary>
@@ -24,7 +23,7 @@ bool ComSaveFileDialog::ShowDialog(void)
 {
 	bool bRst = false;
 
-	if (m_saveFileDialog->ShowDialog() == DialogResult::OK)
+	if (mSaveFileDialog->ShowDialog() == DialogResult::OK)
 	{
 		bRst = true;
 	}
@@ -43,7 +42,7 @@ bool ComSaveFileDialog::StreamWrite(String^ _str)
 	bool bRst = true;
 	try
 	{
-		stream = m_saveFileDialog->OpenFile();
+		stream = mSaveFileDialog->OpenFile();
 	}
 	catch (Exception^)
 	{
@@ -54,7 +53,6 @@ bool ComSaveFileDialog::StreamWrite(String^ _str)
 	streamWriter->Write(_str);
 	streamWriter->Close();
 	stream->Close();
-	delete streamWriter;
 
 	return bRst;
 }

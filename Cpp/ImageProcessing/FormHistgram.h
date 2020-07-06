@@ -24,7 +24,7 @@ namespace ImageProcessing {
 			//TODO: ここにコンストラクター コードを追加します
 			//
 			chart->ContextMenuStrip = contextMenu;
-			m_chartArea = gcnew ChartArea();
+			mChartArea = gcnew ChartArea();
 		}
 
 	protected:
@@ -37,22 +37,22 @@ namespace ImageProcessing {
 			{
 				delete components;
 			}
-			if (m_nHistgram != nullptr)
+			if (mHistgram != nullptr)
 			{
 				for (int i = 0; i < 2; i++)
 				{
-					delete[] m_nHistgram[i];
+					delete[] mHistgram[i];
 				}
-				delete[] m_nHistgram;
-				m_nHistgram = nullptr;
+				delete[] mHistgram;
+				mHistgram = nullptr;
 			}
-			delete m_seriesLineOriginal;
-			delete m_seriesLineAfter;
-			delete m_chartArea;
-			m_seriesLineOriginal = nullptr;
-			m_seriesLineAfter = nullptr;
-			m_chartArea = nullptr;
-			m_bIsOpen = false;
+			delete mSeriesLineOriginal;
+			delete mSeriesLineAfter;
+			delete mChartArea;
+			mSeriesLineOriginal = nullptr;
+			mSeriesLineAfter = nullptr;
+			mChartArea = nullptr;
+			mIsOpen = false;
 		}
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^ chart;
 	private: System::Windows::Forms::ContextMenuStrip^ contextMenu;
@@ -139,97 +139,97 @@ namespace ImageProcessing {
 		/// <summary>
 		/// ヒストグラムデータ
 		/// </summary>
-		int** m_nHistgram;
+		int** mHistgram;
 
 		/// <summary>
 		/// オリジナルのビットマップ
 		/// </summary>
-		Bitmap^ m_bitmapOrg;
+		Bitmap^ mBitmapOrg;
 
 		/// <summary>
 		/// 画像処理後のビットマップ
 		/// </summary>
-		Bitmap^ m_bitmapAfter;
+		Bitmap^ mBitmapAfter;
 
 		/// <summary>
 		/// オープン状態
 		/// </summary>
-		bool m_bIsOpen;
+		bool mIsOpen;
 
 		/// <summary>
 		/// オリジナルのヒストグラムのデータ
 		/// </summary>
-		Series^ m_seriesLineOriginal;
+		Series^ mSeriesLineOriginal;
 
 		/// <summary>
 		/// 画像処理後のヒストグラムのデータ
 		/// </summary>
-		Series^ m_seriesLineAfter;
+		Series^ mSeriesLineAfter;
 
 		/// <summary>
 		/// グラフエリア
 		/// </summary>
-		ChartArea^ m_chartArea;
+		ChartArea^ mChartArea;
 	public:
 		/// <summary>
 		/// オリジナルのビットマップの取得
 		/// </summary>
 		/// <returns>ビットマップ</returns>
-		Bitmap^ GetBitmapOrg(void) { return m_bitmapOrg; };
+		Bitmap^ GetBitmapOrg(void) { return mBitmapOrg; };
 
 		/// <summary>
 		/// オリジナルのビットマップの設定
 		/// </summary>
-		/// <param name="_bitmap">ビットマップ</param>
-		void SetBitmapOrg(Bitmap^ _bitmap) { m_bitmapOrg = _bitmap; }
+		/// <param name="bitmap">ビットマップ</param>
+		void SetBitmapOrg(Bitmap^ bitmap) { mBitmapOrg = bitmap; }
 
 		/// <summary>
 		/// 画像処理後のビットマップの取得
 		/// </summary>
 		/// <returns>ビットマップ</returns>
-		Bitmap^ GetBitmapAfter(void) { return m_bitmapAfter; };
+		Bitmap^ GetBitmapAfter(void) { return mBitmapAfter; };
 
 		/// <summary>
 		/// オリジナルのビットマップの設定
 		/// </summary>
-		/// <param name="_bitmap">ビットマップ</param>
-		void SetBitmapAfter(Bitmap^ _bitmap) { m_bitmapAfter = _bitmap; }
+		/// <param name="bitmap">ビットマップ</param>
+		void SetBitmapAfter(Bitmap^ bitmap) { mBitmapAfter = bitmap; }
 
 		/// <summary>
 		/// ヒストグラム画面のオープン状態の取得
 		/// </summary>
 		/// <returns>ヒストグラム画面のオープン状態</returns>
-		bool GetIsOpen(void) { return m_bIsOpen; };
+		bool GetIsOpen(void) { return mIsOpen; };
 
 		/// <summary>
 		/// ヒストグラム画面のオープン状態の設定
 		/// </summary>
-		/// <param name="_isOpen">ストグラム画面のオープン状態</param>
-		void SetIsOpen(bool _isOpen) { m_bIsOpen = _isOpen; };
+		/// <param name="isOpen">ストグラム画面のオープン状態</param>
+		void SetIsOpen(bool isOpen) { mIsOpen = isOpen; };
 
 		/// <summary>
 		/// オリジナルのヒストグラムのデータ情報の取得
 		/// </summary>
 		/// <returns>オリジナルのヒストグラムのデータ情報</returns>
-		Series^ GetSeriesLineOriginal(void) { return m_seriesLineOriginal; };
+		Series^ GetSeriesLineOriginal(void) { return mSeriesLineOriginal; };
 
 		/// <summary>
 		/// オリジナルのヒストグラムのデータ情報の設定
 		/// </summary>
-		/// <param name="_series">オリジナルのヒストグラムのデータ情報</param>
-		void SetSeriesLineOriginal(Series^ _series) { m_seriesLineOriginal = _series; };
+		/// <param name="series">オリジナルのヒストグラムのデータ情報</param>
+		void SetSeriesLineOriginal(Series^ series) { mSeriesLineOriginal = series; };
 
 		/// <summary>
 		/// 画像処理後のヒストグラムのデータ情報の取得
 		/// </summary>
 		/// <returns>画像処理後のヒストグラムのデータ情報</returns>
-		Series^ GetSeriesLineAfter(void) { return m_seriesLineAfter; };
+		Series^ GetSeriesLineAfter(void) { return mSeriesLineAfter; };
 
 		/// <summary>
 		/// 画像処理後のヒストグラムのデータ情報の設定
 		/// </summary>
-		/// <param name="_series">画像処理後のヒストグラムのデータ情報</param>
-		void SetSeriesLineAfter(Series^ _series) { m_seriesLineAfter = _series; };
+		/// <param name="series">画像処理後のヒストグラムのデータ情報</param>
+		void SetSeriesLineAfter(Series^ series) { mSeriesLineAfter = series; };
 
 		/// <summary>
 		/// グラフの描画

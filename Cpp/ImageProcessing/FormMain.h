@@ -5,7 +5,7 @@
 #include "GrayScale2Diff.h"
 #include "ColorReversal.h"
 #include "FormHistgram.h"
-#include "ComImgInfo.h"
+#include "ComImageProcessingInfo.h"
 #include "ComInfo.h"
 #include "ComDelegate.h"
 #include "ComOpenFileDialog.h"
@@ -52,15 +52,15 @@ namespace ImageProcessing {
 
 			SetToolTip();
 
-			m_bitmap = nullptr;
-			m_tokenSource = nullptr;
-			m_imageProcessing = nullptr;
+			mBitmap = nullptr;
+			mTokenSource = nullptr;
+			mImageProcessing = nullptr;
 
 			System::Configuration::Configuration^ config = ConfigurationManager::OpenExeConfiguration(ConfigurationUserLevel::None);
-			m_strCurImgName = config->AppSettings->Settings["ImgTypeSelectName"]->Value;
-			this->Text = "Image Processing ( " + m_strCurImgName + " )";
+			mCurrentImageProcessingName = config->AppSettings->Settings["ImgTypeSelectName"]->Value;
+			this->Text = "Image Processing ( " + mCurrentImageProcessingName + " )";
 
-			sliderThresh->Enabled = m_strCurImgName == (String^)ComConstStringInfo::IMG_NAME_BINARIZATION ? true : false;
+			sliderThresh->Enabled = mCurrentImageProcessingName == (String^)ComConstStringInfo::IMG_NAME_BINARIZATION ? true : false;
 		}
 
 	protected:
@@ -73,10 +73,10 @@ namespace ImageProcessing {
 			{
 				delete components;
 
-				delete m_bitmap;
-				delete m_tokenSource;
-				delete m_imageProcessing;
-				delete m_histgram;
+				delete mBitmap;
+				delete mTokenSource;
+				delete mImageProcessing;
+				delete mHistgram;
 			}
 		}
 	private: System::Windows::Forms::ToolTip^ toolTipBtnStop;
@@ -496,32 +496,32 @@ namespace ImageProcessing {
 			/// <summary>
 			/// ビットマップ
 			/// </summary>
-			Bitmap^ m_bitmap;
+			Bitmap^ mBitmap;
 
 			/// <summary>
 			/// 画像処理実行用の情報
 			/// </summary>
-			ImageProcessing^ m_imageProcessing;
+			ImageProcessing^ mImageProcessing;
 
 			/// <summary>
 			/// オープンしている画像のファイル名称
 			/// </summary>
-			String^ m_strOpenFileName;
+			String^ mOpenFileName;
 
 			/// <summary>
 			/// キャンセルトークン
 			/// </summary>
-			CancellationTokenSource^ m_tokenSource;
+			CancellationTokenSource^ mTokenSource;
 
 			/// <summary>
 			/// 現在選択中の画像処理の名称
 			/// </summary>
-			String^ m_strCurImgName;
+			String^ mCurrentImageProcessingName;
 
 			/// <summary>
 			/// ヒストグラム用のデータ
 			/// </summary>
-			FormHistgram^ m_histgram;
+			FormHistgram^ mHistgram;
 		public:
 			/// <summary>
 			/// ビットマップを取得する
@@ -532,10 +532,10 @@ namespace ImageProcessing {
 			/// <summary>
 			/// 対象の画像処理オブジェクトを実行する
 			/// </summary>
-			/// <param name="comImgInfo">画像処理の設定</param>
+			/// <param name="comImageProcessingInfo">画像処理の設定</param>
 			/// <param name="token">キャンセルトークン</param>
 			/// <returns>画像処理の実行結果 成功/失敗</returns>
-			bool GoImageProcessing(ComImgInfo^ _comImgInfo, CancellationToken^ _token);
+			bool GoImageProcessing(ComImgInfo^ comImageProcessingInfo, CancellationToken^ token);
 
 			/// <summary>
 			/// ツールチップの設定
@@ -550,8 +550,8 @@ namespace ImageProcessing {
 			/// <summary>
 			/// 時間を表示するテキストボックスに時間を設定する
 			/// </summary>
-			/// <param name="_lTime">時間</param>
-			void SetTextTime(long long _lTime);
+			/// <param name="time">時間</param>
+			void SetTextTime(long long time);
 
 			/// <summary>
 			/// コントロールのEnableを制御する
@@ -675,56 +675,56 @@ namespace ImageProcessing {
 			/// <summary>
 			/// 画像処理中に表示させる画像の表示/非表示の設定
 			/// </summary>
-			/// <param name="_bValue">表示/非表示</param>
-			void SetPictureBoxStatusVisible(bool _bValue) { pictureBoxStatus->Visible = _bValue; };
+			/// <param name="value">表示/非表示</param>
+			void SetPictureBoxStatusVisible(bool value) { pictureBoxStatus->Visible = value; };
 
 			/// <summary>
 			/// 選択ボタンの有効/無効の設定
 			/// </summary>
-			/// <param name="_bValue">有効/無効</param>
-			void SetBtnFileSelectEnable(bool _bValue) { btnFileSelect->Enabled = _bValue; };
+			/// <param name="value">有効/無効</param>
+			void SetBtnFileSelectEnable(bool value) { btnFileSelect->Enabled = value; };
 
 			/// <summary>
 			/// 全てクリアボタンの有効/無効の設定
 			/// </summary>
-			/// <param name="_bValue">有効/無効</param>
-			void SetBtnAllClearEnable(bool _bValue) { btnAllClear->Enabled = _bValue; };
+			/// <param name="value">有効/無効</param>
+			void SetBtnAllClearEnable(bool value) { btnAllClear->Enabled = value; };
 
 			/// <summary>
 			/// スタートボタンの有効/無効の設定
 			/// </summary>
-			/// <param name="_bValue">有効/無効</param>
-			void SetBtnStartEnable(bool _bValue) { btnStart->Enabled = _bValue; };
+			/// <param name="value">有効/無効</param>
+			void SetBtnStartEnable(bool value) { btnStart->Enabled = value; };
 
 			/// <summary>
 			/// ストップボタンの有効/無効の設定
 			/// </summary>
-			/// <param name="_bValue">有効/無効</param>
-			void SetBtnStopEnable(bool _bValue) { btnStop->Enabled = _bValue; };
+			/// <param name="value">有効/無効</param>
+			void SetBtnStopEnable(bool value) { btnStop->Enabled = value; };
 
 			/// <summary>
 			/// 画像保存ボタンの有効/無効の設定
 			/// </summary>
-			/// <param name="_bValue">有効/無効</param>
-			void SetBtnSaveImageEnable(bool _bValue) { btnSaveImage->Enabled = _bValue; };
+			/// <param name="value">有効/無効</param>
+			void SetBtnSaveImageEnable(bool value) { btnSaveImage->Enabled = value; };
 
 			/// <summary>
 			/// ヒストグラム表示ボタンの有効/無効の設定
 			/// </summary>
-			/// <param name="_bValue">有効/無効</param>
-			void SetBtnShowHistgramEnable(bool _bValue) { btnShowHistgram->Enabled = _bValue; };
+			/// <param name="value">有効/無効</param>
+			void SetBtnShowHistgramEnable(bool value) { btnShowHistgram->Enabled = value; };
 
 			/// <summary>
 			/// メインメニューの有効/無効の設定
 			/// </summary>
-			/// <param name="_bValue">有効/無効</param>
-			void SetMenuMainEnable(bool _bValue) { menuMain->Enabled = _bValue; };
+			/// <param name="value">有効/無効</param>
+			void SetMenuMainEnable(bool value) { menuMain->Enabled = value; };
 
 			/// <summary>
 			/// 閾値のスライダの有効/無効の設定
 			/// </summary>
-			/// <param name="_bValue">有効/無効</param>
-			void SetSliderThreshEnable(bool _bValue) { sliderThresh->Enabled = _bValue; };
+			/// <param name="value">有効/無効</param>
+			void SetSliderThreshEnable(bool value) { sliderThresh->Enabled = value; };
 
 			/// <summary>
 			/// 閾値のスライダの値の取得

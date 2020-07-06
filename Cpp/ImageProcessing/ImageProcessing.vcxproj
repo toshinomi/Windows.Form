@@ -175,7 +175,7 @@
     <ClInclude Include="ComDelegate.h" />
     <ClInclude Include="ComFunc.h" />
     <ClInclude Include="ComImageProcessingType.h" />
-    <ClInclude Include="ComImgInfo.h" />
+    <ClInclude Include="ComImageProcessingInfo.h" />
     <ClInclude Include="ComImageProcessing.h" />
     <ClInclude Include="ComInfo.h" />
     <ClInclude Include="ComOpenFileDialog.h" />

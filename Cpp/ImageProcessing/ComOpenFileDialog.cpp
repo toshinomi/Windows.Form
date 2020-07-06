@@ -5,7 +5,7 @@
 /// </summary>
 ComOpenFileDialog::ComOpenFileDialog()
 {
-	m_openFileDialog = gcnew OpenFileDialog();
+	mOpenFileDialog = gcnew OpenFileDialog();
 }
 
 /// <summary>
@@ -13,7 +13,7 @@ ComOpenFileDialog::ComOpenFileDialog()
 /// </summary>
 ComOpenFileDialog::~ComOpenFileDialog()
 {
-	delete m_openFileDialog;
+	delete mOpenFileDialog;
 }
 
 /// <summary>
@@ -24,7 +24,7 @@ bool ComOpenFileDialog::ShowDialog()
 {
 	bool bRst = false;
 
-	if (m_openFileDialog->ShowDialog() == DialogResult::OK)
+	if (mOpenFileDialog->ShowDialog() == DialogResult::OK)
 	{
 		bRst = true;
 	}

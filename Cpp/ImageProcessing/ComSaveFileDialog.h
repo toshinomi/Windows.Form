@@ -16,7 +16,7 @@ protected:
 	/// <summary>
 	/// セーブファイルダイアログ
 	/// </summary>
-	SaveFileDialog^ m_saveFileDialog;
+	SaveFileDialog^ mSaveFileDialog;
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -32,85 +32,85 @@ public:
 	/// FileNameの取得
 	/// </summary>
 	/// <returns>FileName</returns>
-	String^ GetFileName(void) { return m_saveFileDialog->FileName; };
+	String^ GetFileName(void) { return mSaveFileDialog->FileName; };
 
 	/// <summary>
 	/// FileNameの設定
 	/// </summary>
-	/// <param name="_strFileName">FileName</param>
-	void SetFileName(String^ _strFileName) { m_saveFileDialog->FileName = _strFileName; };
+	/// <param name="fileName">FileName</param>
+	void SetFileName(String^ fileName) { mSaveFileDialog->FileName = fileName; };
 
 	/// <summary>
 	/// InitialDirectoryの取得
 	/// </summary>
 	/// <returns>InitialDirectory</returns>
-	String^ GetInitialDirectory(void) { return m_saveFileDialog->InitialDirectory; };
+	String^ GetInitialDirectory(void) { return mSaveFileDialog->InitialDirectory; };
 
 	/// <summary>
 	/// InitialDirectoryの設定
 	/// </summary>
-	/// <param name="_strInitialDirectory">InitialDirectory</param>
-	void SetInitialDirectory(String^ _strInitDirectory) { m_saveFileDialog->InitialDirectory = _strInitDirectory; };
+	/// <param name="initDirectory">InitialDirectory</param>
+	void SetInitialDirectory(String^ initDirectory) { mSaveFileDialog->InitialDirectory = initDirectory; };
 	
 	/// <summary>
 	/// Filterの取得
 	/// </summary>
 	/// <returns>Filter</returns>
-	String^ GetFilter(void) { return m_saveFileDialog->Filter; };
+	String^ GetFilter(void) { return mSaveFileDialog->Filter; };
 
 	/// <summary>
 	/// Filterの設定
 	/// </summary>
-	/// <param name="_strFilter">Filter</param>
-	void SetFilter(String^ _nFilter) { m_saveFileDialog->Filter = _nFilter; };
+	/// <param name="filter">Filter</param>
+	void SetFilter(String^ filter) { mSaveFileDialog->Filter = filter; };
 
 	/// <summary>
 	/// FilterIndexの取得
 	/// </summary>
 	/// <returns>FilterIndex</returns>
-	int GetFilterIndex(void) { return m_saveFileDialog->FilterIndex; };
+	int GetFilterIndex(void) { return mSaveFileDialog->FilterIndex; };
 
 	/// <summary>
 	/// FilterIndexの設定
 	/// </summary>
-	/// <param name="_nFilterIndex">FilterIndex</param>
-	void SetFilterIndex(int _nFilterIndex) { m_saveFileDialog->FilterIndex = _nFilterIndex; };
+	/// <param name="filterIndex">FilterIndex</param>
+	void SetFilterIndex(int filterIndex) { mSaveFileDialog->FilterIndex = filterIndex; };
 
 	/// <summary>
 	/// Titleの取得
 	/// </summary>
 	/// <returns>Title</returns>
-	String^ GetTitle(void) { return m_saveFileDialog->Title; };
+	String^ GetTitle(void) { return mSaveFileDialog->Title; };
 
 	/// <summary>
 	/// Titleの設定
 	/// </summary>
-	/// <param name="_strTitle">Title</param>
-	void SetTitle(String^ _strTitle) { m_saveFileDialog->Title = _strTitle; };
+	/// <param name="title">Title</param>
+	void SetTitle(String^ title) { mSaveFileDialog->Title = title; };
 
 	/// <summary>
 	/// CheckFileExistsの取得
 	/// </summary>
 	/// <returns>CheckFileExists</returns>
-	bool GetCheckFileExists(void) { return m_saveFileDialog->CheckFileExists; };
+	bool GetCheckFileExists(void) { return mSaveFileDialog->CheckFileExists; };
 
 	/// <summary>
 	/// CheckFileExistsの設定
 	/// </summary>
-	/// <param name="_bCheckFileExists">CheckFileExists</param>
-	void SetCheckFileExists(bool _bCheckFileExists) { m_saveFileDialog->CheckFileExists = _bCheckFileExists; };
+	/// <param name="checkFileExists">CheckFileExists</param>
+	void SetCheckFileExists(bool checkFileExists) { mSaveFileDialog->CheckFileExists = checkFileExists; };
 
 	/// <summary>
 	/// CheckPathExistsの取得
 	/// </summary>
 	/// <returns>CheckPathExists</returns>
-	bool GetCheckPathExists(void) { return m_saveFileDialog->CheckPathExists; };
+	bool GetCheckPathExists(void) { return mSaveFileDialog->CheckPathExists; };
 
 	/// <summary>
 	/// CheckPathExistsの設定
 	/// </summary>
-	/// <param name="_bCheckPathExists">CheckPathExists</param>
-	void SetCheckPathExists(bool _bCheckPathExists) { m_saveFileDialog->CheckPathExists = _bCheckPathExists; };
+	/// <param name="checkPathExists">CheckPathExists</param>
+	void SetCheckPathExists(bool checkPathExists) { mSaveFileDialog->CheckPathExists = checkPathExists; };
 
 	/// <summary>
 	/// ダイアログの表示

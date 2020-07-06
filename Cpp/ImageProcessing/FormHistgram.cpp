@@ -17,31 +17,31 @@ void FormHistgram::DrawHistgram(void)
 	chart->Titles->Clear();
 	chart->Series->Clear();
 	chart->ChartAreas->Clear();
-	if (m_chartArea != nullptr)
+	if (mChartArea != nullptr)
 	{
-		delete m_chartArea;
-		m_chartArea = gcnew ChartArea();
+		delete mChartArea;
+		mChartArea = gcnew ChartArea();
 	}
-	chart->ChartAreas->Add(m_chartArea);
-	if (m_seriesLineOriginal != nullptr)
+	chart->ChartAreas->Add(mChartArea);
+	if (mSeriesLineOriginal != nullptr)
 	{
-		delete m_seriesLineOriginal;
-		m_seriesLineOriginal = nullptr;
+		delete mSeriesLineOriginal;
+		mSeriesLineOriginal = nullptr;
 	}
-	m_seriesLineOriginal = gcnew Series();
-	m_seriesLineOriginal->ChartType = SeriesChartType::Line;
-	m_seriesLineOriginal->LegendText = "Original";
-	m_seriesLineOriginal->BorderWidth = 2;
+	mSeriesLineOriginal = gcnew Series();
+	mSeriesLineOriginal->ChartType = SeriesChartType::Line;
+	mSeriesLineOriginal->LegendText = "Original";
+	mSeriesLineOriginal->BorderWidth = 2;
 
-	if (m_seriesLineAfter != nullptr)
+	if (mSeriesLineAfter != nullptr)
 	{
-		delete m_seriesLineAfter;
-		m_seriesLineAfter = nullptr;
+		delete mSeriesLineAfter;
+		mSeriesLineAfter = nullptr;
 	}
-	m_seriesLineAfter = gcnew Series();
-	m_seriesLineAfter->ChartType = SeriesChartType::Line;
-	m_seriesLineAfter->LegendText = "After";
-	m_seriesLineAfter->BorderWidth = 2;
+	mSeriesLineAfter = gcnew Series();
+	mSeriesLineAfter->ChartType = SeriesChartType::Line;
+	mSeriesLineAfter->LegendText = "After";
+	mSeriesLineAfter->BorderWidth = 2;
 #ifdef DEBUG
 	int nHistgram0[ComInfo::RGP_MAX];
 	int nHistgram1[ComInfo::RGP_MAX];
@@ -52,11 +52,11 @@ void FormHistgram::DrawHistgram(void)
 #endif // DEBUG
 	for (int i = 0; i < ComInfo::RGB_MAX; i++)
 	{
-		m_seriesLineOriginal->Points->AddXY(i, m_nHistgram[ComInfo::Picture::Type::Original][i]);
-		m_seriesLineAfter->Points->AddXY(i, m_nHistgram[ComInfo::Picture::Type::After][i]);
+		mSeriesLineOriginal->Points->AddXY(i, mHistgram[ComInfo::Picture::Type::Original][i]);
+		mSeriesLineAfter->Points->AddXY(i, mHistgram[ComInfo::Picture::Type::After][i]);
 	}
-	chart->Series->Add(m_seriesLineOriginal);
-	chart->Series->Add(m_seriesLineAfter);
+	chart->Series->Add(mSeriesLineOriginal);
+	chart->Series->Add(mSeriesLineAfter);
 }
 
 /// <summary>
@@ -64,41 +64,41 @@ void FormHistgram::DrawHistgram(void)
 /// </summary>
 void FormHistgram::CalHistgram(void)
 {
-	int nWidthSize = m_bitmapOrg->Width;
-	int nHeightSize = m_bitmapOrg->Height;
+	int widthSize = mBitmapOrg->Width;
+	int heightSize = mBitmapOrg->Height;
 
-	BitmapData^ bitmapDataOrg = m_bitmapOrg->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadOnly, PixelFormat::Format32bppArgb);
+	BitmapData^ bitmapDataOrg = mBitmapOrg->LockBits(System::Drawing::Rectangle(0, 0, widthSize, heightSize), ImageLockMode::ReadOnly, PixelFormat::Format32bppArgb);
 	BitmapData^ bitmapDataAfter;
-	if (m_bitmapAfter != nullptr)
+	if (mBitmapAfter != nullptr)
 	{
-		bitmapDataAfter = m_bitmapAfter->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadOnly, PixelFormat::Format32bppArgb);
+		bitmapDataAfter = mBitmapAfter->LockBits(System::Drawing::Rectangle(0, 0, widthSize, heightSize), ImageLockMode::ReadOnly, PixelFormat::Format32bppArgb);
 	}
 
-	int nIdxWidth;
-	int nIdxHeight;
+	int indexWidth;
+	int indexHeight;
 
-	for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
+	for (indexHeight = 0; indexHeight < heightSize; indexHeight++)
 	{
-		for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
+		for (indexWidth = 0; indexWidth < widthSize; indexWidth++)
 		{
-			Byte* pPixel = (Byte*)bitmapDataOrg->Scan0.ToPointer() + nIdxHeight * bitmapDataOrg->Stride + nIdxWidth * 4;
-			Byte nGrayScale = (Byte)((pPixel[(int)ComInfo::Pixel::Type::B] + pPixel[(int)ComInfo::Pixel::Type::G] + pPixel[(int)ComInfo::Pixel::Type::R]) / 3);
+			Byte* pixel = (Byte*)bitmapDataOrg->Scan0.ToPointer() + indexHeight * bitmapDataOrg->Stride + indexWidth * 4;
+			Byte grayScale = (Byte)((pixel[(int)ComInfo::Pixel::Type::B] + pixel[(int)ComInfo::Pixel::Type::G] + pixel[(int)ComInfo::Pixel::Type::R]) / 3);
 
-			m_nHistgram[ComInfo::Picture::Type::Original][nGrayScale] += 1;
+			mHistgram[ComInfo::Picture::Type::Original][grayScale] += 1;
 
-			if (m_bitmapAfter != nullptr)
+			if (mBitmapAfter != nullptr)
 			{
-				pPixel = (Byte*)bitmapDataAfter->Scan0.ToPointer() + nIdxHeight * bitmapDataAfter->Stride + nIdxWidth * 4;
-				nGrayScale = (Byte)((pPixel[(int)ComInfo::Pixel::Type::B] + pPixel[(int)ComInfo::Pixel::Type::G] + pPixel[(int)ComInfo::Pixel::Type::R]) / 3);
+				pixel = (Byte*)bitmapDataAfter->Scan0.ToPointer() + indexHeight * bitmapDataAfter->Stride + indexWidth * 4;
+				grayScale = (Byte)((pixel[(int)ComInfo::Pixel::Type::B] + pixel[(int)ComInfo::Pixel::Type::G] + pixel[(int)ComInfo::Pixel::Type::R]) / 3);
 
-				m_nHistgram[ComInfo::Picture::Type::After][nGrayScale] += 1;
+				mHistgram[ComInfo::Picture::Type::After][grayScale] += 1;
 			}
 		}
 	}
-	m_bitmapOrg->UnlockBits(bitmapDataOrg);
-	if (m_bitmapAfter != nullptr)
+	mBitmapOrg->UnlockBits(bitmapDataOrg);
+	if (mBitmapAfter != nullptr)
 	{
-		m_bitmapAfter->UnlockBits(bitmapDataAfter);
+		mBitmapAfter->UnlockBits(bitmapDataAfter);
 	}
 }
 
@@ -107,19 +107,19 @@ void FormHistgram::CalHistgram(void)
 /// </summary>
 void FormHistgram::InitHistgram(void)
 {
-	if (m_nHistgram == nullptr)
+	if (mHistgram == nullptr)
 	{
-		m_nHistgram = new int* [ComInfo::Picture::Type::MAX];
+		mHistgram = new int* [ComInfo::Picture::Type::MAX];
 	}
-	for (int i = 0; i < ComInfo::Picture::Type::MAX; i++)
+	for (int index = 0; index < ComInfo::Picture::Type::MAX; index++)
 	{
-		m_nHistgram[i] = new int[ComInfo::RGB_MAX];
+		mHistgram[index] = new int[ComInfo::RGB_MAX];
 	}
 
-	for (int nIdx = 0; nIdx < ComInfo::RGB_MAX; nIdx++)
+	for (int index = 0; index < ComInfo::RGB_MAX; index++)
 	{
-		m_nHistgram[ComInfo::Picture::Type::Original][nIdx] = 0;
-		m_nHistgram[ComInfo::Picture::Type::After][nIdx] = 0;
+		mHistgram[ComInfo::Picture::Type::Original][index] = 0;
+		mHistgram[ComInfo::Picture::Type::After][index] = 0;
 	}
 }
 
@@ -164,8 +164,8 @@ void FormHistgram::SaveCsv(void)
 		for (int nIdx = 0; nIdx < ComInfo::RGB_MAX; nIdx++)
 		{
 			stringBuilder->Append(nIdx)->Append(strDelmiter);
-			stringBuilder->Append(m_nHistgram[ComInfo::Picture::Type::Original][nIdx])->Append(strDelmiter);
-			stringBuilder->Append(m_nHistgram[ComInfo::Picture::Type::After][nIdx])->Append(strDelmiter);
+			stringBuilder->Append(mHistgram[ComInfo::Picture::Type::Original][nIdx])->Append(strDelmiter);
+			stringBuilder->Append(mHistgram[ComInfo::Picture::Type::After][nIdx])->Append(strDelmiter);
 			stringBuilder->Append(Environment::NewLine);
 		}
 		if (!saveDialog->StreamWrite(stringBuilder->ToString()))

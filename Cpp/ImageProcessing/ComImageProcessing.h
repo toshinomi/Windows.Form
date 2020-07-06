@@ -17,7 +17,7 @@ protected:
 	/// <summary>
 	/// ビットマップ
 	/// </summary>
-	Bitmap^ m_bitmap;
+	Bitmap^ mBitmap;
 
 public:
 	/// <summary>
@@ -40,13 +40,13 @@ public:
 	/// オリジナルのビットマップの取得
 	/// </summary>
 	/// <returns>ビットマップ</returns>
-	Bitmap^ GetBitmap() { return m_bitmap; }
+	Bitmap^ GetBitmap() { return mBitmap; }
 
 	/// <summary>
 	/// オリジナルのビットマップの設定
 	/// </summary>
 	/// <param name="bitmap">ビットマップ</param>
-	void SetBitmap(Bitmap^ bitmap) { m_bitmap = bitmap; }
+	void SetBitmap(Bitmap^ bitmap) { mBitmap = bitmap; }
 
 	/// <summary>
 	/// 画像処理実行の抽象

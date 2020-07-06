@@ -30,7 +30,7 @@ bool Binarization::ImageProcessing(Bitmap^ bitmap, CancellationToken^ token, Byt
 	int widthSize = bitmap->Width;
 	int heightSize = bitmap->Height;
 
-	auto bitmapData = bitmap->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
+	auto bitmapData = bitmap->LockBits(System::Drawing::Rectangle(0, 0, widthSize, heightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
 
 	int indexWidth;
 	int indexHeight;
@@ -52,7 +52,7 @@ bool Binarization::ImageProcessing(Bitmap^ bitmap, CancellationToken^ token, Byt
 			}
 
 			Byte* pixel = (Byte*)bitmapData->Scan0.ToPointer() + indexHeight * bitmapData->Stride + indexWidth * 4;
-			Byte grayScale = (Byte)((pPixel[ComInfo::Pixel::Type::B] + pPixel[ComInfo::Pixel::Type::G] + pPixel[ComInfo::Pixel::Type::R]) / 3);
+			Byte grayScale = (Byte)((pixel[ComInfo::Pixel::Type::B] + pixel[ComInfo::Pixel::Type::G] + pixel[ComInfo::Pixel::Type::R]) / 3);
 
 			Byte binarization = grayScale >= thresh ? (Byte)255 : (Byte)0;
 

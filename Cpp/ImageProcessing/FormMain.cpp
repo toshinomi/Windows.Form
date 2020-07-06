@@ -8,7 +8,7 @@ using namespace ImageProcessing;
 /// <returns>ビットマップ</returns>
 Bitmap^ FormMain::GetBitmap()
 {
-	Bitmap^ bitmap = m_imageProcessing->GetBitmap();
+	Bitmap^ bitmap = mImageProcessing->GetBitmap();
 
 	return bitmap;
 }
@@ -16,13 +16,13 @@ Bitmap^ FormMain::GetBitmap()
 /// <summary>
 /// 対象の画像処理オブジェクトを実行する
 /// </summary>
-/// <param name="_comImgInfo">画像処理の設定</param>
-/// <param name="_token">キャンセルトークン</param>
+/// <param name="comImageProcessingInfo">画像処理の設定</param>
+/// <param name="token">キャンセルトークン</param>
 /// <returns>画像処理の実行結果 成功/失敗</returns>
-bool FormMain::GoImageProcessing(ComImgInfo^ _comImgInfo, CancellationToken^ _token)
+bool FormMain::GoImageProcessing(ComImgInfo^ comImageProcessingInfo, CancellationToken^ token)
 {
-	m_imageProcessing->SetThresh(_comImgInfo->GetBinarizationInfo()->GetThresh());
-	bool bRst = m_imageProcessing->GoImageProcessing(m_strCurImgName, _token);
+	mImageProcessing->SetThresh(comImageProcessingInfo->GetBinarizationInfo()->GetThresh());
+	bool bRst = mImageProcessing->GoImageProcessing(mCurrentImageProcessingName, token);
 
 	return bRst;
 }
@@ -118,20 +118,20 @@ void FormMain::ExecTaskImageProcessing()
 	Stopwatch^ stopwatch = gcnew Stopwatch();
 	stopwatch->Start();
 
-	m_tokenSource = gcnew CancellationTokenSource();
-	CancellationToken^ token = m_tokenSource->Token;
+	mTokenSource = gcnew CancellationTokenSource();
+	CancellationToken^ token = mTokenSource->Token;
 
 	ComImgInfo^ imgInfo = gcnew ComImgInfo();
 	BinarizationInfo^ binarizationInfo = gcnew BinarizationInfo();
 	auto getDelegateSliderThresh = gcnew ComDelegate::DelegateGetByte(this, &FormMain::GetSliderThresh);
 	Byte nThresh = (Byte)this->Invoke(getDelegateSliderThresh);
 	binarizationInfo->SetThresh(nThresh);
-	imgInfo->SetCurImgName(m_strCurImgName);
+	imgInfo->SetCurrentImageProcessingName(mCurrentImageProcessingName);
 	imgInfo->SetBinarizationInfo(binarizationInfo);
 	bool bRst = GoImageProcessing(imgInfo, token);
 	if (bRst)
 	{
-		pictureBoxOriginal->ImageLocation = m_strOpenFileName;
+		pictureBoxOriginal->ImageLocation = mOpenFileName;
 		pictureBoxAfter->Image = GetBitmap();
 
 		stopwatch->Stop();
@@ -140,16 +140,16 @@ void FormMain::ExecTaskImageProcessing()
 		this->Invoke(setDelegateTextTime, stopwatch->ElapsedMilliseconds);
 		delete setDelegateTextTime;
 
-		Bitmap^ bitmap = gcnew Bitmap(m_strOpenFileName);
-		m_histgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
+		Bitmap^ bitmap = gcnew Bitmap(mOpenFileName);
+		mHistgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
 		if (GetBitmap() != nullptr)
 		{
 			System::Threading::Thread::Sleep(50);
-			m_histgram->SetBitmapAfter((Bitmap^)GetBitmap()->Clone());
+			mHistgram->SetBitmapAfter((Bitmap^)GetBitmap()->Clone());
 		}
-		if (m_histgram->GetIsOpen() == true)
+		if (mHistgram->GetIsOpen() == true)
 		{
-			auto actionDrawHistgram = gcnew Action(m_histgram, &FormHistgram::DrawHistgram);
+			auto actionDrawHistgram = gcnew Action(mHistgram, &FormHistgram::DrawHistgram);
 			this->Invoke(actionDrawHistgram);
 			delete actionDrawHistgram;
 		}
@@ -163,10 +163,10 @@ void FormMain::ExecTaskImageProcessing()
 	delete setDelegateControlEnable;
 
 	delete stopwatch;
-	delete m_tokenSource;
+	delete mTokenSource;
 	delete imgInfo;
 	delete binarizationInfo;
-	m_tokenSource = nullptr;
+	mTokenSource = nullptr;
 
 	return;
 }
@@ -188,8 +188,8 @@ void FormMain::TaskWorkImageProcessing()
 /// </summary>
 void FormMain::LoadImage(void)
 {
-	m_bitmap = gcnew Bitmap(m_strOpenFileName);
-	m_imageProcessing = gcnew ImageProcessing(m_bitmap);
+	mBitmap = gcnew Bitmap(mOpenFileName);
+	mImageProcessing = gcnew ImageProcessing(mBitmap);
 
 	return;
 }
@@ -201,7 +201,7 @@ void FormMain::LoadImage(void)
 /// <param name="e">FormClosingイベントのデータ</param>
 void FormMain::OnFormClosingFormMain(Object^ sender, FormClosingEventArgs^ e)
 {
-	if (m_tokenSource != nullptr)
+	if (mTokenSource != nullptr)
 	{
 		e->Cancel = true;
 	}
@@ -222,7 +222,7 @@ void FormMain::OnClickBtnFileSelect(Object^ sender, EventArgs^ e)
 	{
 		pictureBoxOriginal->Image = nullptr;
 		pictureBoxAfter->Image = nullptr;
-		m_strOpenFileName = openFileDlg->GetFileName();
+		mOpenFileName = openFileDlg->GetFileName();
 		try
 		{
 			LoadImage();
@@ -232,30 +232,30 @@ void FormMain::OnClickBtnFileSelect(Object^ sender, EventArgs^ e)
 			MessageBox::Show(this, "Open File Error", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			return;
 		}
-		pictureBoxOriginal->ImageLocation = m_strOpenFileName;
+		pictureBoxOriginal->ImageLocation = mOpenFileName;
 		btnStart->Enabled = true;
 		textBoxTime->Text = "";
 
-		if (m_histgram == nullptr)
+		if (mHistgram == nullptr)
 		{
-			m_histgram = gcnew FormHistgram();
+			mHistgram = gcnew FormHistgram();
 		}
 		else
 		{
-			m_histgram->Close();
-			m_histgram = nullptr;
-			m_histgram = gcnew FormHistgram();
+			mHistgram->Close();
+			mHistgram = nullptr;
+			mHistgram = gcnew FormHistgram();
 		}
 
-		Bitmap^ bitmap = gcnew Bitmap(m_strOpenFileName);
-		m_histgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
+		Bitmap^ bitmap = gcnew Bitmap(mOpenFileName);
+		mHistgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
 		if (GetBitmap() != nullptr)
 		{
-			m_histgram->SetBitmapAfter((Bitmap^)GetBitmap()->Clone());
+			mHistgram->SetBitmapAfter((Bitmap^)GetBitmap()->Clone());
 		}
-		m_histgram->DrawHistgram();
-		m_histgram->SetIsOpen(true);
-		m_histgram->Show();
+		mHistgram->DrawHistgram();
+		mHistgram->SetIsOpen(true);
+		mHistgram->Show();
 		delete bitmap;
 	}
 	delete openFileDlg;
@@ -272,8 +272,8 @@ void FormMain::OnClickBtnAllClear(Object^ sender, EventArgs^ e)
 	pictureBoxOriginal->ImageLocation = nullptr;
 	pictureBoxAfter->Image = nullptr;
 
-	m_bitmap = nullptr;
-	m_strOpenFileName = "";
+	mBitmap = nullptr;
+	mOpenFileName = "";
 
 	textBoxTime->Text = "";
 
@@ -282,9 +282,9 @@ void FormMain::OnClickBtnAllClear(Object^ sender, EventArgs^ e)
 	btnStart->Enabled = false;
 	btnSaveImage->Enabled = false;
 
-	if (m_histgram != nullptr)
+	if (mHistgram != nullptr)
 	{
-		m_histgram->Close();
+		mHistgram->Close();
 	}
 
 	return;
@@ -326,9 +326,9 @@ void FormMain::OnClickBtnStart(Object^ sender, EventArgs^ e)
 /// <param name="e">イベントのデータ</param>
 void FormMain::OnClickBtnStop(Object^ sender, EventArgs^ e)
 {
-	if (m_tokenSource != nullptr)
+	if (mTokenSource != nullptr)
 	{
-		m_tokenSource->Cancel();
+		mTokenSource->Cancel();
 	}
 
 	return;
@@ -341,7 +341,7 @@ void FormMain::OnClickBtnStop(Object^ sender, EventArgs^ e)
 /// <returns>ビットマップ</returns>
 Bitmap^ FormMain::GetImage()
 {
-	Bitmap^ bitmap = m_imageProcessing->GetBitmap();
+	Bitmap^ bitmap = mImageProcessing->GetBitmap();
 
 	return bitmap == nullptr ? bitmap : (Bitmap^)bitmap->Clone();
 }
@@ -385,29 +385,29 @@ void FormMain::OnClickBtnSaveImage(Object^ sender, EventArgs^ e)
 /// <param name="e">イベントのデータ</param>
 void FormMain::OnClickBtnShowHistgram(Object^ sender, EventArgs^ e)
 {
-	if (m_bitmap == nullptr)
+	if (mBitmap == nullptr)
 	{
 		return;
 	}
 
-	if (m_histgram != nullptr)
+	if (mHistgram != nullptr)
 	{
-		m_histgram->Close();
-		m_histgram = nullptr;
-		delete m_histgram;
-		m_histgram = gcnew FormHistgram();
+		mHistgram->Close();
+		mHistgram = nullptr;
+		delete mHistgram;
+		mHistgram = gcnew FormHistgram();
 	}
 
-	Bitmap^ bitmap = gcnew Bitmap(m_strOpenFileName);
-	m_histgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
+	Bitmap^ bitmap = gcnew Bitmap(mOpenFileName);
+	mHistgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
 	if (GetBitmap() != nullptr)
 	{
-		m_histgram->SetBitmapAfter((Bitmap^)GetBitmap()->Clone());
+		mHistgram->SetBitmapAfter((Bitmap^)GetBitmap()->Clone());
 	}
 
-	m_histgram->DrawHistgram();
-	m_histgram->SetIsOpen(true);
-	m_histgram->Show();
+	mHistgram->DrawHistgram();
+	mHistgram->SetIsOpen(true);
+	mHistgram->Show();
 
 	delete bitmap;
 
@@ -444,16 +444,16 @@ void FormMain::ShowSettingImageProcessing(void)
 
 	if (dialogResult == ::DialogResult::OK)
 	{
-		m_strCurImgName = (String^)win->GetCmbBoxImageProcessingType()->SelectedItem;
-		this->Text = "Image Processing ( " + m_strCurImgName + " )";
+		mCurrentImageProcessingName = (String^)win->GetCmbBoxImageProcessingType()->SelectedItem;
+		this->Text = "Image Processing ( " + mCurrentImageProcessingName + " )";
 
-		sliderThresh->Enabled = m_strCurImgName == (String^)ComConstStringInfo::IMG_NAME_BINARIZATION ? true : false;
+		sliderThresh->Enabled = mCurrentImageProcessingName == (String^)ComConstStringInfo::IMG_NAME_BINARIZATION ? true : false;
 
 		pictureBoxAfter->Image = nullptr;
 		btnSaveImage->Enabled = false;
-		m_bitmap = gcnew Bitmap(m_strOpenFileName);
-		m_imageProcessing = gcnew ImageProcessing(m_bitmap);
-		if (m_histgram != nullptr && m_histgram->GetIsOpen() == true)
+		mBitmap = gcnew Bitmap(mOpenFileName);
+		mImageProcessing = gcnew ImageProcessing(mBitmap);
+		if (mHistgram != nullptr && mHistgram->GetIsOpen() == true)
 		{
 			OnClickBtnShowHistgram(this, nullptr);
 		}
@@ -507,31 +507,31 @@ void FormMain::OnSliderMouseUp(System::Object^ sender, System::Windows::Forms::M
 /// </summary>
 void FormMain::ExecParamAjust()
 {
-	m_tokenSource = gcnew CancellationTokenSource();
-	CancellationToken^ token = m_tokenSource->Token;
+	mTokenSource = gcnew CancellationTokenSource();
+	CancellationToken^ token = mTokenSource->Token;
 
 	ComImgInfo^ imgInfo = gcnew ComImgInfo();
 	BinarizationInfo^ binarizationInfo = gcnew BinarizationInfo();
 	Byte nThresh = (Byte)sliderThresh->Value;
 	binarizationInfo->SetThresh(nThresh);
-	imgInfo->SetCurImgName(m_strCurImgName);
+	imgInfo->SetCurrentImageProcessingName(mCurrentImageProcessingName);
 	imgInfo->SetBinarizationInfo(binarizationInfo);
 	bool bRst = GoImageProcessing(imgInfo, token);
 	if (bRst)
 	{
-		pictureBoxOriginal->ImageLocation = m_strOpenFileName;
+		pictureBoxOriginal->ImageLocation = mOpenFileName;
 		pictureBoxAfter->Image = GetBitmap();
 
-		Bitmap^ bitmap = gcnew Bitmap(m_strOpenFileName);
-		m_histgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
+		Bitmap^ bitmap = gcnew Bitmap(mOpenFileName);
+		mHistgram->SetBitmapOrg((Bitmap^)bitmap->Clone());
 		if (GetBitmap() != nullptr)
 		{
 			System::Threading::Thread::Sleep(50);
-			m_histgram->SetBitmapAfter((Bitmap^)GetBitmap()->Clone());
+			mHistgram->SetBitmapAfter((Bitmap^)GetBitmap()->Clone());
 		}
-		if (m_histgram->GetIsOpen() == true)
+		if (mHistgram->GetIsOpen() == true)
 		{
-			m_histgram->DrawHistgram();
+			mHistgram->DrawHistgram();
 		}
 		delete bitmap;
 	}
@@ -539,10 +539,10 @@ void FormMain::ExecParamAjust()
 	SetControlEnable();
 	SetSliderThreshEnable(true);
 
-	delete m_tokenSource;
+	delete mTokenSource;
 	delete imgInfo;
 	delete binarizationInfo;
-	m_tokenSource = nullptr;
+	mTokenSource = nullptr;
 
 	return;
 }

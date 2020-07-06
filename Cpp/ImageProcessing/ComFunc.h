@@ -14,14 +14,14 @@ public:
 	/// <summary>
 	/// Double型のデータからbyte型のデータへの変換
 	/// </summary>
-	/// <param name="_dValue">Double型のデータ</param>
+	/// <param name="value">Double型のデータ</param>
 	/// <returns>byte型のデータ</returns>
-	static Byte DoubleToByte(double _dValue);
+	static Byte DoubleToByte(double value);
 
 	/// <summary>
 	/// long型のデータからbyte型のデータへの変換
 	/// </summary>
-	/// <param name="_lValue">long型のデータ</param>
+	/// <param name="value">long型のデータ</param>
 	/// <returns>byte型のデータ</returns>
-	static Byte LongToByte(long _lValue);
+	static Byte LongToByte(long value);
 };

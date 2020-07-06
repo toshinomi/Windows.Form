@@ -3,10 +3,10 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="_bitmap">ビットマップ</param>
+/// <param name="bitmap">ビットマップ</param>
 ComImageProcessing::ComImageProcessing(Bitmap^ bitmap)
 {
-	m_bitmap = bitmap;
+	mBitmap = bitmap;
 }
 
 /// <summary>
@@ -21,5 +21,5 @@ ComImageProcessing::~ComImageProcessing()
 /// </summary>
 void ComImageProcessing::Init(void)
 {
-	m_bitmap = nullptr;
+	mBitmap = nullptr;
 }

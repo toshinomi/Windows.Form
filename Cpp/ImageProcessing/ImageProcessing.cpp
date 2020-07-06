@@ -48,31 +48,31 @@ bool ImageProcessing::ImageProcessing::GoImageProcessing(String^ imageProcessing
     {
         index = ComInfo::ImgProc::Type::EdgeDetection;
         auto edgeDetection = (EdgeDetection^)arrayImageProcessing[index];
-        result = edgeDetection->ImageProcessing(this->m_bitmap, token);
+        result = edgeDetection->ImageProcessing(this->mBitmap, token);
     }
     else if (imageProcessingName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE)
     {
         index = ComInfo::ImgProc::Type::GrayScale;
         auto grayScale = (GrayScale^)arrayImageProcessing[index];
-        result = grayScale->ImageProcessing(this->m_bitmap, token);
+        result = grayScale->ImageProcessing(this->mBitmap, token);
     }
     else if (imageProcessingName == (String^)ComConstStringInfo::IMG_NAME_BINARIZATION)
     {
         index = ComInfo::ImgProc::Type::Binarization;
         auto binarization = (Binarization^)arrayImageProcessing[index];
-        result = binarization->ImageProcessing(this->m_bitmap, token, GetThresh());
+        result = binarization->ImageProcessing(this->mBitmap, token, GetThresh());
     }
     else if (imageProcessingName == (String^)ComConstStringInfo::IMG_NAME_GRAY_SCALE_2DIFF)
     {
         index = ComInfo::ImgProc::Type::GrayScale2Diff;
         auto grayScale2Diff = (GrayScale2Diff^)arrayImageProcessing[index];
-        result = grayScale2Diff->ImageProcessing(this->m_bitmap, token);
+        result = grayScale2Diff->ImageProcessing(this->mBitmap, token);
     }
     else if (imageProcessingName == (String^)ComConstStringInfo::IMG_NAME_COLOR_REVERSAL)
     {
         index = ComInfo::ImgProc::Type::ColorReversal;
         auto colorReversal = (ColorReversal^)arrayImageProcessing[index];
-        result = colorReversal->ImageProcessing(this->m_bitmap, token);
+        result = colorReversal->ImageProcessing(this->mBitmap, token);
     }
 
 	return result;

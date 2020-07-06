@@ -10,12 +10,12 @@ ComImageProcessingType::ComImageProcessingType()
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="_nId">ID</param>
-/// <param name="_strNmae">名称</param>
-ComImageProcessingType::ComImageProcessingType(int _nId, String^ _strNmae)
+/// <param name="id">ID</param>
+/// <param name="name">名称</param>
+ComImageProcessingType::ComImageProcessingType(int id, String^ name)
 {
-	m_nId = _nId;
-	m_strName = _strNmae;
+	mId = id;
+	mName = name;
 }
 
 /// <summary>
