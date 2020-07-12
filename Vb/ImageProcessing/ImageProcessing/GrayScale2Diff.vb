@@ -61,9 +61,9 @@ Public Class GrayScale2Diff
                 Dim pixelG = ReadByte(bitmapData.Scan0, position + ComInfo.Pixel.G)
                 Dim pixelR = ReadByte(bitmapData.Scan0, position + ComInfo.Pixel.R)
 
-                Dim totalBlue As Long = 0
-                Dim totalGreen As Long = 0
-                Dim totalRed As Long = 0
+                Dim blue As Long = 0
+                Dim green As Long = 0
+                Dim red As Long = 0
                 Dim averageGrayScale As Double = 0.0
                 Dim indexWidthMask As Integer
                 Dim indexHightMask As Integer
@@ -77,20 +77,20 @@ Public Class GrayScale2Diff
 
                             Dim positionMaskArea As Integer = (indexHeight + indexHightMask) * bitmapData.Stride + (indexWidth + indexWidthMask) * 4
 
-                            totalBlue = ReadByte(bitmapData.Scan0, positionMaskArea + ComInfo.Pixel.B) * mask(indexWidthMask, indexHightMask)
-                            totalGreen = ReadByte(bitmapData.Scan0, positionMaskArea + ComInfo.Pixel.G) * mask(indexWidthMask, indexHightMask)
-                            totalRed = ReadByte(bitmapData.Scan0, positionMaskArea + ComInfo.Pixel.R) * mask(indexWidthMask, indexHightMask)
+                            blue = ReadByte(bitmapData.Scan0, positionMaskArea + ComInfo.Pixel.B) * mask(indexWidthMask, indexHightMask)
+                            green = ReadByte(bitmapData.Scan0, positionMaskArea + ComInfo.Pixel.G) * mask(indexWidthMask, indexHightMask)
+                            red = ReadByte(bitmapData.Scan0, positionMaskArea + ComInfo.Pixel.R) * mask(indexWidthMask, indexHightMask)
 
-                            Dim grayScale = (totalBlue + totalGreen + totalRed) / 3
-                            averageGrayScale = (averageGrayScale + grayScale) / 2
+                            Dim gray = (blue + green + red) / 3
+                            averageGrayScale = (averageGrayScale + gray) / 2
                         End If
                     Next
                 Next
-                Dim nGrayScale As Byte = ComFunc.DoubleToByte(averageGrayScale)
+                Dim grayScale As Byte = ComFunc.DoubleToByte(averageGrayScale)
 
-                WriteByte(bitmapData.Scan0, position + ComInfo.Pixel.B, nGrayScale)
-                WriteByte(bitmapData.Scan0, position + ComInfo.Pixel.G, nGrayScale)
-                WriteByte(bitmapData.Scan0, position + ComInfo.Pixel.R, nGrayScale)
+                WriteByte(bitmapData.Scan0, position + ComInfo.Pixel.B, grayScale)
+                WriteByte(bitmapData.Scan0, position + ComInfo.Pixel.G, grayScale)
+                WriteByte(bitmapData.Scan0, position + ComInfo.Pixel.R, grayScale)
             Next
         Next
         bitmap.UnlockBits(bitmapData)
