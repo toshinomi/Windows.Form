@@ -5,18 +5,17 @@ Imports LiveCharts.Wpf
 ''' FormHistgramLiveCharts のロジック
 ''' </summary>
 Public Class FormHistgramLiveCharts
-    Private m_histgramChart As ComHistgramLiveCharts
-    Private m_bIsOpen As Boolean
+    Private mHistgramChart As ComHistgramLiveCharts
 
     ''' <summary>
     ''' オリジナルのビットマップ
     ''' </summary>
     Public Property BitmapOrg() As Bitmap
         Set(value As Bitmap)
-            m_histgramChart.BitmapOrg = value
+            mHistgramChart.BitmapOrg = value
         End Set
         Get
-            Return m_histgramChart.BitmapOrg
+            Return mHistgramChart.BitmapOrg
         End Get
     End Property
 
@@ -25,10 +24,10 @@ Public Class FormHistgramLiveCharts
     ''' </summary>
     Public Property BitmapAfter() As Bitmap
         Set(value As Bitmap)
-            m_histgramChart.BitmapAfter = value
+            mHistgramChart.BitmapAfter = value
         End Set
         Get
-            Return m_histgramChart.BitmapOrg
+            Return mHistgramChart.BitmapOrg
         End Get
     End Property
 
@@ -36,13 +35,6 @@ Public Class FormHistgramLiveCharts
     ''' Formのオープン状態
     ''' </summary>
     Public Property IsOpen() As Boolean
-        Set(value As Boolean)
-            m_bIsOpen = value
-        End Set
-        Get
-            Return m_bIsOpen
-        End Get
-    End Property
 
     ''' <summary>
     ''' コンストラクタ
@@ -54,7 +46,7 @@ Public Class FormHistgramLiveCharts
 
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
 
-        m_histgramChart = New ComHistgramLiveCharts()
+        mHistgramChart = New ComHistgramLiveCharts()
     End Sub
 
     ''' <summary>
@@ -62,11 +54,11 @@ Public Class FormHistgramLiveCharts
     ''' </summary>
     Public Sub DrawHistgram()
         Dim items = New List(Of LineSeries)
-        items = m_histgramChart.DrawHistgram()
+        items = mHistgramChart.DrawHistgram()
 
         chart.Series.Clear()
-        For nIdx As Integer = 0 To items.Count - 1
-            chart.Series.Add(items(nIdx))
+        For index As Integer = 0 To items.Count - 1
+            chart.Series.Add(items(index))
         Next
 
         Return
@@ -78,7 +70,7 @@ Public Class FormHistgramLiveCharts
     ''' <param name="sender">オブジェクト</param>
     ''' <param name="e">FormClosingイベントのデータ</param>
     Private Sub OnFormClosingFormHistgramLiveCharts(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        m_bIsOpen = False
+        IsOpen = False
 
         Return
     End Sub
@@ -89,9 +81,9 @@ Public Class FormHistgramLiveCharts
     ''' <param name="sender">オブジェクト</param>
     ''' <param name="e">イベントのデータ</param>
     Private Sub OnClickMenu(sender As Object, e As EventArgs) Handles SaveCsvToolStripMenuItem.Click
-        Dim strHeader As String = sender.ToString()
+        Dim menuTitle = sender.ToString()
 
-        Select Case (strHeader)
+        Select Case (menuTitle)
             Case ComInfo.MENU_SAVE_FILE
                 SaveCsv()
             Case Else
@@ -102,7 +94,7 @@ Public Class FormHistgramLiveCharts
     ''' CSVファイル保存
     ''' </summary>
     Public Sub SaveCsv()
-        If (m_histgramChart.SaveCsv() = False) Then
+        If (mHistgramChart.SaveCsv() = False) Then
             MessageBox.Show(Me, "Save CSV File Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub

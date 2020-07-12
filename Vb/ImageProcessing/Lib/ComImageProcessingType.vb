@@ -2,32 +2,15 @@
 ''' 画像処理設定のロジック
 ''' </summary>
 Public Class ComImageProcessingType
-    Private m_nId As Integer
-    Private m_strName As String
-
     ''' <summary>
     ''' ID
     ''' </summary>
     Public Property Id() As Integer
-        Get
-            Return m_nId
-        End Get
-        Set(ByVal value As Integer)
-            m_nId = value
-        End Set
-    End Property
 
     ''' <summary>
     ''' 名称
     ''' </summary>
     Public Property Name() As String
-        Get
-            Return m_strName
-        End Get
-        Set(ByVal value As String)
-            m_strName = value
-        End Set
-    End Property
 
     ''' <summary>
     ''' コンストラクタ
@@ -38,11 +21,11 @@ Public Class ComImageProcessingType
     ''' <summary>
     ''' コンストラクタ
     ''' </summary>
-    ''' <param name="_nId">ID</param>
-    ''' <param name="_strNmae">名称</param>
-    Public Sub New(ByVal _nId As Integer, ByVal _strNmae As String)
-        m_nId = _nId
-        m_strName = _strNmae
+    ''' <param name="id">ID</param>
+    ''' <param name="name">名称</param>
+    Public Sub New(ByVal id As Integer, name As String)
+        Me.Id = id
+        Me.Name = name
     End Sub
 
     ''' <summary>

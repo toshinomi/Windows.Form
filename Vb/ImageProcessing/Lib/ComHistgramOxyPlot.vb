@@ -5,26 +5,17 @@ Imports OxyPlot.Series
 ''' OXYプロットのヒストグラム表示のロジック
 ''' </summary>
 Public Class ComHistgramOxyPlot : Inherits ComCharts
-    Private m_pModel As PlotModel
-
     ''' <summary>
     ''' プロットモデル
     ''' </summary>
     Public Property PModel() As PlotModel
-        Set(value As PlotModel)
-            m_pModel = value
-        End Set
-        Get
-            Return m_pModel
-        End Get
-    End Property
 
     ''' <summary>
     ''' ヒストグラム用の2次元配列データ　配列の1次元：オリジナルのデータ、配列の2次元：画像処理後のデータ
     ''' </summary>
     Public ReadOnly Property Histgram() As Integer(,)
         Get
-            Return MyBase.m_nHistgram
+            Return MyBase.mHistgram
         End Get
     End Property
 
@@ -33,10 +24,10 @@ Public Class ComHistgramOxyPlot : Inherits ComCharts
     ''' </summary>
     Public Property BitmapOrg() As Bitmap
         Set(value As Bitmap)
-            MyBase.m_bitmapOrg = value
+            MyBase.mBitmapOrg = value
         End Set
         Get
-            Return MyBase.m_bitmapOrg
+            Return MyBase.mBitmapOrg
         End Get
     End Property
 
@@ -45,10 +36,10 @@ Public Class ComHistgramOxyPlot : Inherits ComCharts
     ''' </summary>
     Public Property BitmapAfter() As Bitmap
         Set(value As Bitmap)
-            MyBase.m_bitmapAfter = value
+            MyBase.mBitmapAfter = value
         End Set
         Get
-            Return MyBase.m_bitmapAfter
+            Return MyBase.mBitmapAfter
         End Get
     End Property
 
@@ -56,7 +47,7 @@ Public Class ComHistgramOxyPlot : Inherits ComCharts
     ''' コンストラクタ
     ''' </summary>
     Public Sub New()
-        m_pModel = New PlotModel()
+        PModel = New PlotModel()
     End Sub
 
     ''' <summary>
@@ -75,34 +66,34 @@ Public Class ComHistgramOxyPlot : Inherits ComCharts
 
         MyBase.CalHistgram()
 
-        Dim dataList1 = New List(Of DataPoint)
+        Dim dataListOriginal = New List(Of DataPoint)
 
-        For nIdx As Integer = 0 To (MyBase.m_nHistgram.Length >> 1) - 1 Step 1
-            Dim DataPoint = New DataPoint(nIdx, MyBase.m_nHistgram(ComInfo.PictureType.Original, nIdx))
-            dataList1.Add(DataPoint)
+        For index As Integer = 0 To (MyBase.mHistgram.Length >> 1) - 1 Step 1
+            Dim DataPoint = New DataPoint(index, MyBase.mHistgram(ComInfo.PictureType.Original, index))
+            dataListOriginal.Add(DataPoint)
         Next
 
-        Dim series1 = New LineSeries() With
+        Dim seriesOriginal = New LineSeries() With
         {
             .Title = "Original",
-            .ItemsSource = dataList1
+            .ItemsSource = dataListOriginal
         }
-        m_pModel.Series.Add(series1)
+        PModel.Series.Add(seriesOriginal)
 
-        Dim dataList2 = New List(Of DataPoint)
+        Dim dataListAfter = New List(Of DataPoint)
 
-        For nIdx As Integer = 0 To (MyBase.m_nHistgram.Length >> 1) - 1 Step 1
-            Dim DataPoint = New DataPoint(nIdx, MyBase.m_nHistgram(ComInfo.PictureType.After, nIdx))
-            dataList2.Add(DataPoint)
+        For index As Integer = 0 To (MyBase.mHistgram.Length >> 1) - 1 Step 1
+            Dim DataPoint = New DataPoint(index, MyBase.mHistgram(ComInfo.PictureType.After, index))
+            dataListAfter.Add(DataPoint)
         Next
 
-        Dim series2 = New LineSeries() With
+        Dim seriesAfter = New LineSeries() With
         {
             .Title = "After",
-            .ItemsSource = dataList2
+            .ItemsSource = dataListAfter
         }
-        m_pModel.Series.Add(series2)
+        PModel.Series.Add(seriesAfter)
 
-        Return m_pModel
+        Return PModel
     End Function
 End Class

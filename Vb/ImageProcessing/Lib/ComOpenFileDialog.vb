@@ -2,17 +2,17 @@
 ''' ファイルオープンのロジック
 ''' </summary>
 Public Class ComOpenFileDialog
-    Protected m_openFileDialog As OpenFileDialog
+    Protected mOpenFileDialog As OpenFileDialog
 
     ''' <summary>
     ''' ファイル名称
     ''' </summary>
     Public Property FileName() As String
         Set(value As String)
-            m_openFileDialog.FileName = value
+            mOpenFileDialog.FileName = value
         End Set
         Get
-            Return m_openFileDialog.FileName
+            Return mOpenFileDialog.FileName
         End Get
     End Property
 
@@ -21,10 +21,10 @@ Public Class ComOpenFileDialog
     ''' </summary>
     Public Property InitialDirectory() As String
         Set(value As String)
-            m_openFileDialog.InitialDirectory = value
+            mOpenFileDialog.InitialDirectory = value
         End Set
         Get
-            Return m_openFileDialog.InitialDirectory
+            Return mOpenFileDialog.InitialDirectory
         End Get
     End Property
 
@@ -33,10 +33,10 @@ Public Class ComOpenFileDialog
     ''' </summary>
     Public Property Filter() As String
         Set(value As String)
-            m_openFileDialog.Filter = value
+            mOpenFileDialog.Filter = value
         End Set
         Get
-            Return m_openFileDialog.Filter
+            Return mOpenFileDialog.Filter
         End Get
     End Property
 
@@ -45,10 +45,10 @@ Public Class ComOpenFileDialog
     ''' </summary>
     Public Property FilterIndex() As Integer
         Set(value As Integer)
-            m_openFileDialog.FilterIndex = value
+            mOpenFileDialog.FilterIndex = value
         End Set
         Get
-            Return m_openFileDialog.FilterIndex
+            Return mOpenFileDialog.FilterIndex
         End Get
     End Property
 
@@ -57,10 +57,10 @@ Public Class ComOpenFileDialog
     ''' </summary>
     Public Property Title() As String
         Set(value As String)
-            m_openFileDialog.Title = value
+            mOpenFileDialog.Title = value
         End Set
         Get
-            Return m_openFileDialog.Title
+            Return mOpenFileDialog.Title
         End Get
     End Property
 
@@ -69,10 +69,10 @@ Public Class ComOpenFileDialog
     ''' </summary>
     Public Property CheckFileExists() As Boolean
         Set(value As Boolean)
-            m_openFileDialog.CheckFileExists = value
+            mOpenFileDialog.CheckFileExists = value
         End Set
         Get
-            Return m_openFileDialog.CheckFileExists
+            Return mOpenFileDialog.CheckFileExists
         End Get
     End Property
 
@@ -81,10 +81,10 @@ Public Class ComOpenFileDialog
     ''' </summary>
     Public Property CheckPathExists() As Boolean
         Set(value As Boolean)
-            m_openFileDialog.CheckPathExists = value
+            mOpenFileDialog.CheckPathExists = value
         End Set
         Get
-            Return m_openFileDialog.CheckPathExists
+            Return mOpenFileDialog.CheckPathExists
         End Get
     End Property
 
@@ -92,7 +92,7 @@ Public Class ComOpenFileDialog
     ''' コンストラクタ
     ''' </summary>
     Public Sub New()
-        m_openFileDialog = New OpenFileDialog()
+        mOpenFileDialog = New OpenFileDialog()
     End Sub
 
     ''' <summary>
@@ -107,12 +107,12 @@ Public Class ComOpenFileDialog
     ''' </summary>
     ''' <returns>結果 成功/失敗</returns>
     Public Function ShowDialog() As Boolean
-        Dim bRst As Boolean = False
+        Dim result As Boolean = False
 
-        If (m_openFileDialog.ShowDialog() = DialogResult.OK) Then
-            bRst = True
+        If (mOpenFileDialog.ShowDialog() = DialogResult.OK) Then
+            result = True
         End If
 
-        Return bRst
+        Return result
     End Function
 End Class

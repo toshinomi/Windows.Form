@@ -4,17 +4,17 @@
 ''' MainFormのロジック
 ''' </summary>
 Public Class FormMain
-    Private m_bitmap As Bitmap
-    Private m_imgProc As Object
-    Private m_strOpenFileName As String
-    Private m_tokenSource As CancellationTokenSource
-    Private m_strCurImgName As String
+    Private mBitmap As Bitmap
+    Private mImageProcessing As ImageProcessing
+    Private mOpenFileName As String
+    Private mTokenSource As CancellationTokenSource
+    Private mCurrentImageProcessingName As String
 #If CHART_LIVE_CHART Then
-    Private m_histgram As FormHistgramLiveCharts
+    Private mHistgram As FormHistgramLiveCharts
 #ElseIf CHART_OXY_PLOT Then
-    private m_histgram As FormHistgramOxyPlot
+    private mHistgram As FormHistgramOxyPlot
 #Else
-    Private m_histgram As FormHistgramOxyPlot
+    Private mHistgram As FormHistgramOxyPlot
 #End If
 
     ''' <summary>
@@ -36,112 +36,46 @@ Public Class FormMain
 
         SetToolTip()
 
-        m_bitmap = Nothing
-        m_tokenSource = Nothing
-        m_imgProc = Nothing
+        mBitmap = Nothing
+        mTokenSource = Nothing
+        mImageProcessing = Nothing
 
-        m_strCurImgName = My.Settings.ImgTypeSelectName
-        Me.Text = "Image Processing ( " + m_strCurImgName + " )"
+        mCurrentImageProcessingName = My.Settings.ImgTypeSelectName
+        Me.Text = "Image Processing ( " + mCurrentImageProcessingName + " )"
 
-        sliderThresh.Enabled = If(m_strCurImgName = ComInfo.IMG_NAME_BINARIZATION, True, False)
+        sliderThresh.Enabled = If(mCurrentImageProcessingName = ComInfo.IMG_NAME_BINARIZATION, True, False)
     End Sub
 
     ''' <summary>
     ''' デスクトラクタ
     ''' </summary>
     Protected Overrides Sub Finalize()
-        m_bitmap = Nothing
-        m_tokenSource = Nothing
-        m_imgProc = Nothing
+        mBitmap = Nothing
+        mTokenSource = Nothing
+        mImageProcessing = Nothing
 
         MyBase.Finalize()
     End Sub
 
     ''' <summary>
-    ''' 対象の画像処理オブジェクトにイメージをロードする
-    ''' </summary>
-    ''' <param name="_strImgName">画像処理オブジェクトの名称</param>
-    Public Sub SelectLoadImage(_strImgName As String)
-        If (m_imgProc IsNot Nothing) Then
-            m_imgProc = Nothing
-        End If
-
-        Select Case _strImgName
-            Case ComInfo.IMG_NAME_EDGE_DETECTION
-                m_imgProc = New EdgeDetection(m_bitmap)
-            Case ComInfo.IMG_NAME_GRAY_SCALE
-                m_imgProc = New GrayScale(m_bitmap)
-            Case ComInfo.IMG_NAME_BINARIZATION
-                m_imgProc = New Binarization(m_bitmap)
-            Case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF
-                m_imgProc = New GrayScale2Diff(m_bitmap)
-            Case ComInfo.IMG_NAME_COLOR_REVERSAL
-                m_imgProc = New ColorReversal(m_bitmap)
-            Case Else
-                m_imgProc = Nothing
-        End Select
-
-        Return
-    End Sub
-
-    ''' <summary>
     ''' 対象の画像処理オブジェクトからWriteableBitmapを取得する
     ''' </summary>
-    ''' <param name="_strImgName">画像処理オブジェクトの名称</param>
     ''' <returns>Writeableなビットマップ</returns>
-    Public Function SelectGetBitmap(_strImgName As String) As Bitmap
-        Dim bitmap As Bitmap = Nothing
-
-        Select Case _strImgName
-            Case ComInfo.IMG_NAME_EDGE_DETECTION
-                Dim edge As EdgeDetection = m_imgProc
-                bitmap = edge.BitmapAfter
-            Case ComInfo.IMG_NAME_GRAY_SCALE
-                Dim gray As GrayScale = m_imgProc
-                bitmap = gray.BitmapAfter
-            Case ComInfo.IMG_NAME_BINARIZATION
-                Dim binarization As Binarization = m_imgProc
-                bitmap = binarization.BitmapAfter
-            Case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF
-                Dim gray2Diff As GrayScale2Diff = m_imgProc
-                bitmap = gray2Diff.BitmapAfter
-            Case ComInfo.IMG_NAME_COLOR_REVERSAL
-                Dim colorReversal As ColorReversal = m_imgProc
-                bitmap = colorReversal.BitmapAfter
-        End Select
-
-        Return bitmap
+    Public Function GetBitmap() As Bitmap
+        Return mImageProcessing.Bitmap
     End Function
 
     ''' <summary>
     ''' 対象の画像処理オブジェクトを実行する
     ''' </summary>
-    ''' <param name="_comImgInfo">画像処理の設定</param>
-    ''' <param name="_token">キャンセルトークン</param>
+    ''' <param name="comImageProcessingInfo">画像処理の設定</param>
+    ''' <param name="token">キャンセルトークン</param>
     ''' <returns>画像処理の実行結果 成功/失敗</returns>
-    Public Function SelectGoImgProc(_comImgInfo As ComImgInfo, _token As CancellationToken) As Boolean
-        Dim bRst As Boolean = True
+    Public Function GoImageProcessing(comImageProcessingInfo As ComImageProcessingInfo, token As CancellationToken) As Boolean
+        mImageProcessing.Thresh = comImageProcessingInfo.BinarizationInfo.Thresh
+        Dim result = mImageProcessing.GoImageProcessing(mCurrentImageProcessingName, token)
 
-        Select Case _comImgInfo.CurImgName
-            Case ComInfo.IMG_NAME_EDGE_DETECTION
-                Dim edge As EdgeDetection = m_imgProc
-                bRst = edge.GoImgProc(_token)
-            Case ComInfo.IMG_NAME_GRAY_SCALE
-                Dim gray As GrayScale = m_imgProc
-                bRst = gray.GoImgProc(_token)
-            Case ComInfo.IMG_NAME_BINARIZATION
-                Dim Binarization As Binarization = m_imgProc
-                Binarization.Thresh = _comImgInfo.BinarizationInfo.Thresh
-                bRst = Binarization.GoImgProc(_token)
-            Case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF
-                Dim gray2Diff As GrayScale2Diff = m_imgProc
-                bRst = gray2Diff.GoImgProc(_token)
-            Case ComInfo.IMG_NAME_COLOR_REVERSAL
-                Dim ColorReversal As ColorReversal = m_imgProc
-                bRst = ColorReversal.GoImgProc(_token)
-        End Select
-
-        Return bRst
+        Return result
     End Function
 
     ''' <summary>
@@ -222,23 +156,23 @@ Public Class FormMain
     ''' </summary>
     ''' <returns>画像処理の実行結果 成功/失敗</returns>
     Public Function TaskWorkImageProcessing()
-        m_tokenSource = New CancellationTokenSource()
-        Dim token As CancellationToken = m_tokenSource.Token
-        Dim imgInfo As ComImgInfo = New ComImgInfo()
-        Dim binarizationInfo As BinarizationInfo = New BinarizationInfo()
+        mTokenSource = New CancellationTokenSource()
+        Dim token = mTokenSource.Token
+        Dim imageProcessingInfo = New ComImageProcessingInfo()
+        Dim binarizationInfo = New BinarizationInfo()
         binarizationInfo.Thresh = sliderThresh.Value
-        imgInfo.CurImgName = m_strCurImgName
-        imgInfo.BinarizationInfo = binarizationInfo
-        Dim bRst As Task(Of Boolean) = Task.Run(Function() SelectGoImgProc(imgInfo, token))
-        Return bRst
+        imageProcessingInfo.CurrentImageProcessingName = mCurrentImageProcessingName
+        imageProcessingInfo.BinarizationInfo = binarizationInfo
+        Dim result As Task(Of Boolean) = Task.Run(Function() GoImageProcessing(imageProcessingInfo, token))
+        Return result
     End Function
 
     ''' <summary>
     ''' イメージのロード処理
     ''' </summary>
     Public Sub LoadImage()
-        m_bitmap = New Bitmap(m_strOpenFileName)
-        SelectLoadImage(m_strCurImgName)
+        mBitmap = New Bitmap(mOpenFileName)
+        mImageProcessing = New ImageProcessing(mBitmap)
 
         Return
     End Sub
@@ -249,8 +183,13 @@ Public Class FormMain
     ''' <param name="sender">オブジェクト</param>
     ''' <param name="e">FormClosingイベントのデータ</param>
     Public Sub OnFormClosingFormMain(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        If (m_tokenSource IsNot Nothing) Then
+        If (mTokenSource IsNot Nothing) Then
             e.Cancel = True
+        End If
+
+        If (mHistgram IsNot Nothing) Then
+            mHistgram.Close()
+            mHistgram = Nothing
         End If
         Return
     End Sub
@@ -261,50 +200,50 @@ Public Class FormMain
     ''' <param name="sender">オブジェクト</param>
     ''' <param name="e">イベントのデータ</param>
     Private Sub OnClickBtnFileSelect(sender As Object, e As EventArgs) Handles btnFileSelect.Click
-        Dim openFileDlg As ComOpenFileDialog = New ComOpenFileDialog()
+        Dim openFileDlg = New ComOpenFileDialog()
         openFileDlg.Filter = "JPG|*.jpg|PNG|*.png"
         openFileDlg.Title = "Open the file"
         If (openFileDlg.ShowDialog() = True) Then
             pictureBoxOriginal.Image = Nothing
             pictureBoxAfter.Image = Nothing
-            m_strOpenFileName = openFileDlg.FileName
+            mOpenFileName = openFileDlg.FileName
             Try
                 LoadImage()
             Catch ex As Exception
                 MessageBox.Show(Me, "Open File Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return
             End Try
-            pictureBoxOriginal.ImageLocation = m_strOpenFileName
+            pictureBoxOriginal.ImageLocation = mOpenFileName
             btnStart.Enabled = True
             textBoxTime.Text = ""
 
-            If (m_histgram Is Nothing) Then
+            If (mHistgram Is Nothing) Then
 #If CHART_LIVE_CHART Then
                 m_histgram = New FormHistgramLiveCharts()
 #ElseIf CHART_OXY_PLOT Then
                 m_histgram = New FormHistgramOxyPlot()
 #Else
-                m_histgram = New FormHistgramOxyPlot()
+                mHistgram = New FormHistgramOxyPlot()
 #End If
             Else
-                m_histgram.Close()
-                m_histgram = Nothing
+                mHistgram.Close()
+                mHistgram = Nothing
 #If CHART_LIVE_CHART Then
-                m_histgram = New FormHistgramLiveCharts()
+                mHistgram = New FormHistgramLiveCharts()
 #ElseIf CHART_OXY_PLOT Then
-                m_histgram = New FormHistgramOxyPlot()
+                mHistgram = New FormHistgramOxyPlot()
 #Else
-                m_histgram = New FormHistgramOxyPlot()
+                mHistgram = New FormHistgramOxyPlot()
 #End If
             End If
 
-            m_histgram.BitmapOrg = New Bitmap(m_strOpenFileName).Clone()
-            If (SelectGetBitmap(m_strCurImgName) IsNot Nothing) Then
-                m_histgram.BitmapAfter = SelectGetBitmap(m_strCurImgName).Clone()
+            mHistgram.BitmapOrg = New Bitmap(mOpenFileName).Clone()
+            If (GetBitmap() IsNot Nothing) Then
+                mHistgram.BitmapAfter = DirectCast(GetBitmap().Clone(), Bitmap)
             End If
-            m_histgram.DrawHistgram()
-            m_histgram.IsOpen = True
-            m_histgram.Show()
+            mHistgram.DrawHistgram()
+            mHistgram.IsOpen = True
+            mHistgram.Show()
         End If
         Return
     End Sub
@@ -318,8 +257,8 @@ Public Class FormMain
         pictureBoxOriginal.ImageLocation = Nothing
         pictureBoxAfter.Image = Nothing
 
-        m_bitmap = Nothing
-        m_strOpenFileName = ""
+        mBitmap = Nothing
+        mOpenFileName = ""
 
         textBoxTime.Text = ""
 
@@ -349,27 +288,27 @@ Public Class FormMain
 
         LoadImage()
 
-        Dim Stopwatch As Stopwatch = New Stopwatch()
+        Dim Stopwatch = New Stopwatch()
         Stopwatch.Start()
         btnStop.Enabled = True
         btnSaveImage.Enabled = False
         btnShowHistgram.Enabled = False
         Dim bResult As Boolean = Await TaskWorkImageProcessing()
         If (bResult) Then
-            pictureBoxOriginal.ImageLocation = m_strOpenFileName
-            pictureBoxAfter.Image = SelectGetBitmap(m_strCurImgName)
+            pictureBoxOriginal.ImageLocation = mOpenFileName
+            pictureBoxAfter.Image = GetBitmap()
 
             Stopwatch.Stop()
 
             Invoke(New Action(Of Long)(AddressOf SetTextTime), Stopwatch.ElapsedMilliseconds)
             btnSaveImage.Enabled = True
 
-            m_histgram.BitmapOrg = New Bitmap(m_strOpenFileName).Clone()
-            If (SelectGetBitmap(m_strCurImgName) IsNot Nothing) Then
-                m_histgram.BitmapAfter = SelectGetBitmap(m_strCurImgName).Clone()
+            mHistgram.BitmapOrg = New Bitmap(mOpenFileName).Clone()
+            If (GetBitmap() IsNot Nothing) Then
+                mHistgram.BitmapAfter = DirectCast(GetBitmap().Clone(), Bitmap)
             End If
-            If (m_histgram.IsOpen = True) Then
-                m_histgram.DrawHistgram()
+            If (mHistgram.IsOpen = True) Then
+                mHistgram.DrawHistgram()
             End If
         End If
         Invoke(New Action(AddressOf SetPictureBoxStatus))
@@ -378,7 +317,7 @@ Public Class FormMain
         btnShowHistgram.Enabled = True
 
         Stopwatch = Nothing
-        m_tokenSource = Nothing
+        mTokenSource = Nothing
 
         Return
     End Sub
@@ -389,52 +328,12 @@ Public Class FormMain
     ''' <param name="sender">オブジェクト</param>
     ''' <param name="e">イベントのデータ</param>
     Private Sub OnClickBtnStop(sender As Object, e As EventArgs) Handles btnStop.Click
-        If (m_tokenSource IsNot Nothing) Then
-            m_tokenSource.Cancel()
+        If (mTokenSource IsNot Nothing) Then
+            mTokenSource.Cancel()
         End If
 
         Return
     End Sub
-
-    ''' <summary>
-    ''' 画像処理のオブジェクトからイメージの取得
-    ''' </summary>
-    ''' <param name="_strImgName">画像処理の名称</param>
-    ''' <returns>ビットマップ</returns>
-    Public Function GetImage(_strImgName As String) As Bitmap
-        Dim Bitmap As Bitmap = Nothing
-
-        Select Case m_strCurImgName
-            Case ComInfo.IMG_NAME_EDGE_DETECTION
-                Dim edge As EdgeDetection = m_imgProc
-                If (edge IsNot Nothing) Then
-                    Bitmap = edge.BitmapAfter
-                End If
-            Case ComInfo.IMG_NAME_GRAY_SCALE
-                Dim gray As GrayScale = m_imgProc
-                If (gray IsNot Nothing) Then
-                    Bitmap = gray.BitmapAfter
-                End If
-            Case ComInfo.IMG_NAME_BINARIZATION
-                Dim binarization As Binarization = m_imgProc
-                If (binarization IsNot Nothing) Then
-                    Bitmap = binarization.BitmapAfter
-                End If
-            Case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF
-                Dim gray2Diff As GrayScale2Diff = m_imgProc
-                If (gray2Diff IsNot Nothing) Then
-                    Bitmap = gray2Diff.BitmapAfter
-                End If
-            Case ComInfo.IMG_NAME_COLOR_REVERSAL
-                Dim colorReversal As ColorReversal = m_imgProc
-                If (colorReversal IsNot Nothing) Then
-                    Bitmap = colorReversal.BitmapAfter
-                End If
-            Case Else
-        End Select
-
-        Return If(Bitmap Is Nothing, Bitmap, Bitmap.Clone())
-    End Function
 
     ''' <summary>
     ''' イメージの保存ボタンのクリックイベント
@@ -446,11 +345,11 @@ Public Class FormMain
         saveDialog.Filter = "PNG|*.png"
         saveDialog.Title = "Save the file"
         If (saveDialog.ShowDialog() = True) Then
-            Dim strFileName = saveDialog.FileName
-            Dim bitmap As Bitmap = GetImage(m_strCurImgName)
+            Dim fileName = saveDialog.FileName
+            Dim bitmap As Bitmap = GetBitmap()
             If (bitmap IsNot Nothing) Then
                 Try
-                    bitmap.Save(strFileName, System.Drawing.Imaging.ImageFormat.Png)
+                    bitmap.Save(fileName, System.Drawing.Imaging.ImageFormat.Png)
                 Catch ex As Exception
                     MessageBox.Show(Me, "Save Image File Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
@@ -467,30 +366,29 @@ Public Class FormMain
     ''' <param name="sender">オブジェクト</param>
     ''' <param name="e">イベントのデータ</param>
     Private Sub OnClickBtnShowHistgram(sender As Object, e As EventArgs) Handles btnShowHistgram.Click
-        If (m_bitmap Is Nothing) Then
+        If (mBitmap Is Nothing) Then
             Return
         End If
 
-        If (m_histgram IsNot Nothing) Then
-            m_histgram.Close()
-            m_histgram = Nothing
-            'm_histgram = New FormHistgramLiveCharts()
+        If (mHistgram IsNot Nothing) Then
+            mHistgram.Close()
+            mHistgram = Nothing
 #If CHART_LIVE_CHART Then
-            m_histgram = New FormHistgramLiveCharts()
+            mHistgram = New FormHistgramLiveCharts()
 #ElseIf CHART_OXY_PLOT Then
-            m_histgram = New FormHistgramOxyPlot()
+            mHistgram = New FormHistgramOxyPlot()
 #Else
-            m_histgram = New FormHistgramOxyPlot()
+            mHistgram = New FormHistgramOxyPlot()
 #End If
         End If
 
-        m_histgram.BitmapOrg = New Bitmap(m_strOpenFileName).Clone()
-        If (SelectGetBitmap(m_strCurImgName) IsNot Nothing) Then
-            m_histgram.BitmapAfter = SelectGetBitmap(m_strCurImgName).Clone()
+        mHistgram.BitmapOrg = New Bitmap(mOpenFileName).Clone()
+        If (GetBitmap() IsNot Nothing) Then
+            mHistgram.BitmapAfter = DirectCast(GetBitmap().Clone(), Bitmap)
         End If
-        m_histgram.DrawHistgram()
-        m_histgram.IsOpen = True
-        m_histgram.Show()
+        mHistgram.DrawHistgram()
+        mHistgram.IsOpen = True
+        mHistgram.Show()
 
         Return
     End Sub
@@ -501,10 +399,9 @@ Public Class FormMain
     ''' <param name="sender">オブジェクト</param>
     ''' <param name="e">イベントのデータ</param>
     Private Sub OnClickMenu(sender As Object, e As EventArgs) Handles imageProcessingToolStripMenuItem.Click, endXToolStripMenuItem.Click
-        Dim menuItem As ToolStripItem = sender
-        Dim strText As String = menuItem.Text
+        Dim menuItem = DirectCast(sender, ToolStripItem)
 
-        Select Case strText
+        Select Case menuItem.Text
             Case ComInfo.MENU_FILE_END
                 Close()
             Case ComInfo.MENU_SETTING_IMAGE_PROCESSING
@@ -521,10 +418,10 @@ Public Class FormMain
         Dim dialogResult = win.ShowDialog()
 
         If (dialogResult = DialogResult.OK) Then
-            m_strCurImgName = win.ComboBoxImageProcessingType.SelectedItem
-            Me.Text = "Image Processing ( " + m_strCurImgName + " )"
+            mCurrentImageProcessingName = win.ComboBoxImageProcessingType.SelectedItem
+            Me.Text = "Image Processing ( " + mCurrentImageProcessingName + " )"
 
-            sliderThresh.Enabled = If(m_strCurImgName = ComInfo.IMG_NAME_BINARIZATION, True, False)
+            sliderThresh.Enabled = If(mCurrentImageProcessingName = ComInfo.IMG_NAME_BINARIZATION, True, False)
 
             pictureBoxAfter.Image = Nothing
             btnSaveImage.Enabled = False
@@ -537,7 +434,7 @@ Public Class FormMain
     ''' <param name="sender">オブジェクト</param>
     ''' <param name="e">イベントのデータ</param>
     Private Sub OnScrollSliderThresh(sender As Object, e As EventArgs) Handles sliderThresh.Scroll
-        Dim trackBar As TrackBar = sender
+        Dim trackBar = DirectCast(sender, TrackBar)
         labelValue.Text = trackBar.Value.ToString()
     End Sub
 
@@ -580,24 +477,24 @@ Public Class FormMain
         btnSaveImage.Enabled = False
         Dim bResult As Boolean = Await TaskWorkImageProcessing()
         If (bResult) Then
-            pictureBoxOriginal.ImageLocation = m_strOpenFileName
-            pictureBoxAfter.Image = SelectGetBitmap(m_strCurImgName)
+            pictureBoxOriginal.ImageLocation = mOpenFileName
+            pictureBoxAfter.Image = GetBitmap()
 
             btnSaveImage.Enabled = True
 
-            m_histgram.BitmapOrg = New Bitmap(m_strOpenFileName).Clone()
-            If (SelectGetBitmap(m_strCurImgName) IsNot Nothing) Then
-                m_histgram.BitmapAfter = SelectGetBitmap(m_strCurImgName).Clone()
+            mHistgram.BitmapOrg = New Bitmap(mOpenFileName).Clone()
+            If (GetBitmap() IsNot Nothing) Then
+                mHistgram.BitmapAfter = DirectCast(GetBitmap().Clone(), Bitmap)
             End If
-            If (m_histgram.IsOpen = True) Then
-                m_histgram.DrawHistgram()
+            If (mHistgram.IsOpen = True) Then
+                mHistgram.DrawHistgram()
             End If
         End If
         Invoke(New Action(AddressOf SetButtonEnable))
         menuMain.Enabled = True
         btnShowHistgram.Enabled = True
 
-        m_tokenSource = Nothing
+        mTokenSource = Nothing
 
         Return
     End Sub

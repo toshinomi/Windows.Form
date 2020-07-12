@@ -67,122 +67,122 @@ Namespace My
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
-        Public Property ImgTypeEdgeId() As Integer
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>
+        Public Property ImageTypeEdgeId() As Integer
             Get
-                Return CType(Me("ImgTypeEdgeId"),Integer)
+                Return CType(Me("ImageTypeEdgeId"), Integer)
             End Get
             Set
-                Me("ImgTypeEdgeId") = value
+                Me("ImageTypeEdgeId") = Value
             End Set
         End Property
-        
+
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("EdgeDetection")>  _
-        Public Property ImgTypeEdgeName() As String
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("EdgeDetection")>
+        Public Property ImageTypeEdgeName() As String
             Get
-                Return CType(Me("ImgTypeEdgeName"),String)
+                Return CType(Me("ImageTypeEdgeName"), String)
             End Get
             Set
-                Me("ImgTypeEdgeName") = value
+                Me("ImageTypeEdgeName") = Value
             End Set
         End Property
-        
+
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("2")>  _
-        Public Property ImgTypeGrayScaleId() As Integer
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("2")>
+        Public Property ImageTypeGrayScaleId() As Integer
             Get
-                Return CType(Me("ImgTypeGrayScaleId"),Integer)
+                Return CType(Me("ImageTypeGrayScaleId"), Integer)
             End Get
             Set
-                Me("ImgTypeGrayScaleId") = value
+                Me("ImageTypeGrayScaleId") = Value
             End Set
         End Property
-        
+
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("GrayScale")>  _
-        Public Property ImgTypeGrayScaleName() As String
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("GrayScale")>
+        Public Property ImageTypeGrayScaleName() As String
             Get
-                Return CType(Me("ImgTypeGrayScaleName"),String)
+                Return CType(Me("ImageTypeGrayScaleName"), String)
             End Get
             Set
-                Me("ImgTypeGrayScaleName") = value
+                Me("ImageTypeGrayScaleName") = Value
             End Set
         End Property
-        
+
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("3")>  _
-        Public Property ImgTypeBinarizationId() As Integer
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("3")>
+        Public Property ImageTypeBinarizationId() As Integer
             Get
-                Return CType(Me("ImgTypeBinarizationId"),Integer)
+                Return CType(Me("ImageTypeBinarizationId"), Integer)
             End Get
             Set
-                Me("ImgTypeBinarizationId") = value
+                Me("ImageTypeBinarizationId") = Value
             End Set
         End Property
-        
+
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Binarization")>  _
-        Public Property ImgTypeBinarizationName() As String
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("Binarization")>
+        Public Property ImageTypeBinarizationName() As String
             Get
-                Return CType(Me("ImgTypeBinarizationName"),String)
+                Return CType(Me("ImageTypeBinarizationName"), String)
             End Get
             Set
-                Me("ImgTypeBinarizationName") = value
+                Me("ImageTypeBinarizationName") = Value
             End Set
         End Property
-        
+
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("4")>  _
-        Public Property ImgTypeGrayScale2DiffId() As Integer
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("4")>
+        Public Property ImageTypeGrayScale2DiffId() As Integer
             Get
-                Return CType(Me("ImgTypeGrayScale2DiffId"),Integer)
+                Return CType(Me("ImageTypeGrayScale2DiffId"), Integer)
             End Get
             Set
-                Me("ImgTypeGrayScale2DiffId") = value
+                Me("ImageTypeGrayScale2DiffId") = Value
             End Set
         End Property
-        
+
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("GrayScale 2Diff")>  _
-        Public Property ImgTypeGrayScale2DiffName() As String
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("GrayScale 2Diff")>
+        Public Property ImageTypeGrayScale2DiffName() As String
             Get
-                Return CType(Me("ImgTypeGrayScale2DiffName"),String)
+                Return CType(Me("ImageTypeGrayScale2DiffName"), String)
             End Get
             Set
-                Me("ImgTypeGrayScale2DiffName") = value
+                Me("ImageTypeGrayScale2DiffName") = Value
             End Set
         End Property
-        
+
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("5")>  _
-        Public Property ImgTypeColorReversalId() As Integer
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("5")>
+        Public Property ImageTypeColorReversalId() As Integer
             Get
-                Return CType(Me("ImgTypeColorReversalId"),Integer)
+                Return CType(Me("ImageTypeColorReversalId"), Integer)
             End Get
             Set
-                Me("ImgTypeColorReversalId") = value
+                Me("ImageTypeColorReversalId") = Value
             End Set
         End Property
-        
+
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("ColorReversal")>  _
-        Public Property ImgTypeColorReversalName() As String
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("ColorReversal")>
+        Public Property ImageTypeColorReversalName() As String
             Get
-                Return CType(Me("ImgTypeColorReversalName"),String)
+                Return CType(Me("ImageTypeColorReversalName"), String)
             End Get
             Set
-                Me("ImgTypeColorReversalName") = value
+                Me("ImageTypeColorReversalName") = Value
             End Set
         End Property
     End Class

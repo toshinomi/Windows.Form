@@ -5,17 +5,17 @@ Imports System.Text
 ''' ファイルセーブのロジック
 ''' </summary>
 Public Class ComSaveFileDialog
-    Protected m_saveFileDialog As SaveFileDialog
+    Protected mSaveFileDialog As SaveFileDialog
 
     ''' <summary>
     ''' ファイル名称
     ''' </summary>
     Public Property FileName() As String
         Set(value As String)
-            m_saveFileDialog.FileName = value
+            mSaveFileDialog.FileName = value
         End Set
         Get
-            Return m_saveFileDialog.FileName
+            Return mSaveFileDialog.FileName
         End Get
     End Property
 
@@ -24,10 +24,10 @@ Public Class ComSaveFileDialog
     ''' </summary>
     Public Property InitialDirectory() As String
         Set(value As String)
-            m_saveFileDialog.InitialDirectory = value
+            mSaveFileDialog.InitialDirectory = value
         End Set
         Get
-            Return m_saveFileDialog.InitialDirectory
+            Return mSaveFileDialog.InitialDirectory
         End Get
     End Property
 
@@ -36,10 +36,10 @@ Public Class ComSaveFileDialog
     ''' </summary>
     Public Property Filter() As String
         Set(value As String)
-            m_saveFileDialog.Filter = value
+            mSaveFileDialog.Filter = value
         End Set
         Get
-            Return m_saveFileDialog.Filter
+            Return mSaveFileDialog.Filter
         End Get
     End Property
 
@@ -48,10 +48,10 @@ Public Class ComSaveFileDialog
     ''' </summary>
     Public Property FilterIndex() As Integer
         Set(value As Integer)
-            m_saveFileDialog.FilterIndex = value
+            mSaveFileDialog.FilterIndex = value
         End Set
         Get
-            Return m_saveFileDialog.FilterIndex
+            Return mSaveFileDialog.FilterIndex
         End Get
     End Property
 
@@ -60,10 +60,10 @@ Public Class ComSaveFileDialog
     ''' </summary>
     Public Property Title() As String
         Set(value As String)
-            m_saveFileDialog.Title = value
+            mSaveFileDialog.Title = value
         End Set
         Get
-            Return m_saveFileDialog.Title
+            Return mSaveFileDialog.Title
         End Get
     End Property
 
@@ -72,10 +72,10 @@ Public Class ComSaveFileDialog
     ''' </summary>
     Public Property CheckFileExists() As Boolean
         Set(value As Boolean)
-            m_saveFileDialog.CheckFileExists = value
+            mSaveFileDialog.CheckFileExists = value
         End Set
         Get
-            Return m_saveFileDialog.CheckFileExists
+            Return mSaveFileDialog.CheckFileExists
         End Get
     End Property
 
@@ -84,10 +84,10 @@ Public Class ComSaveFileDialog
     ''' </summary>
     Public Property CheckPathExists() As Boolean
         Set(value As Boolean)
-            m_saveFileDialog.CheckPathExists = value
+            mSaveFileDialog.CheckPathExists = value
         End Set
         Get
-            Return m_saveFileDialog.CheckPathExists
+            Return mSaveFileDialog.CheckPathExists
         End Get
     End Property
 
@@ -95,7 +95,7 @@ Public Class ComSaveFileDialog
     ''' コンストラクタ
     ''' </summary>
     Public Sub New()
-        m_saveFileDialog = New SaveFileDialog()
+        mSaveFileDialog = New SaveFileDialog()
     End Sub
 
     ''' <summary>
@@ -110,34 +110,34 @@ Public Class ComSaveFileDialog
     ''' </summary>
     ''' <returns>結果 成功/失敗</returns>
     Public Function ShowDialog() As Boolean
-        Dim bRst As Boolean = False
+        Dim result = False
 
-        If (m_saveFileDialog.ShowDialog() = DialogResult.OK) Then
-            bRst = True
+        If (mSaveFileDialog.ShowDialog() = DialogResult.OK) Then
+            result = True
         End If
 
-        Return bRst
+        Return result
     End Function
 
     ''' <summary>
     ''' ストリームの書込み
     ''' </summary>
-    ''' <param name="_str">ファイル名称</param>
+    ''' <param name="fileName">ファイル名称</param>
     ''' <returns>実行結果 成功/失敗</returns>
-    Public Function SreamWrite(_str As String)
+    Public Function SreamWrite(fileName As String)
         Dim stream As Stream
-        Dim bRst As Boolean = True
+        Dim result = True
         Try
-            stream = m_saveFileDialog.OpenFile()
+            stream = mSaveFileDialog.OpenFile()
         Catch ex As Exception
-            bRst = False
-            Return bRst
+            result = False
+            Return result
         End Try
-        Dim streamWriter As StreamWriter = New StreamWriter(stream, Encoding.GetEncoding("UTF-8"))
-        streamWriter.Write(_str)
+        Dim streamWriter = New StreamWriter(stream, Encoding.GetEncoding("UTF-8"))
+        streamWriter.Write(fileName)
         streamWriter.Close()
         stream.Close()
 
-        Return bRst
+        Return result
     End Function
 End Class

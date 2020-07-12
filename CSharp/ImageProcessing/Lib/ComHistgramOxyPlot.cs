@@ -74,12 +74,12 @@ class ComHistgramOxyPlot : ComCharts
             var dataPoint = new DataPoint(index, base.mHistgram[(int)ComInfo.PictureType.Original, index]);
             dataListOriginal.Add(dataPoint);
         }
-        var series1 = new LineSeries
+        var seriesOriginal = new LineSeries
         {
             Title = "Original",
             ItemsSource = dataListOriginal,
         };
-        PlotModel.Series.Add(series1);
+        PlotModel.Series.Add(seriesOriginal);
 
         var dataListAfter = new List<DataPoint>();
         for (int index = 0; index < (mHistgram.Length >> 1); index++)
@@ -87,12 +87,12 @@ class ComHistgramOxyPlot : ComCharts
             var dataPoint = new DataPoint(index, base.mHistgram[(int)ComInfo.PictureType.After, index]);
             dataListAfter.Add(dataPoint);
         }
-        var series2 = new LineSeries
+        var seriesAfter = new LineSeries
         {
             Title = "After",
             ItemsSource = dataListAfter,
         };
-        PlotModel.Series.Add(series2);
+        PlotModel.Series.Add(seriesAfter);
 
         return PlotModel;
     }

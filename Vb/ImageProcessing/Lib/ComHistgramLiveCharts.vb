@@ -10,7 +10,7 @@ Public Class ComHistgramLiveCharts : Inherits ComCharts
     ''' </summary>
     Public ReadOnly Property Histgram() As Integer(,)
         Get
-            Return MyBase.m_nHistgram
+            Return MyBase.mHistgram
         End Get
     End Property
 
@@ -19,10 +19,10 @@ Public Class ComHistgramLiveCharts : Inherits ComCharts
     ''' </summary>
     Public Property BitmapOrg() As Bitmap
         Set(value As Bitmap)
-            MyBase.m_bitmapOrg = value
+            MyBase.mBitmapOrg = value
         End Set
         Get
-            Return MyBase.m_bitmapOrg
+            Return MyBase.mBitmapOrg
         End Get
     End Property
 
@@ -31,10 +31,10 @@ Public Class ComHistgramLiveCharts : Inherits ComCharts
     ''' </summary>
     Public Property BitmapAfter() As Bitmap
         Set(value As Bitmap)
-            MyBase.m_bitmapAfter = value
+            MyBase.mBitmapAfter = value
         End Set
         Get
-            Return MyBase.m_bitmapAfter
+            Return MyBase.mBitmapAfter
         End Get
     End Property
 
@@ -60,26 +60,26 @@ Public Class ComHistgramLiveCharts : Inherits ComCharts
 
         MyBase.CalHistgram()
 
-        Dim lineSeriesChart1 = New LineSeries() With
+        Dim lineSeriesChartOriginal = New LineSeries() With
         {
             .Values = New ChartValues(Of Integer),
             .Title = "Original Image"
         }
 
-        Dim lineSeriesChart2 = New LineSeries() With
+        Dim lineSeriesChartAfter = New LineSeries() With
         {
             .Values = New ChartValues(Of Integer),
             .Title = "After Image"
         }
 
-        For nIdx As Integer = 0 To (MyBase.m_nHistgram.Length >> 1) - 1 Step 1
-            lineSeriesChart1.Values.Add(m_nHistgram(ComInfo.PictureType.Original, nIdx))
-            lineSeriesChart2.Values.Add(m_nHistgram(ComInfo.PictureType.After, nIdx))
+        For index As Integer = 0 To (MyBase.mHistgram.Length >> 1) - 1 Step 1
+            lineSeriesChartOriginal.Values.Add(mHistgram(ComInfo.PictureType.Original, index))
+            lineSeriesChartAfter.Values.Add(mHistgram(ComInfo.PictureType.After, index))
         Next
 
         Dim items = New List(Of LineSeries)
-        items.Add(lineSeriesChart1)
-        items.Add(lineSeriesChart2)
+        items.Add(lineSeriesChartOriginal)
+        items.Add(lineSeriesChartAfter)
 
         Return items
 

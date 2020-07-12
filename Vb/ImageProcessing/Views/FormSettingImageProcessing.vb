@@ -36,17 +36,17 @@ Public Class FormSettingImageProcessing
     ''' </summary>
     Public Sub LoadParam()
         Dim items = New List(Of ComImageProcessingType)
-        items.Add(New ComImageProcessingType(My.Settings.ImgTypeEdgeId, My.Settings.ImgTypeEdgeName))
-        items.Add(New ComImageProcessingType(My.Settings.ImgTypeGrayScaleId, My.Settings.ImgTypeGrayScaleName))
-        items.Add(New ComImageProcessingType(My.Settings.ImgTypeBinarizationId, My.Settings.ImgTypeBinarizationName))
-        items.Add(New ComImageProcessingType(My.Settings.ImgTypeGrayScale2DiffId, My.Settings.ImgTypeGrayScale2DiffName))
-        items.Add(New ComImageProcessingType(My.Settings.ImgTypeColorReversalId, My.Settings.ImgTypeColorReversalName))
+        items.Add(New ComImageProcessingType(My.Settings.ImageTypeEdgeId, My.Settings.ImageTypeEdgeName))
+        items.Add(New ComImageProcessingType(My.Settings.ImageTypeGrayScaleId, My.Settings.ImageTypeGrayScaleName))
+        items.Add(New ComImageProcessingType(My.Settings.ImageTypeBinarizationId, My.Settings.ImageTypeBinarizationName))
+        items.Add(New ComImageProcessingType(My.Settings.ImageTypeGrayScale2DiffId, My.Settings.ImageTypeGrayScale2DiffName))
+        items.Add(New ComImageProcessingType(My.Settings.ImageTypeColorReversalId, My.Settings.ImageTypeColorReversalName))
 
-        cmbBoxImageProcessingType.Items.Add(My.Settings.ImgTypeEdgeName)
-        cmbBoxImageProcessingType.Items.Add(My.Settings.ImgTypeGrayScaleName)
-        cmbBoxImageProcessingType.Items.Add(My.Settings.ImgTypeBinarizationName)
-        cmbBoxImageProcessingType.Items.Add(My.Settings.ImgTypeGrayScale2DiffName)
-        cmbBoxImageProcessingType.Items.Add(My.Settings.ImgTypeColorReversalName)
+        cmbBoxImageProcessingType.Items.Add(My.Settings.ImageTypeEdgeName)
+        cmbBoxImageProcessingType.Items.Add(My.Settings.ImageTypeGrayScaleName)
+        cmbBoxImageProcessingType.Items.Add(My.Settings.ImageTypeBinarizationName)
+        cmbBoxImageProcessingType.Items.Add(My.Settings.ImageTypeGrayScale2DiffName)
+        cmbBoxImageProcessingType.Items.Add(My.Settings.ImageTypeColorReversalName)
         cmbBoxImageProcessingType.SelectedIndex = items.Find(Function(x) x.Name = My.Settings.ImgTypeSelectName)?.Id - 1
 
         Return

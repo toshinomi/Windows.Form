@@ -5,38 +5,38 @@ Public Class ComFunc
     ''' <summary>
     ''' Double型のデータからbyte型のデータへの変換
     ''' </summary>
-    ''' <param name="_dValue">Double型のデータ</param>
+    ''' <param name="value">Double型のデータ</param>
     ''' <returns>byte型のデータ</returns>
-    Public Shared Function DoubleToByte(ByVal _dValue As Double) As Byte
-        Dim nCnvValue As Byte = 0
+    Public Shared Function DoubleToByte(value As Double) As Byte
+        Dim ConvertValue As Byte = 0
 
-        If (_dValue > 255.0) Then
-            nCnvValue = 255
-        ElseIf (_dValue < 0) Then
-            nCnvValue = 0
+        If (value > 255.0) Then
+            ConvertValue = 255
+        ElseIf (value < 0) Then
+            ConvertValue = 0
         Else
-            nCnvValue = CByte(_dValue)
+            ConvertValue = CByte(value)
         End If
 
-        Return nCnvValue
+        Return ConvertValue
     End Function
 
     ''' <summary>
     ''' long型のデータからbyte型のデータへの変換
     ''' </summary>
-    ''' <param name="_lValue">long型のデータ</param>
+    ''' <param name="value">long型のデータ</param>
     ''' <returns>byte型のデータ</returns>
-    Public Shared Function LongToByte(ByVal _lValue As Long) As Byte
-        Dim nCnvValue As Byte = 0
+    Public Shared Function LongToByte(value As Long) As Byte
+        Dim ConvertValue As Byte = 0
 
-        If (_lValue > 255) Then
-            nCnvValue = 255
-        ElseIf (_lValue < 0) Then
-            nCnvValue = 0
+        If (value > 255) Then
+            ConvertValue = 255
+        ElseIf (value < 0) Then
+            ConvertValue = 0
         Else
-            nCnvValue = CByte(_lValue)
+            ConvertValue = CByte(value)
         End If
 
-        Return nCnvValue
+        Return ConvertValue
     End Function
 End Class

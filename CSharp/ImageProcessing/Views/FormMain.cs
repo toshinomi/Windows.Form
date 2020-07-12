@@ -71,9 +71,7 @@ namespace ImageProcessing
         /// <returns>ビットマップ</returns>
         public Bitmap GetBitmap()
         {
-            Bitmap bitmap = mImageProcessing.Bitmap;
-
-            return bitmap;
+            return mImageProcessing.Bitmap; ;
         }
 
         /// <summary>
@@ -85,9 +83,9 @@ namespace ImageProcessing
         public bool GoImageProcessing(ComImageProcessingInfo comImageProcessingInfo, CancellationToken token)
         {
             mImageProcessing.Thresh = comImageProcessingInfo.BinarizationInfo.Thresh;
-            bool bRst = mImageProcessing.GoImageProcessing(mCurrentImageProcessingName, token);
+            bool result = mImageProcessing.GoImageProcessing(mCurrentImageProcessingName, token);
 
-            return bRst;
+            return result;
         }
 
         /// <summary>
@@ -183,8 +181,8 @@ namespace ImageProcessing
             };
             imageProcessingInfo.CurrentImageProcessingName = mCurrentImageProcessingName;
             imageProcessingInfo.BinarizationInfo = binarizationInfo;
-            bool bRst = await Task.Run(() => GoImageProcessing(imageProcessingInfo, token));
-            return bRst;
+            bool result = await Task.Run(() => GoImageProcessing(imageProcessingInfo, token));
+            return result;
         }
 
         /// <summary>
@@ -385,16 +383,16 @@ namespace ImageProcessing
             return;
         }
 
-        /// <summary>
-        /// 画像処理のオブジェクトからイメージの取得
-        /// </summary>
-        /// <returns>ビットマップ</returns>
-        public Bitmap GetImage()
-        {
-            Bitmap bitmap = mImageProcessing.Bitmap;
+        ///// <summary>
+        ///// 画像処理のオブジェクトからイメージの取得
+        ///// </summary>
+        ///// <returns>ビットマップ</returns>
+        //public Bitmap GetImage()
+        //{
+        //    Bitmap bitmap = mImageProcessing.Bitmap;
 
-            return bitmap == null ? bitmap : (Bitmap)bitmap.Clone();
-        }
+        //    return bitmap == null ? bitmap : (Bitmap)bitmap.Clone();
+        //}
 
         /// <summary>
         /// イメージの保存ボタンのクリックイベント
@@ -410,13 +408,13 @@ namespace ImageProcessing
             };
             if (saveDialog.ShowDialog() == true)
             {
-                string strFileName = saveDialog.FileName;
-                var bitmap = GetImage();
+                string fileName = saveDialog.FileName;
+                var bitmap = GetBitmap();
                 if (bitmap != null)
                 {
                     try
                     {
-                        bitmap.Save(strFileName, System.Drawing.Imaging.ImageFormat.Png);
+                        bitmap.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
                     }
                     catch (Exception)
                     {
@@ -474,9 +472,8 @@ namespace ImageProcessing
         private void OnClickMenu(object sender, EventArgs e)
         {
             ToolStripMenuItem menuItem = (ToolStripMenuItem)sender;
-            string strText = menuItem.Text;
 
-            switch (strText)
+            switch (menuItem.Text)
             {
                 case ComInfo.MENU_FILE_END:
                     Close();

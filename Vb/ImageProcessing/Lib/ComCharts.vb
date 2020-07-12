@@ -6,9 +6,9 @@ Imports System.Text
 ''' チャートのロジック
 ''' </summary>
 Public MustInherit Class ComCharts
-    Protected m_nHistgram(ComInfo.PictureType.MAX - 1, ComInfo.RGB_MAX - 1) As Integer
-    Protected m_bitmapOrg As Bitmap
-    Protected m_bitmapAfter As Bitmap
+    Protected mHistgram(ComInfo.PictureType.MAX - 1, ComInfo.RGB_MAX - 1) As Integer
+    Protected mBitmapOrg As Bitmap
+    Protected mBitmapAfter As Bitmap
 
     ''' <summary>
     ''' コンストラクタ
@@ -27,41 +27,39 @@ Public MustInherit Class ComCharts
     ''' イメージからヒストグラム用のデータ算出
     ''' </summary>
     Public Sub CalHistgram()
-        Dim nWidthSize As Integer = m_bitmapOrg.Width
-        Dim nHeightSize As Integer = m_bitmapOrg.Height
+        Dim widthSize = mBitmapOrg.Width
+        Dim heightSize = mBitmapOrg.Height
 
-        Dim bitmapDataOrg = m_bitmapOrg.LockBits(New Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb)
+        Dim bitmapDataOrg = mBitmapOrg.LockBits(New Rectangle(0, 0, widthSize, heightSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb)
         Dim bitmapDataAfter As BitmapData = Nothing
-        If (m_bitmapAfter IsNot Nothing) Then
-            bitmapDataAfter = m_bitmapAfter.LockBits(New Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb)
+        If (mBitmapAfter IsNot Nothing) Then
+            bitmapDataAfter = mBitmapAfter.LockBits(New Rectangle(0, 0, widthSize, heightSize), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb)
         End If
 
-        Dim nIdxWidth As Integer
-        Dim nIdxHeight As Integer
+        Dim indexWidth As Integer
+        Dim indexHeight As Integer
 
-        For nIdxHeight = 0 To nHeightSize - 1 Step 1
-            For nIdxWidth = 0 To nWidthSize - 1 Step 1
-                Dim pAdr As IntPtr = bitmapDataOrg.Scan0
-                Dim nPos As Integer = nIdxHeight * bitmapDataOrg.Stride + nIdxWidth * 4
-                Dim nPixelB As Integer = ReadByte(pAdr, nPos + ComInfo.Pixel.B)
-                Dim nPixelG As Integer = ReadByte(pAdr, nPos + ComInfo.Pixel.G)
-                Dim nPixelR As Integer = ReadByte(pAdr, nPos + ComInfo.Pixel.R)
+        For indexHeight = 0 To heightSize - 1 Step 1
+            For indexWidth = 0 To widthSize - 1 Step 1
+                Dim position = indexHeight * bitmapDataOrg.Stride + indexWidth * 4
+                Dim pixelB = ReadByte(bitmapDataOrg.Scan0, position + ComInfo.Pixel.B)
+                Dim pixelG = ReadByte(bitmapDataOrg.Scan0, position + ComInfo.Pixel.G)
+                Dim pixelR = ReadByte(bitmapDataOrg.Scan0, position + ComInfo.Pixel.R)
 
-                Dim nGrayScale As Integer = (nPixelB + nPixelG + nPixelR) / 3
+                Dim grayScale As Integer = (pixelB + pixelG + pixelR) / 3
 
-                m_nHistgram(ComInfo.PictureType.Original, nGrayScale) += 1
+                mHistgram(ComInfo.PictureType.Original, grayScale) += 1
 
-                If (m_bitmapAfter IsNot Nothing) Then
-                    pAdr = bitmapDataAfter.Scan0
-                    nPos = nIdxHeight * bitmapDataAfter.Stride + nIdxWidth * 4
+                If (mBitmapAfter IsNot Nothing) Then
+                    position = indexHeight * bitmapDataAfter.Stride + indexWidth * 4
 
-                    nPixelB = ReadByte(pAdr, nPos + ComInfo.Pixel.B)
-                    nPixelG = ReadByte(pAdr, nPos + ComInfo.Pixel.G)
-                    nPixelR = ReadByte(pAdr, nPos + ComInfo.Pixel.R)
+                    pixelB = ReadByte(bitmapDataAfter.Scan0, position + ComInfo.Pixel.B)
+                    pixelG = ReadByte(bitmapDataAfter.Scan0, position + ComInfo.Pixel.G)
+                    pixelR = ReadByte(bitmapDataAfter.Scan0, position + ComInfo.Pixel.R)
 
-                    nGrayScale = (nPixelB + nPixelG + nPixelR) / 3
+                    grayScale = (pixelB + pixelG + pixelR) / 3
 
-                    m_nHistgram(ComInfo.PictureType.After, nGrayScale) += 1
+                    mHistgram(ComInfo.PictureType.After, grayScale) += 1
                 End If
             Next
         Next
@@ -71,9 +69,9 @@ Public MustInherit Class ComCharts
     ''' ヒストグラム用のデータ初期化
     ''' </summary>
     Public Sub InitHistgram()
-        For nIdx As Integer = 0 To (m_nHistgram.Length >> 1) - 1 Step 1
-            m_nHistgram(ComInfo.PictureType.Original, nIdx) = 0
-            m_nHistgram(ComInfo.PictureType.After, nIdx) = 0
+        For index As Integer = 0 To (mHistgram.Length >> 1) - 1 Step 1
+            mHistgram(ComInfo.PictureType.Original, index) = 0
+            mHistgram(ComInfo.PictureType.After, index) = 0
         Next
     End Sub
 
@@ -82,25 +80,25 @@ Public MustInherit Class ComCharts
     ''' </summary>
     ''' <returns>CSV保存の結果 成功/失敗</returns>
     Public Function SaveCsv() As Boolean
-        Dim bRst As Boolean = True
-        Dim saveDialog As ComSaveFileDialog = New ComSaveFileDialog()
+        Dim result = True
+        Dim saveDialog = New ComSaveFileDialog()
         saveDialog.Filter = "CSV|*.csv"
         saveDialog.Title = "Save the csv file"
         saveDialog.FileName = "default.csv"
         If (saveDialog.ShowDialog() = True) Then
-            Dim strDelmiter As String = ","
-            Dim stringBuilder As StringBuilder = New StringBuilder()
-            For nIdx As Integer = 0 To (m_nHistgram.Length >> 1) - 1
-                stringBuilder.Append(nIdx).Append(strDelmiter)
-                stringBuilder.Append(m_nHistgram(0, nIdx)).Append(strDelmiter)
-                stringBuilder.Append(m_nHistgram(1, nIdx)).Append(strDelmiter)
+            Dim delmiter = ","
+            Dim stringBuilder = New StringBuilder()
+            For nIdx As Integer = 0 To (mHistgram.Length >> 1) - 1
+                stringBuilder.Append(nIdx).Append(delmiter)
+                stringBuilder.Append(mHistgram(0, nIdx)).Append(delmiter)
+                stringBuilder.Append(mHistgram(1, nIdx)).Append(delmiter)
                 stringBuilder.Append(Environment.NewLine)
             Next
             If (saveDialog.SreamWrite(stringBuilder.ToString()) = False) Then
-                bRst = False
+                result = False
             End If
         End If
 
-        Return bRst
+        Return result
     End Function
 End Class

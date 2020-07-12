@@ -19,7 +19,7 @@ Public Class ComInfo
     ''' <summary>
     ''' 画像処理のタイプの列挙
     ''' </summary>
-    Public Enum ImgType
+    Public Enum ImageProcessingType
         EdgeDetection = 0
         GrayScale
         Binarization
@@ -31,7 +31,7 @@ Public Class ComInfo
     ''' <summary>
     ''' 画像のタイプの列挙
     ''' </summary>
-    Public Enum ImgDataType
+    Public Enum ImageDataType
         Jpg = 0
         Png
         MAX
