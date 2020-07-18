@@ -93,7 +93,7 @@ namespace ImageProcessing.Properties {
         public int ImageTypeBinarizationId
         {
             get {
-                return ((int)(this["IImageTypeBinarizationId"]));
+                return ((int)(this["ImageTypeBinarizationId"]));
             }
             set {
                 this["ImageTypeBinarizationId"] = value;

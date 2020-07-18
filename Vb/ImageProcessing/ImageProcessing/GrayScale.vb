@@ -49,11 +49,11 @@ Public Class GrayScale
                 End If
 
                 Dim position = indexHeight * bitmapData.Stride + indexWidth * 4
-                Dim pixelB = ReadByte(bitmapData.Scan0, position + ComInfo.Pixel.B)
-                Dim pixelG = ReadByte(bitmapData.Scan0, position + ComInfo.Pixel.G)
-                Dim pixelR = ReadByte(bitmapData.Scan0, position + ComInfo.Pixel.R)
+                Dim pixelB As Integer = ReadByte(bitmapData.Scan0, position + ComInfo.Pixel.B)
+                Dim pixelG As Integer = ReadByte(bitmapData.Scan0, position + ComInfo.Pixel.G)
+                Dim pixelR As Integer = ReadByte(bitmapData.Scan0, position + ComInfo.Pixel.R)
 
-                Dim grayScale = (pixelB + pixelG + pixelR) / 3
+                Dim grayScale As Integer = (pixelB + pixelG + pixelR) / 3
                 WriteByte(bitmapData.Scan0, position + ComInfo.Pixel.B, CByte(grayScale))
                 WriteByte(bitmapData.Scan0, position + ComInfo.Pixel.G, CByte(grayScale))
                 WriteByte(bitmapData.Scan0, position + ComInfo.Pixel.R, CByte(grayScale))

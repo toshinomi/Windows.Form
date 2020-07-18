@@ -42,9 +42,9 @@ Public MustInherit Class ComCharts
         For indexHeight = 0 To heightSize - 1 Step 1
             For indexWidth = 0 To widthSize - 1 Step 1
                 Dim position = indexHeight * bitmapDataOrg.Stride + indexWidth * 4
-                Dim pixelB = ReadByte(bitmapDataOrg.Scan0, position + ComInfo.Pixel.B)
-                Dim pixelG = ReadByte(bitmapDataOrg.Scan0, position + ComInfo.Pixel.G)
-                Dim pixelR = ReadByte(bitmapDataOrg.Scan0, position + ComInfo.Pixel.R)
+                Dim pixelB As Integer = ReadByte(bitmapDataOrg.Scan0, position + ComInfo.Pixel.B)
+                Dim pixelG As Integer = ReadByte(bitmapDataOrg.Scan0, position + ComInfo.Pixel.G)
+                Dim pixelR As Integer = ReadByte(bitmapDataOrg.Scan0, position + ComInfo.Pixel.R)
 
                 Dim grayScale As Integer = (pixelB + pixelG + pixelR) / 3
 

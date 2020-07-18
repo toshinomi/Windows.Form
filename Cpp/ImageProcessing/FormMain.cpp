@@ -358,13 +358,13 @@ void FormMain::OnClickBtnSaveImage(Object^ sender, EventArgs^ e)
 	saveDialog->SetTitle("Save the file");
 	if (saveDialog->ShowDialog() == true)
 	{
-		String^ strFileName = saveDialog->GetFileName();
-		auto bitmap = GetImage();
+		String^ fileName = saveDialog->GetFileName();
+		auto bitmap = (Bitmap^)GetImage()->Clone();
 		if (bitmap != nullptr)
 		{
 			try
 			{
-				bitmap->Save(strFileName, System::Drawing::Imaging::ImageFormat::Png);
+				bitmap->Save(fileName, System::Drawing::Imaging::ImageFormat::Png);
 			}
 			catch (Exception^)
 			{
@@ -451,8 +451,10 @@ void FormMain::ShowSettingImageProcessing(void)
 
 		pictureBoxAfter->Image = nullptr;
 		btnSaveImage->Enabled = false;
-		mBitmap = gcnew Bitmap(mOpenFileName);
-		mImageProcessing = gcnew ImageProcessing(mBitmap);
+		if (mOpenFileName != nullptr) {
+			mBitmap = gcnew Bitmap(mOpenFileName);
+			mImageProcessing = gcnew ImageProcessing(mBitmap);
+		}
 		if (mHistgram != nullptr && mHistgram->GetIsOpen() == true)
 		{
 			OnClickBtnShowHistgram(this, nullptr);

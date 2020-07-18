@@ -69,7 +69,7 @@ Public Class ImageProcessing : Inherits ComImageProcessing
                 result = binarization.ImageProcessing(MyBase.mBitmap, token, Thresh)
             Case ComInfo.IMG_NAME_GRAY_SCALE_2DIFF
                 index = ComInfo.ImageProcessingType.GrayScale2Diff
-                Dim grayScale2Diff As GrayScale = arrayImageProcessing(index)
+                Dim grayScale2Diff As GrayScale2Diff = arrayImageProcessing(index)
                 result = grayScale2Diff.ImageProcessing(MyBase.mBitmap, token)
             Case ComInfo.IMG_NAME_COLOR_REVERSAL
                 index = ComInfo.ImageProcessingType.ColorReversal

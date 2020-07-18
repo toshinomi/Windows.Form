@@ -31,6 +31,7 @@ Public Class FormMain
         btnAllClear.Enabled = True
         btnStart.Enabled = False
         btnStop.Enabled = False
+        btnSaveImage.Enabled = False
 
         pictureBoxStatus.Visible = False
 
@@ -265,6 +266,11 @@ Public Class FormMain
         btnFileSelect.Enabled = True
         btnAllClear.Enabled = True
         btnStart.Enabled = False
+        btnSaveImage.Enabled = False
+
+        If (mHistgram IsNot Nothing) Then
+            mHistgram.Close()
+        End If
 
         Return
     End Sub
@@ -346,7 +352,7 @@ Public Class FormMain
         saveDialog.Title = "Save the file"
         If (saveDialog.ShowDialog() = True) Then
             Dim fileName = saveDialog.FileName
-            Dim bitmap As Bitmap = GetBitmap()
+            Dim bitmap As Bitmap = GetBitmap().Clone
             If (bitmap IsNot Nothing) Then
                 Try
                     bitmap.Save(fileName, System.Drawing.Imaging.ImageFormat.Png)
@@ -425,6 +431,13 @@ Public Class FormMain
 
             pictureBoxAfter.Image = Nothing
             btnSaveImage.Enabled = False
+            If (mOpenFileName IsNot Nothing) Then
+                mBitmap = New Bitmap(mOpenFileName)
+                mImageProcessing = New ImageProcessing(mBitmap)
+            End If
+            If (mHistgram IsNot Nothing And mHistgram?.IsOpen = True) Then
+                OnClickBtnShowHistgram(Me, Nothing)
+            End If
         End If
     End Sub
 

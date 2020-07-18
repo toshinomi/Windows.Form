@@ -409,7 +409,7 @@ namespace ImageProcessing
             if (saveDialog.ShowDialog() == true)
             {
                 string fileName = saveDialog.FileName;
-                var bitmap = GetBitmap();
+                var bitmap = (Bitmap)GetBitmap().Clone();
                 if (bitmap != null)
                 {
                     try
@@ -505,9 +505,12 @@ namespace ImageProcessing
 
                 pictureBoxAfter.Image = null;
                 btnSaveImage.Enabled = false;
-                mBitmap = new Bitmap(mOpenFileName);
-                mImageProcessing = new ImageProcessing(mBitmap);
-                if (mHistgram != null && mHistgram.IsOpen == true)
+                if (mOpenFileName != null)
+                {
+                    mBitmap = new Bitmap(mOpenFileName);
+                    mImageProcessing = new ImageProcessing(mBitmap);
+                }
+                if (mHistgram != null && mHistgram?.IsOpen == true)
                 {
                     OnClickBtnShowHistgram(this, null);
                 }
