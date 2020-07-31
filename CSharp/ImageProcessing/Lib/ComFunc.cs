@@ -16,21 +16,21 @@ public class ComFunc
     /// <returns>byte型のデータ</returns>
     static public byte DoubleToByte(double value)
     {
-        byte ConvertValue;
+        byte convertValue;
         if (value > 255.0)
         {
-            ConvertValue = 255;
+            convertValue = 255;
         }
         else if (value < 0)
         {
-            ConvertValue = 0;
+            convertValue = 0;
         }
         else
         {
-            ConvertValue = (byte)value;
+            convertValue = (byte)value;
         }
 
-        return ConvertValue;
+        return convertValue;
     }
 
     /// <summary>
@@ -40,20 +40,20 @@ public class ComFunc
     /// <returns>byte型のデータ</returns>
     static public byte LongToByte(long value)
     {
-        byte ConvertValue;
+        byte convertValue;
         if (value > 255)
         {
-            ConvertValue = 255;
+            convertValue = 255;
         }
         else if (value < 0)
         {
-            ConvertValue = 0;
+            convertValue = 0;
         }
         else
         {
-            ConvertValue = (byte)value;
+            convertValue = (byte)value;
         }
 
-        return ConvertValue;
+        return convertValue;
     }
 }

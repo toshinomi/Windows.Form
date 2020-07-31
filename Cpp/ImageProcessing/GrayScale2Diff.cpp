@@ -24,77 +24,74 @@ GrayScale2Diff::~GrayScale2Diff()
 /// <returns>é¿çsåãâ  ê¨å˜/é∏îs</returns>
 bool GrayScale2Diff::ImageProcessing(Bitmap^ bitmap, CancellationToken^ token)
 {
-	bool bRst = true;
+	bool result = true;
 
-	short nMask[3][3] =
+	short mask[3][3] =
 	{
 		{ 1,  1, 1 },
 		{ 1, -8, 1 },
 		{ 1,  1, 1 }
 	};
 
-	int nWidthSize = bitmap->Width;
-	int nHeightSize = bitmap->Height;
-	int nMasksize = 3;
+	int widthSize = bitmap->Width;
+	int heightSize = bitmap->Height;
+	int maskSize = 3;
 
-	auto bitmapData = bitmap->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
+	auto bitmapData = bitmap->LockBits(System::Drawing::Rectangle(0, 0, widthSize, heightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
 
-	int nIdxWidth;
-	int nIdxHeight;
+	int indexWidth;
+	int indexHeight;
 
-	for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
+	for (indexHeight = 0; indexHeight < heightSize; indexHeight++)
 	{
 		if (token->IsCancellationRequested)
 		{
-			bRst = false;
+			result = false;
 			break;
 		}
 
-		for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
+		for (indexWidth = 0; indexWidth < widthSize; indexWidth++)
 		{
 			if (token->IsCancellationRequested)
 			{
-				bRst = false;
+				result = false;
 				break;
 			}
 
-			Byte* pPixel = (Byte*)bitmapData->Scan0.ToPointer() + nIdxHeight * bitmapData->Stride + nIdxWidth * 4;
+			Byte* pixel = (Byte*)bitmapData->Scan0.ToPointer() + indexHeight * bitmapData->Stride + indexWidth * 4;
 
-			long lCalB = 0;
-			long lCalG = 0;
-			long lCalR = 0;
-			double dCalAve = 0.0;
-			int nIdxWidthMask;
-			int nIdxHightMask;
+			double averageGrayScale = 0.0;
+			int indexWidthMask;
+			int indexHightMask;
 
-			for (nIdxHightMask = 0; nIdxHightMask < nMasksize; nIdxHightMask++)
+			for (indexHightMask = 0; indexHightMask < maskSize; indexHightMask++)
 			{
-				for (nIdxWidthMask = 0; nIdxWidthMask < nMasksize; nIdxWidthMask++)
+				for (indexWidthMask = 0; indexWidthMask < maskSize; indexWidthMask++)
 				{
-					if (nIdxWidth + nIdxWidthMask > 0 &&
-						nIdxWidth + nIdxWidthMask < nWidthSize &&
-						nIdxHeight + nIdxHightMask > 0 &&
-						nIdxHeight + nIdxHightMask < nHeightSize)
+					if (indexWidth + indexWidthMask > 0 &&
+						indexWidth + indexWidthMask < widthSize &&
+						indexHeight + indexHightMask > 0 &&
+						indexHeight + indexHightMask < heightSize)
 					{
-						Byte* pPixel2 = (Byte*)bitmapData->Scan0.ToPointer() + (nIdxHeight + nIdxHightMask) * bitmapData->Stride + (nIdxWidth + nIdxWidthMask) * 4;
+						Byte* pixelMaskArea = (Byte*)bitmapData->Scan0.ToPointer() + (indexHeight + indexHightMask) * bitmapData->Stride + (indexWidth + indexWidthMask) * 4;
 
-						lCalB = pPixel2[ComInfo::Pixel::Type::B] * nMask[nIdxWidthMask][nIdxHightMask];
-						lCalG = pPixel2[ComInfo::Pixel::Type::G] * nMask[nIdxWidthMask][nIdxHightMask];
-						lCalR = pPixel2[ComInfo::Pixel::Type::R] * nMask[nIdxWidthMask][nIdxHightMask];
+						long blue = pixelMaskArea[ComInfo::Pixel::Type::B] * mask[indexWidthMask][indexHightMask];
+						long green = pixelMaskArea[ComInfo::Pixel::Type::G] * mask[indexWidthMask][indexHightMask];
+						long red = pixelMaskArea[ComInfo::Pixel::Type::R] * mask[indexWidthMask][indexHightMask];
 
-						double dcalGray = (lCalB + lCalG + lCalR) / 3;
-						dCalAve = (dCalAve + dcalGray) / 2;
+						double gray = (blue + green + red) / 3;
+						averageGrayScale = (averageGrayScale + gray) / 2;
 					}
 				}
 			}
-			Byte nGrayScale = ComFunc::DoubleToByte(dCalAve);
+			Byte grayScale = ComFunc::DoubleToByte(averageGrayScale);
 
-			pPixel[ComInfo::Pixel::Type::B] = nGrayScale;
-			pPixel[ComInfo::Pixel::Type::G] = nGrayScale;
-			pPixel[ComInfo::Pixel::Type::R] = nGrayScale;
+			pixel[ComInfo::Pixel::Type::B] = grayScale;
+			pixel[ComInfo::Pixel::Type::G] = grayScale;
+			pixel[ComInfo::Pixel::Type::R] = grayScale;
 		}
 	}
 	bitmap->UnlockBits(bitmapData);
 
-	return bRst;
+	return result;
 }

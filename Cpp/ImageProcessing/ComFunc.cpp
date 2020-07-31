@@ -7,22 +7,22 @@
 /// <returns>byte型のデータ</returns>
 Byte ComFunc::DoubleToByte(double value)
 {
-	Byte nCnvValue = 0;
+	Byte convertValue = 0;
 
 	if (value > 255.0)
 	{
-		nCnvValue = 255;
+		convertValue = 255;
 	}
 	else if (value < 0)
 	{
-		nCnvValue = 0;
+		convertValue = 0;
 	}
 	else
 	{
-		nCnvValue = (Byte)value;
+		convertValue = (Byte)value;
 	}
 
-	return nCnvValue;
+	return convertValue;
 }
 
 /// <summary>
@@ -32,20 +32,20 @@ Byte ComFunc::DoubleToByte(double value)
 /// <returns>byte型のデータ</returns>
 Byte ComFunc::LongToByte(long value)
 {
-	Byte nCnvValue = 0;
+	Byte convertValue = 0;
 
 	if (value > 255)
 	{
-		nCnvValue = 255;
+		convertValue = 255;
 	}
 	else if (value < 0)
 	{
-		nCnvValue = 0;
+		convertValue = 0;
 	}
 	else
 	{
-		nCnvValue = (Byte)value;
+		convertValue = (Byte)value;
 	}
 
-	return nCnvValue;
+	return convertValue;
 }

@@ -8,17 +8,17 @@ Public Class ComFunc
     ''' <param name="value">Double型のデータ</param>
     ''' <returns>byte型のデータ</returns>
     Public Shared Function DoubleToByte(value As Double) As Byte
-        Dim ConvertValue As Byte = 0
+        Dim convertValue As Byte = 0
 
         If (value > 255.0) Then
-            ConvertValue = 255
+            convertValue = 255
         ElseIf (value < 0) Then
-            ConvertValue = 0
+            convertValue = 0
         Else
-            ConvertValue = CByte(value)
+            convertValue = CByte(value)
         End If
 
-        Return ConvertValue
+        Return convertValue
     End Function
 
     ''' <summary>
@@ -27,16 +27,16 @@ Public Class ComFunc
     ''' <param name="value">long型のデータ</param>
     ''' <returns>byte型のデータ</returns>
     Public Shared Function LongToByte(value As Long) As Byte
-        Dim ConvertValue As Byte = 0
+        Dim convertValue As Byte = 0
 
         If (value > 255) Then
-            ConvertValue = 255
+            convertValue = 255
         ElseIf (value < 0) Then
-            ConvertValue = 0
+            convertValue = 0
         Else
-            ConvertValue = CByte(value)
+            convertValue = CByte(value)
         End If
 
-        Return ConvertValue
+        Return convertValue
     End Function
 End Class

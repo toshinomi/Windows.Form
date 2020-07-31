@@ -73,9 +73,6 @@ class GrayScale2Diff
 
                     byte* pixel = (byte*)bitmapData.Scan0 + indexHeight * bitmapData.Stride + indexWidth * 4;
 
-                    long blue = 0;
-                    long green = 0;
-                    long red = 0;
                     double averageGrayScale = 0.0;
                     int indexWidthMask;
                     int indexHightMask;
@@ -92,9 +89,9 @@ class GrayScale2Diff
                             {
                                 byte* pixelMaskArea = (byte*)bitmapData.Scan0 + (indexHeight + indexHightMask) * bitmapData.Stride + (indexWidth + indexWidthMask) * 4;
 
-                                blue = pixelMaskArea[(int)ComInfo.Pixel.B] * nMask[indexWidthMask, indexHightMask];
-                                green = pixelMaskArea[(int)ComInfo.Pixel.G] * nMask[indexWidthMask, indexHightMask];
-                                red = pixelMaskArea[(int)ComInfo.Pixel.R] * nMask[indexWidthMask, indexHightMask];
+                                long blue = pixelMaskArea[(int)ComInfo.Pixel.B] * nMask[indexWidthMask, indexHightMask];
+                                long green = pixelMaskArea[(int)ComInfo.Pixel.G] * nMask[indexWidthMask, indexHightMask];
+                                long red = pixelMaskArea[(int)ComInfo.Pixel.R] * nMask[indexWidthMask, indexHightMask];
 
                                 double gray = (blue + green + red) / 3;
                                 averageGrayScale = (averageGrayScale + gray) / 2;

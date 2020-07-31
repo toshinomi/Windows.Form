@@ -24,41 +24,41 @@ GrayScale::~GrayScale()
 /// <returns>é¿çsåãâ  ê¨å˜/é∏îs</returns>
 bool GrayScale::ImageProcessing(Bitmap^ bitmap, CancellationToken^ token)
 {
-	bool bRst = true;
+	bool result = true;
 
-	int nWidthSize = bitmap->Width;
-	int nHeightSize = bitmap->Height;
+	int widthSize = bitmap->Width;
+	int heightSize = bitmap->Height;
 
-	auto bitmapData = bitmap->LockBits(System::Drawing::Rectangle(0, 0, nWidthSize, nHeightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
+	auto bitmapData = bitmap->LockBits(System::Drawing::Rectangle(0, 0, widthSize, heightSize), ImageLockMode::ReadWrite, PixelFormat::Format32bppArgb);
 
-	int nIdxWidth;
-	int nIdxHeight;
+	int indexWidth;
+	int indexHeight;
 
-	for (nIdxHeight = 0; nIdxHeight < nHeightSize; nIdxHeight++)
+	for (indexHeight = 0; indexHeight < heightSize; indexHeight++)
 	{
 		if (token->IsCancellationRequested)
 		{
-			bRst = false;
+			result = false;
 			break;
 		}
 
-		for (nIdxWidth = 0; nIdxWidth < nWidthSize; nIdxWidth++)
+		for (indexWidth = 0; indexWidth < widthSize; indexWidth++)
 		{
 			if (token->IsCancellationRequested)
 			{
-				bRst = false;
+				result = false;
 				break;
 			}
 
-			Byte* pPixel = (Byte*)bitmapData->Scan0.ToPointer() + nIdxHeight * bitmapData->Stride + nIdxWidth * 4;
-			Byte nGrayScale = (Byte)((pPixel[ComInfo::Pixel::Type::B] + pPixel[ComInfo::Pixel::Type::G] + pPixel[ComInfo::Pixel::Type::R]) / 3);
+			Byte* pixel = (Byte*)bitmapData->Scan0.ToPointer() + indexHeight * bitmapData->Stride + indexWidth * 4;
+			Byte grayScale = (Byte)((pixel[ComInfo::Pixel::Type::B] + pixel[ComInfo::Pixel::Type::G] + pixel[ComInfo::Pixel::Type::R]) / 3);
 
-			pPixel[ComInfo::Pixel::Type::B] = nGrayScale;
-			pPixel[ComInfo::Pixel::Type::G] = nGrayScale;
-			pPixel[ComInfo::Pixel::Type::R] = nGrayScale;
+			pixel[ComInfo::Pixel::Type::B] = grayScale;
+			pixel[ComInfo::Pixel::Type::G] = grayScale;
+			pixel[ComInfo::Pixel::Type::R] = grayScale;
 		}
 	}
 	bitmap->UnlockBits(bitmapData);
 
-	return bRst;
+	return result;
 }

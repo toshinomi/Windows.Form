@@ -61,9 +61,6 @@ Public Class GrayScale2Diff
                 Dim pixelG = ReadByte(bitmapData.Scan0, position + ComInfo.Pixel.G)
                 Dim pixelR = ReadByte(bitmapData.Scan0, position + ComInfo.Pixel.R)
 
-                Dim blue As Long = 0
-                Dim green As Long = 0
-                Dim red As Long = 0
                 Dim averageGrayScale As Double = 0.0
                 Dim indexWidthMask As Integer
                 Dim indexHightMask As Integer
@@ -77,9 +74,9 @@ Public Class GrayScale2Diff
 
                             Dim positionMaskArea As Integer = (indexHeight + indexHightMask) * bitmapData.Stride + (indexWidth + indexWidthMask) * 4
 
-                            blue = ReadByte(bitmapData.Scan0, positionMaskArea + ComInfo.Pixel.B) * mask(indexWidthMask, indexHightMask)
-                            green = ReadByte(bitmapData.Scan0, positionMaskArea + ComInfo.Pixel.G) * mask(indexWidthMask, indexHightMask)
-                            red = ReadByte(bitmapData.Scan0, positionMaskArea + ComInfo.Pixel.R) * mask(indexWidthMask, indexHightMask)
+                            Dim blue As Long = ReadByte(bitmapData.Scan0, positionMaskArea + ComInfo.Pixel.B) * mask(indexWidthMask, indexHightMask)
+                            Dim green As Long = ReadByte(bitmapData.Scan0, positionMaskArea + ComInfo.Pixel.G) * mask(indexWidthMask, indexHightMask)
+                            Dim red As Long = ReadByte(bitmapData.Scan0, positionMaskArea + ComInfo.Pixel.R) * mask(indexWidthMask, indexHightMask)
 
                             Dim gray = (blue + green + red) / 3
                             averageGrayScale = (averageGrayScale + gray) / 2
